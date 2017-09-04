@@ -1,0 +1,56 @@
+\input{Setup_files/preamble}
+%\usepackage{showframe}
+\raggedbottom
+
+\begin{document}
+
+%%% Tikz Magic %%%
+\include{Setup_files/tikz_magi}
+
+% Frontmatter - Roman page numbering
+
+\frontmatter
+\makeevenfoot{AAU}{\thepage}{}{}
+\makeoddfoot{AAU}{}{}{\thepage}
+
+%Formalia/home/simon/Git/WaterTank/report/Tikz/valve_model.tex
+\include{report/introduction/introduction_main}
+\tableofcontents*
+
+% Mainmater - normal page numbering
+\mainmatter 
+\makeevenfoot{AAU}{\thepage \text{} of \pageref{LastPage}}{}{}
+\makeoddfoot{AAU}{}{}{\thepage \text{} of \pageref{LastPage}}
+
+
+%%%% Introduction %%%%
+\include{report/intro}
+
+
+%%%% Analysis %%%%
+\include{report/analysis/analysis_main}
+
+%%%% Design %%%%
+\include{report/design/design_main}
+
+
+%%%% Conclusion and verification %%%%
+\part{ Conclusion and verification}
+\label{conclusion_and_verification}
+\include{report/conclusion_and_verification/acceptance_test}
+\include{report/conclusion_and_verification/discussion}
+\include{report/conclusion_and_verification/conclusion}
+
+
+%%%% Apendix %%%%
+\include{report/appendix/appendix_main}
+\clearpage
+
+%%%% Litteratur	%%%%
+\bibliography{Setup_files/Bibliography}
+
+%%%%% List of things that should be corrected %%%% 
+\listoffixmes
+\listoftodos
+
+\end{document}
