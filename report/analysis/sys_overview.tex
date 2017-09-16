@@ -1,4 +1,4 @@
-\emph{This chapter gives a general overview of hydraulic systems and an introduction to the WSS in Randers. The basic topology and structures of water supply networks are explained. }
+\emph{This chapter gives a general overview of hydraulic systems and an introduction to the WSS in Randers. The basic topology and structures of water supply networks are explained. Furthermore, the basic components of hydraulic systems are discussed and the unit called head, as an alternative measure of pressure, is introduced.}
 
 \section{Hydraulic system overview}
 \label{hydraulic_system_overview}
@@ -41,7 +41,8 @@ Loop networks have a configuration as shown in \figref{fig:loop_configuration}.
 %illustration of loop configuration
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/loop_configuration.tex} 
+%\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
 \caption{Loop configuration.}
 \label{fig:loop_configuration}
 \end{figure}
@@ -81,6 +82,10 @@ Valves in the WSS can be seen as actuators along with the pumps. Unlike the pump
 
 Valves can be controlled such that no flow passes through. In these cases the valve is closed and for example certain parts of the system can be isolated. Other possibility is that the valve is fully open. In such case the pressure drop between the two endpoints is experienced only because of the friction loss caused by the valve. 
 
+\subsection{Hydraulic head}
+\label{hydraulic_head}
+\todo{Since EPANET uses head as the measure of pressure, probably it is more convenient to use head.}
+
 \section{The Randers water supply network}
 \label{the_randers_water_supply_network}
 
@@ -88,11 +93,12 @@ The Randers drinkink WSS is managed by Verdo A/S and is the main supplier of dri
 
 Verdo provides the drinking water by drilling from 21 different groundwater bases and has four waterworks for water treatment. The geographical position of the reservoirs at these waterworks is shown in \figref{fig:reservoirs_epanet}, encircled in red.   
 
-Some missing ideas here:
+Missing parts:
 \begin{itemize}
-  \item Which pump stations are to be controller
+  \item Which pump stations are to be controlled
   \item Which tanks 
-  \item which distribution areas are (mostly) dependant on which pumping stations -> this would be useful to know in order to simplify the network and discard some areas in the network 
+  \item Why tanks are installed at the place where they are
+  \item which distribution areas are (mostly) dependant on which pumping stations - this would be useful to know in order to simplify the network and discard some areas in the network 
 \end{itemize}
 \todo{Discussion with Verdo}
 

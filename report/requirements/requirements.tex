@@ -1,7 +1,7 @@
 \chapter{System Modelling}
 \label{system_modelling}
 
-\emph{This chapter gives a mathematical description of the component modelling. Therefore the different physical and mathematical measures of hydraulic systems are introduced The similarities to electronic network modelling is shown, by explaining the relevant properties of graph theory. In the end, the EPANET-based modelling approach is introduced.}
+\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling is shown, by explaining the relevant properties of graph theory. In the end, the EPANET-based modelling approach is introduced.}
 
 \section{Hydraulic component modelling}
 \label{hydraulic_component_modelling}
@@ -11,3 +11,18 @@
 
 \section{Modelling in EPANET}
 \label{modelling_in_epanet}
+
+EPANET is an open source software, created by the United States Environmental Protection Agency (EPA) for simulating hydraulic networks (citeEPAman). EPANET tracks the flow of water in each pipe, the pressure at each node and the height of water in each tank. Furthermore, it uses a node-based model approach which means that the components in the network are either treated as nodes or links. Valves, pumps, reservoirs and tanks are considered as nodes due to their fixed geographical location and geodesic level. Pipes are considered as the links between the nodes in the network. Therefore nodes are termination points for one or more pipes. The end-user consumption flow demand is described as an attribute of nodes. Such nodes are called demand nodes and they have a certain water withdrawal. Attributes of nodes in the network are the geographical and geodesic coordinates, the flow demand, the total and the available head.  
+
+In EPANET the simulation can be carried out in an extended period analysis. Time patterns can be created that make demands at the nodes vary in a periodic way over the course of the time period. Nodal demands, reservoirs and pump schedules can all have time patterns associated with them, thus making the hydraulic simulation more realistic. However, in order to create a schedule plan for changing reservoir levels or pump schedules, water scheduling planning requires data at some time points. It means that it is sufficient to solve the network using a set of hourly time steps (snapshots) over a period of 24 hours, and use the static, steady-state solutions. 
+
+
+
+
+
+
+
+
+
+
+

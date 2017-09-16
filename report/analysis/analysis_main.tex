@@ -18,6 +18,10 @@
 \section{Purpose of the model reduction}
 \label{purpose_of_the_model_reduction}
 
+As it is described in \secref{modelling_in_epanet}, planning pump schedules and tank level changes in EPANET can be carried out by solving iteratively for long time steps. However, when a complex network is being used for developing different control methods, typically the aim is to find an optimisation method which determines the optimal input to the system. In order to run such an optimizing algorithm on a complex system, the network needs to be solved numerically and several online execution runs are required. 
+
+In case of complex networks with a tree structure, there is only one way from a source node to any node in the system. Therefore the network can be described by solving the equation system of the model explicitly, therefore all pressures can be directly calculated in terms of the flows. In case of loop systems however, the procedure is more dificult, since there is more path to each nodes in the network. The network equations have to be solved numerically which can dramatically increase the simulation time of an optimization algorithm. The objective of the system reduction and simplification is threfore to reduce the network components and especially the loops in the network, such that the accuracy of the simplified model is as close as possible to that of the original network model. 
+
 \section{State of the art model reduction analysis}
 \label{state_of_the_art_model_reduction_analysis}
 
