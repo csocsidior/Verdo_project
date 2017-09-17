@@ -59,17 +59,36 @@ Due to the elevation of the tank, when it is filled up, the pumping stations nee
 \subsection{Pumps}
 \label{pumps}
 
-Water pumps are used to increase pressure in hydraulic systems, thus making the water flow. Pumps are the main actuators of a WSS and they can be either flow or pressure controlled. Therefore, pumps can have controllers to produce a desired flow or pressure. This is done by changing the rotational speed of the pump. In this way, when the pump has a reference pressure or flow, simple control makes it possible to produce the desired flow or pressure respectively (cite).The pressure required to make the water reach some height is the sum of the pressure required to overcome the elevation and the friction losses in the pipe network. 
+Water pumps are used to increase pressure in hydraulic systems, thus making the water flow. Pumps are the main actuators of a WSS and they can be either flow or pressure controlled. Therefore, pumps can have controllers to produce a desired flow or pressure. This is done by changing the rotational speed of the pump. In this way, when the pump has a reference pressure or flow, simple control makes it possible to produce the desired flow or pressure respectively (citeCPHD).The pressure required to make the water reach some height is the sum of the pressure required to overcome the elevation and the friction losses in the pipe network. 
 
-The most common pumps in WSSs are centrifugal pumps. Normally the characteristics of such pumps are described by two pump curves. The two curves depict the volume flow versus the pressure and the power of the pump respectively. Normally the curves describe the characteristics for one particular speed, which is denoted the nominal speed. An example of these pump curves is shown in \figref{fig:pump curves}.
+The most common pumps in WSSs are centrifugal pumps. Normally the characteristics of such pumps are described by two pump curves. The two curves depict the volume flow versus the pressure and the power of the pump respectively. Normally the curves describe the characteristics for one particular speed, which is denoted the nominal speed (citeCarstenPHD). An example of these pump curves is shown in \figref{fig:pump_curves}.
 
-%pump curves
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
-\caption{Loop configuration.}
-\label{fig:pump curves}
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/pumpcurve_1.tex} 
+  \caption{Flow versus pressure difference}
+  \label{fig:sub1}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/pumpcurve_2.tex} 
+  \caption{Flow versus power consumption}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Pump curves describing the performance of a centrifugal pump at nominal speed.}
+\label{fig:pump_curves}
 \end{figure}
+
+% %pump curves
+% \begin{figure}[H]
+% \centering
+% \input{report/tikz/pumpcurve_1.tex} 
+% %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+% \caption{Loop configuration.}
+% \label{fig:pump curves}
+% \end{figure}
 
 As can be seen, at a given flow, the pump can deliver a pressure with a maximum limit. This pressure decreases when the flow is increasing. At a certain flow and pressure value, the pump has an optimal point where the operation is the most energy efficient. Pumps are normally designed such that the optimal point lies in the operational area for the pumping application (cite). 
 
