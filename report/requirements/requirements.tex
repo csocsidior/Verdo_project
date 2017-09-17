@@ -1,7 +1,7 @@
 \chapter{System Modelling}
 \label{system_modelling}
 
-\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling is shown, by explaining the relevant properties of graph theory. In the end, the EPANET-based modelling approach is introduced which is used for simulation within the project.}
+\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling is shown, by explaining the relevant properties of graph theory. In the end, the EPANET-based modelling approach is introduced which is used for simulation purposes within the project.}
 
 \section{Hydraulic component modelling}
 \label{hydraulic_component_modelling}
@@ -56,8 +56,54 @@ The incidence matrix, $H$, of a connected graph, $\mathcal{G}$, is a matrix wher
 		\right.
 \end{equation}	
 
+\subsection{Cycle matrix}
+\label{cycle_matrix}
+
+Purely tree structure of a WSS is not typical considering distribution systems for whole cities. However, trees can be arbitrarily chosen from the underlying graph of the system. A connected tree, $\mathcal{T} $, of the graph is a connected sub-graph where any two vertices are connected by exactly one path(cite). Therefore a certain sub-graph which is a tree of the network can be represented as follows
+
+\begin{equation}
+  \label{Numberofchords}
+  \mathcal{T} = \{\mathcal{V_{\mathcal{T}}}, \mathcal{E_{\mathcal{T}}} \} 
+\end{equation}
+
+A special case of connected tree sub-graphs is the spanning tree of the network. A spanning tree contains all the vertices of $\mathcal{G}$ and has no cycles, since it is a tree sub-graph. A spanning tree of the network therefore can be represented as
+
+\begin{equation}
+  \label{Numberofchords}
+  \mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \} 
+\end{equation}
+
+In order to obtain a spanning tree, an edge has to be removed from each cycle. The removed edges are $\mathcal{G} - \mathcal{T}$ and called the chords of $\mathcal{T}$ with respect to $\mathcal{G}$. By adding a chord to $\mathcal{T}$, a cycle is created which is called a fundamental cycle. A graph is conformed by as many fundamental cycles as the number of chords(cite).
+
+The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, such that the number of rows and columns are defined by the number of chords and edges, respectively. The cycle matrix of the system is given by
+
+\begin{equation}
+\label{DiGraphCycle}
+ B_{i,j} =
+		\left\{
+		\begin{array}{ll}
+		
+		1 			&     \text{if the $j^{th}$ edge belongs to the $i^{th}$ cycle and their directions agree}	
+\\
+		-1          &     \text{if the $j^{th}$ edge belongs to the $i^{th}$ cycle and their directions are opposite}
+\\
+        0           &     \text{if the $j^{th}$ edge does not belong to the $i^{th}$ cycle}
+		\end{array}
+		\right.
+\end{equation}	
+
+\subsection{Kirchhoff's law}
+\label{kirchhoffs_law}
+
+(in progress)
+
+\subsection{Partitioning of the network}
+\label{partitioning_of_the_network}
+
+(in progress)
+
 \section{EPANET modelling}
-\label{EPANET modelling}
+\label{EPANET_modelling}
 
 EPANET is an open source software, created by the United States Environmental Protection Agency (EPA) for simulating hydraulic networks \cite{agency2016epanet}. EPANET allows to track the flow of water in each pipe, the pressure at each node and the height of water in each tank. Furthermore, it uses a node-based model approach which means that the components in the network are either treated as nodes or links. Valves, pumps, reservoirs and tanks are considered as nodes due to their fixed geographical location and geodesic level. Pipes are considered as the links between the nodes in the network. Therefore, nodes are termination points for one or more pipes. The end-user consumption flow demand is considered as an attribute of certain nodes. Such nodes are called demand nodes and they have a certain water withdrawal. Attributes of nodes in the network are the geographical and geodesic coordinates, the flow demand, the total, and the available head. \cite{agency2016epanet}  
 
