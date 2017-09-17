@@ -15,6 +15,27 @@ The way of graph-based network modelling has the advantage of making use of tool
 
 In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges or vertices. The whole network can be described by writing up the equations for all vertices in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{system_modelling}. However, in case of complex systems as a water network for a large cities, these equations systems are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure in the system, but to make a complex system easier to handle by exploiting the properties of matrix representations and thereby making it convenient for implementing it in computer algorithms for iterative solvers.  
 
+WSSs can be described by a directed and connected graph, such that \cite{graph_intro}: 
+
+\begin{equation}
+  \label{Numberofchords}
+  \mathcal{G} = \{\mathcal{V}, \mathcal{E} \} 
+\end{equation}
+
+\begin{minipage}[t]{0.20\textwidth}
+Where\\
+\hspace*{8mm} $\mathcal{G} $ \\
+\hspace*{8mm} $\mathcal{V} $ \\
+\hspace*{8mm} $\mathcal{E} $
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+\hspace*{8mm} is a directed and connected graph,\\
+\hspace*{8mm} is the set of vertices, where $\mathcal{V} = \{v_1, ..., v_n\}$,\\
+\hspace*{8mm} is the set of edges, where $\mathcal{E} = \{e_1, ..., e_m\}$. 
+\end{minipage}
+
+
 
 \section{EPANET modelling}
 \label{EPANET modelling}
