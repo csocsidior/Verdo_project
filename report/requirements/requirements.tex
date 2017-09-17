@@ -11,6 +11,9 @@ In this section the mathematical relation between pressure and flow will be give
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
 
+The way of graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or in other word, to vertices. 
+
+In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges or vertices. The whole network can be described by writing up the equations for all vertices in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{system_modelling}. However, in case of complex systems as a water network for a large cities, these equations systems are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure in the system, but to make a complex system easier to handle by exploiting the properties of matrix representations and thereby making it convenient for implementing it in computer algorithms for iterative solvers.  
 
 
 \section{EPANET modelling}
