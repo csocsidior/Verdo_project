@@ -13,7 +13,7 @@ In this section the mathematical relation between pressure and flow will be give
 
 The way of graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or in other word, to vertices. 
 
-In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges or vertices. The whole network can be described by writing up the equations for all vertices in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{system_modelling}. However, in case of complex systems as a water network for a large cities, these equations systems are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure in the system, but to make a complex system easier to handle by exploiting the properties of matrix representations and thereby making it convenient for implementing it in computer algorithms for iterative solvers.  
+In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges or vertices. The whole network can be described by writing up the equations for all vertices in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as a water network for a large cities, these equations systems are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure in the system, but to make a complex system easier to handle by exploiting the properties of matrix representations and thereby making it convenient for implementing it in computer algorithms for iterative solvers.  
 
 WSSs can be described by a directed and connected graph, such that \cite{graph_intro}: 
 
@@ -35,7 +35,26 @@ Where\\
 \hspace*{8mm} is the set of edges, where $\mathcal{E} = \{e_1, ..., e_m\}$. 
 \end{minipage}
 
+\subsection{Incidence matrix}
+\label{incidence_matrix}
 
+The incidence matrix, $H$, of a connected graph, $\mathcal{G}$, is a matrix where the number of rows and columns correspond to the number of vertices and edges, respectively. Therefore $H\in \: \mathbb{R}^{n \times m}$. In case of hydraulic networks, edges are directed in order to keep track of the direction of the flow in the system. 
+
+\begin{equation}
+\label{DiGraph}
+ H_{i,j} =
+		\left\{
+		\begin{array}{ll}
+		
+		1 			&      \text{if the $j^{th}$ edge is incident out of the $i^{th}$ vertex}.	
+\\
+	    -1          &      \text{if the $j^{th}$ edge is incident into the $i^{th}$ vertex}.
+\\
+        0           &      \text{if the $j^{th}$ edge is not connected to the $i^{th}$ vertex}.
+
+		\end{array}
+		\right.
+\end{equation}	
 
 \section{EPANET modelling}
 \label{EPANET modelling}
