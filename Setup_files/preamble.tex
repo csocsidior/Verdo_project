@@ -156,17 +156,17 @@
 
 % ¤¤ Marginer ¤¤ %
 \setlrmarginsandblock{3.5cm}{2.5cm}{*}		% \setlrmarginsandblock{Indbinding}{Kant}{Ratio}
-\setulmarginsandblock{2.0cm}{3.0cm}{*}		% \setulmarginsandblock{Top}{Bund}{Ratio}
+\setulmarginsandblock{3.2cm}{3.0cm}{*}		% \setulmarginsandblock{Top}{Bund}{Ratio}
 \checkandfixthelayout 						% Oversaetter vaerdier til brug for andre pakker
 
-%	¤¤ Afsnitsformatering ¤¤ %
+%	¤¤ Paragraph formatting ¤¤ %
 \setlength{\parindent}{0mm}           		% Stoerrelse af indryk
 \setlength{\parskip}{3mm}          			% Afstand mellem afsnit ved brug af double Enter
 \linespread{0.85}								% Linie afstand
 
-% ¤¤ Indholdsfortegnelse ¤¤ %
+% ¤¤ Table of contents ¤¤ %
 \setsecnumdepth{subsubsection}		 			% Dybden af nummerede overkrifter (part/chapter/section/subsection)
-\maxsecnumdepth{subsubsection}				% Dokumentklassens graense for nummereringsdybde
+\maxsecnumdepth{subsubsection}				% Document class boundary for numbering depth
 \settocdepth{subsubsection} 					% Dybden af indholdsfortegnelsen
 
 % ¤¤ Lister ¤¤ %
@@ -210,7 +210,7 @@
 \newif\ifchapternonum
 
 \makechapterstyle{AlexanderGrebenkov}{%
-\renewcommand{\chapterheadstart}{\vspace*{1cm}\hrule height 1.1pt\vspace{0.2cm}\medskip}
+\renewcommand{\chapterheadstart}{\vspace*{0cm}\hrule height 1.1pt\vspace{0.2cm}\medskip}
 \renewcommand{\chapnamefont}{\normalfont\huge\bfseries}
 \renewcommand{\chapnumfont}{\normalfont\huge\bfseries}
 \renewcommand{\chaptitlefont}{\normalfont\huge\bfseries}
@@ -222,7 +222,7 @@
 }
 \chapterstyle{AlexanderGrebenkov}
 
-% ¤¤ Sidehoved ¤¤ %
+% ¤¤ Header ¤¤ % 
 
 \makepagestyle{AAU}							% Definerer sidehoved og sidefod udseende frem til ...
 \makepsmarks{AAU}{%
@@ -241,10 +241,11 @@
 
 \makeevenhead{AAU}{Gr938}{}{\leftmark}					    % Definerer lige siders sidehoved (\makeevenhead{Navn}{Venstre}{Center}{Hoejre})
 \makeoddhead{AAU}{\rightmark}{}{Aalborg University}			% Definerer ulige siders sidehoved (\makeoddhead{Navn}{Venstre}{Center}{Hoejre})
-\makeheadrule{AAU}{\textwidth}{0.5pt}						% Tilfoejer en streg under sidehovedets indhold
-\makefootrule{AAU}{\textwidth}{0.5pt}{1mm}					% Tilfoejer en streg under sidefodens indhold
+\makeheadrule{AAU}{\textwidth}{0.5pt}						% Adds a line under the header content
 
-\copypagestyle{AAUchap}{AAU}								% Sidehoved for kapitelsider defineres som standardsider, men med blank sidehoved
+\makefootrule{AAU}{\textwidth}{0.5pt}{1mm}					% Adds a line below the footer's content
+
+\copypagestyle{AAUchap}{AAU}								% Page header for chapter pages is defined as standard pages but with blank header
 \makeoddhead{AAUchap}{}{}{}
 \makeevenhead{AAUchap}{}{}{}
 \makeheadrule{AAUchap}{\textwidth}{0pt}
