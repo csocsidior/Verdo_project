@@ -209,30 +209,19 @@
 \definecolor{numbercolor}{gray}{0.7}		% Definerer en farve til brug til kapiteludseende
 \newif\ifchapternonum
 
-\makechapterstyle{jenor}{					% Definerer kapiteludseende frem til ...
-  \renewcommand\beforechapskip{0pt}
-  \renewcommand\printchaptername{}
-  \renewcommand\printchapternum{}
-  \renewcommand\printchapternonum{\chapternonumtrue}
-  \renewcommand\chaptitlefont{\fontfamily{pbk}\fontseries{db}\fontshape{n}\fontsize{20}{30}\selectfont\raggedleft}
-  \renewcommand\chapnumfont{\fontfamily{pbk}\fontseries{m}\fontshape{n}\fontsize{1in}{0in}\selectfont\color{numbercolor}}
-  \renewcommand\printchaptertitle[1]{%
-    \noindent
-    \ifchapternonum
-    \begin{tabularx}{\textwidth}{X}
-    {\let\\\newline\chaptitlefont ##1\par} 
-    \end{tabularx}
-    \par\vskip-2.5mm\hrule
-    \else
-    \begin{tabularx}{\textwidth}{Xl}
-    {\parbox[b]{\linewidth}{\chaptitlefont ##1}} & \raisebox{-15pt}{\chapnumfont \thechapter}
-    \end{tabularx}
-    \par\vskip2mm\hrule
-    \fi
-  }
-}											% ... her
-
-\chapterstyle{jenor}						% Valg af kapiteludseende - Google 'memoir chapter styles' for alternativer
+\makechapterstyle{AlexanderGrebenkov}{%
+\renewcommand{\chapterheadstart}{\vspace*{1cm}\hrule\medskip}
+\renewcommand{\chapnamefont}{\normalfont\huge\bfseries}
+\renewcommand{\chapnumfont}{\normalfont\huge\bfseries}
+\renewcommand{\chaptitlefont}{\normalfont\huge\bfseries}
+\renewcommand{\printchaptername}{}
+\renewcommand{\chapternamenum}{ }
+\renewcommand{\printchapternum}{\chapnumfont \thechapter}
+\renewcommand{\afterchapternum}{. }
+\renewcommand{\afterchaptertitle}{\par\nobreak\medskip\hrule\vskip
+\afterchapskip}
+}
+\chapterstyle{AlexanderGrebenkov}
 
 % ¤¤ Sidehoved ¤¤ %
 
@@ -250,7 +239,8 @@
 \nouppercaseheads											% Ingen Caps oenskes
 
 
-\makeevenhead{AAU}{Gr837}{}{\leftmark}					    % Definerer lige siders sidehoved (\makeevenhead{Navn}{Venstre}{Center}{Hoejre})
+
+\makeevenhead{AAU}{Gr938}{}{\leftmark}					    % Definerer lige siders sidehoved (\makeevenhead{Navn}{Venstre}{Center}{Hoejre})
 \makeoddhead{AAU}{\rightmark}{}{Aalborg University}			% Definerer ulige siders sidehoved (\makeoddhead{Navn}{Venstre}{Center}{Hoejre})
 \makeheadrule{AAU}{\textwidth}{0.5pt}						% Tilfoejer en streg under sidehovedets indhold
 \makefootrule{AAU}{\textwidth}{0.5pt}{1mm}					% Tilfoejer en streg under sidefodens indhold

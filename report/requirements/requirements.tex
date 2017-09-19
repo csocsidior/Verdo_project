@@ -11,7 +11,7 @@ In this section the mathematical relation between pressure and flow will be give
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
 
-Graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or equivalently, to vertices. \todo{To supervisors: Question about this at the supervisor meeting.}
+Graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or equivalently, to vertices.
 
 In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges or vertices. The whole network can be described by writing up the equations for all vertices in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as a water network for a large cities, these systems of equations are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a complex system easier by exploiting the properties of matrix representations. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
 
@@ -92,7 +92,7 @@ The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, s
 		\right.
 \end{equation}	
 
-\subsection{Kirchhoff's law}
+\subsection{Kirchhoff's and Ohm's law}
 \label{kirchhoffs_law}
 
 (in progress)
@@ -101,6 +101,7 @@ The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, s
 \label{partitioning_the_network}
 
 (in progress)
+Show it on a small example.
 
 \section{EPANET modelling}
 \label{EPANET_modelling}
