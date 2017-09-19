@@ -13,7 +13,7 @@ In this section the mathematical relation between pressure and flow will be give
 
 Graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or equivalently, to vertices.
 
-In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges or vertices. The whole network can be described by writing up the equations for all vertices in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as a water network for a large cities, these systems of equations are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a complex system easier by exploiting the properties of matrix representations. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
+In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as a water network for a large cities, these systems of equations are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a algebraic constraints easier by exploiting the properties of matrix representations. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
 
 WSSs can be described by a directed and connected graph, such that \cite{graph_intro}: 
 
@@ -59,7 +59,7 @@ The incidence matrix, $H$, of a connected graph, $\mathcal{G}$, is a matrix wher
 \subsection{Cycle matrix}
 \label{cycle_matrix}
 
-Purely tree structure of a WSS is not common when considering distribution systems for whole cities. However, trees can be arbitrarily chosen from the underlying graph of the system. A connected tree, $\mathcal{T} $, of the graph is a connected sub-graph where any two vertices are connected by exactly one path \cite{deo2017graph}. Therefore a certain sub-graph which is a tree of the network can be represented as follows
+Purely tree structure of a WSS is not common when considering distribution systems for whole cities. However, trees can be arbitrarily chosen from the underlying graph of the system. A tree, $\mathcal{T} $, of the graph is a connected sub-graph where any two vertices are connected by exactly one path \cite{deo2017graph}. Therefore a certain sub-graph which is a tree of the network can be represented as follows
 
 \begin{equation}
   \label{Numberofchords}

@@ -210,7 +210,7 @@
 \newif\ifchapternonum
 
 \makechapterstyle{AlexanderGrebenkov}{%
-\renewcommand{\chapterheadstart}{\vspace*{1cm}\hrule\medskip}
+\renewcommand{\chapterheadstart}{\vspace*{1cm}\hrule height 1.1pt\vspace{0.2cm}\medskip}
 \renewcommand{\chapnamefont}{\normalfont\huge\bfseries}
 \renewcommand{\chapnumfont}{\normalfont\huge\bfseries}
 \renewcommand{\chaptitlefont}{\normalfont\huge\bfseries}
@@ -218,8 +218,7 @@
 \renewcommand{\chapternamenum}{ }
 \renewcommand{\printchapternum}{\chapnumfont \thechapter}
 \renewcommand{\afterchapternum}{. }
-\renewcommand{\afterchaptertitle}{\par\nobreak\medskip\hrule\vskip
-\afterchapskip}
+\renewcommand{\afterchaptertitle}{\par\nobreak\medskip\vspace{0.2cm}\hrule height 1.1pt\vspace{0.4cm}}
 }
 \chapterstyle{AlexanderGrebenkov}
 
