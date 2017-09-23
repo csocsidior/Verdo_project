@@ -1,38 +1,137 @@
 \chapter{System Modelling}
 \label{system_modelling}
 
-\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling are shown by explaining the relevant properties of graph theory. In the end, the EPANET-based modelling approach is introduced which is used for simulation purposes within this project.}
+\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling are shown by explaining the relevant properties of graph theory. The reduced model for multi-inletsystems is introduced first, then the inclusion of tanks is discussed. In the end, the EPANET-based modelling approach is introduced which is used for simulation purposes within this project.}
 
 \section{Hydraulic component modelling}
 \label{hydraulic_component_modelling}
 
-In this section the mathematical relation between pressure and flow will be given for each of the different components in a WSS system to show their nonlinear behaviour. (The purpose here is not the derivation of the different models, it was done in the previous project.)
+In this section the mathematical relation between pressure and flow is given for each component in a WSS system, in order to show their non-linear behaviour. The purpose here is not to derive the different models, rather to introduce the mathematical formalism which describes them.
+
+\eqref{onecomponent} shows the dual variables which describe all two-terminal components in the network 
+
+\begin{equation}
+\label{onecomponent}
+ \begin{bmatrix}
+    \Delta p \\
+    q
+\end{bmatrix}
+=
+ \begin{bmatrix}
+    p_{in} - p_{out} \\
+    q
+\end{bmatrix},
+\end{equation}
+
+ \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $\Delta p$ \\
+\hspace*{8mm} $q$ \\
+\hspace*{8mm} $p_{in}$, $p_{out}$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the differential pressure across the elements,\\
+is the flow through the element,\\
+are the absolute pressures.
+is the flow through the element.
+\end{minipage}
+\begin{minipage}[t]{0.10\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\unit{m}$\\
+\textcolor{White}{te}$\unit{m}$\\
+\textcolor{White}{te}$\unit{\frac{l}{s}}$
+\end{minipage}
+
+\subsection{Pipe model}
+\label{pipe_component}
+
+Pipes in the network are governed by the dynamic equation
+
+\begin{equation}
+\label{complete_pipemodel}
+  \Delta p_i = J_i \dot{q_i} + f_i(q_i) - \Delta h_i,
+\end{equation}
+
+ \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $J_i$ \\
+\hspace*{8mm} $f_i(q_i)$ \\
+\hspace*{8mm} $\Delta h_i$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the inertia of the pipes,\\ 
+is the pressure drop due to friction,\\
+is the pressure drop due to geodesic level difference across the two terminals of pipe elements.
+\end{minipage}
+
+The dynamics of the pipes are discarded in the project, as it is shown in other works that the small time constant of the pipe dynamics are not dominant in the system, especially if there are elevated reservoirs included \cite{8thsemester_project,kenneth_houe}. Therefore the pressure across pipes can be written as
+
+
+\begin{equation}
+\label{complete_pipemodel1}
+  \Delta p_i = f_i(q_i) - \Delta h_i,
+\end{equation}
+
+The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle \geq 0$ for every $x,y \in \: \mathbb{R}^{n}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance
+
+\begin{equation}
+  \label{deltap_friction}
+  f_i(q_i) = \rho_i |q_i|q_i,
+\end{equation}
+
+ \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $\rho_i > 0$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the parameter of the pipes. 
+\end{minipage}
+
+In the following sections it is assumed that each $f_i$ has the structure shown in \eqref{deltap_friction}. 
+
+\subsection{Valve model}
+\label{valve_component}
+
+(in progress)
+
+\subsection{Pump model}
+\label{pump_component}
+
+(in progress)
+
+\subsection{Elevated reservoir model}
+\label{elevatedreservoir_component}
+
+(in progress)
 
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
 
 Graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or equivalently, to vertices.
 
-In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as a water network for a large cities, these systems of equations are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a algebraic constraints easier by exploiting the properties of matrix representations. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
+In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as water networks for large cities, these systems of equations are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a algebraic constraints easier by exploiting the properties of the matrix representation. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
 
 WSSs can be described by a directed and connected graph, such that \cite{graph_intro}: 
 
 \begin{equation}
   \label{Numberofchords}
-  \mathcal{G} = \{\mathcal{V}, \mathcal{E} \} 
+  \mathcal{G} = \{\mathcal{V}, \mathcal{E} \} ,
 \end{equation}
 
 \begin{minipage}[t]{0.20\textwidth}
-Where\\
+where\\
 \hspace*{8mm} $\mathcal{G} $ \\
 \hspace*{8mm} $\mathcal{V} $ \\
 \hspace*{8mm} $\mathcal{E} $
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-\hspace*{8mm} is a directed and connected graph,\\
-\hspace*{8mm} is the set of vertices, where $\mathcal{V} = \{v_1, ..., v_n\}$,\\
-\hspace*{8mm} is the set of edges, where $\mathcal{E} = \{e_1, ..., e_m\}$. 
+is a directed and connected graph,\\
+is the set of vertices, where $\mathcal{V} = \{v_1, ..., v_n\}$,\\
+is the set of edges, where $\mathcal{E} = \{e_1, ..., e_m\}$. 
 \end{minipage}
 
 \subsection{Incidence matrix}
@@ -56,10 +155,12 @@ The incidence matrix, $H$, of a connected graph, $\mathcal{G}$, is a matrix wher
 		\right.
 \end{equation}	
 
+It is worth mentioning that the reduced incidence matrix can be obtained by removing any arbitrary row from $H$. Therefore $H$ always have $(n-1)$ row rank. This statement can be explained by the mass conservation in the network, which is explained in the following section, \secref{kirchhoffs_law}.
+
 \subsection{Cycle matrix}
 \label{cycle_matrix}
 
-Purely tree structure of a WSS is not common when considering distribution systems for whole cities. However, trees can be arbitrarily chosen from the underlying graph of the system. A tree, $\mathcal{T} $, of the graph is a connected sub-graph where any two vertices are connected by exactly one path \cite{deo2017graph}. Therefore a certain sub-graph which is a tree of the network can be represented as follows
+Purely tree structure of a WSS is not common when considering water distribution systems. However, trees can be arbitrarily chosen from the underlying graph of the system.\footnote{Recall that a tree with $n$ vertices has $n-1$ edges \cite{deo2017graph}.}  A tree, $\mathcal{T} $, of the graph is a connected sub-graph where any two vertices are connected by exactly one path \cite{deo2017graph}. Therefore a certain sub-graph which is a tree of the network can be represented as follows
 
 \begin{equation}
   \label{Numberofchords}
@@ -92,16 +193,73 @@ The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, s
 		\right.
 \end{equation}	
 
-\subsection{Kirchhoff's and Ohm's law}
+\subsection{Kirchhoff's and Ohm's law for hydraulic networks}
 \label{kirchhoffs_law}
 
-(in progress)
+In this project the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, where water is able to enter and leave the network at a subset of the vertices. For such a system Kirchhoff's vertex law corresponds to conservation of mass in each vertex and described by
 
-\subsection{Partitioning the network}
-\label{partitioning_the_network}
+\begin{equation}
+  \label{vertexlaw_open}
+  Hq = d,
+\end{equation}
 
-(in progress)
-Show it on a small example.
+  \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $d \in \: \mathbb{R}^{n}$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the vector of nodal demands, with $d_i > 0$ when demand flow is into vertex $i$ and $d_i < 0$ when demand flow is out of vertex $i$.
+\end{minipage}
+\begin{minipage}[t]{0.10\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\unit{\frac{l}{s}}$
+\end{minipage}
+
+Nodal demands can be seen as the end-user consumption, which means that they take out water from the network. The mass conservation corresponds to the fact that what is consumed from the system must also be produced. Due to mass conservation, there can be only $(n-1)$ independent nodal demands in the network
+
+\begin{equation}
+  \label{mass_conservation}
+  d_n = - \sum_{i=1}^{n-1} d_i.
+\end{equation}
+
+In the further project, a distinction is made between inlet and non-inlet nodes. It is assumed that the demand at non-inlet nodes fulfil the following constraint
+
+\begin{equation}
+  \label{non_inlet_constraint}
+  d_i \geq 0.
+\end{equation}
+
+It is worth noting however, that in closed hydraulic networks the vertex law is
+
+\begin{equation}
+  \label{vertexlaw_closed}
+  Hq = 0.
+\end{equation}
+
+Ohm's law for hydraulic networks therefore can be expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$, and the edges of the graph are only pipe elements
+
+\begin{equation}
+  \label{ohmslaw}
+  \Delta p = H^Tp = f(q) - H^Th.
+\end{equation}
+
+In \eqref{ohmslaw} the differential pressure is described across each edge in the network, taking into account the pressure loss due to friction, $f(q)$ and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. 
+
+
+
+
+
+
+\subsection{Multi-inlet reduced network description}
+\label{multi_inlet_reduced_network_description}
+
+The aim of the
+
+\subsection{Inclusion of elevated reservoirs}
+\label{inclusion_of_reservoirs}
+
+As it is described in \eqref{non_inlet_constraint}, a distinction is made between non-inlet and inlet nodes, by assuming that non-inlet nodes have only positive or zero demand in the network. However, when the inclusion of a tank is considered, a special type of node has to be introduced. I.e., a node which can have a demand in both positive and negative directions, meaning that the demand is positive when the tank is being filled and the demand is negative when it is being emptied. 
 
 \section{EPANET modelling}
 \label{EPANET_modelling}
