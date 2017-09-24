@@ -121,7 +121,7 @@ WSSs can be described by a directed and connected graph, such that \cite{graph_i
   \mathcal{G} = \{\mathcal{V}, \mathcal{E} \} ,
 \end{equation}
 
-\begin{minipage}[t]{0.20\textwidth}
+\begin{minipage}[t]{0.2\textwidth}
 where\\
 \hspace*{8mm} $\mathcal{G} $ \\
 \hspace*{8mm} $\mathcal{V} $ \\
@@ -213,10 +213,10 @@ is the vector of nodal demands, with $d_i > 0$ when demand flow is into vertex $
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
-\textcolor{White}{te}$\unit{\frac{l}{s}}$
+\textcolor{White}{te}$\unit{\frac{L}{s}}$
 \end{minipage}
 
-Nodal demands can be seen as the end-user consumption, which means that they take out water from the network. The mass conservation corresponds to the fact that what is consumed from the system must also be produced. Due to mass conservation, there can be only $(n-1)$ independent nodal demands in the network
+Nodal demands can be seen as the end-user consumption, which means that water is taken out from the network. The mass conservation corresponds to the fact that what is consumed from the system must also be produced. Due to mass conservation, there can be only $(n-1)$ independent nodal demands in the network
 
 \begin{equation}
   \label{mass_conservation}
@@ -237,7 +237,7 @@ It is worth noting however, that in closed hydraulic networks the vertex law is
   Hq = 0.
 \end{equation}
 
-Ohm's law for hydraulic networks therefore can be expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$, and the edges of the graph are only pipe elements
+Ohm's law for hydraulic networks therefore can be expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$. Important to point out that the edges of the underlying graph are considered as only pipe elements
 
 \begin{equation}
   \label{ohmslaw}
@@ -251,15 +251,111 @@ In \eqref{ohmslaw} the differential pressure is described across each edge in th
 
 
 
-\subsection{Multi-inlet reduced network description}
+\subsection{Multi-inlet reduced network model}
 \label{multi_inlet_reduced_network_description}
 
-The aim of the
+The system is considered to be a water network supplied from more than one pumping stations and several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are pipes. The inclusion of storage tanks is the next step of the model development, therefore it is described in a following section, in \secref{inclusion_of_reservoirs}.
+
+The aim of the modelling is to obtain a reduced order network model which is able to capture the dependence of the measured output pressures on the flows and pressures at the inlets. Therefore it is assumed that the inlet pressures and demands are measured. Furthermore, pressure measurement is available in the remaining network, at the end-users. Considering generality, the model is described for $c$ inlets, however it should be noted that regarding the Randers WSS, two inlet points are considered. 
+
+In order to put the system into a form which can handle the measured pressure dependencies on the control inputs, the underlying graph of the network is first partitioned. The $n$ vertices of the graph are separated into two sets
+
+\begin{equation}
+  \label{vertices1}
+  \mathcal{V} = \{\bar{\mathcal{V}}, \hat{\mathcal{V}} \}, 
+\end{equation}
+
+\begin{minipage}[t]{0.3\textwidth}
+where\\
+\hspace*{8mm} $\hat{\mathcal{V}} = \{\hat{v}_1, ..., \hat{v}_c\}$\\
+and \\
+\hspace*{8mm} $\bar{\mathcal{V}} = \{\bar{v}_1, ..., \bar{v}_{n-c}\}$ 
+\end{minipage}
+\begin{minipage}[t]{0.55\textwidth}
+\vspace*{2mm}
+ represents the vertices corresponding to the inlet points,\\
+ represents the remaining vertices in the graph.
+\end{minipage}
+
+The partitioning for the $m$ edges of the graph is being chosen such that
+
+\begin{equation}
+  \label{edges1}
+  \mathcal{E} = \{\mathcal{E_{\mathcal{T}}}, \mathcal{E_{\mathcal{C}}} \},
+\end{equation}
+
+\begin{minipage}[t]{0.35\textwidth}
+where\\
+\hspace*{8mm} $\mathcal{E_{\mathcal{T}}} = \{e_{\mathcal{T},1}, ..., e_{\mathcal{T},n-c}\}$\\
+and\\
+\hspace*{8mm} $\mathcal{E_{\mathcal{C}}} = \{e_{\mathcal{C},1}, ..., e_{\mathcal{C},m-n+c}\}$. 
+\end{minipage}
+
+The subsets regarding edges and the partitioning is chosen such that the sub-matrix, which maps edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $\bar{\mathcal{V}}$, is invertible. 
+
+Therefore the incidence matrix can be split into four sub-matrices, as shown in \eqref{H_matrix_sub} below
+
+\begin{equation}
+\label{H_matrix_sub}
+H=
+\left[
+\begin{array}{c;{2pt/2pt}r}
+\bar{H}_{\mathcal{T}} & \bar{H}_{\mathcal{C}} \\
+\hdashline[2pt/2pt]
+\hat{H}_{\mathcal{T}} & \hat{H}_{\mathcal{C}}
+\end{array}
+\right],
+\end{equation}
+
+\begin{minipage}[t]{0.3\textwidth}
+where\\
+\hspace*{8mm} $\bar{H}_{\mathcal{T}} \in \mathbb{R}^{(n-c) \times (n-c)}$\\ 
+\hspace*{8mm} $\bar{H}_{\mathcal{C}} \in \mathbb{R}^{(n-c) \times (m-n+c)}$\\
+\hspace*{8mm} $\hat{H}_{\mathcal{T}} \in \mathbb{R}^{c \times (n-c)}$\\
+\hspace*{8mm} $\hat{H}_{\mathcal{C}} \in \mathbb{R}^{c \times (m-n+c)}$
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{-0.1mm}
+is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $\bar{\mathcal{V}}$,\\ 
+is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{C}}}$ to vertices in $\bar{\mathcal{V}}$,\\
+is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $\hat{\mathcal{V}}$,\\
+is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{C}}}$ to vertices in $\hat{\mathcal{V}}$. 
+\end{minipage}
+
+It is worth noting that the only requirement for the edge partitioning is $\bar{H}_{\mathcal{T}}$ being invertible\footnote{$\exists \{\mathcal{V}, \mathcal{E} \} : \bar{H}^{-1}_{\mathcal{T}} \because rank(H) = (n-1) $ \cite{deo2017graph} }. Furthermore, the set $\mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \}$ is not necessarily a tree of the underlying graph, it can be any form of a connected graph that fulfils the requirements. However, one special case is when $c = 1$, meaning that the network has only one inlet. In this case, $\mathcal{T}$ is indeed a spanning tree. 
+
+With the chosen partition, Kirchhoff's vertex law in \eqref{vertexlaw_open} can be rewritten as
+
+\begin{equation}
+  \label{vertexlaw_partitioned1}
+  \bar{d} = \bar{H}_{\mathcal{T}} q_{\mathcal{T}} + \bar{H}_{\mathcal{C}} q_{\mathcal{C}},
+\end{equation}
+
+\begin{equation}
+  \label{vertexlaw_partitioned2}
+  \hat{d} = \hat{H}_{\mathcal{T}} q_{\mathcal{T}} + \hat{H}_{\mathcal{C}} q_{\mathcal{C}},
+\end{equation}
+
+and Ohm's law in \eqref{ohmslaw}, separating the pressure drop due to hydraulic resistance
+
+\begin{equation}
+  \label{ohmslaw_partitioned1}
+  f_{\mathcal{T}}(q_\mathcal{T}) = \bar{H}^T_{\mathcal{T}} (\bar{p} + \bar{h}) + \hat{H}^T_{\mathcal{T}} (\hat{p} + \hat{h}),
+\end{equation}
+
+\begin{equation}
+  \label{ohmslaw_partitioned2}
+  f_{\mathcal{C}}(q_\mathcal{C}) = \bar{H}^T_{\mathcal{C}} (\bar{p} + \bar{h}) + \hat{H}^T_{\mathcal{C}} (\hat{p} + \hat{h}).
+\end{equation}
+
+
 
 \subsection{Inclusion of elevated reservoirs}
 \label{inclusion_of_reservoirs}
 
-As it is described in \eqref{non_inlet_constraint}, a distinction is made between non-inlet and inlet nodes, by assuming that non-inlet nodes have only positive or zero demand in the network. However, when the inclusion of a tank is considered, a special type of node has to be introduced. I.e., a node which can have a demand in both positive and negative directions, meaning that the demand is positive when the tank is being filled and the demand is negative when it is being emptied. 
+As it is described in \eqref{non_inlet_constraint}, a distinction is made between non-inlet and inlet vertices, by assuming that non-inlet vertices have only positive or zero nodal demand. However, when the inclusion of a tank is considered, a special type of node has to be introduced. A node which can have a demand in both positive and negative directions, meaning that the demand is positive when the tank is being filled and negative when it is being emptied.
+
+
 
 \section{EPANET modelling}
 \label{EPANET_modelling}
