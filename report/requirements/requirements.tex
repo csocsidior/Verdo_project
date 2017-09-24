@@ -90,7 +90,7 @@ where\\
 is the parameter of the pipes. 
 \end{minipage}
 
-In the following sections it is assumed that each $f_i$ has the structure shown in \eqref{deltap_friction}. 
+The form in \eqref{deltap_friction} is motivated by turbulent flow in the pipes in the network, which is typical in water supply applications\cite{prahata}. In the following sections it is assumed that each $f_i$ has the structure shown in \eqref{deltap_friction}. 
 
 \subsection{Valve model}
 \label{valve_component}
@@ -347,6 +347,128 @@ and Ohm's law in \eqref{ohmslaw}, separating the pressure drop due to hydraulic 
   \label{ohmslaw_partitioned2}
   f_{\mathcal{C}}(q_\mathcal{C}) = \bar{H}^T_{\mathcal{C}} (\bar{p} + \bar{h}) + \hat{H}^T_{\mathcal{C}} (\hat{p} + \hat{h}).
 \end{equation}
+
+Writing up \eqref{ohmslaw_partitioned1} and \eqref{ohmslaw_partitioned2} in matrix form
+
+\begin{equation}
+\label{ohmslaw_matrixform}
+ \begin{bmatrix} 
+ f_{\mathcal{T}}(q_\mathcal{T}) \\ 
+ f_{\mathcal{C}}(q_\mathcal{C}) 
+ \end{bmatrix}
+ =
+  \underbrace{\begin{bmatrix}
+   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\
+   \bar{H}^T_{\mathcal{C}} & \hat{H}^T_{\mathcal{C}} 
+   \end{bmatrix}}_{\begin{bmatrix} 
+                  \bar{H}^T & \hat{H}^T 
+                  \end{bmatrix}}
+   \begin{bmatrix} 
+ (\bar{p} + \bar{h}) \\ 
+ (\hat{p} + \hat{h}) 
+ \end{bmatrix}
+\end{equation}
+
+As it is shown in \eqref{ohmslaw_matrixform}, the transposed incidence matrices can be written up as the two sub-matrices partitioned according to inlet and non-inlet nodes. 
+
+Introducing matrix $B$, in which the arrangement of the edges are the same as for the incidence matrix, $H$, meaning that $B$ is regarding to the graphs $H_{\mathcal{T}}$ and $H_{\mathcal{T}}$. Then $B$ can be given
+
+\begin{equation}
+\label{bmatrix}
+B
+ =
+\begin{bmatrix} 
+-\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
+\end{bmatrix}
+\end{equation}
+
+It should be noted that since the set $\mathcal{T}$ does not define a spanning tree when $c>0$, matrix $B$ is not a cycle matrix corresponding to any spanning tree. However, it is defined the same way as cycle matrices are given. For this reason, the following can be written
+
+ \begin{equation}
+  \label{meshlaw_analogy}
+  BH^T = 
+  \begin{bmatrix} 
+-\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
+\end{bmatrix}
+\begin{bmatrix}
+   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\
+   \bar{H}^T_{\mathcal{C}} & \hat{H}^T_{\mathcal{C}} 
+   \end{bmatrix} 
+   =
+   \begin{bmatrix} 
+-\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
+\end{bmatrix}
+\hat{H}^T.
+\end{equation}
+
+It should be noted, that $B \bar{H}^T = 0$ by the definition of matrix $B$ \cite{deo2017graph}. 
+
+Multiplying with B from the left in \eqref{ohmslaw_matrixform} 
+
+\begin{equation}
+\label{ohmslaw_matrixform_B}
+\begin{bmatrix} 
+-\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
+\end{bmatrix}
+ \begin{bmatrix} 
+ f_{\mathcal{T}}(q_\mathcal{T}) \\ 
+ f_{\mathcal{C}}(q_\mathcal{C}) 
+ \end{bmatrix}
+ =
+ \begin{bmatrix} 
+-\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
+\end{bmatrix}
+  \begin{bmatrix}
+   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\
+   \bar{H}^T_{\mathcal{C}} & \hat{H}^T_{\mathcal{C}} 
+   \end{bmatrix}
+   \begin{bmatrix} 
+ (\bar{p} + \bar{h}) \\ 
+ (\hat{p} + \hat{h}) 
+ \end{bmatrix}
+\end{equation}
+
+induces the following expression
+
+\begin{equation}
+\label{meshresult}
+f_{\mathcal{C}}(q_\mathcal{C}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(q_\mathcal{T}) = (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
+\end{equation}
+
+From \eqref{vertexlaw_partitioned1}, the vector $q_{\mathcal{T}}$, of flows in edges $\mathcal{E}_{\mathcal{T}}$ can be expressed
+
+\begin{equation}
+\label{qt_flow}
+q_{\mathcal{T}} = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}.
+\end{equation}
+
+Therefore using \eqref{qt_flow}, \eqref{meshresult} can be rewritten
+
+\begin{equation}
+\label{meshresult2}
+f_{\mathcal{C}}(q_\mathcal{C}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) = (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
+\end{equation} 
+
+Now rewriting the vertex demands at non-inlet vertices, $\bar{d}$, such that
+
+\begin{equation}
+\label{noninlet_demand}
+\bar{d} = - v \sigma
+\end{equation}
+
+  \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $\bar{d} \in \: \mathbb{R}^{n-c}$\\
+\hspace*{8mm} $\sigma \in \: \mathbb{R}_{+}$ \\
+\newline
+\hspace*{8mm} $v \in \: \mathbb{R}_{n-c}$
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the vector of nodal demands in non-inlet vertices,\\
+is the total demand in the network, representing the total consumption of the end-users,\\
+represents a vector with the property $\sum_{i} v_i = 1 $ and $v_i \in \: (0;1)$.
+\end{minipage}
 
 
 
