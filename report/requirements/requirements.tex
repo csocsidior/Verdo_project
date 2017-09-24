@@ -90,12 +90,37 @@ where\\
 is the parameter of the pipes. 
 \end{minipage}
 
-The form in \eqref{deltap_friction} is motivated by turbulent flow in the pipes in the network, which is typical in water supply applications\cite{prahata}. In the following sections it is assumed that each $f_i$ has the structure shown in \eqref{deltap_friction}. 
+The form in \eqref{deltap_friction} is motivated by turbulent flow in the pipes in the network, which is typical in water supply applications\cite{prahata}. In the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
+
+It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a factor, then its value is multiplied by some power of this factor \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
+
+\begin{equation}
+  \label{homogeneity}
+  \rho_i |(\alpha q_i)|(\alpha q_i) = f_i(\alpha q_i) = \alpha^2 f_i(q_i).
+\end{equation}
+
+This property is noted here and used later in the system description, in \secref{multi_inlet_reduced_network_description}.
 
 \subsection{Valve model}
 \label{valve_component}
 
-(in progress)
+Valves in the network are governed by the following algebraic expression
+
+\begin{equation}
+\label{valvemodel}
+ \Delta p_i = \mu_i(q_i,k_v) = \frac{1}{k_v(OD)^2} |q_i| q_i, 
+\end{equation}
+
+ \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $k_v$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the valve conductivity function, taking in its argument the Opening Degree(OD) of the valve \cite{8thsemester_project}.
+\end{minipage}
+
+Furthermore, $\mu_i(q_i,k_v)$ is a continuously differentiable and proper function which for $q_i = 0$ is zero and monotonically increasing.
 
 \subsection{Pump model}
 \label{pump_component}
@@ -449,7 +474,7 @@ Therefore using \eqref{qt_flow}, \eqref{meshresult} can be rewritten
 f_{\mathcal{C}}(q_\mathcal{C}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) = (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
 \end{equation} 
 
-Now rewriting the vertex demands at non-inlet vertices, $\bar{d}$, such that
+Now expressing the vertex demands at non-inlet vertices, $\bar{d}$, such that
 
 \begin{equation}
 \label{noninlet_demand}
@@ -469,6 +494,28 @@ is the vector of nodal demands in non-inlet vertices,\\
 is the total demand in the network, representing the total consumption of the end-users,\\
 represents a vector with the property $\sum_{i} v_i = 1 $ and $v_i \in \: (0;1)$.
 \end{minipage}
+
+Furthermore, introduce a vector, $a_{\mathcal{C}}$, such that 
+
+\begin{equation}
+\label{ac}
+q_{\mathcal{C}} = a_{\mathcal{C}} \sigma
+\end{equation}
+
+is a unique solution to \eqref{meshresult}. The proof of this proposition is shown for the one-inlet case in \cite{oneinput_paper}.
+
+Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the total demand, $\sigma$, in the network, \eqref{meshresult2} can be expressed such that
+
+\begin{equation}
+\begin{split}
+\label{meshresult3}
+& f_{\mathcal{C}}(q_\mathcal{C}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) = \\
+& f_{\mathcal{C}}(a_{\mathcal{C}} \sigma) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} \sigma - \bar{H}^{-1}_{\mathcal{T}} v \sigma) = \\
+& f_{\mathcal{C}}(a_{\mathcal{C}})\sigma^2 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} - \bar{H}^{-1}_{\mathcal{T}} v) \sigma^2,
+\end{split}
+\end{equation} 
+
+where the latter equality is due to the homogeneity property of the pressure drops due to frictions, explained in \secref{pipe_component}.
 
 
 
