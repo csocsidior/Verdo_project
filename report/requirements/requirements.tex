@@ -74,7 +74,7 @@ The dynamics of the pipes are discarded in the project, as it is shown in other 
   \Delta p_i = f_i(q_i) - \Delta h_i,
 \end{equation}
 
-The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle \geq 0$ for every $x,y \in \: \mathbb{R}^{n}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance
+The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle > 0$ for every $x,y \in \: \mathbb{R}^{n}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance
 
 \begin{equation}
   \label{deltap_friction}
@@ -137,7 +137,7 @@ Furthermore, $\mu_i(q_i,k_v)$ is a continuously differentiable and proper functi
 
 Graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or equivalently, to vertices.
 
-In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as water networks for large cities, these systems of equations are hard to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a algebraic constraints easier by exploiting the properties of the matrix representation. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
+In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as water networks of large cities, these systems of equations are difficult to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a algebraic constraints easier by exploiting the properties of the matrix representation. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
 
 WSSs can be described by a directed and connected graph, such that \cite{graph_intro}: 
 
@@ -221,7 +221,7 @@ The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, s
 \subsection{Kirchhoff's and Ohm's law for hydraulic networks}
 \label{kirchhoffs_law}
 
-In this project the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, where water is able to enter and leave the network at a subset of the vertices. For such a system Kirchhoff's vertex law corresponds to conservation of mass in each vertex and described by
+In this project the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, if present, where water is able to enter and leave the network at a subset of the vertices. For such a system Kirchhoff's vertex law corresponds to conservation of mass in each vertex and described by
 
 \begin{equation}
   \label{vertexlaw_open}
@@ -248,11 +248,11 @@ Nodal demands can be seen as the end-user consumption, which means that water is
   d_n = - \sum_{i=1}^{n-1} d_i.
 \end{equation}
 
-In the further project, a distinction is made between inlet and non-inlet nodes. It is assumed that the demand at non-inlet nodes fulfil the following constraint
+In the further report, a distinction is made between inlet and non-inlet nodes. It is assumed that the demand at non-inlet nodes fulfil the following constraint
 
 \begin{equation}
   \label{non_inlet_constraint}
-  d_i \geq 0.
+  d_i \leq 0.
 \end{equation}
 
 It is worth noting however, that in closed hydraulic networks the vertex law is
@@ -269,11 +269,7 @@ Ohm's law for hydraulic networks therefore can be expressed with the incidence m
   \Delta p = H^Tp = f(q) - H^Th.
 \end{equation}
 
-In \eqref{ohmslaw} the differential pressure is described across each edge in the network, taking into account the pressure loss due to friction, $f(q)$ and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. 
-
-
-
-
+In \eqref{ohmslaw} the differential pressure is described across each edge in the network, taking into account the pressure loss due to friction, $f(q)$ and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. It is noted that the pressure loss, $f(q)$ and the geodesic level $h$ are both considered in the unit head. Therefore the measure is meter, and the units fit. 
 
 
 \subsection{Multi-inlet reduced network model}
@@ -281,7 +277,7 @@ In \eqref{ohmslaw} the differential pressure is described across each edge in th
 
 The system is considered to be a water network supplied from more than one pumping stations and several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are pipes. The inclusion of storage tanks is the next step of the model development, therefore it is described in a following section, in \secref{inclusion_of_reservoirs}.
 
-The aim of the modelling is to obtain a reduced order network model which is able to capture the dependence of the measured output pressures on the flows and pressures at the inlets. Therefore it is assumed that the inlet pressures and demands are measured. Furthermore, pressure measurement is available in the remaining network, at the end-users. Considering generality, the model is described for $c$ inlets, however it should be noted that regarding the Randers WSS, two inlet points are considered. 
+The aim of the modelling here is to obtain a reduced order network model which is able to capture the dependence of the measured output pressures on the flows and pressures at the inlets. Therefore it is assumed that the inlet pressures and demands are measured. Furthermore, pressure measurement is available in the remaining network, at the end-users. Considering generality, the model is described for $c$ inlets, however it should be noted that regarding the Randers WSS, two inlet vertices are taken into account. 
 
 In order to put the system into a form which can handle the measured pressure dependencies on the control inputs, the underlying graph of the network is first partitioned. The $n$ vertices of the graph are separated into two sets
 
@@ -325,8 +321,8 @@ Therefore the incidence matrix can be split into four sub-matrices, as shown in 
 H=
 \left[
 \begin{array}{c;{2pt/2pt}r}
-\bar{H}_{\mathcal{T}} & \bar{H}_{\mathcal{C}} \\
-\hdashline[2pt/2pt]
+\bar{H}_{\mathcal{T}} & \bar{H}_{\mathcal{C}} \\[3pt]
+\hdashline[2pt/2pt] 
 \hat{H}_{\mathcal{T}} & \hat{H}_{\mathcal{C}}
 \end{array}
 \right],
@@ -347,7 +343,7 @@ is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $
 is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{C}}}$ to vertices in $\hat{\mathcal{V}}$. 
 \end{minipage}
 
-It is worth noting that the only requirement for the edge partitioning is $\bar{H}_{\mathcal{T}}$ being invertible\footnote{$\exists \{\mathcal{V}, \mathcal{E} \} : \bar{H}^{-1}_{\mathcal{T}} \because rank(H) = (n-1) $ \cite{deo2017graph} }. Furthermore, the set $\mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \}$ is not necessarily a tree of the underlying graph, it can be any form of a connected graph that fulfils the requirements. However, one special case is when $c = 1$, meaning that the network has only one inlet. In this case, $\mathcal{T}$ is indeed a spanning tree. 
+It is worth noting that the only requirement for the edge partitioning is $\bar{H}_{\mathcal{T}}$ being invertible\footnote{$\exists \{\mathcal{V}, \mathcal{E} \} : \bar{H}^{-1}_{\mathcal{T}} \because rank(H) = (n-1) $ \cite{deo2017graph} }. Furthermore, the set $\mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \}$ is not necessarily a tree of the underlying graph, it can be any form of a connected graph that fulfils the requirements. However, one special case is given when $c = 1$, meaning that the network has only one inlet. In this case, $\mathcal{T}$ is indeed a spanning tree. 
 
 With the chosen partition, Kirchhoff's vertex law in \eqref{vertexlaw_open} can be rewritten as
 
@@ -378,57 +374,57 @@ Writing up \eqref{ohmslaw_partitioned1} and \eqref{ohmslaw_partitioned2} in matr
 \begin{equation}
 \label{ohmslaw_matrixform}
  \begin{bmatrix} 
- f_{\mathcal{T}}(q_\mathcal{T}) \\ 
+ f_{\mathcal{T}}(q_\mathcal{T}) \\[3pt]
  f_{\mathcal{C}}(q_\mathcal{C}) 
  \end{bmatrix}
  =
   \underbrace{\begin{bmatrix}
-   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\
+   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\[3pt]
    \bar{H}^T_{\mathcal{C}} & \hat{H}^T_{\mathcal{C}} 
    \end{bmatrix}}_{\begin{bmatrix} 
                   \bar{H}^T & \hat{H}^T 
                   \end{bmatrix}}
    \begin{bmatrix} 
- (\bar{p} + \bar{h}) \\ 
+ (\bar{p} + \bar{h}) \\[3pt] 
  (\hat{p} + \hat{h}) 
  \end{bmatrix}
 \end{equation}
 
 As it is shown in \eqref{ohmslaw_matrixform}, the transposed incidence matrices can be written up as the two sub-matrices partitioned according to inlet and non-inlet nodes. 
 
-Introducing matrix $B$, in which the arrangement of the edges are the same as for the incidence matrix, $H$, meaning that $B$ is regarding to the graphs $H_{\mathcal{T}}$ and $H_{\mathcal{T}}$. Then $B$ can be given
+Now, defining a matrix $\Xi$, in which the arrangement of the edges are the same as for the incidence matrix, $H$, meaning that $\Xi$ is regarding to the graphs $H_{\mathcal{T}}$ and $H_{\mathcal{C}}$. $\Xi$ is defined as follows
 
 \begin{equation}
 \label{bmatrix}
-B
+\Xi
  =
 \begin{bmatrix} 
 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
 \end{bmatrix}
 \end{equation}
 
-It should be noted that since the set $\mathcal{T}$ does not define a spanning tree when $c>0$, matrix $B$ is not a cycle matrix corresponding to any spanning tree. However, it is defined the same way as cycle matrices are given. For this reason, the following can be written
+It should be noted that the expressions in matrix $\Xi$ are of the same structure as the structure of a partitioned cycle matrix. However, the set $\mathcal{T}$ does not define a spanning tree when $c>0$, therefore matrix $\Xi$ is not a cycle matrix corresponding to any spanning tree. Multiplying $H$ with $\Xi$ from the left-hand side
 
  \begin{equation}
   \label{meshlaw_analogy}
-  BH^T = 
+  \Xi H^T = 
   \begin{bmatrix} 
 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
 \end{bmatrix}
 \begin{bmatrix}
-   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\
+   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\[3pt]
    \bar{H}^T_{\mathcal{C}} & \hat{H}^T_{\mathcal{C}} 
    \end{bmatrix} 
    =
    \begin{bmatrix} 
--\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
+0 & -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T + \hat{H}^T 
 \end{bmatrix}
-\hat{H}^T.
+.
 \end{equation}
 
-It should be noted, that $B \bar{H}^T = 0$ by the definition of matrix $B$ \cite{deo2017graph}. 
+$\Xi$ is defined such that $\Xi \bar{H}^T = 0$ by definition \cite{deo2017graph}. 
 
-Multiplying with B from the left in \eqref{ohmslaw_matrixform} 
+Multiplying with $\Xi$ from the left in \eqref{ohmslaw_matrixform} 
 
 \begin{equation}
 \label{ohmslaw_matrixform_B}
@@ -436,7 +432,7 @@ Multiplying with B from the left in \eqref{ohmslaw_matrixform}
 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
 \end{bmatrix}
  \begin{bmatrix} 
- f_{\mathcal{T}}(q_\mathcal{T}) \\ 
+ f_{\mathcal{T}}(q_\mathcal{T}) \\[3pt] 
  f_{\mathcal{C}}(q_\mathcal{C}) 
  \end{bmatrix}
  =
@@ -444,11 +440,11 @@ Multiplying with B from the left in \eqref{ohmslaw_matrixform}
 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
 \end{bmatrix}
   \begin{bmatrix}
-   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\
+   \bar{H}^T_{\mathcal{T}} & \hat{H}^T_{\mathcal{T}} \\[3pt]
    \bar{H}^T_{\mathcal{C}} & \hat{H}^T_{\mathcal{C}} 
    \end{bmatrix}
    \begin{bmatrix} 
- (\bar{p} + \bar{h}) \\ 
+ (\bar{p} + \bar{h}) \\[3pt]
  (\hat{p} + \hat{h}) 
  \end{bmatrix}
 \end{equation}
@@ -502,7 +498,7 @@ Furthermore, introduce a vector, $a_{\mathcal{C}}$, such that
 q_{\mathcal{C}} = a_{\mathcal{C}} \sigma
 \end{equation}
 
-is a unique solution to \eqref{meshresult}. The proof of this proposition is shown for the one-inlet case in \cite{oneinput_paper}.
+is a unique solution to \eqref{meshresult}. The uniqueness of this proposition is shown for the one-inlet case in \cite{oneinput_paper}.
 
 Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the total demand, $\sigma$, in the network, \eqref{meshresult2} can be expressed such that
 
@@ -511,13 +507,31 @@ Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the 
 \label{meshresult3}
 & f_{\mathcal{C}}(q_\mathcal{C}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) = \\
 & f_{\mathcal{C}}(a_{\mathcal{C}} \sigma) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} \sigma - \bar{H}^{-1}_{\mathcal{T}} v \sigma) = \\
-& f_{\mathcal{C}}(a_{\mathcal{C}})\sigma^2 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} - \bar{H}^{-1}_{\mathcal{T}} v) \sigma^2,
+& f_{\mathcal{C}}(a_{\mathcal{C}})\sigma^2 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} - \bar{H}^{-1}_{\mathcal{T}} v) \sigma^2.
 \end{split}
 \end{equation} 
 
 where the latter equality is due to the homogeneity property of the pressure drops due to frictions, explained in \secref{pipe_component}.
 
+Defining a function $F_v : \mathbb{R}^{m-n+c} \rightarrow \mathbb{R}^{m-n+c}$, parametrized with $v$ such that it takes $a_c$ as input, the following expression can be formed
 
+\begin{equation}
+\begin{split}
+\label{Fv}
+F_v(a_c) = f_{\mathcal{C}}(a_{\mathcal{C}}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} - \bar{H}^{-1}_{\mathcal{T}} v) 
+\end{split}
+\end{equation}
+
+Furthermore, $F_v$ equals to the following, according to \eqref{meshresult2}
+
+\begin{equation}
+\begin{split}
+\label{Fv1}
+F_v(a_c) = \frac{1}{\sigma^2} (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
+\end{split}
+\end{equation}
+
+An algebraic expression for $a_c$ can be found iff $\exists F_v^{-1}(\cdot)$. It can be shown, however that $\exists F_v^{-1}(\cdot)$ by showing that $F_v(\cdot)$ is a homeomorphism\footnote{Two functions are homeomorphic if they can be formed into each other by continuous, invertible mapping \cite{krantz2012handbook}.} which is done in \cite{oneinput_paper}.  
 
 \subsection{Inclusion of elevated reservoirs}
 \label{inclusion_of_reservoirs}
