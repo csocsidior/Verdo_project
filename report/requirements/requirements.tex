@@ -130,7 +130,28 @@ Furthermore, $\mu_i(q_i,k_v)$ is a continuously differentiable and proper functi
 \subsection{Elevated reservoir model}
 \label{elevatedreservoir_component}
 
-(in progress)
+In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is proportional to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the amount of water, proportionality can be set between the pressure and the flow in and out of the tank. The dynamics of such a system can be described by a first order differential equation of the form
+
+\begin{equation}
+\label{wt_model}
+\dot{p}_i = \tau_i q_i
+\end{equation}
+
+ \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $p_i$ \\
+\hspace*{8mm} $\tau_i$ \\
+\newline
+\hspace*{8mm} $q_i$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the pressure at the node connected to the tank,\\ 
+is a parameter dependant of the cross sectional area of the tank,\\
+is the flow in the tank if $q_i > 0$ and flow out of the tank if $q_i < 0$.
+\end{minipage}
+
+It is assumed that the tanks in the model and also in the WSS in Randers have the same cross sectional areas in the entire height of the tank. 
 
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
@@ -488,7 +509,7 @@ where\\
 \vspace*{2mm}
 is the vector of nodal demands in non-inlet vertices,\\
 is the total demand in the network, representing the total consumption of the end-users,\\
-represents a vector with the property $\sum_{i} v_i = 1 $ and $v_i \in \: (0;1)$.
+represents the distribution vector of nodal demands among the non-inlet vertices with the property $\sum_{i} v_i = 1 $ and $v_i \in \: (0;1)$.
 \end{minipage}
 
 Furthermore, introduce a vector, $a_{\mathcal{C}}$, such that 
@@ -522,7 +543,7 @@ F_v(a_c) = f_{\mathcal{C}}(a_{\mathcal{C}}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}
 \end{split}
 \end{equation}
 
-Furthermore, $F_v$ equals to the following, according to \eqref{meshresult2}
+Furthermore, $F_v(\cdot)$ equals to the following, according to \eqref{meshresult2}
 
 \begin{equation}
 \begin{split}
@@ -531,7 +552,58 @@ F_v(a_c) = \frac{1}{\sigma^2} (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\
 \end{split}
 \end{equation}
 
-An algebraic expression for $a_c$ can be found iff $\exists F_v^{-1}(\cdot)$. It can be shown, however that $\exists F_v^{-1}(\cdot)$ by showing that $F_v(\cdot)$ is a homeomorphism\footnote{Two functions are homeomorphic if they can be formed into each other by continuous, invertible mapping \cite{krantz2012handbook}.} which is done in \cite{oneinput_paper}.  
+An algebraic expression for $a_c$ can be found iff $\exists F_v^{-1}(\cdot)$. It can be shown, however that $\exists F_v^{-1}(\cdot)$ by showing that $F_v(\cdot)$ is a homeomorphism\footnote{Two functions are homeomorphic if they can be formed into each other by continuous, invertible mapping \cite{krantz2012handbook}.}, which is done in \cite{oneinput_paper}.  
+
+As a result of using the inverse mapping property of $F_v$, an expression can be obtained for $a_c$
+
+\begin{equation}
+\label{Fv2}
+a_c = F_v^{-1} \Big(\frac{1}{\sigma^2} (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}) \Big),
+\end{equation}
+
+  \begin{minipage}[t]{0.60\textwidth}
+where\\
+\hspace*{8mm} $A = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}\in \: \mathbb{R}^{(m-n+c \times c)}$ 
+\end{minipage}
+
+
+The main objective of writing up $a_c$ is to show that it can be expressed in terms of $v, \sigma(t), \hat{p}(t)$ and $\hat{h}$, where $\hat{h}$ and $\sigma(t)$ are assumed to be known signals and parameters, $v$ is an unknown parameter and $\hat{p}(t)$ is the control signal. The difficulty about the constraint on $a_c$ in \eqref{Fv2} is that its structure is unknown.  
+
+Assuming that matrix $A$ has a non-trivial kernel\footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.}, and $(\hat{p} + \hat{h}) \neq 0 \in \: ker(A)$, then $a_c$ can be expressed such that 
+
+\begin{equation}
+\label{Fv3}
+a_c = F_v^{-1} (0).
+\end{equation}
+
+\eqref{Fv3} shows, that in the special case when the input vertices are chosen such that the product $A(\hat{p} + \hat{h}) = 0$, then $a_c$ becomes only dependent on the parameter $v$. 
+
+Now, using the equations for Ohm's law in \eqref{ohmslaw_partitioned1} and the vector $q_{\mathcal{T}}$, of flows in edges $\mathcal{E}_{\mathcal{T}}$ in \eqref{qt_flow}, the vector $\bar{p}$ of pressures at non-inlet vertices is expressed
+
+\begin{equation}
+\begin{split}
+  \label{non-inlet_p1}
+  \bar{p} = & \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h} \\
+  & \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_c + \bar{H}^{-1}_{\mathcal{T}} v)\sigma^2 - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h}
+\end{split}
+\end{equation}
+
+As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressures in the non-inlet vertices can be written up in terms of $\sigma(t)$, $\hat{p}(t)$ signals and in terms of $\hat{h}$, $\bar{h}$, $v$ and $a_c$ parameters. In the non-general case, as shown in \eqref{Fv3}, $a_c$ is a parameter which is governed by the behaviour of the distribution of the total demand among the non-inlet vertices. In case vector $v$ is constant, which means that the distribution of nodal demands are the same in all vertices in the network, the output pressure in the $i^{th}$ non-inlet vertices can be written as follows: 
+
+\begin{equation}
+\label{model_multiinlet1}
+\bar{p}_i(t) = \alpha_i \sigma^2(t) + \sum_i \beta_{ij} \hat{p}_j(t) + \gamma_i
+\end{equation}
+
+  \begin{minipage}[t]{0.50\textwidth}
+where\\
+\hspace*{8mm} $ \alpha_i = (\bar{H}^{-T}_{\mathcal{T}})_i f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_c + \bar{H}^{-1}_{\mathcal{T}} v)$ \\
+\vspace*{7pt}
+\hspace*{8mm} $ \beta_{ij} = (\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{ij} $ \\
+\vspace*{7pt}
+\hspace*{8mm} $ \gamma_{i} = -(\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{i}\hat{h} - \bar{h}_i $ 
+
+\end{minipage}
 
 \subsection{Inclusion of elevated reservoirs}
 \label{inclusion_of_reservoirs}
