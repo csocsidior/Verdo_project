@@ -130,11 +130,11 @@ Furthermore, $\mu_i(q_i,k_v)$ is a continuously differentiable and proper functi
 \subsection{Elevated reservoir model}
 \label{elevatedreservoir_component}
 
-In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is proportional to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the amount of water, proportionality can be set between the pressure and the flow in and out of the tank. The dynamics of such a system can be described by a first order differential equation of the form
+In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is proportional to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the amount of water in the tank, proportional relation can be set between the pressure and the flow in and out of the tank. The dynamics of such a system can be described by a first order differential equation of the form
 
 \begin{equation}
 \label{wt_model}
-\dot{p}_i = \tau_i q_i
+\dot{p}_i = -\tau_i q_i
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
@@ -151,7 +151,7 @@ is a parameter dependant of the cross sectional area of the tank,\\
 is the flow in the tank if $q_i > 0$ and flow out of the tank if $q_i < 0$.
 \end{minipage}
 
-It is assumed that the tanks in the model and also in the WSS in Randers have the same cross sectional areas in the entire height of the tank. 
+It is assumed that tanks have the same cross sectional areas in the entire height of the tank. 
 
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
@@ -413,22 +413,22 @@ Writing up \eqref{ohmslaw_partitioned1} and \eqref{ohmslaw_partitioned2} in matr
 
 As it is shown in \eqref{ohmslaw_matrixform}, the transposed incidence matrices can be written up as the two sub-matrices partitioned according to inlet and non-inlet nodes. 
 
-Now, defining a matrix $\Xi$, in which the arrangement of the edges are the same as for the incidence matrix, $H$, meaning that $\Xi$ is regarding to the graphs $H_{\mathcal{T}}$ and $H_{\mathcal{C}}$. $\Xi$ is defined as follows
+Now, defining a matrix $\Gamma$, in which the arrangement of the edges are the same as for the incidence matrix, $H$, meaning that $\Gamma$ is regarding to the graphs $H_{\mathcal{T}}$ and $H_{\mathcal{C}}$. $\Gamma$ is defined as follows
 
 \begin{equation}
 \label{bmatrix}
-\Xi
+\Gamma
  =
 \begin{bmatrix} 
 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
 \end{bmatrix}
 \end{equation}
 
-It should be noted that the expressions in matrix $\Xi$ are of the same structure as the structure of a partitioned cycle matrix. However, the set $\mathcal{T}$ does not define a spanning tree when $c>0$, therefore matrix $\Xi$ is not a cycle matrix corresponding to any spanning tree. Multiplying $H$ with $\Xi$ from the left-hand side
+It should be noted that the expressions in matrix $\Gamma$ are of the same structure as the structure of a partitioned cycle matrix. However, the set $\mathcal{T}$ does not define a spanning tree when $c>0$, therefore matrix $\Gamma$ is not a cycle matrix corresponding to any spanning tree. Multiplying $H$ with $\Gamma$ from the left-hand side
 
  \begin{equation}
   \label{meshlaw_analogy}
-  \Xi H^T = 
+  \Gamma H^T = 
   \begin{bmatrix} 
 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
 \end{bmatrix}
@@ -443,9 +443,9 @@ It should be noted that the expressions in matrix $\Xi$ are of the same structur
 .
 \end{equation}
 
-$\Xi$ is defined such that $\Xi \bar{H}^T = 0$ by definition \cite{deo2017graph}. 
+$\Gamma$ is defined such that $\Gamma \bar{H}^T = 0$ \cite{deo2017graph}. 
 
-Multiplying with $\Xi$ from the left in \eqref{ohmslaw_matrixform} 
+Multiplying with $\Gamma$ from the left in \eqref{ohmslaw_matrixform} 
 
 \begin{equation}
 \label{ohmslaw_matrixform_B}
