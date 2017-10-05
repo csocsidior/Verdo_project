@@ -105,36 +105,53 @@ Valves can be controlled such that no flow passes through. In these cases the va
 \label{hydraulic_head}
 Since EPANET uses head as the measure of pressure, probably it is more convenient to use head in the report
 
-\section{The Randers water supply network (in progress)}
+\newpage
+
+\section{The Randers water supply network}
 \label{the_randers_water_supply_network}
 
-The Randers drinking WSS is managed by Verdo A/S and is the main supplier of drinking water and heating to the city of Randers. Verdo supplies water to approximately 46.000 customers in Randers Municipality \cite{verdo}. The simulation model of the network is illustrated in \figref{fig:reservoirs_epanet}. As can be seen, the WSS in Randers is a complex, looped configuration with many different distribution areas. In overall, the system consists of around 4500 pipe elements, six tanks and more than 20 valves. The water in the network is controlled by eight pumping stations, located at different places throughout the network, thereby making it possible to deliver the desired pressure and flow to the end-users. At these pumping stations, pumps are often placed in parallel connections, due to the reason mentioned in \secref{pumps}. %At the outlet of the pumping stations, often PRVs or FCVs are placed. 
-
-Verdo provides the drinking water by drilling from 21 different groundwater bases and has four waterworks for water treatment \cite{verdo}. The geographical position of the reservoirs at these waterworks is shown in \figref{fig:reservoirs_epanet}, encircled in red.   
-
-Missing parts:
-\begin{itemize}
-  \item Which pump stations are to be controlled
-  \item Are PRVs and FCVs really placed at the pumping stations in reality, or just for simulation purposes
-  \item Which tanks 
-  \item Why tanks are installed at the place where they are
-  \item which distribution areas are (mostly) dependant on which pumping stations - this would be useful to know in order to simplify the network and discard some areas in the network 
-\end{itemize}
-
-%illustration of reservoirs in the EPANET model of Randers WSS
-\begin{figure}[H]
-\centering
-\input{report/tikz/reservoirs_epanet.tex} 
-\caption{Reservoirs in the Randers WSS (encircled in red).}
-\label{fig:reservoirs_epanet}
-\end{figure}
-
-As can be seen, reservoirs are placed in the outer parts of the city, typically next to the main pumping stations. The locations of the six tanks, or tank stations, in the system is are shown in (figref below)
+The Randers drinking WSS is managed by Verdo A/S and is the main supplier of drinking water and heating to the city of Randers. Verdo supplies water to approximately 46.000 customers in Randers Municipality \cite{verdo}. The WSS in Randers is a complex, looped configuration with many different distribution areas. The coverage of the distribution areas are shown in \figref{fig:level_zones} bellow.
 
 %illustration of tanks in the EPANET model of Randers WSS
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
-\caption{Elevated reservoirs in the Randers WSS (encircled in blue).}
-\label{fig:tanks_EPANET}
+\includegraphics[width=1\textwidth]{report/pictures/level_zones1}
+\caption{Distribution zones in the Randers WSS.}
+\label{fig:level_zones}
 \end{figure}
+
+In \figref{fig:level_zones}, the different distribution areas are shown, however the whole distribution map can be split up into four main areas, according to the geographical properties of the city. The main four regions can be separated as
+
+\begin{itemize}
+   \item \emph{Area 1}: Includes the area labelled with HZ, (High Zone)
+   \item \emph{Area 2}: Includes the area labelled with LZ, (Low Zone) 
+   \item \emph{Area 3}: Includes the area labelled with HNP and HNP\_TR1 
+   \item \emph{Area 4}: Includes the area labelled with VSV\_TF, VSV and VSV\_TR
+ \end{itemize}
+
+
+
+
+
+
+% The network model for simulation is illustrated in \figref{fig:reservoirs_epanet}. As can be seen, the WSS in Randers is a complex, looped configuration with many different distribution areas. In overall, the system consists of around 4500 pipe elements, six tanks and more than 20 valves. The water in the network is controlled by eight pumping stations, located at different places throughout the network, thereby making it possible to deliver the desired pressure and flow to the end-users. At these pumping stations, pumps are often placed in parallel connections, due to the reason mentioned in \secref{pumps}. %At the outlet of the pumping stations, often PRVs or FCVs are placed. 
+
+% Verdo provides the drinking water by drilling from 21 different groundwater bases and has four waterworks for water treatment \cite{verdo}. The geographical position of the reservoirs at these waterworks is shown in \figref{fig:reservoirs_epanet}, encircled in red.   
+
+% Missing parts:
+% \begin{itemize}
+%   \item Which pump stations are to be controlled
+%   \item Are PRVs and FCVs really placed at the pumping stations in reality, or just for 
+% \end{itemize}
+
+%illustration of reservoirs in the EPANET model of Randers WSS
+
+% \begin{figure}[H]
+% \centering
+% \input{report/tikz/reservoirs_epanet.tex} 
+% \caption{Reservoirs in the Randers WSS (encircled in red).}
+% \label{fig:reservoirs_epanet}
+% \end{figure}
+
+% As can be seen, reservoirs are placed in the outer parts of the city, typically next to the main pumping stations. The location of the six tank stations is shown in (figref below)
+

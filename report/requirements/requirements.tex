@@ -1,7 +1,7 @@
 \chapter{System Modelling}
 \label{system_modelling}
 
-\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling are shown by explaining the relevant properties of graph theory. The reduced model for multi-inletsystems is introduced first, then the inclusion of tanks is discussed. In the end, the EPANET-based modelling approach is introduced which is used for simulation purposes within this project.}
+\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling are shown by explaining the relevant properties of graph theory. A reduced model for multi-inlet networks is first introduced, then the inclusion of tanks is discussed. In the end, the EPANET-based modelling approach is introduced and compared to the real-world system.}
 
 \section{Hydraulic component modelling}
 \label{hydraulic_component_modelling}
@@ -31,10 +31,9 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the differential pressure across the elements,\\
+is the differential pressure across the element,\\
 is the flow through the element,\\
 are the absolute pressures.
-is the flow through the element.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
@@ -151,14 +150,14 @@ is a parameter dependant of the cross sectional area of the tank,\\
 is the flow in the tank if $q_i > 0$ and flow out of the tank if $q_i < 0$.
 \end{minipage}
 
-It is assumed that tanks have the same cross sectional areas in the entire height of the tank. 
+It is assumed that tanks have the same cross sectional areas in the entire height. 
 
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
 
-Graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps correspond to edges and each terminal of the network correspond to nodes, or equivalently, to vertices.
+Graph-based network modelling has the advantage of making use of tools from circuit theory. Most of these tools are developed based on Graph Theory(GT). These methods can be used to model WSSs as directed graphs, where components of the systems, such as valves, pipes, tanks and pumps can correspond to edges and each terminal of the network correspond to nodes, or equivalently, to vertices.
 
-In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as water networks of large cities, these systems of equations are difficult to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a algebraic constraints easier by exploiting the properties of the matrix representation. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
+In case of WSSs, in order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the desired edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems as water networks for large cities, these systems of equations are difficult to handle individually and typically cannot be solved explicitly if there are loops in the system. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of a algebraic constraints easier by exploiting the properties of the matrix algebra. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
 
 WSSs can be described by a directed and connected graph, such that \cite{graph_intro}: 
 
@@ -242,7 +241,7 @@ The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, s
 \subsection{Kirchhoff's and Ohm's law for hydraulic networks}
 \label{kirchhoffs_law}
 
-In this project the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, if present, where water is able to enter and leave the network at a subset of the vertices. For such a system Kirchhoff's vertex law corresponds to conservation of mass in each vertex and described by
+In this project the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, if present, where water is able to enter and leave the network at a subset of the vertices. For such system, Kirchhoff's vertex law corresponds to conservation of mass in each vertex and described by
 
 \begin{equation}
   \label{vertexlaw_open}
@@ -276,27 +275,27 @@ In the further report, a distinction is made between inlet and non-inlet nodes. 
   d_i \leq 0.
 \end{equation}
 
-It is worth noting however, that in closed hydraulic networks the vertex law is
+It is worth noting however, that in closed hydraulic networks the vertex law becomes
 
 \begin{equation}
   \label{vertexlaw_closed}
   Hq = 0.
 \end{equation}
 
-Ohm's law for hydraulic networks therefore can be expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$. Important to point out that the edges of the underlying graph are considered as only pipe elements
+Ohm's law for hydraulic networks therefore can be expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$. Important to point out that the description below in \eqref{ohmslaw} is valid if edges of the underlying graph are considered as only pipe elements
 
 \begin{equation}
   \label{ohmslaw}
   \Delta p = H^Tp = f(q) - H^Th.
 \end{equation}
 
-In \eqref{ohmslaw} the differential pressure is described across each edge in the network, taking into account the pressure loss due to friction, $f(q)$ and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. It is noted that the pressure loss, $f(q)$ and the geodesic level $h$ are both considered in the unit head. Therefore the measure is meter, and the units fit. 
+In \eqref{ohmslaw}, the differential pressure is described across each edge in the network, taking into account the pressure loss due to friction, $f(q)$, and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. It is noted that the pressure loss, $f(q)$ and the geodesic level $h$ are both considered in the unit head. Therefore the measure is meter, and the units fit. 
 
 
 \subsection{Multi-inlet reduced network model}
 \label{multi_inlet_reduced_network_description}
 
-The system is considered to be a water network supplied from more than one pumping stations and several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are pipes. The inclusion of storage tanks is the next step of the model development, therefore it is described in a following section, in \secref{inclusion_of_reservoirs}.
+The system is considered to be a water network supplied from more than one pumping stations and the distribution is to several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are pipes. The inclusion of storage tanks is the next step of the model development, therefore it is described in a following section, in \secref{inclusion_of_reservoirs}.
 
 The aim of the modelling here is to obtain a reduced order network model which is able to capture the dependence of the measured output pressures on the flows and pressures at the inlets. Therefore it is assumed that the inlet pressures and demands are measured. Furthermore, pressure measurement is available in the remaining network, at the end-users. Considering generality, the model is described for $c$ inlets, however it should be noted that regarding the Randers WSS, two inlet vertices are taken into account. 
 
@@ -310,6 +309,7 @@ In order to put the system into a form which can handle the measured pressure de
 \begin{minipage}[t]{0.3\textwidth}
 where\\
 \hspace*{8mm} $\hat{\mathcal{V}} = \{\hat{v}_1, ..., \hat{v}_c\}$\\
+\newline
 and \\
 \hspace*{8mm} $\bar{\mathcal{V}} = \{\bar{v}_1, ..., \bar{v}_{n-c}\}$ 
 \end{minipage}
@@ -352,7 +352,7 @@ H=
 \begin{minipage}[t]{0.3\textwidth}
 where\\
 \hspace*{8mm} $\bar{H}_{\mathcal{T}} \in \mathbb{R}^{(n-c) \times (n-c)}$\\ 
-\hspace*{8mm} $\bar{H}_{\mathcal{C}} \in \mathbb{R}^{(n-c) \times (m-n+c)}$\\
+\hspace*{8mm} $\bar{H}_{\mathcal{C}} \in \mathbb{R}^{(n-c) \times (m\!-\!n\!+\!c)}$\\
 \hspace*{8mm} $\hat{H}_{\mathcal{T}} \in \mathbb{R}^{c \times (n-c)}$\\
 \hspace*{8mm} $\hat{H}_{\mathcal{C}} \in \mathbb{R}^{c \times (m-n+c)}$
 \end{minipage}
@@ -566,10 +566,11 @@ where\\
 \hspace*{8mm} $A = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}\in \: \mathbb{R}^{(m-n+c \times c)}$ 
 \end{minipage}
 
+The existence of such inverse mapping means that the measured vector of input pressures, $\hat{p}$, defines exactly one value for $a_c$, since the friction losses,$f(\cdot)$, are strictly increasing functions.
 
 The main objective of writing up $a_c$ is to show that it can be expressed in terms of $v, \sigma(t), \hat{p}(t)$ and $\hat{h}$, where $\hat{h}$ and $\sigma(t)$ are assumed to be known signals and parameters, $v$ is an unknown parameter and $\hat{p}(t)$ is the control signal. The difficulty about the constraint on $a_c$ in \eqref{Fv2} is that its structure is unknown.  
 
-Assuming that matrix $A$ has a non-trivial kernel\footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.}, and $(\hat{p} + \hat{h}) \neq 0 \in \: ker(A)$, then $a_c$ can be expressed such that 
+However, assuming that matrix $A$ has a non-trivial kernel\footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.}, and $(\hat{p} + \hat{h}) \neq 0 \in \: ker(A)$, then $a_c$ can be expressed such that 
 
 \begin{equation}
 \label{Fv3}
@@ -584,11 +585,11 @@ Now, using the equations for Ohm's law in \eqref{ohmslaw_partitioned1} and the v
 \begin{split}
   \label{non-inlet_p1}
   \bar{p} = & \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h} \\
-  & \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_c + \bar{H}^{-1}_{\mathcal{T}} v)\sigma^2 - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h}
+  =&\bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_c + \bar{H}^{-1}_{\mathcal{T}} v)\sigma^2 - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h}
 \end{split}
 \end{equation}
 
-As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressures in the non-inlet vertices can be written up in terms of $\sigma(t)$, $\hat{p}(t)$ signals and in terms of $\hat{h}$, $\bar{h}$, $v$ and $a_c$ parameters. In the non-general case, as shown in \eqref{Fv3}, $a_c$ is a parameter which is governed by the behaviour of the distribution of the total demand among the non-inlet vertices. In case vector $v$ is constant, which means that the distribution of nodal demands are the same in all vertices in the network, the output pressure in the $i^{th}$ non-inlet vertices can be written as follows: 
+As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressures in the non-inlet vertices can be written up in terms of $\sigma(t)$, $\hat{p}(t)$ signals and in terms of $\hat{h}$, $\bar{h}$, $v$ and $a_c$ parameters. In the non-general case, as shown in \eqref{Fv3}, $a_c$ is a parameter which is governed by the behaviour of the distribution of the total demand among the non-inlet vertices. In case vector $v$ is constant and time invariant, which means that the distribution of nodal demands are the same in all vertices in the network at all time, the output pressure in the $i^{th}$ non-inlet vertices can be written as follows: 
 
 \begin{equation}
 \label{model_multiinlet1}
