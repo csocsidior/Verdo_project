@@ -1,0 +1,42 @@
+ \usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=1.2,transform shape]
+
+
+
+\draw [thick](-3.7,1.4) -- (0.1,1.4);
+\draw [thick](-3.7,1) -- (0.1,1);
+\draw [thick](-3.7,0.6) -- (0.1,0.6);
+\draw [thick](-3.7,0.2) -- (0.1,0.2);
+\draw [thick](-3.3,1.8) -- (-3.3,0.2);
+\draw [thick](-2.8,1.8) -- (-2.8,0.2);
+\draw [thick](-2.3,1.8) -- (-2.3,0.2);
+\draw [thick](-1.8,1.8) -- (-1.8,0.2);
+\draw [thick](-1.3,1.8) -- (-1.3,0.2);
+\draw [thick](-0.8,1.8) -- (-0.8,0.2);
+\draw [thick](-0.3,1.8) -- (-0.3,0.2);
+
+%pump
+\node[thick][draw,circle,minimum size=0.4cm] (p0) at (-3,-0.5) {};
+\node(p1) at ($(p0)+(-0.2,0)$) {};
+\node(p2) at ($(p1)+(0.2,0.2)$) {};
+\node(p3) at ($(p1)+(0.4,0)$) {};
+\draw [thick](p1.center) -- (p2.center) -- (p3.center);
+
+%pump
+\node[thick][draw,circle,minimum size=0.4cm] (p0) at (-0.6,-0.5) {};
+\node(p1) at ($(p0)+(-0.2,0)$) {};
+\node(p2) at ($(p1)+(0.2,0.2)$) {};
+\node(p3) at ($(p1)+(0.4,0)$) {};
+\draw [thick](p1.center) -- (p2.center) -- (p3.center);
+
+
+\draw [thick](-0.6,-0.3) -- (-0.6,0.2) -- (-3,0.2) -- (-3,-0.3);
+\draw [thick] (-3.3,-1.1) rectangle (-2.7,-1.5);
+\node at (-3,-1.3) {\tiny HBP};
+\draw [thick] (-0.9,-1.1) rectangle (-0.3,-1.5);
+\node at (-0.6,-1.3) {\tiny HSP};
+\draw [thick](-3,-0.7) -- (-3,-1.1);
+\draw [thick](-0.6,-0.7) -- (-0.6,-1.1);
+\draw [thick](-3,-1.5) -- (-3,-1.7) -- (-0.6,-1.7) -- (-0.6,-1.5);
+\draw [thick](-1.8,-1.7) -- (-1.8,-3);
+\end{tikzpicture}
