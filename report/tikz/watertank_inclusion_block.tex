@@ -1,0 +1,21 @@
+ \usetikzlibrary{arrows}
+\begin{tikzpicture}[scale=1.3,transform shape]
+
+\node at (-1.2,-2.5) {\tiny Static};
+\node at (-1.1,-2.7) {\tiny network};
+\node at (-1.2,-1.15) {\tiny Elevated};
+\node at (-1.13,-1.38) {\tiny reservoirs};
+\node at (0.1,-1.8) {\tiny $\hat{p}_t$};
+\node at (-2.4,-1.8) {\tiny $\hat{d}_t$};
+\node at (0.4,-2.65) {\tiny $\hat{p}_c$};
+\node at (0.4,-2.9) {\tiny $\hat{d}_c$};
+\node at (-2.9,-2.7) {\tiny $\bar{p}$};
+
+\draw [thick] (-1.8,-0.9) rectangle (-0.5,-1.6);
+\draw [thick] (-1.8,-2.2) rectangle (-0.4,-3);
+\draw [-latex](-0.5,-1.3) -- (-0.1,-1.3) -- (-0.1,-2.4) -- (-0.4,-2.4);
+\draw [-latex](0.15,-2.65) -- (-0.4,-2.65);
+\draw [-latex](0.15,-2.9) -- (-0.4,-2.9);
+\draw [-latex](-1.8,-2.4) -- (-2.2,-2.4) -- (-2.2,-1.3) -- (-1.8,-1.3);
+\draw [-latex](-1.8,-2.7) -- (-2.6,-2.7);
+\end{tikzpicture}
