@@ -60,12 +60,12 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the mass inertia of the pipes,\\ 
+is the mass inertia of the water in the pipes,\\ 
 is the pressure drop due to friction,\\
 is the pressure drop due to geodesic level difference across the two terminals of pipe elements.
 \end{minipage}
 
-The dynamics of the pipes are discarded in the project, as it is shown in other works that the small time constant of the pipe dynamics are not dominant in the system, especially if there are elevated reservoirs included \cite{8thsemester_project,kenneth_houe}. Therefore the pressure across pipes can be written as
+The dynamics of the pipes are discarded in the project, as it is shown in other works that the small time constant of the pipe dynamics are not dominant in the system, especially if there are elevated reservoirs included \cite{8thsemester_project,kenneth_houe}. Therefore the pressure drop across pipes can be written as
 
 
 \begin{equation}
@@ -86,10 +86,46 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the parameter of the pipes. 
+is the resistance coefficient, the parameter of the pipes. 
+\end{minipage}
+\begin{minipage}[t]{0.10\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\unit{\cdot}$
 \end{minipage}
 
-The form in \eqref{deltap_friction} is motivated by turbulent flow in the pipes in the network, which is typical in water supply applications\cite{prahata}. In the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
+\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result \cite{prahata,agency2016epanet}. $\rho$ is given as shown in eqref below. 
+
+\begin{equation}
+  \label{resistance_coefficient}
+  \rho = 0.0252 f_{DW}(\epsilon, D, R)D^{-5}l,
+\end{equation}
+
+ \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $f_{DW}$ \\
+\hspace*{8mm} $\epsilon$ \\
+\hspace*{8mm} $D$ \\
+\hspace*{8mm} $R$ \\
+\hspace*{8mm} $l$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the D-W friction factor,  \\
+is the roughness of the pipe,  \\
+is the diameter of the pipe,  \\
+is the Reynolds-number, which defines the type of the flow,  \\
+is the length of the pipe.
+\end{minipage}
+\begin{minipage}[t]{0.10\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\unit{\cdot}$\\
+\textcolor{White}{te}$\unit{m}$\\
+\textcolor{White}{te}$\unit{m}$ \\
+\textcolor{White}{te}$\unit{\cdot}$ \\
+\textcolor{White}{te}$\unit{m}$
+\end{minipage}
+
+In the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
 
 It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
 
@@ -98,7 +134,8 @@ It is important to note here that $f_i(\cdot)$ is a homogeneous map which means 
   \rho_i |(\alpha q_i)|(\alpha q_i) = f_i(\alpha q_i) = \alpha^2 f_i(q_i).
 \end{equation}
 
-This property is noted here and used later in the system description, in \secref{multi_inlet_reduced_network_description}.
+More precisely, with the given structure of $f(\cdot)$ the scaling would be $|\alpha|\alpha$, however $\alpha \geq 0$ is already assumed in \eqref{homogeneity}. 
+This property is noted here and used later in the system description, in \secref{multi_inlet_reduced_network_description}, where the scaling is indeed such that $\alpha \in \: \mathbb{R}_{+}$.
 
 \subsection{Valve model}
 \label{valve_component}
@@ -173,7 +210,7 @@ where\\
 \vspace*{2mm}
 is the pressure at the node connected to the tank,\\ 
 is the water level in the tank,\\ 
-is a parameter dependant of the cross sectional area of the tank,\\
+is a parameter dependant on the cross sectional area and the pressure - water level ratio in the tank,\\
 is the flow in the tank if $q_i > 0$ and flow out of the tank if $q_i < 0$.
 \end{minipage}
 
@@ -273,7 +310,7 @@ The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, s
 \subsection{Kirchhoff's and Ohm's law for hydraulic networks}
 \label{kirchhoffs_law}
 
-In this project the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, if present, where water is able to enter and leave the network at a subset of the vertices. For such system, Kirchhoff's vertex law corresponds to conservation of mass in each vertex and described by
+In this project, the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, where water is able to enter and leave the network at a subset of the vertices. For such system, Kirchhoff's vertex law corresponds to conservation of mass in each vertex and described by
 
 \begin{equation}
   \label{vertexlaw_open}
@@ -300,6 +337,8 @@ Nodal demands can be seen as the end-user consumption, which means that water is
   d_n = - \sum_{i=1}^{n-1} d_i.
 \end{equation}
 
+As a matter of fact, \eqref{mass_conservation} is not an additional constraint since it follows from \eqref{vertexlaw_open}. This can be sown by using the knowledge that $\mathds{1}_n$ is the left kernel\footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.} of $H$.
+
 In the further report, a distinction is made between inlet and non-inlet nodes. It is assumed that the demand at non-inlet nodes fulfil the following constraint
 
 \begin{equation}
@@ -314,7 +353,7 @@ It is worth noting however, that in closed hydraulic networks the vertex law bec
   Hq = 0.
 \end{equation}
 
-Ohm's law for hydraulic networks therefore can be expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$. Important to point out that the description below in \eqref{ohmslaw} is valid if edges of the underlying graph are considered as only pipe elements
+Ohm's law for hydraulic networks can be expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$. Important to point out that the description below in \eqref{ohmslaw} is valid if edges of the underlying graph are considered as only pipe elements
 
 \begin{equation}
   \label{ohmslaw}
@@ -327,9 +366,11 @@ In \eqref{ohmslaw}, the differential pressure is described across each edge in t
 \subsection{Multi-inlet reduced network model}
 \label{multi_inlet_reduced_network_description}
 
-The system is considered to be a water network supplied from more than one pumping stations and the distribution is to several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are pipes. The inclusion of storage tanks is the next step of the model development, therefore it is described in a following section, in \secref{inclusion_of_reservoirs}.
+The system is a water network supplied from more than one pumping stations and the distribution is to several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are only pipes. 
 
-The aim of the modelling here is to obtain a reduced order network model which is able to capture the dependence of the measured output pressures on the flows and pressures at the inlets. Therefore it is assumed that the inlet pressures and demands are measured. Furthermore, pressure measurement is available in the remaining network, at the end-users. Considering generality, the model is described for $c$ inlets, however it should be noted that regarding the Randers WSS, two inlet vertices are taken into account. 
+The aim of the modelling here is to obtain a reduced order network model which is able to capture the dependence of the measured output pressures on the flows and pressures at the inlets. The inclusion of storage tanks is the next step of the model development, therefore it is described in a following section, in \secref{inclusion_of_reservoirs}. 
+
+It is assumed that the inlet pressures and demands are measured. Furthermore, pressure measurement is available in certain parts of the remaining network, at the end-users. Considering generality, the model is described for $c$ inlets, however it should be noted that regarding the Randers WSS, two inlet vertices are taken into account. 
 
 In order to put the system into a form which can handle the measured pressure dependencies on the control inputs, the underlying graph of the network is first partitioned. The $n$ vertices of the graph are separated into two sets
 
@@ -365,7 +406,7 @@ and\\
 \hspace*{8mm} $\mathcal{E_{\mathcal{C}}} = \{e_{\mathcal{C},1}, ..., e_{\mathcal{C},m-n+c}\}$. 
 \end{minipage}
 
-The subsets regarding edges and the partitioning is chosen such that the sub-matrix, which maps edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $\bar{\mathcal{V}}$, is invertible. 
+The subsets regarding edges and the partitioning is chosen such that the sub-matrix, which maps edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $\bar{\mathcal{V}}$, is invertible. It is worth mentioning that such partitioning is always possible for connected graphs. 
 
 Therefore the incidence matrix can be split into four sub-matrices, as shown in \eqref{H_matrix_sub} below
 
@@ -396,7 +437,7 @@ is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $
 is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{C}}}$ to vertices in $\hat{\mathcal{V}}$. 
 \end{minipage}
 
-It is worth noting that the only requirement for the edge partitioning is $\bar{H}_{\mathcal{T}}$ being invertible\footnote{$\exists \{\mathcal{V}, \mathcal{E} \} : \bar{H}^{-1}_{\mathcal{T}} \because rank(H) = (n-1) $ \cite{deo2017graph} }. Furthermore, the set $\mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \}$ is not necessarily a tree of the underlying graph, it can be any form of a connected graph that fulfils the requirements. However, one special case is given when $c = 1$, meaning that the network has only one inlet. In this case, $\mathcal{T}$ is indeed a spanning tree. 
+It is worth noting that the only requirement for the edge partitioning is $\bar{H}_{\mathcal{T}}$ being invertible\footnote{$\exists \{\mathcal{V}, \mathcal{E} \} : \bar{H}^{-1}_{\mathcal{T}} \because rank(H) = (n-1) $ \cite{deo2017graph} }. Furthermore, the set $\mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \}$ is not necessarily a tree of the underlying graph, it can be any form of graph that fulfils the requirements. The set here, $\mathcal{T}$, is not connected due to the requirement of $\mathcal{E_{\mathcal{T}}} \geq (n-1)$. For the multi-inlet case, $c > 1$, therefore $\mathcal{E_{\mathcal{T}}} = (n-c)$.  However, one special case is given when $c = 1$, meaning that the network has only one inlet. In this case, $\mathcal{T}$ is indeed a spanning tree. 
 
 With the chosen partition, Kirchhoff's vertex law in \eqref{vertexlaw_open} can be rewritten as
 
@@ -445,7 +486,7 @@ Writing up \eqref{ohmslaw_partitioned1} and \eqref{ohmslaw_partitioned2} in matr
 
 As it is shown in \eqref{ohmslaw_matrixform}, the transposed incidence matrices can be written up as the two sub-matrices partitioned according to inlet and non-inlet nodes. 
 
-Now, defining a matrix $\Gamma$, in which the arrangement of the edges are the same as for the incidence matrix, $H$, meaning that $\Gamma$ is regarding to the graphs $H_{\mathcal{T}}$ and $H_{\mathcal{C}}$. $\Gamma$ is defined as follows
+Now, defining a matrix $\Gamma$, in which the orientation of the edges are the same as for the incidence matrix, $H$. $\Gamma$ is defined as follows
 
 \begin{equation}
 \label{bmatrix}
@@ -456,7 +497,7 @@ Now, defining a matrix $\Gamma$, in which the arrangement of the edges are the s
 \end{bmatrix}
 \end{equation}
 
-It should be noted that the expressions in matrix $\Gamma$ are of the same structure as the structure of a partitioned cycle matrix. However, the set $\mathcal{T}$ does not define a spanning tree when $c>0$, therefore matrix $\Gamma$ is not a cycle matrix corresponding to any spanning tree. Multiplying $H$ with $\Gamma$ from the left-hand side
+It should be noted that the expressions in matrix $\Gamma$ are of the same structure as the structure of a partitioned cycle matrix. However, the set $\mathcal{T}$ does not define a spanning tree when $c>1$, therefore matrix $\Gamma$ is not a cycle matrix corresponding to any spanning tree. Multiplying $H$ with $\Gamma$ from the left-hand side
 
  \begin{equation}
   \label{meshlaw_analogy}
@@ -470,7 +511,7 @@ It should be noted that the expressions in matrix $\Gamma$ are of the same struc
    \end{bmatrix} 
    =
    \begin{bmatrix} 
-0 & -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T + \hat{H}^T 
+0 & -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}} + \hat{H}^T_{\mathcal{C}} 
 \end{bmatrix}
 .
 \end{equation}
@@ -548,10 +589,10 @@ Furthermore, introduce a vector, $a_{\mathcal{C}}$, such that
 
 \begin{equation}
 \label{ac}
-q_{\mathcal{C}} = a_{\mathcal{C}} \sigma
+q_{\mathcal{C}} = a_{\mathcal{C}} \sigma.
 \end{equation}
 
-is a unique solution to \eqref{meshresult}. The uniqueness of this proposition is shown for the one-inlet case in \cite{oneinput_paper}.
+Such an $a_{\mathcal{C}}$ can always be defined in this manner as long as $\sigma \neq 0$.
 
 Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the total demand, $\sigma$, in the network, \eqref{meshresult2} can be expressed such that
 
@@ -566,12 +607,12 @@ Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the 
 
 where the latter equality is due to the homogeneity property of the pressure drops due to frictions, explained in \secref{pipe_component}.
 
-Defining a function $F_v : \mathbb{R}^{m-n+c} \rightarrow \mathbb{R}^{m-n+c}$, parametrized with $v$ such that it takes $a_c$ as input, the following expression can be formed
+Defining a function $F_v : \mathbb{R}^{m-n+c} \rightarrow \mathbb{R}^{m-n+c}$, parametrized with $v$ such that it takes $a_{\mathcal{C}}$ as input, the following expression can be formed
 
 \begin{equation}
 \begin{split}
 \label{Fv}
-F_v(a_c) = f_{\mathcal{C}}(a_{\mathcal{C}}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} - \bar{H}^{-1}_{\mathcal{T}} v) 
+F_v(a_{\mathcal{C}}) = f_{\mathcal{C}}(a_{\mathcal{C}}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} - \bar{H}^{-1}_{\mathcal{T}} v) 
 \end{split}
 \end{equation}
 
@@ -580,36 +621,38 @@ Furthermore, $F_v(\cdot)$ equals to the following, according to \eqref{meshresul
 \begin{equation}
 \begin{split}
 \label{Fv1}
-F_v(a_c) = \frac{1}{\sigma^2} (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
+F_v(a_{\mathcal{C}}) = \frac{1}{\sigma^2} (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
 \end{split}
 \end{equation}
 
-An algebraic expression for $a_c$ can be found iff $\exists F_v^{-1}(\cdot)$. It can be shown, however that $\exists F_v^{-1}(\cdot)$ by showing that $F_v(\cdot)$ is a homeomorphism\footnote{Two functions are homeomorphic if they can be formed into each other by continuous, invertible mapping \cite{krantz2012handbook}.}, which is done in \cite{oneinput_paper}.  
+An algebraic expression for $a_c$ can be found iff $\exists F_v^{-1}(\cdot)$. It can be shown, however that $\exists F_v^{-1}(\cdot)$ by showing that $F_v(\cdot)$ is a homeomorphism\footnote{Two functions are homeomorphic if they can be formed into each other by continuous, invertible mapping \cite{krantz2012handbook}. However, here invertibility is a sufficient condition.}, which is done in \cite{oneinput_paper}.  
 
-As a result of using the inverse mapping property of $F_v$, an expression can be obtained for $a_c$
+As a result of using the inverse mapping of $F_v$, an expression can be obtained for $a_{\mathcal{C}}$
 
 \begin{equation}
 \label{Fv2}
-a_c = F_v^{-1} \Big(\frac{1}{\sigma^2} (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}) \Big),
+a_{\mathcal{C}} = F_v^{-1} A(\hat{p} + \hat{h}),
 \end{equation}
 
   \begin{minipage}[t]{0.60\textwidth}
 where\\
-\hspace*{8mm} $A = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}\in \: \mathbb{R}^{(m-n+c \times c)}$ 
+\hspace*{8mm} $A = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}\in \: \mathbb{R}^{(m-n+c \times c)}$. 
 \end{minipage}
 
-The existence of such inverse mapping means that the measured vector of input pressures, $\hat{p}$, defines exactly one value for $a_c$, since the friction losses, $f(\cdot)$, are strictly increasing functions.
+$A$ has a non-trivial kernel, and for every unique value of $1/sigma^2 A (\hat{p}+\hat{h}) $, there is a unique $a_{\mathcal{C}}$.
 
-The main objective of writing up $a_c$ is to show that it can be expressed in terms of $v, \sigma(t), \hat{p}(t)$ and $\hat{h}$, where $\hat{h}$ and $\sigma(t)$ are assumed to be known signals and parameters, $v$ is an unknown parameter and $\hat{p}(t)$ is the control signal. The difficulty about the constraint on $a_c$ in \eqref{Fv2} is that its structure is unknown.  
+% The existence of such inverse mapping means that the measured vector of input pressures, $\hat{p}$, defines exactly one value for $a_{\mathcal{C}}$, since the friction losses, $f(\cdot)$, are strictly increasing functions.
 
-However, assuming that matrix $A$ has a non-trivial kernel\footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.}, and $(\hat{p} + \hat{h}) \neq 0 \in \: ker(A)$, then $a_c$ can be expressed such that 
+The main objective of writing up $a_{\mathcal{C}}$ is to show that it can be expressed in terms of $v, \sigma(t), \hat{p}(t)$ and $\hat{h}$, where $\hat{h}$ and $\sigma(t)$ are assumed to be known signals and parameters, $v(t)$ is an unknown parameter and $\hat{p}(t)$ is the control signal. The difficulty about the constraint on $a_{\mathcal{C}}$ in \eqref{Fv2} is that its structure is unknown.  
+
+However, assuming that $(\hat{p} + \hat{h}) \neq 0 \in \: ker(A)$, then $a_{\mathcal{C}}$, \eqref{Fv1} can be expressed such that 
 
 \begin{equation}
 \label{Fv3}
-a_c = F_v^{-1} (0).
+a_{\mathcal{C}} = F_v^{-1} (0).
 \end{equation}
 
-\eqref{Fv3} shows, that in the special case when the input vertices are chosen such that the product $A(\hat{p} + \hat{h}) = 0$, then $a_c$ becomes only dependent on the parameter $v$. 
+\eqref{Fv3} shows, that in the special case when the input vertices are chosen such that the product $A(\hat{p} + \hat{h}) = 0$, then $a_{\mathcal{C}}$ becomes only dependent on the parameter $v$. 
 
 Now, using the equations for Ohm's law in \eqref{ohmslaw_partitioned1} and the vector $q_{\mathcal{T}}$, of flows in edges $\mathcal{E}_{\mathcal{T}}$ in \eqref{qt_flow}, the vector $\bar{p}$ of pressures at non-inlet vertices is expressed
 
@@ -621,7 +664,7 @@ Now, using the equations for Ohm's law in \eqref{ohmslaw_partitioned1} and the v
 \end{split}
 \end{equation}
 
-As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressures in the non-inlet vertices can be written up in terms of $\sigma(t)$, $\hat{p}(t)$ time-varying signals, in terms of $\hat{h}$ and $\bar{h}$ constants and in terms of the parameter $a_c$ and $v$. In the non-general case, as shown in \eqref{Fv3}, $a_c$ is a parameter which is governed by the behaviour of the total demand distribution among the non-inlet vertices. In case vector $v$ is constant, thereby time-invariant, which means that the distribution of nodal demands are the same in all vertices in the network at all time, the output pressure in the $i^{th}$ non-inlet vertices can be written as follows: 
+As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressures in the non-inlet vertices can be written up in terms of $\sigma(t)$, $\hat{p}(t)$ time-varying signals, in terms of $\hat{h}$ and $\bar{h}$ constants and in terms of the parameter $a_{\mathcal{C}}$ and $v$. In the non-general case, as shown in \eqref{Fv3}, $a_c$ is a parameter which is governed by the behaviour of the total demand distribution among the non-inlet vertices. In case vector $v$ is constant, thereby time-invariant, which means that the distribution of nodal demands are the same in all vertices in the network at all time, the output pressure in the $i^{th}$ non-inlet vertices can be written as follows: 
 
 \begin{equation}
 \label{model_multiinlet1}
@@ -630,7 +673,7 @@ As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressu
 
   \begin{minipage}[t]{0.50\textwidth}
 where\\
-\hspace*{8mm} $ \alpha_i = (\bar{H}^{-T}_{\mathcal{T}})_i f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_c + \bar{H}^{-1}_{\mathcal{T}} v)$ \\
+\hspace*{8mm} $ \alpha_i = (\bar{H}^{-T}_{\mathcal{T}})_i f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} + \bar{H}^{-1}_{\mathcal{T}} v)$ \\
 \vspace*{7pt}
 \hspace*{8mm} $ \beta_{ij} = (\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{ij} $ \\
 \vspace*{7pt}
