@@ -60,7 +60,7 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the inertia of the pipes,\\ 
+is the mass inertia of the pipes,\\ 
 is the pressure drop due to friction,\\
 is the pressure drop due to geodesic level difference across the two terminals of pipe elements.
 \end{minipage}
@@ -73,7 +73,7 @@ The dynamics of the pipes are discarded in the project, as it is shown in other 
   \Delta p_i = f_i(q_i) - \Delta h_i,
 \end{equation}
 
-The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle > 0$ for every $x,y \in \: \mathbb{R}^{n}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance
+The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle > 0$ for every $x,y \in \: \mathbb{R}^{m}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance
 
 \begin{equation}
   \label{deltap_friction}
@@ -91,7 +91,7 @@ is the parameter of the pipes.
 
 The form in \eqref{deltap_friction} is motivated by turbulent flow in the pipes in the network, which is typical in water supply applications\cite{prahata}. In the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
 
-It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a factor, then its value is multiplied by some power of this factor \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
+It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
 
 \begin{equation}
   \label{homogeneity}
@@ -119,7 +119,7 @@ where\\
 is the valve conductivity function, taking in its argument the Opening Degree(OD) of the valve \cite{8thsemester_project}.
 \end{minipage}
 
-Furthermore, $\mu_i(q_i,k_v)$ is a continuously differentiable and proper function which for $q_i = 0$ is zero and monotonically increasing.
+$\mu_i(q_i,k_v)$ is a continuously differentiable and proper function which for $q_i = 0$ is zero and monotonically increasing.
 
 \subsection{Pump model}
 \label{pump_component}
@@ -154,16 +154,17 @@ is the impeller rotational speed.
 \subsection{Elevated reservoir model}
 \label{elevatedreservoir_component}
 
-In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is proportional to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the amount of water in the tank, proportional relation can be set between the pressure and the flow in and out of the tank. The dynamics of such a system can be described by a first order differential equation of the form
+In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is equal to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the cross sectional area of the tank and the amount of water in it, proportional relation can be set between the pressure and the flow in and out of the tank. The dynamics of such a system can be described by a first order differential equation of the form
 
 \begin{equation}
 \label{wt_model}
-\dot{p}_i = -\tau_i q_i
+\dot{p}_i = -\tau_i\Big(\frac{p_i}{h_i}\Big) q_i
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
 where\\
 \hspace*{8mm} $p_i$ \\
+\hspace*{8mm} $h_i$ \\
 \hspace*{8mm} $\tau_i$ \\
 \newline
 \hspace*{8mm} $q_i$ 
@@ -171,11 +172,17 @@ where\\
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
 is the pressure at the node connected to the tank,\\ 
+is the water level in the tank,\\ 
 is a parameter dependant of the cross sectional area of the tank,\\
 is the flow in the tank if $q_i > 0$ and flow out of the tank if $q_i < 0$.
 \end{minipage}
 
-It is assumed that tanks have the same cross sectional areas in the entire height. 
+As can be seen in \eqref{wt_model}, in general, the parameter of the tank depends on the pressure and water level ratio, if the cross sectional are is not constant along the height of the tank. However, it is assumed that tanks have the same cross sectional areas in the entire height. Then \eqref{wt_model} simplifies to
+
+\begin{equation}
+\label{wt_model}
+\dot{p}_i = -\tau_i q_i.
+\end{equation}
 
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
