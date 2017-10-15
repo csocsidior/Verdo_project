@@ -93,7 +93,7 @@ is the resistance coefficient, the parameter of the pipes.
 \textcolor{White}{te}$\unit{\cdot}$
 \end{minipage}
 
-\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result \cite{prahata,agency2016epanet}. $\rho$ is given as shown in eqref below. 
+\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result \cite{prahata,agency2016epanet}. $\rho$ is given as shown in \eqref{resistance_coefficient} below \footnote{EPANET uses the same calculation for the resistance coefficient.}. 
 
 \begin{equation}
   \label{resistance_coefficient}
@@ -343,7 +343,7 @@ In the further report, a distinction is made between inlet and non-inlet nodes. 
 
 \begin{equation}
   \label{non_inlet_constraint}
-  d_i \leq 0.
+  d_i \geq 0.
 \end{equation}
 
 It is worth noting however, that in closed hydraulic networks the vertex law becomes
@@ -639,7 +639,7 @@ where\\
 \hspace*{8mm} $A = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}\in \: \mathbb{R}^{(m-n+c \times c)}$. 
 \end{minipage}
 
-$A$ has a non-trivial kernel, and for every unique value of $1/sigma^2 A (\hat{p}+\hat{h}) $, there is a unique $a_{\mathcal{C}}$.
+$A$ has a non-trivial kernel, and for every unique value of $1/ \sigma^2 A (\hat{p}+\hat{h}) $, there is a unique $a_{\mathcal{C}}$.
 
 % The existence of such inverse mapping means that the measured vector of input pressures, $\hat{p}$, defines exactly one value for $a_{\mathcal{C}}$, since the friction losses, $f(\cdot)$, are strictly increasing functions.
 
@@ -668,14 +668,14 @@ As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressu
 
 \begin{equation}
 \label{model_multiinlet1}
-\bar{p}_i(t) = \alpha_i \sigma^2(t) + \sum_i \beta_{ij} \hat{p}_j(t) + \gamma_i
+\bar{p}_i(t) = \alpha_i \sigma^2(t) + \sum_j \beta_{ij} \hat{p}_j(t) + \gamma_i
 \end{equation}
 
   \begin{minipage}[t]{0.50\textwidth}
 where\\
 \hspace*{8mm} $ \alpha_i = (\bar{H}^{-T}_{\mathcal{T}})_i f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} + \bar{H}^{-1}_{\mathcal{T}} v)$ \\
 \vspace*{7pt}
-\hspace*{8mm} $ \beta_{ij} = (\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{ij} $ \\
+\hspace*{8mm} $ \beta_{ij} = -(\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{ij} $ \\
 \vspace*{7pt}
 \hspace*{8mm} $ \gamma_{i} = -(\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{i}\hat{h} - \bar{h}_i $ 
 
@@ -701,7 +701,7 @@ If the non-inlet demands are time-varying, but periodic behaviour is assumed and
 
 \begin{equation}
 \label{model_multiinlet1}
-\bar{p}_i(t) = \alpha_i(t) \sigma^2(t) + \sum_i \beta_{ij} \hat{p}_j(t) + \gamma_i,
+\bar{p}_i(t) = \alpha_i(t) \sigma^2(t) + \sum_j \beta_{ij} \hat{p}_j(t) + \gamma_i,
 \end{equation}
 
 where $\alpha_i$ is also a time-varying parameter of the model. 
