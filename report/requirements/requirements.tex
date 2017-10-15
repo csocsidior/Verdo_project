@@ -93,27 +93,29 @@ is the resistance coefficient, the parameter of the pipes.
 \textcolor{White}{te}$\unit{\cdot}$
 \end{minipage}
 
-\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result \cite{prahata,agency2016epanet}. $\rho$ is given as shown in \eqref{resistance_coefficient} below \footnote{EPANET uses the same calculation for the resistance coefficient.}. 
+\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result \cite{prahata,agency2016epanet}. $\rho$ is given as shown in \eqref{resistance_coefficient} below\footnote{EPANET uses the same calculation for the resistance terms.}.  
 
 \begin{equation}
   \label{resistance_coefficient}
-  \rho = 0.0252 f_{DW}(\epsilon, D, R)D^{-5}l,
+  \rho = \frac{c f_{D}(\epsilon, D, R)l}{D^{5}},
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
 where\\
-\hspace*{8mm} $f_{DW}$ \\
+\hspace*{8mm} $f_{D}$ \\
 \hspace*{8mm} $\epsilon$ \\
 \hspace*{8mm} $D$ \\
 \hspace*{8mm} $R$ \\
+\hspace*{8mm} $c$ \\
 \hspace*{8mm} $l$ 
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the D-W friction factor,  \\
+is the Darcy friction factor,  \\
 is the roughness of the pipe,  \\
 is the diameter of the pipe,  \\
 is the Reynolds-number, which defines the type of the flow,  \\
+is a constant in SI units,  \\
 is the length of the pipe.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
@@ -122,10 +124,10 @@ is the length of the pipe.
 \textcolor{White}{te}$\unit{m}$\\
 \textcolor{White}{te}$\unit{m}$ \\
 \textcolor{White}{te}$\unit{\cdot}$ \\
+\textcolor{White}{te}$\unit{s^2/m}$ \\
 \textcolor{White}{te}$\unit{m}$
 \end{minipage}
-
-In the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
+The derivation of \eqref{resistance_coefficient} is explained more in detail in appref \cite{chen2016sustainable}. Furthermore, in the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
 
 It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
 
@@ -183,7 +185,7 @@ is the impeller rotational speed.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
-\textcolor{White}{te}$\unit{head}$\\
+\textcolor{White}{te}$\unit{m}$\\
 \textcolor{White}{te}$\unit{\cdot}$\\
 \textcolor{White}{te}$\unit{\frac{rad}{s}}$
 \end{minipage}  
