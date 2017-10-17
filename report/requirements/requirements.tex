@@ -38,9 +38,52 @@ are the absolute pressures.
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
 \textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{\frac{l}{s}}$
+\textcolor{White}{te}$\unit{l/s}$\\
+\textcolor{White}{te}$\unit{m}$
 \end{minipage}
+
+\subsection{Hydraulic head}
+\label{hydraulic_head}
+As can be seen in \eqref{onecomponent}, the measure of the pressure is in meters, and the measure of volumetric flow is in liters per second. It is important to note here, before the network modelling, that the units used for calculations are in SI. However, at some points in the report, non-SI units are discussed due to the fact that EPANET uses head and liters per seconds as the measure of pressure and flow. 
+
+In general, the hydraulic head, or total head, is a measure of the potential of fluid at a specific measurement point. It relates the energy of an incompressible fluid to the height of an equivalent static column of that fluid. The different forms of energies concerning fluids can be measured in distance, and therefore these terms are sometimes referred to as heads. The total hydraulic head of a fluid is composed of the pressure head and elevation head. \footnote{There is a third term, called the kinetic head which is discarded, since the flow is assumed to be turbulent and uniformly distributed along the cross sectional area of all pipes.}
+
+The total head is given 
+
+\begin{equation}
+\label{totalhead}
+  h = \underbrace{\frac{p}{\rho g}}_{h_p} + z,
+\end{equation}
+
+\begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $h$ \\
+\hspace*{8mm} $h_p$ \\
+\hspace*{8mm} $p$ \\
+\hspace*{8mm} $z$ \\
+\hspace*{8mm} $g$ \\
+\hspace*{8mm} $\rho$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the total head,\\
+is the pressure head,\\
+is the absolute pressure in pressure units, \\
+is the elevation, \\
+is the gravitational constant, \\
+is the density of the fluid.
+\end{minipage}
+\begin{minipage}[t]{0.10\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\unit{m}$\\
+\textcolor{White}{te}$\unit{m}$\\
+\textcolor{White}{te}$\unit{Pa}$\\
+\textcolor{White}{te}$\unit{m}$\\
+\textcolor{White}{te}$\unit{m/s^2}$\\
+\textcolor{White}{te}$\unit{kg/m^3}$
+\end{minipage}
+
+Therefore, pressure head is a measurement of length, which is dependant on the density of the fluid but can be converted to the units of pressure. Using meters for describing pressure in the system is convenient for the reason, that pressure can be treated the same way as the elevation. During the modelling, this property is therefore exploited. 
 
 \subsection{Pipe model}
 \label{pipe_component}
@@ -127,7 +170,7 @@ is the length of the pipe.
 \textcolor{White}{te}$\unit{s^2/m}$ \\
 \textcolor{White}{te}$\unit{m}$
 \end{minipage}
-The derivation of \eqref{resistance_coefficient} is explained more in detail in appref \cite{chen2016sustainable}. Furthermore, in the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
+The derivation of \eqref{resistance_coefficient} is explained in more detail in appref \cite{chen2016sustainable}. Furthermore, in the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
 
 It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
 
@@ -329,7 +372,7 @@ is the vector of nodal demands, with $d_i > 0$ when demand flow is into vertex $
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
-\textcolor{White}{te}$\unit{\frac{L}{s}}$
+\textcolor{White}{te}$\unit{\frac{l}{s}}$
 \end{minipage}
 
 Nodal demands can be seen as the end-user consumption, which means that water is taken out from the network. The mass conservation corresponds to the fact that what is consumed from the system must also be produced. Due to mass conservation, there can be only $(n-1)$ independent nodal demands in the network
@@ -764,19 +807,28 @@ where the 'Elevated reservoirs' block has dynamics. The reservoirs act as integr
 
 \newpage
 
-\section{EPANET modelling}
-\label{EPANET_modelling}
+\section{Multi-inlet network example}
+\label{multi_inlet_network_example}
 
-EPANET is an open source software, created by the United States Environmental Protection Agency (EPA) for simulating hydraulic networks \cite{agency2016epanet}. EPANET allows to track the flow of water in each pipe, the pressure at each node and the height of water in each tank. Furthermore, it uses a node-based model approach which means that the components in the network are either treated as nodes or links. Valves, pumps, reservoirs and tanks are considered as nodes due to their fixed geographical location and geodesic level. Pipes are considered as the links between the nodes in the network. Therefore, nodes are termination points for one or more pipes. The end-user consumption flow demand is considered as an attribute of certain nodes. Such nodes are called demand nodes and they have a certain water withdrawal. Attributes of nodes in the network are the geographical and geodesic coordinates, the flow demand, the total, and the available head. \cite{agency2016epanet}  
+%Graph of example1 network
+\begin{figure}[H]
+\centering
+%\includegraphics[width=1\textwidth]{report/pictures/verdo_pic}
+\input{report/tikz/example1_graph.tex} 
+\caption{Graph of example1.}
+\label{fig:example1_graph}
+\end{figure}
 
-In EPANET, there is a function to carry out simulations within an extended period. Time patterns can be created that make demands at the nodes vary in a periodic way over the course of the time period. Nodal demands, reservoirs and pump schedules can all have time patterns associated with them, thus making the hydraulic simulation of the network more realistic. In order to create a schedule plan for changing reservoir levels or schedules for the pumping strategy, it is sufficient to have simulation data only at certain time steps. Therefore it is sufficient to solve the network using a set of hourly time steps (snapshots) over a period of 24 hours, and use the static, steady-state solutions for pump scheduling \cite{agency2016epanet}. The main function of EPANET is this, and therefore is used within this project for extended period analysis. During the analysis, pressure and flow values, along with the demand pattern can be simulated for periodic time steps. 
-
-Since all nodes and links in the network have their unique IDs, during the project, the name of certain components will always have a reference to the original IDs in EPANET, for the better and clearer trackability. 
 
 
 
 
 
+% EPANET is an open source software, created by the United States Environmental Protection Agency (EPA) for simulating hydraulic networks \cite{agency2016epanet}. EPANET allows to track the flow of water in each pipe, the pressure at each node and the height of water in each tank. Furthermore, it uses a node-based model approach which means that the components in the network are either treated as nodes or links. Valves, pumps, reservoirs and tanks are considered as nodes due to their fixed geographical location and geodesic level. Pipes are considered as the links between the nodes in the network. Therefore, nodes are termination points for one or more pipes. The end-user consumption flow demand is considered as an attribute of certain nodes. Such nodes are called demand nodes and they have a certain water withdrawal. Attributes of nodes in the network are the geographical and geodesic coordinates, the flow demand, the total, and the available head. \cite{agency2016epanet}  
+
+% In EPANET, there is a function to carry out simulations within an extended period. Time patterns can be created that make demands at the nodes vary in a periodic way over the course of the time period. Nodal demands, reservoirs and pump schedules can all have time patterns associated with them, thus making the hydraulic simulation of the network more realistic. In order to create a schedule plan for changing reservoir levels or schedules for the pumping strategy, it is sufficient to have simulation data only at certain time steps. Therefore it is sufficient to solve the network using a set of hourly time steps (snapshots) over a period of 24 hours, and use the static, steady-state solutions for pump scheduling \cite{agency2016epanet}. The main function of EPANET is this, and therefore is used within this project for extended period analysis. During the analysis, pressure and flow values, along with the demand pattern can be simulated for periodic time steps. 
+
+% Since all nodes and links in the network have their unique IDs, during the project, the name of certain components will always have a reference to the original IDs in EPANET, for the better and clearer trackability. 
 
 
 
