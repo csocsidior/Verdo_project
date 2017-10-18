@@ -1,0 +1,64 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.3in,
+height=1.3in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmin=0,
+xmax=5,
+xlabel style={font=\color{white!15!black}},
+xlabel={Time [h]},
+ymin=-15,
+ymax=30,
+ylabel style={font=\color{white!15!black}},
+ylabel={Flow [LPS]},
+axis background/.style={fill=white},
+%title style={font=\bfseries},
+%title={$\text{Flows in e}_\text{2}\text{, e}_\text{6}\text{ and e}_\text{7}$},
+xmajorgrids,
+ymajorgrids,
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot[const plot, color=mycolor1, line width=1.2pt] table[row sep=crcr] {%
+0	11.7502570959187\\
+1	29.5561012463149\\
+2	23.0126657096865\\
+3	27.3936960334265\\
+4	18.5662622910719\\
+5	9.43871589453002\\
+};
+\addlegendentry{$q_{\mathcal{C},2}$}
+
+\addplot[const plot, color=mycolor2, line width=1.2pt] table[row sep=crcr] {%
+0	3.85877138476544\\
+1	9.45870515475531\\
+2	7.4303780100986\\
+3	8.79458158128527\\
+4	6.03871892954993\\
+5	3.10763052781182\\
+};
+\addlegendentry{$q_{\mathcal{C},6}$}
+
+\addplot[const plot, color=mycolor3, line width=1.2pt] table[row sep=crcr] {%
+0	-5.87120832235041\\
+1	-14.7517027576359\\
+2	-11.4907702869938\\
+3	-13.6743937097818\\
+4	-9.27312831304249\\
+5	-4.71685971758539\\
+};
+\addlegendentry{$q_{\mathcal{C},7}$}
+
+\end{axis}
+\end{tikzpicture}%

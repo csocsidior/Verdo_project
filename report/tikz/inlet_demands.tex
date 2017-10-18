@@ -1,0 +1,53 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.25in,
+height=1.3in,
+at={(0.791in,0.461in)},
+scale only axis,
+xmin=0,
+xmax=5,
+xlabel style={font=\color{white!15!black}},
+xlabel={Time [h]},
+ymin=-25,
+ymax=0,
+ylabel style={font=\color{white!15!black}},
+ylabel={Flow [LPS]},
+axis background/.style={fill=white},
+%title style={font=\bfseries},
+%title={Inlet demands},
+xmajorgrids,
+ymajorgrids,
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot[const plot, color=mycolor1, line width=1.2pt] table[row sep=crcr] {%
+0	-0.27002029288415\\
+1	-1.78959208760883\\
+2	-1.07885170290758\\
+3	-1.53102470893297\\
+4	-0.688152757407579\\
+5	-0.175509754602786\\
+};
+\addlegendentry{$\hat{d}_1$}
+
+\addplot[const plot, color=mycolor2, line width=1.2pt] table[row sep=crcr] {%
+0	-9.72997970711585\\
+1	-24.2104079123912\\
+2	-18.9211482970924\\
+3	-22.468975291067\\
+4	-15.3118472425924\\
+5	-7.82449024539721\\
+};
+\addlegendentry{$\hat{d}_2$}
+
+\end{axis}
+\end{tikzpicture}%

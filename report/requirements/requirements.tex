@@ -44,9 +44,9 @@ are the absolute pressures.
 
 \subsection{Hydraulic head}
 \label{hydraulic_head}
-As can be seen in \eqref{onecomponent}, the measure of the pressure is in meters, and the measure of volumetric flow is in liters per second. It is important to note here, before the network modelling, that the units used for calculations are in SI. However, at some points in the report, non-SI units are discussed due to the fact that EPANET uses head and liters per seconds as the measure of pressure and flow. 
+As can be seen in \eqref{onecomponent}, the measure of the pressure is in meters, and the measure of volumetric flow is in liters per second. It is important to note here, before the network modelling, that the units used for calculations are in SI. However, at some points in the report, non-SI units are considered due to the fact that EPANET uses head and liters per seconds as the measure of pressure and flow. Therefore the conception of hydraulic head is shortly introduced. The derivation and connection between pressure and head is explained in more detail in (appref). In the further report, the measure of pressure is always in meters. 
 
-In general, the hydraulic head, or total head, is a measure of the potential of fluid at a specific measurement point. It relates the energy of an incompressible fluid to the height of an equivalent static column of that fluid. The different forms of energies concerning fluids can be measured in distance, and therefore these terms are sometimes referred to as heads. The total hydraulic head of a fluid is composed of the pressure head and elevation head. \footnote{There is a third term, called the kinetic head which is discarded, since the flow is assumed to be turbulent and uniformly distributed along the cross sectional area of all pipes.}
+In general, the hydraulic head, or total head, is a measure of the potential of fluid at a specific measurement point. It relates the energy of an incompressible fluid to the height of an equivalent static column of that fluid. The different forms of energies concerning fluids can be measured in distance, and therefore these terms are sometimes referred to as heads. The total hydraulic head of a fluid is composed of the pressure head and elevation head. \footnote{There is a third term, called the kinetic head which is discarded, since the flow is assumed to be turbulent and uniformly distributed along the cross sectional area of all pipes \cite{chen2016sustainable}.}
 
 The total head is given 
 
@@ -754,7 +754,7 @@ where $\alpha_i$ is also a time-varying parameter of the model.
 \subsection{Inclusion of elevated reservoirs}
 \label{inclusion_of_reservoirs}
 
-As it is described in \eqref{non_inlet_constraint}, a distinction is made between non-inlet and inlet vertices, by assuming that non-inlet vertices have only positive or zero nodal demand. However, when the inclusion of a tank is considered, a special type of node has to be introduced. A node which can have a demand in both positive and negative directions, meaning that the demand is positive when the tank is being filled and negative when it is being emptied. For this reason, the input demands, pressures and static pressures are separated such that 
+As it is described in \eqref{non_inlet_constraint}, a distinction is made between non-inlet and inlet vertices, by assuming that non-inlet vertices have only positive or zero nodal demand. However, when the inclusion of a tank is considered, a special type of node has to be introduced. A node which can have a demand in both positive and negative directions, meaning that the demand is positive when the tank is being filled and negative when it is being emptied. For this reason, the input demands, pressures and elevations are separated such that 
 
 \begin{equation}
 \begin{split}
@@ -783,15 +783,15 @@ where\\
 \vspace*{2mm}
 is the vector including the nodal demands of the tanks,\\
 is the the vector including the nodal demands of the pump inputs,\\
-is the vector including the static pressures in the tanks,\\
-is the the vector including the static pressures of the pump inputs,\\
+is the vector including the elevation of the tanks,\\
+is the the vector including the elevation of the pump stations,\\
 is the vector including the absolute pressures in the tanks,\\
 is the the vector including the absolute pressures of the pump inputs,\\
 is a mapping which selects the nodes belonging to tanks, \\
 is a mapping which selects the nodes belonging to pump inputs.
 \end{minipage}
 
-The inclusion of the tanks means that the static model description in \eqref{model_multiinlet1} is not sufficient any more. The model without the tanks is a static description because it does not contain any dynamics, since the dynamics of the pipes were discarded in \eqref{complete_pipemodel}. However, as the tanks are included in the system, besides the pumps, the tanks have pressure contribution to the inputs. Therefore when the system is described with the tanks, the system dynamics are according to the pressure and demand in the tank and are constrained by the algebraic equation in \eqref{model_multiinlet1}. The block diagram of such system is shown in \figref{fig:WT_system_blockdiagram}.
+The inclusion of tanks means that the static model description in \eqref{model_multiinlet1} is not sufficient any more. The model without the tanks is a static description because it does not contain any dynamics, since the dynamics of the pipes were discarded in \eqref{complete_pipemodel}. However, as the tanks are included in the system, besides the pumps, the tanks have pressure contribution as inputs. Therefore when the system is described with tanks, the system dynamics are according to the pressure and demand in the tank and are constrained by the algebraic equation in \eqref{model_multiinlet1}. The block diagram of such system is shown in \figref{fig:WT_system_blockdiagram}.
 
 
 %Pumping stations and waterworks in Randers
@@ -803,26 +803,203 @@ The inclusion of the tanks means that the static model description in \eqref{mod
 \label{fig:WT_system_blockdiagram}
 \end{figure}
 
-where the 'Elevated reservoirs' block has dynamics. The reservoirs act as integrators on the demand flow into or out of the tank. 
+where the 'Elevated reservoirs' block represents a subsystem with dynamics, as the reservoirs act as integrators on the demand flow into or out of the tank. 
+
+In case of elevated reservoirs, usually the in- and outflow,$\hat{d}_t$, is controlled due to the reason that a pressure error can be significantly high because of the big time constant of such buffers in the network. The aim therefore is to set up a model which is capable of handling the dynamics of the tanks, constrained by the static network. Such dynamic system is expected to be derived in a form shown in eqref. 
+
+\begin{equation}
+\label{eq1}
+\bar{p} = f(\sigma,\hat{p}, \bar{p})
+\end{equation}
+
+\begin{equation}
+\label{eq2}
+\dot{\hat{p}} = g(\sigma,\hat{d}_t, \bar{p})
+\end{equation}
+
+\begin{equation}
+\label{eq3}
+\hat{d}_t = h(\bar{p}, \bar{d}, \hat{p}, \hat{d})
+\end{equation}
+
 
 \newpage
 
 \section{Multi-inlet network example}
 \label{multi_inlet_network_example}
 
+In order to simulate and thereby verify the network model for the static system, it is first tested on a simple, two-source, two-loop pipe network. In this case the simulations can be easily compared to simulations in EPANET, as all non-inlet pressures and flows represent steady-state values in the network. Therefore the simulation results of the model is compared to the calculations made by EPANET.
+
+The underlying graph of such network is shown in \figref{fig:example1_graph} below
+
 %Graph of example1 network
 \begin{figure}[H]
 \centering
 %\includegraphics[width=1\textwidth]{report/pictures/verdo_pic}
 \input{report/tikz/example1_graph.tex} 
-\caption{Graph of example1.}
+\caption{Graph of a simple multi-inlet network.}
 \label{fig:example1_graph}
+\end{figure}
+
+In \figref{fig:example1_graph}, the arrows are present only to illustrate the external in-and outflows due to the input flows by the pumping stations at $v_1 $ and $v_2$, and the the user-consumption in $v_3$ and $v_6$.
+
+In order to have a $\bar{H}_{\mathcal{T}}$ which is invertible, the orientation of the edges is chosen as shown in \eqref{edgeorientation1}.
+
+\begin{equation}
+  \label{edgeorientation1}
+  \mathcal{E} = \{e_{\mathcal{T},1}, e_{\mathcal{T},5}, e_{\mathcal{T},3}, e_{\mathcal{T},4}, e_{\mathcal{C},2}, e_{\mathcal{C},6}, e_{\mathcal{C},7} \}.
+\end{equation}
+
+The describing signals and parameters are the following
+
+\begin{equation}
+\label{example1_signals_constants}
+p(t) =
+ \begin{bmatrix} 
+ \bar{p}_3(t) \\[1.3pt] 
+ \bar{p}_4(t) \\[1.3pt]
+ \bar{p}_5(t) \\[1.3pt] 
+ \bar{p}_6(t) \\[1.3pt] 
+ \hat{p}_1(t) \\[1.3pt] 
+ \hat{p}_2(t) \\[1.3pt] 
+ \end{bmatrix}
+ , \hspace{5mm}
+ d(t) =  \begin{bmatrix} 
+ \bar{d}_3(t) \\[1pt] 
+ 0 \\[1pt]
+ 0 \\[1pt] 
+ \bar{d}_6(t) \\[1pt] 
+ \hat{d}_1(t) \\[1pt] 
+ \hat{d}_2(t) \\[1pt] 
+ \end{bmatrix}
+ , \hspace{5mm}
+ h =  \begin{bmatrix} 
+ \bar{h}_3 \\[1pt] 
+ \bar{h}_4 \\[1pt]
+ \bar{h}_5 \\[1pt] 
+ \bar{h}_6 \\[1pt] 
+ \hat{h}_1 \\[1pt] 
+ \hat{h}_2 \\[1pt] 
+ \end{bmatrix}
+ , \hspace{5mm}
+ v =  \begin{bmatrix} 
+ v_3 \\[1pt] 
+ 0 \\[1pt]
+ 0 \\[1pt] 
+ v_6 \\[1pt]
+ \end{bmatrix}.
+\end{equation}
+
+There are two demand nodes in the network, therefore the total flow consumption can be written as
+
+\begin{equation}
+  \label{consumption1}
+  \sigma(t) = \bar{d}_3(t) + \bar{d}_6(t).
+\end{equation}
+
+The specifications of this example network such as the elevation in different vertices, the distribution vector and the demands are listed in (appref). 
+
+In order to determine the output pressures, i.e. the pressures in the non-inlet vertices, first recall \eqref{meshresult2}, 
+
+\begin{equation}
+  \label{ac_eq} 
+  g(q_{\mathcal{C}}) = f_{\mathcal{C}}(q_\mathcal{C}) - B f_{\mathcal{T}}(C q_\mathcal{C} + D \bar{d}) - A(\hat{p} + \hat{h}) = 0.
+\end{equation}
+
+\begin{minipage}[t]{0.4\textwidth}
+where\\
+\hspace*{8mm} $B = \bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}$, \vspace*{1.5mm}  \\
+\hspace*{8mm} $C = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
+\hspace*{8mm} $D = \bar{H}^{-1}_{\mathcal{T}}$. 
+\end{minipage}
+
+
+As there is not any analytical solution for $q_{\mathcal{C}}$ in \eqref{ac_eq}, it needs to be solved numerically. As $F(q_{\mathcal{C}})$ is differentiable with respect to $q_{\mathcal{C}}$, root finding algorithms such as Newton's method can be used. Furthermore, $g(q_{\mathcal{C}})$ is an increasing function, therefore the root of this function is the global minimum. By solving \eqref{ac_eq}, the unique value for $a_{\mathcal{C}}$ can be obtained. With this $a_{\mathcal{C}}$ vector, the non-inlet pressures and all flows in the network can be calculated in terms of the input pressures and the total demand in the network. \eqref{ac_eq} is solved in each time step in an extended-simulation in order to calculate the non-inlet pressures in different time periods. 
+
+In the first case, the distribution parameter among the non-inlet demands, $v$, is considered to be constant and the demand nodes are scaled up or down. The demands therefore has a base demand which is modified according to the scaling pattern in the simulation, similarly as in EPANET. 
+
+COMMENT1: \emph{The following simulation results, i think, are qualitatively correct, but there are some matters about it. Which is probably a topic for the supervisor meeting.}
+
+COMMENT2: \emph{There isn't any constraint on the input flows.}
+
+In this simulation, the pressure inputs for the two pumping stations are set for the same value. 
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/inlet_pressures.tex} 
+  \caption{Inlet pressures, $(\hat{p})$}
+  \label{fig:sub11_example1}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/inlet_demands.tex} 
+  \caption{Inlet demands, $(\hat{d})$}
+  \label{fig:sub22_example1}
+\end{subfigure}
+\caption{Signals describing the input pressures(left) and flows(right) of the pumping stations.}
+\label{fig:inlet_pressures_demands}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/demands.tex} 
+  \caption{Non-inlet demands, $(\bar{d})$}
+  \label{fig:sub21_example1}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/non_inlet_pressures.tex} 
+  \caption{Non-inlet pressures, $(\bar{p})$}
+  \label{fig:sub22_example1}
+\end{subfigure}
+\caption{Signals describing the demand flows by the end-users(left) and output pressures(right) in the network.}
+\label{fig:noninlet_demands_noninlet_pressures}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/flows_C.tex} 
+  \caption{Flows in $\mathcal{C}$, $(q_{\mathcal{C}})$}
+  \label{fig:sub31_example1}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+  \input{report/tikz/flows_T.tex} 
+  \caption{Flows in $\mathcal{T}$, $(q_{\mathcal{T}})$}
+  \label{fig:sub31_example1}
+\end{subfigure}
+\caption{Signals describing the flows in all pipes in the network.}
+\label{fig:flows_C_T}
 \end{figure}
 
 
 
+\subsection{Simulation in EPANET}
+\label{example1_EPANET}
 
+In EPANET, the simulation is built up in the same way as the network model. The simulation model is shown in the figure below. 
 
+%EPANET example1 network
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{report/pictures/example1_epanetmodel}
+%\input{report/tikz/example1_graph.tex} 
+\caption{Non-inlet pressures in .}
+\label{fig:epanet_example1}
+\end{figure}
+
+As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present as extra links and nodes in this simulation. These extra nodes and links are removed when data is extracted from the EPANET model due to the reason that the input pressures can be measured on $v_1$ and $v_2$. The input flows can be measured through the links, connecting the reservoirs to the nodes, $v_1$ and $v_2$. Furthermore, the elevations and the demands are attributes of the nodes. In this simulation only demands are changing according to hourly time steps.  
+
+\newpage
+
+\section{Multi-inlet network example extended with a tank}
+\label{multi_inlet_network_example_WT}
 
 % EPANET is an open source software, created by the United States Environmental Protection Agency (EPA) for simulating hydraulic networks \cite{agency2016epanet}. EPANET allows to track the flow of water in each pipe, the pressure at each node and the height of water in each tank. Furthermore, it uses a node-based model approach which means that the components in the network are either treated as nodes or links. Valves, pumps, reservoirs and tanks are considered as nodes due to their fixed geographical location and geodesic level. Pipes are considered as the links between the nodes in the network. Therefore, nodes are termination points for one or more pipes. The end-user consumption flow demand is considered as an attribute of certain nodes. Such nodes are called demand nodes and they have a certain water withdrawal. Attributes of nodes in the network are the geographical and geodesic coordinates, the flow demand, the total, and the available head. \cite{agency2016epanet}  
 

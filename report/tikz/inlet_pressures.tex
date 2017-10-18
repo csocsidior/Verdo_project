@@ -1,0 +1,53 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.3in,
+height=1.3in,
+at={(0.766in,0.474in)},
+scale only axis,
+xmin=0,
+xmax=5,
+xlabel style={font=\color{white!15!black}},
+xlabel={Time [h]},
+ymin=47,
+ymax=53,
+ylabel style={font=\color{white!15!black}},
+ylabel={Pressure [m]},
+axis background/.style={fill=white},
+%title style={font=\bfseries},
+%title={Inlet pressures},
+xmajorgrids,
+ymajorgrids,
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot[const plot, color=mycolor1, line width=1.2pt] table[row sep=crcr] {%
+0	52.51\\
+1	47.74\\
+2	50.02\\
+3	48.57\\
+4	51.22\\
+5	52.81\\
+};
+\addlegendentry{$\hat{p}_1$}
+
+\addplot[const plot, color=mycolor2, line width=1.2pt] table[row sep=crcr] {%
+0	52.49\\
+1	47.66\\
+2	49.98\\
+3	48.5\\
+4	51.18\\
+5	52.8\\
+};
+\addlegendentry{$\hat{p}_2$}
+
+\end{axis}
+\end{tikzpicture}%
