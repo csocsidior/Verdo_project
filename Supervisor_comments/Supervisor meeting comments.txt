@@ -1,0 +1,35 @@
+dynamics of the pipes -> say something about low freq. dynamics Pressure shocks, hammering. 
+in reality -> closing valves create pressure shocks 
+friction factor -> consider it as constant, because it won't be such a big error 
+compared to the EPANET results 
+(3.7) -> change the order and say positive scalar. 
+(3.9) -> model works only for positive flow 
+
+inclusion of WT 
+pressure measurements -> flow control is suitable 
+ask Randers -> pressure or flow controller at the pumping stations 
+
+(3.17) mistake in the definition of d!!!
+
+The numeric solver is not correct !!!!!
+
+column rank! when pseudo inverse is considered
+
+U^T*U -> has to have block identity 
+
+
+correct the sign mistake in the demands!!!! -> out on a graphical example 
+with a pipe 
+
+
+
+
+
+
+
+
+SUP meeting 2nd
+
+mass conservation idea- > dot_p_t
+passivity expressiion -> prove stability 
+

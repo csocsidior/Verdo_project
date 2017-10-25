@@ -1,14 +1,14 @@
 \chapter{System Modelling}
 \label{system_modelling}
 
-\emph{This chapter gives a mathematical description of the component modelling. Thus the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic network modelling are shown by explaining the relevant properties of graph theory. A reduced model for multi-inlet networks is first introduced, then the inclusion of tanks is discussed. In the end, the EPANET-based modelling approach is introduced and compared to the real-world system.}
+\emph{This chapter gives a mathematical description of the component modelling. Thus, the different physical and mathematical measures of hydraulic systems are introduced. The similarities to electronic networks are shown by explaining the relevant properties of graph theory. A reduced model for multi-inlet networks is first introduced, then the inclusion of tanks is considered. In the end, the EPANET-based modelling approach is introduced and the reduced model is verified on a simple pipe network by comparing it to the simulation results in EPANET.}
 
 \section{Hydraulic component modelling}
 \label{hydraulic_component_modelling}
 
-In this section the mathematical relation between pressure and flow is given for each component in a WSS system, in order to show their non-linear behaviour. The purpose here is not to derive the different models, rather to introduce the mathematical formalism which describes them.
+In this section the mathematical relation between pressure and flow is given for each component in a WSS system, in order to show their non-linear behaviour. The purpose here is not to derive the different models, but to introduce the mathematical formalism which describes them.
 
-\eqref{onecomponent} shows the dual variables which describe all two-terminal components in the network 
+\eqref{onecomponent} shows the dual variable which describes all two-terminal components in the network 
 
 \begin{equation}
 \label{onecomponent}
@@ -37,53 +37,71 @@ are the absolute pressures.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
-\textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{l/s}$\\
-\textcolor{White}{te}$\unit{m}$
+\textcolor{White}{te}$\unit{Pa}$\\
+\textcolor{White}{te}$\unit{\frac{m^3}{s}}$\\
+\textcolor{White}{te}$\unit{Pa}$
 \end{minipage}
 
 \subsection{Hydraulic head}
 \label{hydraulic_head}
-As can be seen in \eqref{onecomponent}, the measure of the pressure is in meters, and the measure of volumetric flow is in liters per second. It is important to note here, before the network modelling, that the units used for calculations are in SI. However, at some points in the report, non-SI units are considered due to the fact that EPANET uses head and liters per seconds as the measure of pressure and flow. Therefore the conception of hydraulic head is shortly introduced. The derivation and connection between pressure and head is explained in more detail in (appref). In the further report, the measure of pressure is always in meters. 
 
-In general, the hydraulic head, or total head, is a measure of the potential of fluid at a specific measurement point. It relates the energy of an incompressible fluid to the height of an equivalent static column of that fluid. The different forms of energies concerning fluids can be measured in distance, and therefore these terms are sometimes referred to as heads. The total hydraulic head of a fluid is composed of the pressure head and elevation head. \footnote{There is a third term, called the kinetic head which is discarded, since the flow is assumed to be turbulent and uniformly distributed along the cross sectional area of all pipes \cite{chen2016sustainable}.}
-
-The total head is given 
+As can be seen in \eqref{onecomponent}, the measure of pressure is in $[Pa]$ and the measure of volumetric flow is in $[\frac{m^3}{s}]$. In the further report, the units used for calculation are in SI, however sometimes results are shown in non-SI units. Non-SI units are considered due to the fact that EPANET uses meter head and liters instead of pascals and cubic meters for pressure and flow simulations, respectively. The unit conversion between liters and cubic meters is a constant, however meter head expresses pressure in terms of length. The link between pressure and pressure head is explained in \eqref{pressurehead} below. 
 
 \begin{equation}
-\label{totalhead}
-  h = \underbrace{\frac{p}{\rho g}}_{h_p} + z,
-\end{equation}
+\label{pressurehead}
+  h_p = \frac{p}{\rho g}.
+\end{equation} 
 
 \begin{minipage}[t]{0.20\textwidth}
 where\\
-\hspace*{8mm} $h$ \\
 \hspace*{8mm} $h_p$ \\
 \hspace*{8mm} $p$ \\
-\hspace*{8mm} $z$ \\
 \hspace*{8mm} $g$ \\
 \hspace*{8mm} $\rho$ 
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the total head,\\
 is the pressure head,\\
-is the absolute pressure in pressure units, \\
-is the elevation, \\
+is the absolute pressure pascals, \\
 is the gravitational constant, \\
 is the density of the fluid.
+\end{minipage}
+\begin{minipage}[t]{0.1\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\unit{m}$\\
+\textcolor{White}{te}$\unit{\frac{kg}{ms^2}}$\\
+\textcolor{White}{te}$\unit{\frac{m}{s^2}}$\\
+\textcolor{White}{te}$\unit{\frac{kg}{m^3}}$
+\end{minipage}
+
+As can be seen in \eqref{pressurehead}, if the density of the liquid is a known parameter, the conversion can be made easily between pressure and pressure head. In this project, water is considered and its density is assumed to be constant. 
+
+In general, the hydraulic head, or total head, is a measure of the potential of fluid at a specific measurement point. It relates the energy of an incompressible fluid to the height of an equivalent static column of that fluid. The different forms of energies concerning fluids can be measured in distance, and therefore that is the reason that these terms are sometimes referred to as heads. The total hydraulic head of a fluid is composed of the pressure head and elevation head. \footnote{There is a third term, called the kinetic head which is discarded, since the velocity of the fluid is assumed to be constant along the cross sectional area in the whole length of pipes \cite{chen2016sustainable}.}
+
+The total head is given 
+
+\begin{equation}
+\label{totalhead}
+  h = h_p + z,
+\end{equation}
+
+\begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $h$ \\
+\hspace*{8mm} $z$ 
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+is the total head,\\
+is the elevation.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
 \textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{Pa}$\\
-\textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{m/s^2}$\\
-\textcolor{White}{te}$\unit{kg/m^3}$
+\textcolor{White}{te}$\unit{m}$
 \end{minipage}
 
-Therefore, pressure head is a measurement of length, which is dependant on the density of the fluid but can be converted to the units of pressure. Using meters for describing pressure in the system is convenient for the reason, that pressure can be treated the same way as the elevation. During the modelling, this property is therefore exploited. 
+Therefore, pressure head is a measurement of length, which is dependant on the density of the fluid but can be converted to the units of pressure. Using meters for describing pressure in the system is convenient for the reason, that pressure can be treated the same way as the elevation. In calculations, this property is exploited. 
 
 \subsection{Pipe model}
 \label{pipe_component}
@@ -108,39 +126,40 @@ is the pressure drop due to friction,\\
 is the pressure drop due to geodesic level difference across the two terminals of pipe elements.
 \end{minipage}
 
-The dynamics of the pipes are discarded in the project, as it is shown in other works that the small time constant of the pipe dynamics are not dominant in the system, especially if there are elevated reservoirs included \cite{8thsemester_project,kenneth_houe}. Therefore the pressure drop across pipes can be written as
-
+The dynamics of pipes due to mass inertia are discarded in this project, as it is shown in other works that the small time constant of these mass inertia dynamics are not dominant in the system, especially if there are elevated reservoirs included \cite{8thsemester_project,kenneth_houe}. Therefore the pressure drop across pipes can be written as
 
 \begin{equation}
 \label{complete_pipemodel1}
   \Delta p_i = f_i(q_i) - \Delta h_i,
 \end{equation}
 
-The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle > 0$ for every $x,y \in \: \mathbb{R}^{m}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance
+Additionally, the dynamics due to inertia of the liquid is not the only possible dynamics for pipes. The phenomenon, called water hammer occurs when a fluid, or gas in motion is forced to stop or change direction suddenly. In this case, a pressure wave runs through the pipe, causing vibration and possible damage in the network \cite{2011water}. However, \eqref{complete_pipemodel} models the pressure drops or equivalently, headloss, due to the elevation of the pipes and friction of the fluid. Therefore such rapid flow change is not assumed in the network.
+
+The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle > 0$ for every $x,y \in \: \mathbb{R}^{m}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance such that
 
 \begin{equation}
   \label{deltap_friction}
-  f_i(q_i) = \rho_i |q_i|q_i,
+  f_i(q_i) = \gamma_i |q_i|q_i,
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
 where\\
-\hspace*{8mm} $\rho_i > 0$ 
+\hspace*{8mm} $\gamma_i > 0$ 
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the resistance coefficient, the parameter of the pipes. 
+is the resistance coefficient, the parameter of pipes. 
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
 \textcolor{White}{te}$\unit{\cdot}$
 \end{minipage}
 
-\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result \cite{prahata,agency2016epanet}. $\rho$ is given as shown in \eqref{resistance_coefficient} below\footnote{EPANET uses the same calculation for the resistance terms.}.  
+\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result and is the most commonly used in Europe\cite{prahata,agency2016epanet}. $\gamma$ is given as shown in \eqref{resistance_coefficient} below\footnote{EPANET uses the same D-W formula for calculating the resistance terms.}.  
 
 \begin{equation}
   \label{resistance_coefficient}
-  \rho = \frac{c f_{D}(\epsilon, D, R)l}{D^{5}},
+  \gamma(q) = \frac{c f_{D}(\epsilon,Re(q), D )l}{D^{5}},
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
@@ -148,7 +167,7 @@ where\\
 \hspace*{8mm} $f_{D}$ \\
 \hspace*{8mm} $\epsilon$ \\
 \hspace*{8mm} $D$ \\
-\hspace*{8mm} $R$ \\
+\hspace*{8mm} $Re$ \\
 \hspace*{8mm} $c$ \\
 \hspace*{8mm} $l$ 
 \end{minipage}
@@ -157,7 +176,7 @@ where\\
 is the Darcy friction factor,  \\
 is the roughness of the pipe,  \\
 is the diameter of the pipe,  \\
-is the Reynolds-number, which defines the type of the flow,  \\
+is the Reynolds-number,  \\
 is a constant in SI units,  \\
 is the length of the pipe.
 \end{minipage}
@@ -167,12 +186,15 @@ is the length of the pipe.
 \textcolor{White}{te}$\unit{m}$\\
 \textcolor{White}{te}$\unit{m}$ \\
 \textcolor{White}{te}$\unit{\cdot}$ \\
-\textcolor{White}{te}$\unit{s^2/m}$ \\
+\textcolor{White}{te}$\unit{\frac{s^2}{m}}$ \\
 \textcolor{White}{te}$\unit{m}$
 \end{minipage}
+
+In \eqref{resistance_coefficient}, the Darcy friction factor, $f_D$, is dependant on the Reynolds number, which is defined by the volumetric flow in the pipes. However, at high flows Re becomes nearly constant and therefore normally this flow dependency is disregarded. Thus, $f_D$ is considered to be constant in the further project. 
+
 The derivation of \eqref{resistance_coefficient} is explained in more detail in appref \cite{chen2016sustainable}. Furthermore, in the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
 
-It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
+It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a positive scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
 
 \begin{equation}
   \label{homogeneity}
@@ -198,7 +220,7 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the valve conductivity function, taking in its argument the Opening Degree(OD) of the valve \cite{8thsemester_project}.
+is the valve conductivity function, taking the Opening Degree(OD) of the valve in its argument \cite{8thsemester_project}.
 \end{minipage}
 
 $\mu_i(q_i,k_v)$ is a continuously differentiable and proper function which for $q_i = 0$ is zero and monotonically increasing.
@@ -232,6 +254,8 @@ is the impeller rotational speed.
 \textcolor{White}{te}$\unit{\cdot}$\\
 \textcolor{White}{te}$\unit{\frac{rad}{s}}$
 \end{minipage}  
+
+The model described in \eqref{eq:PumpModel}, works only for positive flows, therefore it is assumed that liquid cannot flow back to the pump. 
 
 \subsection{Elevated reservoir model}
 \label{elevatedreservoir_component}
@@ -388,7 +412,7 @@ In the further report, a distinction is made between inlet and non-inlet nodes. 
 
 \begin{equation}
   \label{non_inlet_constraint}
-  d_i \geq 0.
+  d_i \leq 0.
 \end{equation}
 
 It is worth noting however, that in closed hydraulic networks the vertex law becomes
@@ -822,7 +846,6 @@ In case of elevated reservoirs, usually the in- and outflow,$\hat{d}_t$, is cont
 \hat{d}_t = h(\bar{p}, \bar{d}, \hat{p}, \hat{d})
 \end{equation}
 
-
 \newpage
 
 \section{Multi-inlet network example}
@@ -903,12 +926,12 @@ In order to determine the output pressures, i.e. the pressures in the non-inlet 
 
 \begin{equation}
   \label{ac_eq} 
-  g(q_{\mathcal{C}}) = f_{\mathcal{C}}(q_\mathcal{C}) - B f_{\mathcal{T}}(C q_\mathcal{C} + D \bar{d}) - A(\hat{p} + \hat{h}) = 0.
+  g(q_{\mathcal{C}}) = f_{\mathcal{C}}(q_\mathcal{C}) + B f_{\mathcal{T}}(C q_\mathcal{C} + D \bar{d}) - A(\hat{p} + \hat{h}) = 0.
 \end{equation}
 
 \begin{minipage}[t]{0.4\textwidth}
 where\\
-\hspace*{8mm} $B = \bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}$, \vspace*{1.5mm}  \\
+\hspace*{8mm} $B = -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}$, \vspace*{1.5mm}  \\
 \hspace*{8mm} $C = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
 \hspace*{8mm} $D = \bar{H}^{-1}_{\mathcal{T}}$. 
 \end{minipage}
@@ -994,7 +1017,8 @@ In EPANET, the simulation is built up in the same way as the network model. The 
 \label{fig:epanet_example1}
 \end{figure}
 
-As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present as extra links and nodes in this simulation. These extra nodes and links are removed when data is extracted from the EPANET model due to the reason that the input pressures can be measured on $v_1$ and $v_2$. The input flows can be measured through the links, connecting the reservoirs to the nodes, $v_1$ and $v_2$. Furthermore, the elevations and the demands are attributes of the nodes. In this simulation only demands are changing according to hourly time steps.  
+As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present as extra links and nodes in this simulation. These extra nodes and links are removed when data is extracted from the EPANET model due to the reason that the input pressures can be measured on $v_1$ and $v_2$. The input flows can be measured through the links, connecting the reservoirs to the nodes, $v_1$ and $v_2$. Furthermore, the elevations and the demands are attributes of the nodes. In this simulation only demands are changing according to hourly time steps. 
+
 
 \newpage
 
