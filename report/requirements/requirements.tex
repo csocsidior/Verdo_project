@@ -110,14 +110,14 @@ Pipes in the network are governed by the dynamic equation
 
 \begin{equation}
 \label{complete_pipemodel}
-  \Delta p_i = J_i \dot{q_i} + f_i(q_i) - \Delta h_i,
+  \Delta p_i = J_i \dot{q_i} + f_i(q_i) - h_i,
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
 where\\
 \hspace*{8mm} $J_i$ \\
 \hspace*{8mm} $f_i(q_i)$ \\
-\hspace*{8mm} $\Delta h_i$ 
+\hspace*{8mm} $ h_i$ 
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
@@ -130,7 +130,7 @@ The dynamics of pipes due to mass inertia are discarded in this project, as it i
 
 \begin{equation}
 \label{complete_pipemodel1}
-  \Delta p_i = f_i(q_i) - \Delta h_i,
+  \Delta p_i = f_i(q_i) - h_i,
 \end{equation}
 
 Additionally, the dynamics due to inertia of the liquid is not the only possible dynamics for pipes. The phenomenon, called water hammer occurs when a fluid, or gas in motion is forced to stop or change direction suddenly. In this case, a pressure wave runs through the pipe, causing vibration and possible damage in the network \cite{2011water}. However, \eqref{complete_pipemodel} models the pressure drops or equivalently, headloss, due to the elevation of the pipes and friction of the fluid. Therefore such rapid flow change is not assumed in the network.
