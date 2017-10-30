@@ -1,27 +1,25 @@
 \chapter{Example Network}
 \label{system_description}
 
-\section{unspecified1}
-\label{unspecified1}
+\subsection{Simulation in EPANET}
+\label{example1_EPANET}
+
+In EPANET, the simulation is built up in the same way as the network model. The simulation model is shown in the figure below. 
+
+%EPANET example1 network
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{report/pictures/example1_epanetmodel}
+%\input{report/tikz/example1_graph.tex} 
+\caption{Non-inlet pressures in .}
+\label{fig:epanet_example1}
+\end{figure}
+
+As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present as extra links and nodes in this simulation. These extra nodes and links are removed when data is extracted from the EPANET model due to the reason that the input pressures can be measured on $v_1$ and $v_2$. The input flows can be measured through the links, connecting the reservoirs to the nodes, $v_1$ and $v_2$. Furthermore, the elevations and the demands are attributes of the nodes. In this simulation only demands are changing according to hourly time steps. 
+
 %
 
 
-\pagebreak
-
-
-\section{System Topology}
-\label{systemdiagram}
-
-123
-
-\section{Incidence Matrix}
-\label{IncidenceSection}
-
-123
-
-\section{Cycle Matrix}
-\label{CycleAppendix}
-\vspace{4mm}
 
 
 

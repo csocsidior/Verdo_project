@@ -155,7 +155,7 @@ is the resistance coefficient, the parameter of pipes.
 \textcolor{White}{te}$\unit{\cdot}$
 \end{minipage}
 
-\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result and is the most commonly used in Europe\cite{prahata,agency2016epanet}. $\gamma$ is given as shown in \eqref{resistance_coefficient} below\footnote{EPANET uses the same D-W formula for calculating the resistance terms.}.  
+\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result and is the most commonly used in Europe\cite{prahata,agency2016epanet}. $\gamma$ is given as shown in \eqref{resistance_coefficient} below\footnote{EPANET uses the D-W formula for calculating the resistance terms.}.  
 
 \begin{equation}
   \label{resistance_coefficient}
@@ -439,7 +439,7 @@ Ohm's law for hydraulic networks is expressed with the incidence matrix, when $H
 In \eqref{ohmslaw}, the differential pressure is described across each edge in the network, taking into account the pressure loss due to friction, $f(q)$, and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. It is noted that the pressure loss, $f(q)$, the absolute pressure, $p$  and the geodesic level $h$ can be both considered in units of meter. As mentioned in the previous section, handling Ohm's law for hydraulic systems in meter is convenient, since the elevation is already in meters.
 
 
-\subsection{Multi-inlet reduced network model}
+\subsection{Multi-inlet network model}
 \label{multi_inlet_reduced_network_description}
 
 The system is a water network supplied from more than one pumping stations and the distribution is to several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are only pipes. 
@@ -784,7 +784,7 @@ where $\alpha_i$ is also a time-varying parameter of the model.
 \subsection{Inclusion of elevated reservoirs}
 \label{inclusion_of_reservoirs}
 
-When a WT is being attached to an existing pipe network, certain properties of the previous system must be modified. Regarding the underlying graph of the network, when a WT is newly attached, the vertex to which the tank is connected becomes a vertex with a demand. However, the demand flow which describes the filling and emptying process of the tank, in this case, is not related to any user consumption, since flow can go into and come out from the tank. Therefore, the constraint on demand flows, described in \eqref{non_inlet_constraint} is not true in case of elevated reservoirs, as the demand can be both positive or negative. For this reason, demands on the reservoirs are treated as inputs and partitioned from the input flows of the pumps such that 
+When a WT is being attached to an existing pipe network, certain properties of the previous system must be modified. Regarding the underlying graph of the network, when a WT is newly attached, the vertex to which the tank is connected becomes a vertex with a demand. However, the demand flow which describes the filling and emptying process of the tank, in this case, is not related directly to any user consumption profile, since flow can go into and come out from the tank. Therefore, the constraint on demand flows, described in \eqref{non_inlet_constraint} is not true in case of elevated reservoirs, as the demand can be both positive or negative. For this reason, demands on the reservoirs are treated as inputs and partitioned from the input flows of the pumps such that 
 
 \begin{equation}
 \begin{split}
@@ -846,18 +846,18 @@ With the inclusion of tanks, the network is not only constrained by the static p
 \label{fig:WT_system_blockdiagram}
 \end{figure}
 
-where the 'Elevated reservoirs' block represents a subsystem with dynamics, and the 'Static network' subsystem is governed by the algebraic flow and pressure relations which describe the water distribution network. 
+where the 'Elevated reservoirs' block represents the subsystem with dynamics, and the 'Static network' subsystem is governed by the algebraic flow and pressure relations which describe the pipe network. 
 
-When elevated reservoirs are introduced in the network, the system usually operates such that the control inputs are the flows, $\hat{d}$, as this is the most practical and robust way to control the network. In fact, this is the case regarding the Randers WSS, as the two pumping stations which are filling up the tanks are flow controlled, as it is shown in \secref{waterworks_and_pumping_stations}. 
+When elevated reservoirs are introduced in the network, the system usually operates such that the control inputs are the flows, $\hat{d}$, as this is the most practical and robust way to control the network. In fact, this is the case regarding the Randers WSS, as the two pumping stations which are filling up the tanks are controlled by flow, as it was explained in \secref{waterworks_and_pumping_stations}. 
 
-This modelling approach is different, however,  from what is handled in case of a network without a tank, since instead of using the pressures, $\hat{p}$, the inlet flows, $\hat{d_c}$ and $\hat{d_c}$, are considered as inputs. Furthermore, regarding the dynamics, the filling or emptying of a tank is dependent on how much flow is delivered by the pumps. Recalling the dynamic equation of tanks, from \eqref{wt_model_demand}
+This modelling approach is different, however,  from what is handled in case of a network without a tank, since instead of using the pressures, $\hat{p}$, the inlet flows, $\hat{d_c}$ and $\hat{d_c}$, are considered as inputs. Furthermore, regarding the dynamics, the filling and emptying of a tank is dependent on how much flow is delivered by the pumps. Recalling the dynamic equation of tanks, from \eqref{wt_model_demand}
 
 \begin{equation}
 \label{wt_model_demand}
 \dot{\hat{p}}_t = \gamma \hat{d}_t,
 \end{equation}
 
-it is seen that the tank flows, $\hat{d}_t$, need to be expressed in terms of the inputs, $\hat{d}_c$. In order to express the demand regarding the tank, the whole network is treated as one node, as illustrated in \figref{fig:onenode_system}. 
+it is seen that the tank flows, $\hat{d}_t$, need to be expressed in terms of the inputs, $\hat{d}_c$. In order to express the demand regarding a tank, the whole network is treated as one node, as illustrated in \figref{fig:onenode_system}. 
 
  %Network illustration as one node
 \begin{figure}[H]
@@ -868,7 +868,7 @@ it is seen that the tank flows, $\hat{d}_t$, need to be expressed in terms of th
 \label{fig:onenode_system}
 \end{figure}
 
-According to the mass-balance in the network, and using the corresponding partitioning, as shown in \figref{fig:onenode_system} the balance equation on demand flows is in the form of
+According to the mass-balance in the network, and using the corresponding partitioning as shown in \figref{fig:onenode_system}, the balance equation on demand flows can be written in the form of
 
 \begin{equation}
 \label{massbalance_model2}
@@ -890,7 +890,7 @@ According to the mass-balance in the network, and using the corresponding partit
 0
 \end{equation}
 
-Now expressing $\hat{d}_t $ from \eqref{massbalance_model2} yields
+Now, expressing $\hat{d}_t $ from \eqref{massbalance_model2} yields
 
 \begin{equation}
 \label{massbalance_model2_1}
@@ -925,12 +925,12 @@ The aim therefore is to set up a model which is capable of handling the dynamics
 
 \newpage
 
-\section{Multi-inlet network example}
+\section{Simulation example on a simple pipe network}
 \label{multi_inlet_network_example}
 
-In order to simulate and thereby verify the network model for the static system, it is first tested on a simple, two-source, two-loop pipe network. In this case the simulations can be easily compared to simulations in EPANET, as all non-inlet pressures and flows represent steady-state values in the network. Therefore the simulation results of the model is compared to the calculations made by EPANET.
+In order to illustrate and to show how the implementation and the model works, it is first tested on a simple, two-source, two-loop pipe network. This simple pipe system serves as an example to point out the differences and possible simplifications which were done regarding the modelling in Matlab and in EPANET. In this case simulation results are steady-state values of pressures and flows, and the models are excited by some arbitrary pressure inputs. 
 
-The underlying graph of such network is shown in \figref{fig:example1_graph} below
+The underlying graph of the example network is shown in \figref{fig:example1_graph}
 
 %Graph of example1 network
 \begin{figure}[H]
@@ -941,16 +941,23 @@ The underlying graph of such network is shown in \figref{fig:example1_graph} bel
 \label{fig:example1_graph}
 \end{figure}
 
-In \figref{fig:example1_graph}, the arrows are present only to illustrate the external in-and outflows due to the input flows by the pumping stations at $v_1 $ and $v_2$, and the the user-consumption in $v_3$ and $v_6$.
+In \figref{fig:example1_graph}, arrows illustrate the in-and outflows such that input flows are present in $v_1 $ and $v_2$, and user-consumption is defined only in $v_3$ and $v_6$. The diameters are the same for all pipes, however regarding the length, there are two types of pipes in this network. The corresponding parameters of the pipes, pumps, the elevation profile and the hourly demand variation is described in detail and can be found in (appref). 
 
-In order to have a $\bar{H}_{\mathcal{T}}$ which is invertible, the orientation of the edges is chosen as shown in \eqref{edgeorientation1}.
+The partitioning of edges in the network is chosen such that
 
 \begin{equation}
-  \label{edgeorientation1}
-  \mathcal{E} = \{e_{\mathcal{T},1}, e_{\mathcal{T},5}, e_{\mathcal{T},3}, e_{\mathcal{T},4}, e_{\mathcal{C},2}, e_{\mathcal{C},6}, e_{\mathcal{C},7} \}.
+  \label{edgeorientation_example1_T}
+  \mathcal{E}_{\mathcal{T}} = \{ e_1, e_5, e_3, e_4 \} \equiv \{ e_{\mathcal{T},1}, e_{\mathcal{T},2}, e_{\mathcal{T},3}, e_{\mathcal{T},4}  \},
 \end{equation}
 
-The describing signals and parameters are the following
+and
+
+\begin{equation}
+\label{edgeorientation_example1_C}
+  \mathcal{E}_\mathcal{C} = \{e_2, e_6, e_7\} \equiv \{e_{\mathcal{C},1}, e_{\mathcal{C},2}, e_{\mathcal{C},3}\},
+\end{equation}.
+
+The corresponding vectors describing the pressures and flows in vertices and edges, respectively, furthermore the elevation and distribution profiles are given such that
 
 \begin{equation}
 \label{example1_signals_constants}
@@ -990,16 +997,16 @@ p(t) =
  \end{bmatrix}.
 \end{equation}
 
-There are two demand nodes in the network, therefore the total flow consumption can be written as
+From this arrangement of edges and nodes, it follows that the sub-matrix, $\bar{H}_{\mathcal{T}}$, which maps non-inlet vertices to edges in set $\mathcal{E}_{\mathcal{T}}$, is invertible. 
+
+Since there are two nodes in the system with demand, the total flow leaving the network can be written as
 
 \begin{equation}
   \label{consumption1}
-  \sigma(t) = \bar{d}_3(t) + \bar{d}_6(t).
+  \sigma(t) = -\bar{d}_3(t) - \bar{d}_6(t).
 \end{equation}
 
-The specifications of this example network such as the elevation in different vertices, the distribution vector and the demands are listed in (appref). 
-
-In order to determine the output pressures, i.e. the pressures in the non-inlet vertices, first recall \eqref{meshresult2}, 
+Having the input pressures and the parameters of the network, the output pressures, i.e. the pressures in the non-inlet vertices can be calculated. However, first recall \eqref{meshresult2}, 
 
 \begin{equation}
   \label{ac_eq} 
@@ -1008,21 +1015,24 @@ In order to determine the output pressures, i.e. the pressures in the non-inlet 
 
 \begin{minipage}[t]{0.4\textwidth}
 where\\
+\hspace*{8mm} $A = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$, \vspace*{1.5mm}  \\
 \hspace*{8mm} $B = -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}$, \vspace*{1.5mm}  \\
 \hspace*{8mm} $C = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
 \hspace*{8mm} $D = \bar{H}^{-1}_{\mathcal{T}}$. 
 \end{minipage}
 
+On account of non-linearity in \eqref{ac_eq},  it is not possible to solve the network analysis problem analytically. Instead, iterative numerical solution methods are used. As $g(q_{\mathcal{C}})$ is differentiable with respect to $q_{\mathcal{C}}$, gradient-based root finding algorithms such as Newton-Raphson method can be used. With iterative methods, initial values of flows are repeatedly adjusted until the difference between two successive iterates is within an acceptable tolerance.  Furthermore, we know from the homogeneity and monotonicity property of $g(q_{\mathcal{C}})$ that the function is a homeomorphism in $q_{\mathcal{C}}$, therefore its root is unique. Using gradient-based searching methods, and squaring $g(q_{\mathcal{C}})$ 
 
-As there is not any analytical solution for $q_{\mathcal{C}}$ in \eqref{ac_eq}, it needs to be solved numerically. As $F(q_{\mathcal{C}})$ is differentiable with respect to $q_{\mathcal{C}}$, root finding algorithms such as Newton's method can be used. Furthermore, $g(q_{\mathcal{C}})$ is an increasing function, therefore the root of this function is the global minimum. By solving \eqref{ac_eq}, the unique value for $a_{\mathcal{C}}$ can be obtained. With this $a_{\mathcal{C}}$ vector, the non-inlet pressures and all flows in the network can be calculated in terms of the input pressures and the total demand in the network. \eqref{ac_eq} is solved in each time step in an extended-simulation in order to calculate the non-inlet pressures in different time periods. 
+\begin{equation}
+\label{gradient_search} 
+  2 \frac{\partial g^T(q_{\mathcal{C}})}{\partial q_{\mathcal{C}}} g(q_{\mathcal{C}}) = 0, 
+\end{equation}
 
-In the first case, the distribution parameter among the non-inlet demands, $v$, is considered to be constant and the demand nodes are scaled up or down. The demands therefore has a base demand which is modified according to the scaling pattern in the simulation, similarly as in EPANET. 
+the unique solution can be found. Furthermore, if $g^T(q_{\mathcal{C}}) g(q_{\mathcal{C}})$ is convex, the solution is the global minimum. By solving \eqref{ac_eq} for $a_{\mathcal{C}}$, the non-inlet pressures and all flows in the network can be calculated in terms of the input pressures and the total demand in the network. In order to obtain these values, the previously-derived output equation in \eqref{model_multiinlet1} can be used. 
 
-COMMENT1: \emph{The following simulation results, i think, are qualitatively correct, but there are some matters about it. Which is probably a topic for the supervisor meeting.}
+In the simulation, the most simple case is considered, when the total flow demand in the network is varies, however the distribution among vertices remains the same. In this case, $v$ is a constant vector, and the base demands in all vertices are the same. 
 
-COMMENT2: \emph{There isn't any constraint on the input flows.}
-
-In this simulation, the pressure inputs for the two pumping stations are set for the same value. 
+The variation curve for the input pressures are set the same in both EPANET and in the simulator. 
 
 \begin{figure}[H]
 \centering
@@ -1080,26 +1090,7 @@ In this simulation, the pressure inputs for the two pumping stations are set for
 
 
 
-\subsection{Simulation in EPANET}
-\label{example1_EPANET}
-
-In EPANET, the simulation is built up in the same way as the network model. The simulation model is shown in the figure below. 
-
-%EPANET example1 network
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{report/pictures/example1_epanetmodel}
-%\input{report/tikz/example1_graph.tex} 
-\caption{Non-inlet pressures in .}
-\label{fig:epanet_example1}
-\end{figure}
-
-As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present as extra links and nodes in this simulation. These extra nodes and links are removed when data is extracted from the EPANET model due to the reason that the input pressures can be measured on $v_1$ and $v_2$. The input flows can be measured through the links, connecting the reservoirs to the nodes, $v_1$ and $v_2$. Furthermore, the elevations and the demands are attributes of the nodes. In this simulation only demands are changing according to hourly time steps. 
-
-
-\newpage
-
-\section{Multi-inlet network example extended with a tank}
+\section{Simulation example with elevated reservoir}
 \label{multi_inlet_network_example_WT}
 
 % EPANET is an open source software, created by the United States Environmental Protection Agency (EPA) for simulating hydraulic networks \cite{agency2016epanet}. EPANET allows to track the flow of water in each pipe, the pressure at each node and the height of water in each tank. Furthermore, it uses a node-based model approach which means that the components in the network are either treated as nodes or links. Valves, pumps, reservoirs and tanks are considered as nodes due to their fixed geographical location and geodesic level. Pipes are considered as the links between the nodes in the network. Therefore, nodes are termination points for one or more pipes. The end-user consumption flow demand is considered as an attribute of certain nodes. Such nodes are called demand nodes and they have a certain water withdrawal. Attributes of nodes in the network are the geographical and geodesic coordinates, the flow demand, the total, and the available head. \cite{agency2016epanet}  
