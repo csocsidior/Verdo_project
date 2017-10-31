@@ -15,34 +15,48 @@
 \chapter{Network simplification}
 \label{network_simplification}
 
+\emph{This chapter gives a general introduction about the need for model simplification in WSSs. Different approaches and methods are discussed in a state of art manner, including the development and methodologies employed in this field. Lastly, an attempt is made to simplify the Randers WSS, using one of the techniques which are being introduced in this chapter. }
+
 \section{Purpose of the model reduction}
 \label{purpose_of_the_model_reduction}
 
-As it is described in \secref{EPANET_modelling}, planning pump schedules and tank level changes in EPANET can be carried out by solving iteratively for long time steps. However, when a complex network is being used for developing different control methods, typically the aim is to find an optimisation method which determines the optimal input to the system. In order to run such an optimizing algorithm on a complex system, the network needs to be solved numerically and several online execution runs are required. 
+As it was explained in \chapref{description_of_water_supply_systems}, the typical components of WSSs are reservoirs, pipes, pumps and valves. Each of these interconnected elements are dependant on their neighbours, thus the behaviour of the entire WSS depends on each of its elements. For simulation purposes, it is required that the model of the real-life network consists of thousands of elements in order to accurately replicate hydraulic behaviour and the topographical layout of the system. Such models are appropriate for simulation purposes, however, online optimisation tasks are much more computationally demanding, therefore simplified models are required. There are different approaches for model reduction, however the outcome of most of these methods is a hydraulic model with a smaller number of components than the original one. 
 
-In case of complex networks with a tree structure, there is only one way from a source node to any node in the system. Therefore the network can be described by solving the equation system of the model explicitly, therefore all pressures can be directly calculated in terms of the flows. In case of loop systems however, the procedure is more dificult, since there is more path to each nodes in the network. The system of equations have to be solved numerically which can dramatically increase the simulation time of an optimization algorithm. The objective of the system reduction and simplification is threfore to reduce the number of network components and especially the loops in the network, such that the accuracy of the simplified model is as close as possible to that of the original network model. 
+The use of Geographic Information Systems(GIS) in the water industry resulted in an increasing amount of information about actual network topology and service that can be utilized in a model \cite{johnson2016geographic}. As a consequence this, normally the simulation model of the WSSs include exactly the same amount of components as in real-life, and therefore a large-scale system is defined. 
+
+The efficiency and accuracy of large-scale system reduction highly depend on the model complexity and the selected method. Several research in this field has been focusing the verification of the different methods and therefore provided case studies for the different approaches. 
 
 \section{State of the art model reduction analysis}
 \label{state_of_the_art_model_reduction_analysis}
 
-123
-
-\subsection{Simplification of network model components}
-\label{simplification of network model components}
-
-Simplification directly, by keeping the basic components but combining and replacing the individual components. (For example, series, parallel pipes. Tree substructure in the system.)
-
-\subsection{Black box simplification}
-\label{black_box_simplification}
-
-Replacing the system partially or fully with a system which provides the same function with less complexity. 
+In the frame of this project, the WSS in Randers is considered as a large-scale system and attempted to be reduced. However, before discussing the reduction on the actual model network, first the different methods for model reduction are introduced in a state of the art manner. It is worth noting that throughout the report, the terms reduction and simplification are used alternately to describe of process of achieving a hydraulic model with a smaller number of components than the original. The different reduction approaches, discussed in this report are: 
 
 \begin{itemize}
-  \item static simplification with linearization and simplification
-  \item neural network approach 
+\item Skeletonization, which were researched in \cite{walski2003advanced} and \cite{battlepaper}.
+\item Parameter fitting (cite)
+\item Graph decomposition (cite)
+\item Variable elimination (cite)
 \end{itemize}
 
+\subsection{Skeletonization}
+\label{skeletonization}
 
+Skeletonization can be considered as a reduction of data needed to represent the operation of the hydraulic system without significant loss of information \cite{reduction_PHD}. The basic types of network components are maintained but the individual network components are combined and replaced. Skeletonization is not a single process but several different low-level element removal processes that must be applied in series in order to ensure that the demands in the network are logically reduced back to their source of supply. 
+
+\subsection{Parameter fitting}
+\label{parameter_fitting}
+
+(in progress)
+
+\subsection{Graph decomposition}
+\label{graph_decomposition}
+
+(in progress)
+
+\subsection{Variable elimination}
+\label{variable_elimination}
+
+(in progress)
 
 
 

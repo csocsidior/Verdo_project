@@ -1,37 +1,41 @@
 \chapter{Assumption List}
 \label{assumptionlist}
+
+\emph{In this part of the appendix, the different assumptions and simplifications, which were applied in the project, are collected. In order to ease the reading, a reference points to the part in the report where the relevant assumption is used.}
+
 \begin{center}
 \begin{tabular}{| >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{3in} | >{\centering\arraybackslash}m{1in} | >{\centering\arraybackslash}m{1in} |}
 \hline
 \textbf{Number} & \textbf{Assumptions} & \textbf{Section reference} \\
 \hline
 \multirow{1}{4em}{1}
-& The fluid in the network is water. & a \\ 
+& The fluid in the network is water. & \secref{hydraulic_head} \\ 
 \hline
 \multirow{2}{4em}{2} 
-& All pipes in the system are filled up fully with water at all time. & a \\ 
+& All pipes in the system are filled up fully with water at all time. & \secref{pipe_component} \\ 
 \hline
 \multirow{1}{4em}{3} 
-& The pipes have a cylindrical structure and the cross section, $A(x)$, is constant for every $x \in [0,L]$.  & a \\ 
+& The pipes have a cylindrical structure and the cross section, $A(x)$, is constant for every $x \in [0,L]$.  & \secref{pipe_component} \\ 
 \hline
 \multirow{1}{4em}{4} 
-& The flow of water is uniformly distributed along the cross sectional area of the pipe and the flow is turbulent. & a \\ 
+& The flow of water is uniformly distributed along the cross sectional area of the pipe and the flow is turbulent. & \secref{pipe_component} \\ 
 \hline
 \multirow{1}{4em}{5} 
-& $ z$, the change in elevation only occurs in pipes. & a \\ 
+& The change in elevation, $ z$, occurs only in pipes. & \secref{pipe_component} \\ 
 \hline
 \multirow{1}{4em}{6} 
-& Pumps in the network are of the type centrifugal. & a \\ 
+& At high flows, the Reynolds number is assumed to be constant. Therefore the Darcy friction factor, $f_D$ is assumed to be constant. & \secref{pipe_component} \\ 
 \hline
 \multirow{1}{4em}{7} 
-& Tanks in the network have constant diameters. In other words, the walls of the tanks are vertical. & a \\ 
+& Pumps in the network are of the type centrifugal. & \secref{pump_component} \\ 
 \hline
-\multirow{1}{4em}{11} 
-& Functions describing the pressure drops regarding the flow through them across the components of the system are continuously differentiable. & a \\ 
+\multirow{1}{4em}{8} 
+& Tanks in the network have constant diameters. Equivalently, walls of the tanks are vertical. & \secref{elevatedreservoir_component} \\ 
 \hline
-\multirow{1}{4em}{12} 
-& At high flows, the Reynolds number is assumed to be constant. Therefore the Darcy friction factor, $f_D$ is assumed to be constant. & a \\ 
+\multirow{1}{4em}{9} 
+& Functions describing the pressure drops regarding the flow through them across the components of the system are continuously differentiable. & \secref{multi_inlet_reduced_network_description} \\ 
 \hline
+
 
 
 \end{tabular}

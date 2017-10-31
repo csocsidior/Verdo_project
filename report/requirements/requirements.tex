@@ -82,18 +82,18 @@ The total head is given
 
 \begin{equation}
 \label{totalhead}
-  h = h_p + z,
+  h_t = h_p + z,
 \end{equation}
 
 \begin{minipage}[t]{0.20\textwidth}
 where\\
-\hspace*{8mm} $h$ \\
+\hspace*{8mm} $h_t$ \\
 \hspace*{8mm} $z$ 
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
 is the total head,\\
-is the elevation.
+is the elevation(head).
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
@@ -159,7 +159,7 @@ is the resistance coefficient, the parameter of pipes.
 
 \begin{equation}
   \label{resistance_coefficient}
-  \gamma(q) = \frac{c f_{D}(\epsilon,Re(q), D )l}{D^{5}},
+  \gamma(q) = \frac{c_D f_{D}(\epsilon,Re(q), D )l}{D^{5}},
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
@@ -168,7 +168,7 @@ where\\
 \hspace*{8mm} $\epsilon$ \\
 \hspace*{8mm} $D$ \\
 \hspace*{8mm} $Re$ \\
-\hspace*{8mm} $c$ \\
+\hspace*{8mm} $c_D$ \\
 \hspace*{8mm} $l$ 
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
@@ -177,7 +177,7 @@ is the Darcy friction factor,  \\
 is the roughness of the pipe,  \\
 is the diameter of the pipe,  \\
 is the Reynolds-number,  \\
-is a constant in SI units,  \\
+is a coefficient in the D-W equation,  \\
 is the length of the pipe.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
@@ -198,7 +198,7 @@ It is important to note here that $f_i(\cdot)$ is a homogeneous map which means 
 
 \begin{equation}
   \label{homogeneity}
-  \rho_i |(\alpha q_i)|(\alpha q_i) = f_i(\alpha q_i) = \alpha^2 f_i(q_i).
+  \gamma_i |(\alpha q_i)|(\alpha q_i) = f_i(\alpha q_i) = \alpha^2 f_i(q_i).
 \end{equation}
 
 More precisely, with the given structure of $f(\cdot)$ the scaling would be $|\alpha|\alpha$, however $\alpha \geq 0$ is already assumed in \eqref{homogeneity}. 
@@ -264,13 +264,13 @@ In elevated reservoirs, the rate of change in the volume of the fluid inside the
 
 \begin{equation}
 \label{wt_model}
-\dot{p}_i = \tau_i\Big(\frac{p_i}{h_i}\Big) q_i
+\dot{p}_i = \tau_i\Big(\frac{p_i}{h_{l,i}}\Big) q_i
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
 where\\
 \hspace*{8mm} $p_i$ \\
-\hspace*{8mm} $h_i$ \\
+\hspace*{8mm} $h_{l,i}$ \\
 \hspace*{8mm} $\tau_i$ \\
 \newline
 \hspace*{8mm} $q_i$ 
@@ -904,7 +904,7 @@ where it is shown, that if the control flow, $\hat{d}_c$, is higher than the tot
 \dot{\hat{p}}_t = \gamma (\sigma - 1^T \hat{d}_c).
 \end{equation}
 
-It is important to point out that this first order differential equation in \eqref{wt_model_demand}, describes a simple mass-balance model of a single tank system, where the input flows equal to the overall demand in the network and the rate of change in storage in the tank. 
+It is important to point out that this first order differential equation in \eqref{wt_model_demand}, describes the mass-balance model of a single tank system, where the input flows equal to the overall demand in the network and the rate of change in storage in the tank. The result is not surprising, since according to \eqref{wt_model_demand}, the water level, or pressure, fluctuates according to the in- and outflow of water, which relates to the pumping and demand in the network. 
 
 The aim therefore is to set up a model which is capable of handling the dynamics of the tanks, constrained by the static network. Such dynamic system is expected to be derived in a form shown in eqref. 
 
@@ -928,7 +928,7 @@ The aim therefore is to set up a model which is capable of handling the dynamics
 \section{Simulation example on a simple pipe network}
 \label{multi_inlet_network_example}
 
-In order to illustrate and to show how the implementation and the model works, it is first tested on a simple, two-source, two-loop pipe network. This simple pipe system serves as an example to point out the differences and possible simplifications which were done regarding the modelling in Matlab and in EPANET. In this case simulation results are steady-state values of pressures and flows, and the models are excited by some arbitrary pressure inputs. 
+In order to illustrate and to show how the implementation of the model described in \secref{multi_inlet_reduced_network_description} works, it is first tested on a simple, two-source, two-loop pipe network. This simple pipe system serves as an example to point out the differences and possible simplifications which were done regarding the modelling in Matlab and in EPANET. In this case, simulation results are steady-state values of pressures and flows, and the models are excited by some arbitrary pressure inputs. 
 
 The underlying graph of the example network is shown in \figref{fig:example1_graph}
 
@@ -1030,7 +1030,7 @@ On account of non-linearity in \eqref{ac_eq},  it is not possible to solve the n
 
 the unique solution can be found. Furthermore, if $g^T(q_{\mathcal{C}}) g(q_{\mathcal{C}})$ is convex, the solution is the global minimum. By solving \eqref{ac_eq} for $a_{\mathcal{C}}$, the non-inlet pressures and all flows in the network can be calculated in terms of the input pressures and the total demand in the network. In order to obtain these values, the previously-derived output equation in \eqref{model_multiinlet1} can be used. 
 
-In the simulation, the most simple case is considered, when the total flow demand in the network is varies, however the distribution among vertices remains the same. In this case, $v$ is a constant vector, and the base demands in all vertices are the same. 
+In the simulation, the most simple case is considered, when the total flow demand in the network varies, however the distribution among vertices remains the same. In this case, $v$ is a constant vector, and the base demands in all vertices are the same. 
 
 The variation curve for the input pressures are set the same in both EPANET and in the simulator. 
 

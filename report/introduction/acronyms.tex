@@ -7,6 +7,7 @@
 		D-W     &&	Darcy-Weisbach									\\ \hline
 		EPA     &&	Environmental Protection Agency					\\ \hline
 		FCV     &&	Flow Control Valve								\\ \hline
+		GIS     &&	Geographic Information Systems					\\ \hline
 		GT      &&	Graph Theory									\\ \hline
 		MPC 	&&	Model Predictive Control						\\ \hline		
 		PRV     &&	Pressure Regulating Valve						\\ \hline
@@ -35,26 +36,65 @@
 
 
 \begin{tabular}{l l l} 
-	\textbf{Symbol}		&	\textbf{Description}										& \textbf{Unit}	\\\hline
-	$a$					&	Description									    			& [$\cdot$]\\
-	$b$					&	Description 						    					& [$\cdot$]\\	
+	\textbf{Symbol}		&	\textbf{Description}								& \hspace{25mm}\textbf{Unit}	\\\hline
+
+	$a_{h2},a_{h1},a_{h0}$ &	Pump constants	 								& \hspace{25mm}[$\cdot$]\\
+	$c_D$				&	Darcy-Weisbach equation coefficient	 				& \hspace{25mm}[$\frac{s^2}{m}$]\\
+	$D$					&	Diameter (of pipes or tanks)						& \hspace{25mm}[$m$]\\
+	$d$					&	Flow demand	 										& \hspace{25mm}[$\frac{m^3}{s}$]\\
+	$f(q)$				&	Pressure drop due to pipe resistance				& \hspace{25mm}[$Pa$]\\
+	$h$					&	Pressure drop due to elevation					    & \hspace{25mm}[$Pa$]\\
+	$h_{l}$				&	Water level in tanks							    & \hspace{25mm}[$m$]\\
+	$h_p$				&	Pressure head									    & \hspace{25mm}[$m$]\\
+	$h_t$				&	Total head									        & \hspace{25mm}[$m$]\\
+	$J$					&	Mass inertia of water pipes							& \hspace{25mm}[$kgm^2$]\\
+	$k_v$				&	Valve conductivity function							& \hspace{25mm}[$\cdot$]\\
+	$l$					&	Length (of pipes)									& \hspace{25mm}[$m$]\\
+	$p$					&	Absolute pressure									& \hspace{25mm}[$Pa$]\\
+	$q$					&	Volumetric flow									    & \hspace{25mm}[$\frac{m^3}{s}$]\\
+	$Re$				&	Reynolds number								        & \hspace{25mm}[$\cdot$]\\
+	$z$					&	Elevation head									    & \hspace{25mm}[$m$]\\
+
+	$\gamma p$			&	Resistance parameter of pipes 						& \hspace{25mm}[$\cdot$]\\	
+	$\Delta p$			&	Differential pressure 						    	& \hspace{25mm}[$Pa$]\\
+	$\epsilon p$		&	Roughness of pipes 						    		& \hspace{25mm}[$m$]\\	
+	$\mu(q,k_v)$		&	Pressure drop on valves 						   	& \hspace{25mm}[$Pa$]\\
+	$\omega_r$			&	Impeller rotational speed of centrifugal pumps 		& \hspace{25mm}[$\frac{rad}{s}$]\\
+	$\tau$				&	Elevated reservoir parameter 			 			& \hspace{25mm}[$\frac{s^2}{kg}$]\\	
+\end{tabular}
+
+\section*{Constants}
+
+\begin{tabular}{l l l} 
+	\textbf{Symbol}		&	\textbf{Description}							& \hspace{64mm}\textbf{Unit}			\\\hline						
+	$g$ = 9.83 			&	Gravitational acceleration						& \hspace{64mm}[$\frac{m}{s^2}$]\\
+	$\rho = 1000$		&	Density of water								& \hspace{64mm}[$\frac{kg}{m^3}$]\\
+	$f_D = ?$			&	Darcy friction factor							& \hspace{64mm}[$\frac{kg}{m^3}$]\\
 \end{tabular}
 
 \section*{Graph theory}
 
 \begin{tabular}{l l} 
 	\textbf{Symbol}		&	\textbf{Description}										\\\hline
-	$a$					&	Description									    			\\
-	$b$					&	Description		    										\\
+	$B$		&	Cycle matrix		    										\\
+	$\mathcal{E}$		&	Set of edges		    										\\
+	$\mathcal{E_T}$		&	Partitioned set of edges 		    										\\
+	$\mathcal{E_C}$		&	Partitioned set of edges 		    										\\
+	$\mathcal{G}$		&	Directed and connected graph									    			\\
+	$H$		&	Incidence matrix		    										\\
+	$\mathcal{V}$		&	Set of vertices		    										\\
+	$\bar{\mathcal{V}}$ &	Vertices regarding non-inlet points	    										\\
+	$\hat{\mathcal{V}}$ &	Vertices regarding inlet points	    										\\
+	$m$		&	Number of columns in the incidence matrix									\\
+	$n$		&	Number of rows in the incidence matrix									\\
+	$\mathcal{T}$		&	General sub-graph 		    										\\
+	$\mathcal{T^*}$		&	Tree in a graph		    										\\
+	$\mathcal{T}^*_{span}$		&	Spanning tree in a graph	    										\\
+
+
 \end{tabular}	
 
-\section*{Constants}
-
-\begin{tabular}{l l l} 
-	\textbf{Symbol}		&	\textbf{Description}										\\\hline
-	$a$					&	Description									    			\\
-	$b$					&	Description		    										\\
-\end{tabular}	
+	
 
 % \section*{Mathematical tools}
 % vectorfields
