@@ -1284,7 +1284,7 @@ Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_
 \end{cases}
 \end{equation}
 
-\eqref{final_flowmodel} is a system of Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states, $\hat{p}$, given the inputs, $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter, $v_{\mathcal{D}}$. The constraint is set by the algebraic equations regarding the static network and tells about the geometry on which the trajectory of the solution moves. Equivalently, \eqref{final_flowmodel} can be described in a more abstract form such that
+\eqref{final_flowmodel} is a system of Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states, $\hat{p}$, given the inputs, $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter, $v_{\mathcal{D}}$. The constraint is set by the algebraic equations regarding the static network and tells information about the geometry on which the trajectory of the ODE solution moves. Equivalently, \eqref{final_flowmodel} can be described in a more abstract form such that
 
 \begin{equation}
 \label{final_flowmodel_abstract}
@@ -1298,7 +1298,17 @@ The states of the system are the pressures in the WTs, therefore when the model 
 
 In order to calculate back the corresponding pressure inputs, $\bar{p}_{\mathcal{K}}$, first $\bar{p}$ is expressed from Ohm's law as proposed in \secref{multi_inlet_reduced_network_description}
 
+\begin{equation}
+  \label{non-inlet_p_WT}
+  \bar{p} =  \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h} .
+\end{equation}
 
+Now using that $\bar{p} = K \bar{p}_{\mathcal{K}} + D \bar{p}_{\mathcal{D}}$, the pressure output equation becomes
+
+\begin{equation}
+  \label{non-inlet_p_WT1}
+  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_3 q_\mathcal{C} + A_4 K \bar{d}_{\mathcal{K}} - A_4 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h} .
+\end{equation}
 
 \subsection{Simulation example}
 \label{simulation_example2}
