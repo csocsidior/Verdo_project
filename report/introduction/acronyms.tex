@@ -9,25 +9,27 @@
 		FCV     &&	Flow Control Valve								\\ \hline
 		GIS     &&	Geographic Information Systems					\\ \hline
 		GT      &&	Graph Theory									\\ \hline
+		KCL     &&	Kirchhoff's current law							\\ \hline
 		MPC 	&&	Model Predictive Control						\\ \hline		
 		PRV     &&	Pressure Regulating Valve						\\ \hline
 		OD		&&	Opening Degree									\\ \hline
 		WSS 	&&	Water Supply System								\\ \hline
+		WT  	&&	Water Tank										\\ \hline
 	\end{tabular}
 
 \section*{Acronyms - Randers Network}
 	
 	\begin{tabular}{|l c l|} \hline
-		BKV     &&	Bunkedal Vandværk 					\\ \hline
+		BKV     &&	Bunkedal Vandværk 										\\ \hline
 		LZ      &&	Low Zone												\\ \hline
-		HBP     &&	Hobrovej Pumpestation 		\\ \hline
-		HNP     &&	Hornbæk Pumpestation 			\\ \hline
-		HSP 	&&	Hadsundvej Pumpestation 	\\ \hline		
+		HBP     &&	Hobrovej Pumpestation 									\\ \hline
+		HNP     &&	Hornbæk Pumpestation 									\\ \hline
+		HSP 	&&	Hadsundvej Pumpestation 								\\ \hline		
 		HZ      &&	High Zone												\\ \hline
-		OMV		&&	Oust Mølle Vandværk 				\\ \hline
-		TBP 	&&	Toldbodgade Pumpestation 	\\ \hline
-		VSV 	&&	Vilstrup Vandværk 					\\ \hline
-		ØSV 	&&	Østrup Skov Vandværk 			\\ \hline
+		OMV		&&	Oust Mølle Vandværk 									\\ \hline
+		TBP 	&&	Toldbodgade Pumpestation 								\\ \hline
+		VSV 	&&	Vilstrup Vandværk 										\\ \hline
+		ØSV 	&&	Østrup Skov Vandværk 									\\ \hline
 	\end{tabular}
 
 \newpage
@@ -38,6 +40,7 @@
 \begin{tabular}{l l l} 
 	\textbf{Symbol}		&	\textbf{Description}								& \hspace{25mm}\textbf{Unit}	\\\hline
 
+	$A_{wt}$ 			&	Cross sectional area of water tanks	 				& \hspace{25mm}[$m^2$]\\
 	$a_{h2},a_{h1},a_{h0}$ &	Pump constants	 								& \hspace{25mm}[$\cdot$]\\
 	$c_D$				&	Darcy-Weisbach equation coefficient	 				& \hspace{25mm}[$\frac{s^2}{m}$]\\
 	$D$					&	Diameter (of pipes or tanks)						& \hspace{25mm}[$m$]\\
@@ -60,7 +63,7 @@
 	$\epsilon p$		&	Roughness of pipes 						    		& \hspace{25mm}[$m$]\\	
 	$\mu(q,k_v)$		&	Pressure drop on valves 						   	& \hspace{25mm}[$Pa$]\\
 	$\omega_r$			&	Impeller rotational speed of centrifugal pumps 		& \hspace{25mm}[$\frac{rad}{s}$]\\
-	$\tau$				&	Elevated reservoir parameter 			 			& \hspace{25mm}[$\frac{s^2}{kg}$]\\	
+	$\tau$				&	Elevated reservoir parameter 			 			& \hspace{25mm}[$\frac{Pa}{m^3}$]\\	
 \end{tabular}
 
 \section*{Constants}
@@ -69,7 +72,7 @@
 	\textbf{Symbol}		&	\textbf{Description}							& \hspace{64mm}\textbf{Unit}			\\\hline						
 	$g$ = 9.83 			&	Gravitational acceleration						& \hspace{64mm}[$\frac{m}{s^2}$]\\
 	$\rho = 1000$		&	Density of water								& \hspace{64mm}[$\frac{kg}{m^3}$]\\
-	$f_D = ?$			&	Darcy friction factor							& \hspace{64mm}[$\frac{kg}{m^3}$]\\
+	$f_D = 0.05$			&	Darcy friction factor							& \hspace{64mm}[$\frac{kg}{m^3}$]\\
 \end{tabular}
 
 \section*{Graph theory}

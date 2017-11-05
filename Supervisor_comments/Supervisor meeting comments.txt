@@ -33,3 +33,21 @@ SUP meeting 2nd
 mass conservation idea- > dot_p_t
 passivity expressiion -> prove stability 
 
+
+
+
+
+
+;Forsyning under Fjorden
+LINK HogL8 OPEN AT CLOCKTIME 8 PM
+LINK HogL8 CLOSED AT CLOCKTIME 10 PM
+
+
+LINK HL13 CLOSED IF Node HL7 ABOVE 2.75
+LINK HL13 OPEN IF Node HL7 BELOW 2.55
+LINK HogL12 CLOSED IF Node HL7 ABOVE 2.80
+LINK HogL12 OPEN IF Node HL7 BELOW 2.10
+LINK HogL13 CLOSED IF Node HL7 ABOVE 2.35
+LINK HogL13 OPEN IF Node HL7 BELOW 1.90
+
+

@@ -54,7 +54,7 @@ Loop networks are usually composed of smaller loops which are composed of smalle
 
 Elevated reservoirs, or tanks, are typically placed in the system to use them as buffers and level out the pressure and flow demand differences. When the demand is high, the waterworks might not be able to provide the sufficient amount of water in the network. In these cases, the elevated reservoir supplies the remaining demand. When the user consumption decreases, the system can be controlled such that the tank is being refilled to provide the required demand for the next peak time of consumption. Having such an elevated reservoir in the network, the system becomes more independent of the pump stations, as the refilled tank can itself maintain the desired pressure and flow for a limited time. 
 
-Due to the elevation of the tank, when it is filled up, the pumping stations need to provide a pressure higher than the pressure in the water tank. Therefore when the tank is being emptied, the pumping stations can reduce the amount of pressure they provide to the system, since the pressure from the elevated reservoir becomes dominant. This is due to the fact that the dynamics of systems with large storages come primarily from the pressure of the tank \cite{8thsemester_project}. However, it should be noted that normally the level in the tank is varying less than a meter. This means that the effect on the pump operation is limited. Due to these considerations, the dynamics of these elevated reservoirs has to be taken into account while modelling the system. 
+Due to the elevation of the tank, when it is filled up, the pumping stations need to provide a pressure higher than the pressure in the water tank(WT). Therefore when the tank is being emptied, the pumping stations can reduce the amount of pressure they provide to the system, since the pressure from the elevated reservoir becomes dominant. This is due to the fact that the dynamics of systems with large storages come primarily from the pressure of the tank \cite{8thsemester_project}. However, it should be noted that normally the level in the tank is varying less than a meter. This means that the effect on the pump operation is limited. Due to these considerations, the dynamics of these elevated reservoirs has to be taken into account while modelling the system. 
 
 \subsection{Pumps}
 \label{pumps}
@@ -128,7 +128,7 @@ The distribution network which is located in the southern part of the city is ca
 \label{fig:vilstrup_region}
 \end{figure}
 
-The only connection between Vilstrup and the northern region is through an emergency line, which is indeed used in emergency cases when the waterwork and pumping station in Vilstrup malfunctions or if there is a pollution in the water tanks. In these cases waterworks from the northern parts can provide water to the Vilstrup zone. Besides the emergency cases, Vilstrup does not rely on the waterworks and pumping stations in Randers North.  
+The only connection between Vilstrup and the northern region is through an emergency line, which is indeed used in emergency cases when the waterwork and pumping station in Vilstrup malfunctions or if there is a pollution in the WTs. In these cases waterworks from the northern parts can provide water to the Vilstrup zone. Besides the emergency cases, Vilstrup does not rely on the waterworks and pumping stations in Randers North.  
 
 Randers North consists of three different areas, each having its own particular geographical property. The water distribution in these regions are normally relies on each other, meaning that during a certain time period, the schedulings of the pumps are interconnected. 
 
@@ -214,7 +214,7 @@ The two main waterworks in the northern region are Bunkedal and Østrup Skov Wat
 
 One of the drawbacks, however, is that the fresh water is located in the LZ, therefore the water has to be pumped from BKV and ØSV to locations with higher elevation. Since BKV and ØSV are the main sources to the HZ and LZ areas, in the worst case, water has to be pumped up approximately 55 meters above sea level. For this reason, the pumping station called Toldbodgade provides the sufficient amount of pressure to the HZ areas. In the HZ areas, at the border of LZ and HZ, there are two pumping stations, Hadsundvej and Hobrovej, which divides the water distribution in the HZ and LZ. 
 
-As can be seen in \figref{fig:pumping_stations_and_waterworks}, the network in the HZ is a grid structure. The two main pump stations, HSP and HBP provide the sufficient pressure and flow to the grid and to the LZ areas, such that they keep a balance in pressure and flow. Furthermore, there is a water tank placed both at HSP and HBP. Since the HZ has an elevation of approximately 55 meters, the static pressure in each water tank at the two pumping stations is sufficient to provide pressure in the LZ areas, without any pumping effort. Therefore HSP and HBP provide pressure to the LZ areas such that the geodesic properties are exploited. An illustration of the two pumping stations and the HZ grid is shown in \figref{fig:HBP_HSP_grid}. 
+As can be seen in \figref{fig:pumping_stations_and_waterworks}, the network in the HZ is a grid structure. The two main pump stations, HSP and HBP provide the sufficient pressure and flow to the grid and to the LZ areas, such that they keep a balance in pressure and flow. Furthermore, there is a WT placed both at HSP and HBP. Since the HZ has an elevation of approximately 55 meters, the static pressure in each WT at the two pumping stations is sufficient to provide pressure in the LZ areas, without any pumping effort. Therefore HSP and HBP provide pressure to the LZ areas such that the geodesic properties are exploited. An illustration of the two pumping stations and the HZ grid is shown in \figref{fig:HBP_HSP_grid}. 
 
  %HZ grid
 \begin{figure}[H]
@@ -241,7 +241,7 @@ In this report, the control of the two main pumping stations, Hadsundvej and Hob
 \label{fig:simplified_network}
 \end{figure}
 
-The modelling of this system is going to be used for control purposes, which means that the model needs to be simple, but at the same time needs to have the same characteristics as of the original network. In the WSS in Randders, the control purpose is to find an optimal control scheme which is able to actuate the pumps at the two main pumping stations, such that the dynamic effect of the water tanks at each station are taken into account. 
+The modelling of this system is going to be used for control purposes, which means that the model needs to be simple, but at the same time needs to have the same characteristics as of the original network. In the WSS in Randders, the control purpose is to find an optimal control scheme which is able to actuate the pumps at the two main pumping stations, such that the dynamic effect of the WTs at each station are taken into account. 
 
 Tom's comments:\newline
 -some additional info on the purpose of the control \newline

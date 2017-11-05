@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt,fleqn,dvipsnames,twoside,openright]{memoir}  	% Openright aabner kapitler paa hoejresider (openany begge)
+\documentclass[a4paper,11pt,ceqn,dvipsnames,twoside,openright]{memoir}  	% Openright aabner kapitler paa hoejresider (openany begge)
 
 
 %%%% PACKAGES %%%%
@@ -59,6 +59,8 @@
 %\usepackage{subcaption}
 \usepackage{capt-of}
 
+ %\usepackage{nccmath}
+
 % ¤¤ Matematik mm. ¤¤
 \usepackage{amsmath}						% Avancerede matematik-udvidelser
 \usepackage{blkarray}
@@ -74,6 +76,13 @@
 \AtBeginEnvironment{sansmath}{\let\bm\mathsfbf}{}{}
 \DeclareRobustCommand{\ttfamily}{\fontencoding{T1}\fontfamily{lmtt}\selectfont}
 
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+    \setlength\abovedisplayskip{10pt}
+    \setlength\belowdisplayskip{10pt}
+    \setlength\abovedisplayshortskip{10pt}
+    \setlength\belowdisplayshortskip{10pt}
+}
 
 \usepackage{gensymb}
 
@@ -191,6 +200,7 @@
 \setlength{\belowcaptionskip}{0pt}			% Afstand under figurteksten
 
 
+
 \let\oldequation=\equation
 \let\endoldequation=\endequation
 \renewenvironment{equation}{\vspace{-6mm}\begin{oldequation}}{\end{oldequation}\vspace{-6mm}}
@@ -287,6 +297,8 @@
 \usepackage{pdflscape}
 \usepackage{bbm}
 \usepackage{dsfont}
+
+
 
 
 %%%% WARNING HACKS %%%%
