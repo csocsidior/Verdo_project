@@ -13,6 +13,7 @@
 		MPC 	&&	Model Predictive Control						\\ \hline		
 		PRV     &&	Pressure Regulating Valve						\\ \hline
 		OD		&&	Opening Degree									\\ \hline
+		ODE		&&	Ordinary Differential Equation					\\ \hline
 		WSS 	&&	Water Supply System								\\ \hline
 		WT  	&&	Water Tank										\\ \hline
 	\end{tabular}
@@ -56,6 +57,7 @@
 	$p$					&	Absolute pressure									& \hspace{25mm}[$Pa$]\\
 	$q$					&	Volumetric flow									    & \hspace{25mm}[$\frac{m^3}{s}$]\\
 	$Re$				&	Reynolds number								        & \hspace{25mm}[$\cdot$]\\
+	$T$					&	Period of time								        & \hspace{25mm}[$s$]\\
 	$z$					&	Elevation head									    & \hspace{25mm}[$m$]\\
 
 	$\gamma p$			&	Resistance parameter of pipes 						& \hspace{25mm}[$\cdot$]\\	
@@ -79,20 +81,24 @@
 
 \begin{tabular}{l l} 
 	\textbf{Symbol}		&	\textbf{Description}										\\\hline
-	$B$		&	Cycle matrix		    										\\
-	$\mathcal{E}$		&	Set of edges		    										\\
-	$\mathcal{E_T}$		&	Partitioned set of edges 		    										\\
-	$\mathcal{E_C}$		&	Partitioned set of edges 		    										\\
-	$\mathcal{G}$		&	Directed and connected graph									    			\\
-	$H$		&	Incidence matrix		    										\\
-	$\mathcal{V}$		&	Set of vertices		    										\\
-	$\bar{\mathcal{V}}$ &	Vertices regarding non-inlet points	    										\\
-	$\hat{\mathcal{V}}$ &	Vertices regarding inlet points	    										\\
-	$m$		&	Number of columns in the incidence matrix									\\
+	$B$		&	Cycle matrix		    												\\
+	$\mathcal{E}$		&	Set of edges		    									\\
+	$\mathcal{E_T}$		&	Edges regarding the sub-graph $\mathcal{T}$ 		    	\\
+	$\mathcal{E_C}$		&	Edges regarding the sub-graph $\mathcal{C}$ 		    	\\
+	$I$					&	Identity matrix		    									\\
+	$\mathcal{G}$		&	Directed and connected graph								\\
+	$H$		&	Incidence matrix		    											\\
+	$\mathcal{V}$		&	Set of vertices		    									\\
+	$\bar{\mathcal{V}}$ &	Vertices regarding non-inlet points	    					\\
+	$\hat{\mathcal{V}}$ &	Vertices regarding inlet points	    						\\
+	$c$		&	Number of pumping stations												\\
+	$l$		&	Number of elevated reservoirs											\\
+	$m$		&	Number of columns in the incidence matrix								\\
 	$n$		&	Number of rows in the incidence matrix									\\
-	$\mathcal{T}$		&	General sub-graph 		    										\\
-	$\mathcal{T^*}$		&	Tree in a graph		    										\\
-	$\mathcal{T}^*_{span}$		&	Spanning tree in a graph	    										\\
+	$\mathcal{T}$		&	General sub-graph 		    								\\
+	$\mathcal{T^*}$		&	Tree in a graph		    									\\
+	$\mathcal{T}^*_{span}$		&	Spanning tree in a graph	    					\\
+
 
 
 \end{tabular}	
@@ -122,7 +128,23 @@
 %\newpage
 \section*{Glossary of mathematical notation}
 
-Description of the mathematical notation and terminology used in the report.
+\textbf{Matrices}
+
+References for diagonal matrices are noted with $diag(\cdot)$, which maps an n-tuple to the corresponding diagonal matrix:
+
+\begin{equation*}
+diag \: : \: \mathbb{R}^{n} \rightarrow \mathbb{R}^{n \times n},
+\end{equation*}
+\begin{equation*}
+diag(a_1,\: ... \:, a_n ) := 
+\begin{pmatrix}
+    a_{1} & & \\
+    & \ddots & \\
+    & & a_{n}
+  \end{pmatrix}.
+  \end{equation*}
+
+
 
 % \textbf{Upper and lower bounds of a variable}
 
