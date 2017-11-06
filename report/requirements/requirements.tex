@@ -316,7 +316,7 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the cross sectional area of the tank.
+is the cross sectional area of the $i^{th}$ tank.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
@@ -1116,7 +1116,7 @@ In the single-WT modelling case, the dynamics can be described by a one-state, s
 \section{Multi-inlet, multi-WT model}
 \label{multi_inlet_multi_WT_model}
 
-In case when there are more than one WT, the mass-balance equation, proposed in \eqref{massbalance_model2} is not applicable due to the fact that the pressures delivered by the tanks have to be balanced, similarly as in a simple connected-volume system. Therefore, a model framework is required which can handle the dynamics of multiple tanks, constrained by the static network and driven by the input flows of the pumping stations. In order to derive such model, the partitioning of the network is reconsidered. As described previously, the incidence matrix is partitioned such that 
+In case when there are more than one WTs, the mass-balance equation, proposed in \eqref{massbalance_model2} is not applicable due to the fact that the pressures delivered by the tanks have to be balanced, similarly as in a simple connected-volume system. Therefore, a model framework is required which can handle the dynamics of multiple tanks, constrained by the static network and driven by the input flows of the pumping stations. In order to derive such model, the partitioning of the network is reconsidered. As described previously, the incidence matrix is partitioned such that 
 
 \begin{equation}
 \label{H_matrix_sub1}
@@ -1148,7 +1148,7 @@ and \\
  represents the remaining vertices in the graph.
 \end{minipage}
 
-We originally defined $\bar{d}$ to describe non-inlet demands in the network and $\hat{d}$ to describe inlet-flows of the pumping stations, along with the demands of the WTs. With the redefined notation and partitioning of vertices, now we make sure that the vertices related to tanks are separated and all other points in the network are in the same set. So now, $\hat{d}$ describes flows regarding the WTs. In order to express the controlled inlet and non-inlet points in the network, the vectors related to the nodes marked with bars, $\bar{p}$and $\bar{d}$, are split such that
+We originally defined $\bar{d}$ to describe non-inlet demands in the network and $\hat{d}$ to describe inlet-flows of the pumping stations, along with the demands of the WTs. With the redefined notation and partitioning of vertices, now we make sure that the vertices related to tanks are separated and all other points in the network are in the same set. So now, $\hat{d}$ describes flows regarding the WTs. In order to express the controlled inlet and non-inlet points in the network, the vectors related to the nodes marked with bars, $\bar{p}$ and $\bar{d}$, are split such that
 
 \begin{subequations}
 
@@ -1176,7 +1176,7 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the vector including the controlled inlet pressures ,\\
+is the vector including the inlet pressures ,\\
 is the the vector including the non-inlet pressures, \\
 is the the vector including the controlled inlet flows, \\
 is the the vector including the non-inlet demands, \\
@@ -1246,7 +1246,7 @@ As shown in \eqref{WT_flows}, the vertex law describes the dependencies of the W
 
 where $\Lambda = diag(\frac{1}{\tau_1},... ,\frac{1}{\tau_l}) \in \: \mathbb{R}^l_+$. 
 
-Inserting the expression of $\hat{d}$ in \eqref{WT_flows}, into the WT dynamics leads to
+Inserting $\hat{d}$ in \eqref{WT_flows}, into the WT dynamics leads to
 
 \begin{equation}
 \label{WT_matrixform_1}
@@ -1260,7 +1260,7 @@ Now, with the partitioning of $\bar{d}$, the inlet and non-inlet demands are ins
 \Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
 \end{equation}
 
-As shown in \eqref{WT_matrixform_final}, the dynamics are now in terms of the inputs, $\bar{d}_{\mathcal{K}}$, the overall demand in the network, $\sigma$ and $q_\mathcal{C}$. Recalling \eqref{meshresult2} in \secref{multi_inlet_reduced_network_description} and using the abbreviations for the corresponding matrices, Ohm's law is reformulated such that
+As shown in \eqref{WT_matrixform_final}, the dynamics are now in terms of the inputs, $\bar{d}_{\mathcal{K}}$, the overall demand in the network, $\sigma$ and $q_\mathcal{C}$. Recalling \eqref{meshresult2} in \secref{multi_inlet_reduced_network_description} and using the abbreviations for the corresponding matrices, Ohm's law was reformulated such that
 
  \begin{equation}
 \label{meshresult2_WT_model}
@@ -1274,7 +1274,7 @@ Now, using again that $\bar{d} = K \bar{d}_{\mathcal{K}} + D \bar{d}_{\mathcal{D
 f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2 f_{\mathcal{T}}(A_3 q_\mathcal{C} + A_4 K \bar{d}_{\mathcal{K}} - A_4 D v_{\mathcal{D}} \sigma) = 0.
 \end{equation} 
 
-Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_model1}, \eqref{WT_matrixform_final} describes the dynamics of the system, taking into account the static constraints by the demands. Therefore, the structure of the overall Multi-inlet, multi-WT model can be summarized as follows
+Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_model1}, \eqref{WT_matrixform_final} describes the dynamics of the system, taking into account the static constraints by the demands. Therefore, the structure of the overall Multi-inlet, multi-WT model dynamics can be summarized as follows
 
 \begin{equation}
 \label{final_flowmodel}
@@ -1284,17 +1284,9 @@ Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_
 \end{cases}
 \end{equation}
 
-\eqref{final_flowmodel} is a system of Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states, $\hat{p}$, given the inputs, $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter, $v_{\mathcal{D}}$. The constraint is set by the algebraic equations regarding the static network and tells information about the geometry on which the trajectory of the ODE solution moves. Equivalently, \eqref{final_flowmodel} can be described in a more abstract form such that
+\eqref{final_flowmodel} is a system of Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states, $\hat{p}$, given the inputs, $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter, $v_{\mathcal{D}}$. The constraint is set by the algebraic equations regarding the static network and includes information about the geometry on which the trajectory of the ODE solution can be found. 
 
-\begin{equation}
-\label{final_flowmodel_abstract}
-\begin{cases}
-    \dot{\hat{p}} = g_{v_{\mathcal{D}}}(q_\mathcal{C}, \bar{d}_{\mathcal{K}}, \sigma)\\
-    q_\mathcal{C} = h_{v_{\mathcal{D}}}(q_\mathcal{C},\hat{p}, \bar{d}_{\mathcal{K}}, \sigma).
-\end{cases}
-\end{equation}
-
-The states of the system are the pressures in the WTs, therefore when the model equations are solved, $q_\mathcal{C}$ are first calculated from the initial pressure values, $\hat{p}$ , equivalently, the initial water levels in the tanks. 
+The states of the system are the pressures in the WTs, therefore when the model equations are solved for $q_\mathcal{C}$, initial information of the pressure values, $\hat{p}$, is required. Equivalently, the initial water levels in the tanks have to be known. 
 
 In order to calculate back the corresponding pressure inputs, $\bar{p}_{\mathcal{K}}$, first $\bar{p}$ is expressed from Ohm's law as proposed in \secref{multi_inlet_reduced_network_description}
 
@@ -1303,17 +1295,41 @@ In order to calculate back the corresponding pressure inputs, $\bar{p}_{\mathcal
   \bar{p} =  \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h} .
 \end{equation}
 
-Now using that $\bar{p} = K \bar{p}_{\mathcal{K}} + D \bar{p}_{\mathcal{D}}$, the pressure output equation becomes
+Now using that $\bar{p}_{\mathcal{K}} = K^T \bar{p} $, the pressure input equation becomes
 
 \begin{equation}
   \label{non-inlet_p_WT1}
   \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_3 q_\mathcal{C} + A_4 K \bar{d}_{\mathcal{K}} - A_4 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h} .
 \end{equation}
 
+Furthermore, using that $\bar{p}_{\mathcal{D}} = D^T \bar{p} $, the pressure output equation becomes
+
+\begin{equation}
+  \label{non-inlet_p_WT111}
+  \bar{p}_{\mathcal{D}} = D^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_3 q_\mathcal{C} + A_4 K \bar{d}_{\mathcal{K}} - A_4 D v_{\mathcal{D}} \sigma) - D^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - D^T\bar{h} .
+\end{equation}
+
+Equivalently, \eqref{final_flowmodel} and \eqref{non-inlet_p_WT111} can be described in a more abstract form, considering a non-linear state-space system structure such that
+
+\begin{equation}
+\label{final_flowmodel_abstract}
+\begin{cases}
+    \dot{\hat{p}} = g_{v_{\mathcal{D}}}( \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})\\
+    \bar{p}_{\mathcal{D}} = h_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})
+\end{cases}
+\end{equation}
+\begin{equation*}
+s.t. \:\:\:\:\: q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})
+\end{equation*}
+
+with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \mathbb{R}^{c}$ the input vector, $\sigma \in \mathbb{R}_{+}$ the measurable disturbance and $v_{\mathcal{D}} \in \mathbb{R}^{(n-l-c)}$ the time-varying parameter. 
+
+%q_\mathcal{C} = k_{v_{\mathcal{D}}}(q_\mathcal{C},\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
+
 \subsection{Simulation example}
 \label{simulation_example2}
 
-1234
+(in progress)
 
 \section{Model comparison}
 \label{model_comparison}
