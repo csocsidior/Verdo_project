@@ -15,62 +15,69 @@
 \chapter{Simulation framework in EPANET}
 \label{simulation_framework_in_EPANET}
 
-\emph{This chapter gives a general introduction about the need for model simplification in WSSs. Different approaches and methods are discussed in a state of art manner, including the development and methodologies employed in this field. Lastly, an attempt is made to simplify the Randers WSS, using one of the techniques which are being introduced in this chapter. }
+\emph{This chapter gives an insight into the simulation model of the Randers WSS in EPANET. In order to better understand how the simulation works, the modelling of the different pump stations, waterworks, and the demand patterns are explained in detail. In the end, an attempt is made to split the network into different subsystems and make necessary modifications such that data is easily extractable for system identification purposes.}
 
-\section{Purpose of the model reduction}
-\label{purpose_of_the_model_reduction}
+% \emph{This chapter gives a general introduction about the need for model simplification in WSSs. Different approaches and methods are discussed in a state of art manner, including the development and methodologies employed in this field. Lastly, an attempt is made to simplify the Randers WSS, using one of the techniques which are being introduced in this chapter. }
 
-As it was explained in \chapref{description_of_water_supply_systems}, the typical components of WSSs are reservoirs, pipes, pumps and valves. Each of these interconnected elements are dependant on their neighbours, thus the behaviour of the entire WSS depends on each of its elements. For simulation purposes, it is required that the model of the real-life network consists of thousands of elements in order to accurately replicate hydraulic behaviour and the topographical layout of the system. Such models are appropriate for simulation purposes, however, online optimisation tasks are much more computationally demanding, therefore simplified models are required. There are different approaches for model reduction, however the outcome of most of these methods is a hydraulic model with a smaller number of components than the original one. 
+\section{Model and data structure}
+\label{model_data_and_structure}
 
-The use of Geographic Information Systems(GIS) in the water industry resulted in an increasing amount of information about actual network topology and service that can be utilized in a model \cite{johnson2016geographic}. As a consequence this, normally the simulation model of WSSs include exactly the same amount of components as in real-life, and therefore a large-scale are considered. 
+As it was explained in \chapref{description_of_water_supply_systems}, the typical components of WSSs are reservoirs, pipes, pumps and valves. Each of these interconnected elements are dependant on their neighbours, thus the behaviour of the entire WSS depends on each of its elements. For simulation purposes, it is required that the model of the real-life network consists of thousands of elements in order to accurately replicate hydraulic behaviour and the topographical layout of the system. Such models are appropriate for simulation purposes, however, online optimisation tasks are much more computationally demanding. Therefore the available data in the simulation framework has to be incorporated into a more compact model for control purposes. 
 
-The efficiency and accuracy of large-scale system reduction is highly dependant on the complexity of models and the selected method. In this field, several researches has been focusing on the verification of different methods and therefore provided case studies and results. 
+The use of Geographic Information Systems(GIS) in the water industry resulted in an increasing amount of information about actual network topology and service that can be utilized in a model \cite{johnson2016geographic}. As a consequence of this, normally the simulation model of WSSs include exactly the same amount of components as in real-life. 
 
-\section{State of the art model reduction analysis}
-\label{state_of_the_art_model_reduction_analysis}
+The following data and model description is strongly based on the Randers WSS EPANET documentation (cite), provided by Verdo A/S, where the considerations about the modelling and the data processing from GIS are gathered. The model is mainly based on the data gathered in GIS, however considerations on case studies and experience have also been taken into account. 
 
-In the frame of this project, the WSS in Randers is considered as a large-scale system and attempted to be reduced. However, before discussing the reduction on the actual model network, first the different methods for model reduction are introduced in a state of the art manner. It is worth noting that throughout the report, the terms reduction and simplification are used alternately as a description of the process of achieving a hydraulic model with a smaller number of components than the original. The different reduction approaches, discussed in this report are: 
+Initially in the model, nodes were made among each different pipe elements, however this increased the calculation time significantly. Therefore the number of nodes in the network are reduced based on the fact that pipe sections with the same material and dimensions can be treated as one pipeline. The simulation model, including the VSV region consists of the following number of elements, as shown in \tabref{numberofelements_table}
 
-\begin{itemize}
-\item Skeletonization, which is researched in \cite{walski2003advanced}, \cite{MARTINEZSOLANO2017286} and \cite{battlepaper}.
-\item Parameter fitting (cite)
-\item Graph decomposition (cite)
-\item Variable elimination (cite)
-\end{itemize}
+\begin{center}
+\label{numberofelements_table}
+    \begin{tabular}{ | p{3cm} | p{3cm} |}
+    \hline
+    \textbf{Element type} & \textbf{Number}  \\ 
+    \hline
+    Links & 4144  \\ 
+    \hline
+    Nodes & 4180  \\ 
+    \hline
+    Tanks & 6  \\ 
+    \hline
+    \end{tabular}
+    \captionof{table}{asd}
+\end{center}
 
-\subsection{Skeletonization}
-\label{skeletonization}
+It is important to note that the number of tanks in the model does not necessarily reflect the number of WTs in the real system. In certain parts of the system, the modelling reflects the real-world results, however the structure of certain pumping stations and waterworks are different. For the same reason, one pump in the model can replace more pumps in parallel in the real world. During the modelling, 
 
-Skeletonization can be considered as a reduction of data needed to represent the operation of the hydraulic system without significant loss of information \cite{reduction_PHD}. The basic types of network components are maintained but the individual network components are combined and replaced. Skeletonization is not a single process but several different low-level element removal processes that must be applied in series in order to ensure that the demands in the network are logically reduced back to their source of supply. 
-
-(in progress)
-
-\emph{Comments for the supervisors:}
-
-\textcolor{blue}{The plan is to try skeletonization in the first place. Write algorithm for serial/parallel pipe replacement and tree reduction. The Randers WSS should be split into different zones: (HNP, High zone, Low zone,  waterworks on the eastern side) and skeletonization should be carried out on each sub-system separately. After it is done, the sub-systems can be attached again. The HNP region and Low zone and the waterworks on the eastern side are mainly tree structures, they can be reduced significantly,i think, with skeletonization. I am not sure about the grid in the High zone. If the network after the skeletonization is not sufficiently reduced, then try a different method on the already skeletonized network.}
-
-\todo{Q1: Verification of reduced networks}
-\todo{Q2: Distributed optimization without reduction, large-scale network}
-
-\subsection{Parameter fitting}
-\label{parameter_fitting}
+\subsection{Water consumption data}
+\label{water_consumption_data}
 
 (in progress)
 
-\subsection{Graph decomposition}
-\label{graph_decomposition}
+\subsection{Pump stations and waterworks}
+\label{pump_stations_andwaterworks}
 
 (in progress)
 
-\subsection{Variable elimination}
-\label{variable_elimination}
+\section{Model calibration and validation}
+\label{model_calibration_and_validation}
+
+\subsection{Pipe roughness}
+\label{pipe_roughness}
 
 (in progress)
 
-\section{Sectioning of the Randers WSS}
-\label{sectioning_of_the_randers_WSS}
+\subsection{Control rules in simulation}
+\label{control rules in simulation}
 
 (in progress)
+
+
+
+
+
+
+
+
 
 
 

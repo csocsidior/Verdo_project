@@ -978,7 +978,7 @@ The variation curve for the input pressures are set the same in both EPANET and 
 \section{Inclusion of elevated reservoirs}
 \label{inclusion_of_reservoirs}
 
-When a WT is being attached to an existing pipe network, certain properties of the previous system must be modified. Regarding the underlying graph of the network, when a WT is attached, the vertex to which the tank is connected becomes a vertex with a demand. However, the demand flow which describes the filling and emptying process of the tank, in this case, is not directly related to any user consumption profile, since flow can go into and come out of the tank. Therefore, the constraint on demand flows, described in \eqref{non_inlet_constraint} is not true in case of elevated reservoirs, as the demand can be both positive or negative. For this reason, demands on the reservoirs are treated as inputs and added to the nodes marked with hats $\hat{p}$ and $\hat{d}$. The nodes on which demand of elevated reservoirs are defined are partitioned from the input flows of the pumps such that 
+When a WT is being attached to an existing pipe network, certain properties of the previous system must be modified. Regarding the underlying graph of the network, when a WT is attached, the vertex to which the tank is connected becomes a vertex with a demand. However, the demand flow which describes the filling and emptying process of the tank, in this case, is not directly related to any user consumption profile, since flow can go into and come out of the tank. Therefore, the constraint on demand flows, described in \eqref{non_inlet_constraint} is not true in case of elevated reservoirs, as the demand can be both positive or negative. For this reason, demands on the reservoirs are treated as inputs and added to the nodes marked with hats $\hat{p}$ and $\hat{d}$. The nodes on which demand of elevated reservoirs are defined are selected from the input flows of the pumps such that 
 
 \begin{subequations}
 \begin{equation}
@@ -1324,6 +1324,8 @@ s.t. \:\:\:\:\: q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K
 
 with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \mathbb{R}^{c}$ the input vector, $\sigma \in \mathbb{R}_{+}$ the measurable disturbance and $v_{\mathcal{D}} \in \mathbb{R}^{(n-l-c)}$ the time-varying parameter. 
 
+It is worth noting here that this model with the flow inputs and the dynamics of the WTs result in a scalar dynamic equation in case of one tank. Therefore, the proposed restructuring of the model here is suitable to describe one tank systems as well, and capable of replacing the mass-balance based system dynamics, proposed in \secref{multi_inlet_single_WT_model}. 
+
 %q_\mathcal{C} = k_{v_{\mathcal{D}}}(q_\mathcal{C},\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
 
 \subsection{Simulation example}
@@ -1334,7 +1336,50 @@ with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \
 \section{Model comparison}
 \label{model_comparison}
 
+In this chapter, three different model arrangements have been proposed and two of them have been derived for control purposes. As a summary of the network modelling, the different approaches and system structures are compared. It should be noted again, that notation has been redefined through the modelling, therefore symbols for the Multi-inlet and Multi-inlet, single-WT models are different from the ones describing the Multi-inlet, multi-WT model. With this in mind, the properties of the three network models are summed up in the following table
 
+\begin{center}
+    \begin{tabular}{ | >{\centering\arraybackslash}m{1.8cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} |}
+    \hline
+    \multirow{1}{*}
+     & \textbf{Multi-inlet model} & \textbf{Multi-inlet/single-WT, based on mass-balance} & \textbf{Multi-inlet/multi-WT} \\ 
+     \hline
+     \multirow{1}{*}
+    \textbf{Description} & A model, describing a system without WTs, therefore describing a static network with time-varying parameters. & A model, describing the system dynamics with only one WT, relying on the mass-balance in the system, constrained by the static network. The parameter of the system is also time-varying. & A model describing the system dynamics with multiple WTs, constrained by the static network with time-varying parameter.\\ 
+    \hline
+      \multirow{1}{*}
+    \textbf{Input} & $\hat{p}$ - Pressures of the multiple pumping stations. & $\hat{d}_c$ - Flows of the multiple pumping stations. & $\bar{d}_{\mathcal{K}}$ - Flows of the multiple pumping stations.\\ 
+    \hline
+      \multirow{1}{*}
+    \textbf{States} & - & $\hat{p}_t$ - The pressure in one tank. & $\hat{p}$ - The pressures in multiple tanks.\\ 
+    \hline
+      \multirow{1}{*}
+    \textbf{Output} & $\bar{p}$ - Pressures in the non-inlet points. & $\bar{p}$ - Pressures in the non-inlet points & $\bar{p}$ - Pressures in the non-inlet points.\\ 
+    \hline
+      \multirow{1}{*}
+    \textbf{Advantages} & The network is without dynamics, therefore all solutions are steady-state values. & The network is controlled with flow, which makes the system more robust towards pressure errors in the WT. The dynamics are governed by a scalar equation, relying on the input flows.  & The control can handle the pressure balance among multiple WTs.\\ 
+    \hline
+      \multirow{1}{*}
+    \textbf{Governing equations} & 123 & 123 & \begin{equation*}
+\label{final_flowmodel_abstract}
+\begin{cases}
+    \dot{\hat{p}} = g_{v_{\mathcal{D}}}( \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})\\
+    \bar{p}_{\mathcal{D}} = h_{v_{\mathcal{D}}}(\hat{p}, \!\bar{d}_{\mathcal{K}}, \!\sigma, \! q_\mathcal{C})
+\end{cases}
+\end{equation*}
+\vspace{-7mm}
+\begin{equation*}
+q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})
+\end{equation*}\\ 
+    \hline
+      \multirow{1}{*}
+    \textbf{Section reference} & \secref{multi_inlet_reduced_network_description} & \secref{multi_inlet_single_WT_model} & \secref{multi_inlet_multi_WT_model}\\ 
+    \hline
+    \end{tabular}
+    \captionof{table}{Summary of the network models}
+\end{center}
+
+In the further discussion, the Multi-inlet, multi-WT network model is considered, as that one is the most suitable for describing the water network in Randers. 
 
 
 
