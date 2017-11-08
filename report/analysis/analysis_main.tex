@@ -22,13 +22,13 @@
 \section{Model and data structure}
 \label{model_data_and_structure}
 
-As it was explained in \chapref{description_of_water_supply_systems}, the typical components of WSSs are reservoirs, pipes, pumps and valves. Each of these interconnected elements are dependant on their neighbours, thus the behaviour of the entire WSS depends on each of its elements. For simulation purposes, it is required that the model of the real-life network consists of thousands of elements in order to accurately replicate hydraulic behaviour and the topographical layout of the system. Such models are appropriate for simulation purposes, however, online optimisation tasks are much more computationally demanding. Therefore the available data in the simulation framework has to be incorporated into a more compact model for control purposes. 
+As it was explained in \chapref{description_of_water_supply_systems}, the typical components of WSSs are reservoirs, pipes, pumps and valves. Each of these interconnected elements are dependent on their neighbours, thus the behaviour of the entire WSS depends on each of its elements. For simulation purposes, it is required that the model of the real-life network consists of thousands of elements in order to accurately replicate hydraulic behaviour and the topographical layout of the system. Such models are appropriate for simulation purposes, however, online optimisation tasks are much more computationally demanding. Therefore the available data in the simulation framework can be used to create a more compact model for control purposes. 
 
 The use of Geographic Information Systems(GIS) in the water industry resulted in an increasing amount of information about actual network topology and service that can be utilized in a model \cite{johnson2016geographic}. As a consequence of this, normally the simulation model of WSSs include exactly the same amount of components as in real-life. 
 
-The following data and model description is strongly based on the Randers WSS EPANET documentation (cite), provided by Verdo A/S, where the considerations about the modelling and the data processing from GIS are gathered. The model is mainly based on the data gathered in GIS, however considerations on case studies and experience have also been taken into account. 
+The following data and model description strongly relies on the documentation of the Randers WSS EPANET model (cite), provided by Verdo A/S, where the considerations and modelling steps with the available data from GIS are gathered. The model is mainly based on the data gathered in GIS, however considerations on case studies and experience have also been taken into account. It is important to note that the following results and properties of the EPANET model serve as a basis for the data processing and therefore frequently used in the report.  
 
-Initially in the model, nodes were made among each different pipe elements, however this increased the calculation time significantly. Therefore the number of nodes in the network are reduced based on the fact that pipe sections with the same material and dimensions can be treated as one pipeline. The simulation model, including the VSV region consists of the following number of elements, as shown in \tabref{numberofelements_table}
+Initially in the model, nodes were made among each different pipe elements, however this increased the calculation time significantly. Therefore the number of nodes in the network are reduced based on the fact that pipe sections with the same material and dimensions can be treated as one pipeline. In order to illustrate the complexity of the network, the number of elements in the simulation model including the VSV region, is shown in \tabref{numberofelements_table}
 
 \begin{center}
 \label{numberofelements_table}
@@ -43,20 +43,42 @@ Initially in the model, nodes were made among each different pipe elements, howe
     Tanks & 6  \\ 
     \hline
     \end{tabular}
-    \captionof{table}{asd}
+    \captionof{table}{Number of WSS elements.}
 \end{center}
 
-It is important to note that the number of tanks in the model does not necessarily reflect the number of WTs in the real system. In certain parts of the system, the modelling reflects the real-world results, however the structure of certain pumping stations and waterworks are different. For the same reason, one pump in the model can replace more pumps in parallel in the real world. During the modelling, 
+It is important to note that the number of tanks in the model does not necessarily reflect the number of WTs in the real system. In certain parts of the system, the modelling reflects the real-world results, however the structure of certain pumping stations and waterworks are different. For the same reason, at some places in the simulation one pump serves to simulate a whole pumping station while in the real world more pumps are placed in parallel. 
 
 \subsection{Water consumption data}
 \label{water_consumption_data}
 
-(in progress)
+In the model, consumption data is divided into two groups: non-industrial and industrial demands. The number of demand categories were chosen to keep down as it turned out that the quality of this data from GIS is not representative enough, as relatively few building addresses, which are the registered floor and  two or more storey buildings. The consumption curves were defined such that they are matched the pumped water volumes from waterworks and pumping stations in each individual zones. Therefore a calculation for the deviation has been made over the day such that it was possible to conclude on the uniformity of the consumption types in each zone (cite). With around 3 percent uncertainty, the consumption patterns turned out to be reliable in the model. The demand patterns over a 24 hours long period are shown in  
+
+\begin{figure}[H]
+\centering
+%\includegraphics[width=0.4\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/demandpatterns.tex}
+\caption{Industrial and Non-industrial demand patterns in the EPANET simulation.}
+\label{fig:demandpatterns_EPANET}
+\end{figure}
+
+It is worth noting that the industrial consumption profile in the VSV zone slightly differs from the industries in the rest of the network. However, since the VSV zone is not considered in the further simulation model, the demand pattern is not shown here. Furthermore, there are no consumers in the supply area that have a significant effect on water consumption such that it influences the model calibration and simulation. 
 
 \subsection{Pump stations and waterworks}
 \label{pump_stations_andwaterworks}
 
-(in progress)
+As described in \secref{the_randers_water_supply_network}, there are several different pumping stations and waterworks in the network, supplying different zones. In general, there is a possibility in EPANET to simulate the cleaning process in the waterworks, including drilling, raw water and clean water, however in the model the focus is on the correct distribution. Therefore all waterworks are simulated with clean reservoirs with a fixed level for the WTs. In the EPANET simulation, pumps in the waterworks pump the water out corresponding to the real pump curves. However, there is one exception, where the simulation of the pumping station is different. In the OMV water work, which is responsible for filling the tank(T1) in HBP pumping station in the HZ, the precise operation of the pumping station has not been taken into account. Instead, the control schedule of the pumps has been simulated as a positive demand node(negative according to the EPANET sign convention), just as in the network modelling, proposed in this report. The reason for this is that the controls turned out to be relatively complicated with frequency converters and simulation results of the pumping were not matching the real world scenarios. The advantage of this is that in one of the flow controlled pumping stations, the mass balance is controlled and furthermore the risk that the model does not simulate correctly is reduced. 
+Apart from the OMV water work, all water works have been simulated with reservoirs which cannot be emptied by calculation. Water works and pumping stations, where the pumps are pressure controlled, are controlled by PRVs, as this is the typical way of controlling pressure controlled pumps in EPANET networks (cite). Such an arrangement is shown in \figref{fig:PRV_EPANET} 
+
+ %Network illustration as one node
+\begin{figure}[H]
+\centering
+%\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/PRV_control_EPANET.tex} 
+\caption{Water works modelled in EPANET, except OMV.}
+\label{fig:PRV_EPANET}
+\end{figure}
+
+It is important to note, however that with this arrangement in case of high demands in the network it is possible that water works and pumping stations deliver more flow than is actually possible. Therefore control rules have been incorporated in the models which prevents the pumping stations produce more flow than available in the real world. 
 
 \section{Model calibration and validation}
 \label{model_calibration_and_validation}
@@ -70,6 +92,9 @@ It is important to note that the number of tanks in the model does not necessari
 \label{control rules in simulation}
 
 (in progress)
+
+\section{Model preparation for data extraction}
+\label{model_preparation_for_data_extraction}
 
 
 

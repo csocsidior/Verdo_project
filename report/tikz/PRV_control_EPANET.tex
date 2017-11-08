@@ -1,0 +1,23 @@
+\begin{tikzpicture}[scale=0.5,transform shape]
+
+\begin{scope} [rotate around={0:(12,5.5)}, shift={(0.8,0)}]
+\draw[thick,transform shape] (12,5.5) circle (0.5);
+\draw[thick,transform shape] (12.5,5.5) -- (12,6);
+\draw[thick,transform shape] (12.5,5.5) node (v1) {} -- (12,5);
+\end{scope}
+
+%man-valve
+\begin{scope} [rotate ={-90}]
+\node(n1) at (-5.25,16) {};
+\draw[thick,transform shape](n1.center) -- ($(n1)-(0.5,0)$) --
+($(n1)-(0,1)$) -- ($(n1)-(0.5,1)$) --  (n1.center);
+
+\end{scope}
+
+\draw [thick](15,5.5) -- (13.3,5.5);
+\node at (15.5,6.2) {\large PRV};
+\draw [thick](16,5.5) -- (17.5,5.5);
+\draw [fill=cyan] [thick](9.1,5.7) -- (9.1,5.1) -- (10.9,5.1) -- (10.9,5.7);
+\draw  [thick](9.1,6.1) -- (9.1,5.1) -- (10.9,5.1) -- (10.9,6.1);
+\draw [thick](12.3,5.5) -- (10.9,5.5);
+\end{tikzpicture}
