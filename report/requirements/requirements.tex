@@ -1116,7 +1116,7 @@ In the single-WT modelling case, the dynamics can be described by a one-state, s
 \section{Multi-inlet, multi-WT model}
 \label{multi_inlet_multi_WT_model}
 
-In case when there are more than one WTs, the mass-balance equation, proposed in \eqref{massbalance_model2} is not applicable due to the fact that the pressures delivered by the tanks have to be balanced, similarly as in a simple connected-volume system. Therefore, a model framework is required which can handle the dynamics of multiple tanks, constrained by the static network and driven by the input flows of the pumping stations. In order to derive such model, the partitioning of the network is reconsidered. As described previously, the incidence matrix is partitioned such that 
+In case when there are more than one WTs, the model based on the mass-balance equation, proposed in \eqref{massbalance_model2} is not applicable due to the fact that the pressures delivered by the tanks have to be balanced, similarly as in a simple connected-volume system. Therefore, a model framework is required which can handle the dynamics of multiple tanks, constrained by the static network and driven by the input flows of the pumping stations. In order to derive such model, the partitioning of the network is reconsidered. As described previously, the incidence matrix is partitioned such that 
 
 \begin{equation}
 \label{H_matrix_sub1}
@@ -1184,7 +1184,7 @@ is a mapping which selects the nodes belonging to the pumps, \\
 is a mapping which selects the nodes belonging to the rest of the network except pumps and elevated reservoirs.
 \end{minipage}
 
-With this partitioning of the vertices, similarly to the model presented in \secref{multi_inlet_reduced_network_description}, Kirchhoff's and Ohm's law can be formulated. Recalling Kirchhoff's vertex law
+With this partitioning of vertices, similarly to the model presented in \secref{multi_inlet_reduced_network_description}, Kirchhoff's and Ohm's law can be formulated. Recalling Kirchhoff's vertex law
 
 \begin{equation}
 \label{kirchhoffslaw_matrix}
@@ -1203,7 +1203,7 @@ H
 and recalling \eqref{ohmslaw_matrixform}, Ohm's law is given
 
 \begin{equation}
-\label{ohmslaw_matrixform}
+\label{ohmslaw_matrixform11}
  \begin{pmatrix} 
  f_{\mathcal{T}}(q_\mathcal{T}) \\[3pt]
  f_{\mathcal{C}}(q_\mathcal{C}) 
@@ -1284,7 +1284,7 @@ Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_
 \end{cases}
 \end{equation}
 
-\eqref{final_flowmodel} is a system of Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states, $\hat{p}$, given the inputs, $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter, $v_{\mathcal{D}}$. The constraint is set by the algebraic equations regarding the static network and includes information about the geometry on which the trajectory of the ODE solution can be found. 
+\eqref{final_flowmodel} is a system of first-order Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states, $\hat{p}$, given the inputs, $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter, $v_{\mathcal{D}}$. The constraint is set by the algebraic equations regarding the static network and includes information about the geometry on which the trajectory of the ODE solution can be found. 
 
 The states of the system are the pressures in the WTs, therefore when the model equations are solved for $q_\mathcal{C}$, initial information of the pressure values, $\hat{p}$, is required. Equivalently, the initial water levels in the tanks have to be known. 
 
@@ -1324,21 +1324,23 @@ s.t. \:\:\:\:\: q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K
 
 with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \mathbb{R}^{c}$ the input vector, $\sigma \in \mathbb{R}_{+}$ the measurable disturbance and $v_{\mathcal{D}} \in \mathbb{R}^{(n-l-c)}$ the time-varying parameter. 
 
-It is worth noting here that this model with the flow inputs and the dynamics of the WTs result in a scalar dynamic equation in case of one tank. Therefore, the proposed restructuring of the model here is suitable to describe one tank systems as well, and capable of replacing the mass-balance based system dynamics, proposed in \secref{multi_inlet_single_WT_model}. 
+It is worth noting here that this model with the flow inputs and the dynamics of the WTs results in a scalar dynamic equation in case of one tank. Therefore, the proposed restructuring of the model here is suitable for describing one tank systems as well, and capable of replacing the mass-balance based system dynamics, proposed in \secref{multi_inlet_single_WT_model}. 
 
 %q_\mathcal{C} = k_{v_{\mathcal{D}}}(q_\mathcal{C},\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
 
 \subsection{Simulation example}
 \label{simulation_example2}
 
-(in progress)
+\textbf{Comments for supervisors:}
+\newline
+\textcolor{blue}{Here the same kind of simulation is planned except that for this, water tanks will be considered. The simulation will be compared to the simulation in EPANET. Aim of this is to try the model, as for last time it helped me to find mistakes in unit conversion and in implementation. This part however has low priority now so it is planned to make it later. (It also helps to illustrate how the model is applied on a simple example network.)}
 
 \newpage
 
 \section{Model comparison}
 \label{model_comparison}
 
-In this chapter, three different model arrangements have been proposed and two of them have been derived for control purposes. As a summary of the network modelling, the different approaches and system structures are compared. It should be noted again, that notation has been redefined through the modelling, therefore symbols for the Multi-inlet and Multi-inlet, single-WT models are different from the ones describing the Multi-inlet, multi-WT model. With this in mind, the properties of the three network models are summed up in the following table
+In this chapter, three different model arrangements have been proposed and two of them have been derived for control purposes. As a summary of the network modelling, the different approaches and system structures are compared. It should be noted again, that notation has been redefined through the modelling, therefore symbols for the Multi-inlet and Multi-inlet, single-WT models are different from the one describing the Multi-inlet, multi-WT model. With this in mind, the properties of the three network models are summed up in the following table
 
 \begin{center}
     \begin{tabular}{ | >{\centering\arraybackslash}m{1.8cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} |}
@@ -1392,7 +1394,7 @@ q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\m
     \captionof{table}{Summary of the network models.}
 \end{center}
 
-In the further discussion, the Multi-inlet, multi-WT network model is considered, as that one is the most suitable for describing the water network in Randers. 
+In the further discussion, the Multi-inlet, multi-WT network model is considered, as that one is the most suitable for describing the water network in Randers. Furthermore, the redefined notation is kept. 
 
 
 
