@@ -1,2 +1,15 @@
 Supervisor meeting 
 
+flow out of the tanks -> measured? 
+linear dynamics
+polynomial based tool for system id. 
+RBF NN - > radial basis functions 
+Bernstein polynomials if we choose splines as radial basis functions 
+nntool-> matlab 
+nntool
+output-> from EPANET model
+
+change the output equation to P_k
+\sigma is an unknown variable in the real world
+
+21st -> Tuesday 10.000 supervisor meeting. 
