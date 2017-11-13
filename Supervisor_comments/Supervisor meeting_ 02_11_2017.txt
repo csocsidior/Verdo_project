@@ -11,5 +11,6 @@ output-> from EPANET model
 
 change the output equation to P_k
 \sigma is an unknown variable in the real world
+the dynamic equations are non-recursive -> not necessary to use recursive NNs 
 
 21st -> Tuesday 10.000 supervisor meeting. 

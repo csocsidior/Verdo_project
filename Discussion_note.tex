@@ -1,0 +1,48 @@
+\input{Setup_files/preamble}
+
+\begin{document}
+\frontmatter
+\makeevenfoot{AAU}{\thepage}{}{}
+\makeoddfoot{AAU}{}{}{\thepage}
+
+\pagenumbering{gobble}
+\section{Discussion note}
+
+The output $\bar{p}_{\mathcal{K}}$ is given by \eqref{eq1}, which is a static equation
+
+\begin{equation}
+  \label{eq1}
+  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - \underbrace{K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h}}_{\text{Linear term}} .
+\end{equation}
+
+We consider it as an input-output model where:
+
+ \begin{minipage}[t]{0.28\textwidth}
+\hspace*{6mm} $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ \\
+\hspace*{6mm} $\hat{p}$  
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+%\vspace*{2mm}
+is the elevation of inlets ,\\
+is the elevation of WTs, 
+\end{minipage}
+
+\begin{equation}
+\label{eq2}
+\Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
+\end{equation}
+
+ \begin{equation}
+\label{eq3}
+f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2 f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0.
+\end{equation} 
+
+\begin{minipage}[t]{0.4\textwidth}
+where\\
+\hspace*{8mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$, \vspace*{1.5mm}  \\
+\hspace*{8mm} $A_2 = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
+\hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$. 
+\end{minipage}
+
+
+\end{document}
