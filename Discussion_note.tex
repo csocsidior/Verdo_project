@@ -6,7 +6,7 @@
 \makeoddfoot{AAU}{}{}{\thepage}
 
 \pagenumbering{gobble}
-\section{Discussion note}
+\section{Discussion note about system identification}
 
 The output $\bar{p}_{\mathcal{K}}$ is given by \eqref{eq1}, which is a static equation
 
@@ -15,22 +15,38 @@ The output $\bar{p}_{\mathcal{K}}$ is given by \eqref{eq1}, which is a static eq
   \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - \underbrace{K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h}}_{\text{Linear term}} .
 \end{equation}
 
-We consider it as an input-output model where:
+We consider it as an input-output model where the inputs:
 
- \begin{minipage}[t]{0.28\textwidth}
+ \begin{minipage}[t]{0.2\textwidth}
 \hspace*{6mm} $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ \\
-\hspace*{6mm} $\hat{p}$  
+\hspace*{6mm} $\hat{p}$  \\
+\hspace*{6mm} $\hat{h}$ \\
+\hspace*{6mm} $\sigma$ \\
+\hspace*{6mm} $\bar{d}_{\mathcal{K}}$ \\
+\hspace*{6mm} $q_\mathcal{C}$
 \end{minipage}
-\begin{minipage}[t]{0.68\textwidth}
+\begin{minipage}[t]{0.58\textwidth}
 %\vspace*{2mm}
 is the elevation of inlets ,\\
-is the elevation of WTs, 
+is the pressure in the WTs, \\
+is the elevation of the WTs, \\
+is the total demand, \\
+is the inlet flows, \\
+is the flows in $\mathcal{C}$.
 \end{minipage}
 
+and the output is $\bar{p}_{\mathcal{K}}$, which is the vector of inlet pressures. If we consider this input-output relation as a black-box model, all inputs and outputs are known and can be extracted (almost) directly from EPANET, except $q_\mathcal{C}$ for which we have the constraint. For the identification, Radial Basis Function(RBF) Networks can be used, assuming that we do not have any priori information about the system structure. 
+
+For the dynamics, some non-recursive Neural Network(NN) based approach can be used, however the dynamics are also in terms of $q_\mathcal{C}$. 
+ 
 \begin{equation}
 \label{eq2}
 \Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
 \end{equation}
+
+The dynamics are linear, therefore some other linear black-box model methods are also suitable. 
+
+The constraint on $q_\mathcal{C}$ is given by \eqref{eq3}
 
  \begin{equation}
 \label{eq3}
@@ -39,10 +55,17 @@ f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2 f_{\mathcal{T}}(A_
 
 \begin{minipage}[t]{0.4\textwidth}
 where\\
-\hspace*{8mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$, \vspace*{1.5mm}  \\
-\hspace*{8mm} $A_2 = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
-\hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$. 
+\hspace*{6mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$, \vspace*{1.5mm}  \\
+\hspace*{6mm} $A_2 = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
+\hspace*{6mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$. 
 \end{minipage}
 
+This is an implicit function and $q_\mathcal{C}$ is unknown. Furthermore, $q_\mathcal{C}$ is defined by the partitioning of the network, therefore the only way to extract this data from EPANET is by defining the set $\mathcal{C}$ first. In order to solve for  $q_\mathcal{C}$, the structure of the system is considered and partitioned. The data used($\bar{d}_{\mathcal{K}},\hat{p},\hat{h},\sigma$) are the same as for the models regarding the dynamics and the outputs. 
+
+$q_\mathcal{C}$ is calculated using the system matrices for a 48 hours period, and then it can be used as the input signal for the dynamics and output model. 
+
+\emph{Q1}: As there is no measurement data on $q_\mathcal{C}$, it is calculated  by using the measured inputs and using the system model. (The model is used, therefore the constraint is not treated as black-box.) Is the idea here a possible way to continue or should the constraints on $q_\mathcal{C}$ handled differently? 
+
+\emph{Q2}: In \eqref{eq1}, the linear terms can be separated from the non-linear part if we use the system matrices. $\hat{h}$ and $\bar{h}_{\mathcal{K}}$ are constants, therefore they are treated as an offset. They are subtracted from the measured $\bar{p}_{\mathcal{K}}$ inlet pressures. $\bar{p}$ is measured, therefore the linear term regarding $\bar{p}$ is also subtracted. When it is done, the identification is done on the non-linear terms, including only the remaining inputs ($\sigma,\bar{d}_{\mathcal{K}}, q_\mathcal{C}$). 
 
 \end{document}
