@@ -9,8 +9,18 @@ nntool-> matlab
 nntool
 output-> from EPANET model
 
-change the output equation to P_k
+change the output equation to P_k ->OK
 \sigma is an unknown variable in the real world
 the dynamic equations are non-recursive -> not necessary to use recursive NNs 
 
 21st -> Tuesday 10.000 supervisor meeting. 
+
+
+
+Supervisor meeting with Jan and Tom
+
+If too many neurons -> overfit of the function -> stop when it's a reasonable amount
+Since there is no measurement noise, everything is assumed to be deterministic in the model
+-> There is no need of training and validation data, training data is sufficient, as the outcome for the
+two identification procedure would be the same
+A_2^T mistake !!!!!
