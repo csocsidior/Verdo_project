@@ -1268,7 +1268,7 @@ As shown in \eqref{WT_matrixform_final}, the dynamics are now in terms of the in
 
  \begin{equation}
 \label{meshresult2_WT_model}
-f_{\mathcal{C}}(q_\mathcal{C}) -A_1(\hat{p} + \hat{h}) + A_2 f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 \bar{d}) = 0.
+f_{\mathcal{C}}(q_\mathcal{C}) -A_1(\hat{p} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 \bar{d}) = 0.
 \end{equation} 
 
 \begin{minipage}[t]{0.4\textwidth}
@@ -1282,7 +1282,7 @@ Now, using again that $\bar{d} = K \bar{d}_{\mathcal{K}} + D \bar{d}_{\mathcal{D
 
  \begin{equation}
 \label{meshresult2_WT_model1}
-f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2 f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0.
+f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0.
 \end{equation} 
 
 Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_model1}, \eqref{WT_matrixform_final} describes the dynamics of the system, taking into account the static constraints by the demands. Therefore, the structure of the overall Multi-inlet, multi-WT model dynamics can be summarized as follows
@@ -1291,7 +1291,7 @@ Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_
 \label{final_flowmodel}
 \begin{cases}
     \Lambda \dot{\hat{p}}(t) = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}(t)  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}}(t) + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}}(t) \sigma(t), \vspace{2mm}\\
-    f_{\mathcal{C}}(q_\mathcal{C}(t)) - A_1(\hat{p}(t) + \hat{h}) + A_2 f_{\mathcal{T}}(A_2^T q_\mathcal{C}(t) + A_3 K \bar{d}_{\mathcal{K}}(t) - A_3 D v_{\mathcal{D}}(t) \sigma(t)) = 0.
+    f_{\mathcal{C}}(q_\mathcal{C}(t)) - A_1(\hat{p}(t) + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C}(t) + A_3 K \bar{d}_{\mathcal{K}}(t) - A_3 D v_{\mathcal{D}}(t) \sigma(t)) = 0.
 \end{cases}
 \end{equation}
 
@@ -1310,14 +1310,14 @@ Now using that $\bar{p}_{\mathcal{K}} = K^T \bar{p} $, the pressure input equati
 
 \begin{equation}
   \label{non-inlet_p_WT1}
-  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h} .
+  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h} .
 \end{equation}
 
 Furthermore, using that $\bar{p}_{\mathcal{D}} = D^T \bar{p} $, the pressure output equation becomes
 
 \begin{equation}
   \label{non-inlet_p_WT111}
-  \bar{p}_{\mathcal{D}} = D^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - D^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - D^T\bar{h}.
+  \bar{p}_{\mathcal{D}} = D^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - D^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - D^T\bar{h}.
 \end{equation}
 
 Equivalently, \eqref{final_flowmodel} and \eqref{non-inlet_p_WT111} can be described in a more abstract form, considering a non-linear State-Space(SS) system structure such that
@@ -1344,9 +1344,7 @@ It is worth noting here that this model with the flow inputs and the dynamics of
 \subsection{Simulation example}
 \label{simulation_example2}
 
-\textbf{Comments for supervisors:}
-\newline
-\textcolor{blue}{Here the same kind of simulation is planned except that for this, water tanks will be considered. The simulation will be compared to the simulation in EPANET. Aim of this is to try the model, as for last time it helped me to find mistakes in unit conversion and in implementation. This part however has low priority now so it is planned to make it later. (It also helps to illustrate how the model is applied on a simple example network.)}
+(in progress)
 
 \newpage
 
