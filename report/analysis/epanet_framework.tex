@@ -51,12 +51,14 @@ In the model, consumption data is divided into two groups: non-industrial and in
 
 \vspace{-3mm}
 
+In \figref{fig:demandpatterns_EPANET}, the $y$-axis shows the ratio of change compared to the base demand of the two different types of consumers. For each type of consumer, different base demands are determined. However, the variation from this base value can be described in the same manner with the presented consumption curves for users falling in the same category. 
+
 It is worth noting that the industrial consumption profile in the VSV zone slightly differs from the industries in the rest of the network. However, since the VSV zone is not considered in the further simulation model, the demand pattern is not shown here. Furthermore, there are no consumers in the corresponding supply areas who have  significant effect on water consumption to influence the model calibration and simulation. 
 
 \subsection{Control and water source abstractions}
 \label{control_and_water_source_abstractions}
 
-As described in \secref{the_randers_water_supply_network}, there are several different pumping stations and waterworks in the network, supplying different zones. In general, there is a possibility in EPANET to simulate the cleaning process in the waterworks, including drilling, raw water and clean water treatment. However, in the model the focus is on the correct distribution. Therefore, all waterworks are simulated with clean water reservoirs. In the EPANET simulation, pumps in the waterworks pump the water out corresponding to the real pump curves. However, there are two exceptions, where the simulation of the pumping station is different. In the OMV water work, which is responsible for filling the tanks(T1A and T1B) in HBP pumping station in the HZ, the precise operation of the pumping station has not been taken into account. Instead, the control schedule of the pumps has been simulated as a positive demand node(negative according to the EPANET sign convention). The same technique was used in HBP pumping station, where the two tanks are and which provides the distribution to the HZ. The reason for this is that the controls turned out to be relatively complicated with frequency converters and simulation results of the pumping were not matching the real world scenarios. The advantage of this is that in one of the flow controlled pumping stations, the mass balance is controlled and furthermore the risk that the model does not simulate correctly is reduced. It should be noted that this abstraction can be made easily in HBP and OMV, since pumps in these two pumping stations are flow controlled. 
+As described in \secref{the_randers_water_supply_network}, there are several different pumping stations and waterworks in the network, supplying different zones. In general, there is a possibility in EPANET to simulate the cleaning process in the waterworks, including drilling, raw water and clean water treatment. However, in the model the focus is on the correct distribution. Therefore, all waterworks are simulated with clean water reservoirs. In the EPANET simulation, pumps in the waterworks pump the water out corresponding to the real pump curves. However, there are two exceptions, where the simulation of the pumping station is different. In the OMV water work, which is responsible for filling the tanks(T1A and T1B) in HBP pumping station, the precise operation has not been taken into account. Instead, the control schedule of the pumps has been simulated as a positive demand node, which is negative according to the EPANET sign convention. The same technique was used in HBP pumping station, where the two tanks are located and which provides the distribution to the HZ. One of the reasons for this is that the controls turned out to be relatively complicated with frequency converters and the simulation result of the pumping was not matching the real world scenario. The advantage of this is that in one of the flow controlled pumping stations, the mass balance is controlled. Furthermore, the risk that the model does not simulate correctly is reduced. It should be noted that this abstraction can be done easily in HBP and OMV, since pumps in these two pumping stations are flow controlled. 
 
 Apart from the OMV water work and HBP pumping station, all water works have been simulated with reservoirs which cannot be emptied. Water works and pumping stations, where the pumps are pressure controlled, are controlled by PRVs, as this is the typical way of controlling pressure controlled pumps in EPANET networks \cite{agency2016epanet}. Such an arrangement is shown in \figref{fig:PRV_EPANET} 
 
@@ -65,31 +67,46 @@ Apart from the OMV water work and HBP pumping station, all water works have been
 \centering
 %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
 \input{report/tikz/PRV_control_EPANET.tex} 
-\caption{Water works modelled in EPANET, except OMV.}
+\caption{Abstraction for pressure controlled pumping stations in EPANET.}
 \label{fig:PRV_EPANET}
 \end{figure}
 
 \vspace{-3mm}
-It is important to note, however, that with this arrangement in case of high demands in the network it is possible that water works and pumping stations deliver more flow than is actually possible. Therefore control rules have been incorporated in the models which prevents the pumping stations produce more flow than available in the real world. 
+It is important to note, however, that in case of high demands, with this arrangement in the network it can happen that water works and pumping stations deliver more flow than allowed or physically possible. Therefore control rules have been incorporated in the models which prevent the pumping stations produce more flow than available in the real world. 
+
+In case of flow controlled pumping stations, such as OMV, the following abstractions are made in the EPANET simulation framework 
+
+ %Flowcontrolled pumping stations in EPANET
+\begin{figure}[H]
+\centering
+%\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/flow_abstraction.tex} 
+\caption{Abstraction for flow controlled pumping stations in EPANET.}
+\label{fig:FCV_EPANET}
+\end{figure}
+
+\vspace{-3mm}
+
+In \figref{fig:FCV_EPANET}, the node which has demand $d_+$ is the flow controlled pumping station. The water coming out from this node can be controlled by a FCV. In every case, the pumping stations are supplied by flow from water works. A good example for this is TBP pumping station where the water works BKV and ØSV are modelled. However, the pumping station can be modelled as two nodes, where inflow is defined on the node on the water work side and outflow is defined on the outlet side. 
 
 \section{Model calibration and validation}
 \label{model_calibration_and_validation}
 
-The simulation data has been validated by using pressure measurements on different fire hydrants in the network for several times in different years. When the model was made, the data was not completely up to date, as these pressure measurements were carried out in years before the EPANET modelling. The major uncertainty about this data is in the arrangement of the pipe network and the pumping stations, since it has been changed over the years and old facilities have been replaced. Although the data on which the model relies is uncertain and there might be variations in pressure, the validation of the model has been carried out according to these highly uncertain pressure measurements. 
+The simulation data has been validated by using pressure measurements on different fire hydrants in the network for several times corresponding to different years. When the model was made, the data was not completely up to date, as these pressure measurements were carried out in years before the EPANET modelling. The major uncertainty about this data is in the arrangement of the pipe network and the pumping stations, since it has been changed over the years and old facilities have been replaced. Although the data on which the model relies is uncertain and there might be variations in pressure, the validation of the model has been carried out according to these highly uncertain pressure measurements. 
 
 \subsection{Pipe roughness}
 \label{pipe_roughness}
 
 In the model, all pipes are associated with tags, indicating dimensions, material and year information. With this information it is possible to estimate an average resistance, i.e. roughness of the pipes. 
-During the validation process of the pipe resistances, it was chosen to consider an average roughness value, taking into account that the roughness should not be lower than a roughness of new pipes and at the same time, should not exceed a certain upper bound. Roughnesses were upscaled at places where the pressure was too high while downscaled where the pressure was certainly too low. Correct pressure data, however is an essential information for a more detailed and precise calibration, therefore high deviations are present in the system up to 5 meter heads. 
+During the validation process of the pipe resistances, it was chosen to consider an average roughness value, taking into account that the roughness should not be lower than a roughness of new pipes and at the same time, should not exceed a certain upper bound. Roughnesses were upscaled at places where the pressure was too high while downscaled where the pressure was certainly too low. Correct pressure data, however is an essential information for a more detailed and precise calibration, therefore high deviations up to 5 meter heads are present in the system. \figref{fig:pressure_mistakes} shows the pressure deviation in the system compared to the data on which the system was calibrated. 
 
 %Fire hydrants measurements
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.45\textwidth]{report/pictures/fire_hydrants}
+\includegraphics[width=0.55\textwidth]{report/pictures/fire_hydrants}
 %\input{report/tikz/PRV_control_EPANET.tex} 
 \caption{Difference calculation between observed and calculated pressures on fire hydrants\cite{verdo_doc}.}
-\label{fig:PRV_EPANET}
+\label{fig:pressure_mistakes}
 \end{figure}
 
 \vspace{-3mm}
@@ -97,7 +114,8 @@ During the validation process of the pipe resistances, it was chosen to consider
 \subsection{Grid balance and supply zones}
 \label{grid_balance_supply_zones}
 
-With the simulation model in EPANET it is possible to illustrate which pumping stations supply the different areas in the network. Simulations can be carried out for instance on supply areas in certain zones where more than one pumping station contributes to the consumption. The two zones, considered in this report are the HZ and LZ, in which the former is supplied by OMV and TBP and the latter is supplied by HBP and HSP where the tanks are placed on high elevation level. Consequently, as mentioned in \secref{waterworks_and_pumping_stations}, OMV and TBP are the waterworks and pumping stations which are responsible for filling the tanks in the HZ in HBP and HSP, respectively. \figref{fig:HSP_HBP_EPA} shows the distribution between the two pumping stations, HBP and HSP, in the high zone. 
+With the simulation model in EPANET there is a possibility to illustrate which pumping stations supply the different areas in the network. Simulations can be carried out for instance on supply areas in certain zones where more than one pumping station contributes to the consumption. The two zones, considered in this report are the HZ and LZ, in which the former is supplied by OMV and TBP and the latter is supplied by HBP and HSP where the tanks are placed on high elevation level. Consequently, as mentioned in \secref{waterworks_and_pumping_stations}, OMV and TBP are the waterworks and pumping stations which are responsible for filling the tanks in the HZ in HBP and HSP, respectively. 
+Using the water quality properties of EPANET, a contamination was introduced first in OMV pumping station and then TBP. By introducing a contamination into the system, it can be tracked which parts of the network gets contaminated. \figref{fig:HSP_HBP_EPA} shows an example for this, illustrating the distribution between the two pumping stations, OMV and TBP. 
 
 
 \begin{figure}[H]
@@ -114,7 +132,7 @@ With the simulation model in EPANET it is possible to illustrate which pumping s
   \caption{HBP supply area, marked with red}
   \label{fig:HSP_HBP_EPA2}
 \end{subfigure}
-\caption{Supply area by HSP(on the left) and supply area by HBP(on the right)(cite).}
+\caption{Supply area by HSP(on the left) and supply area by HBP(on the right)\cite{verdo_doc}.}
 \label{fig:HSP_HBP_EPA}
 \end{figure}
 
@@ -122,7 +140,7 @@ With the simulation model in EPANET it is possible to illustrate which pumping s
 
 The red areas in \figref{fig:HSP_HBP_EPA} indicate 80-100 percent of drinking water originating from one or the other pumping station. However, the other colours(primarily yellow and green) indicate that there is a mix of water from both stations. The result in the grid is according to the control goals, as one pumping station supplies half of the region and an other the other one. This is achieved by controlling the flow in HBP and the pressure in HSP. 
 
-\section{Modification of the model}
+\section{Modifications in the model}
 \label{modification_model}
 
 (in progress)

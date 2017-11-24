@@ -6,13 +6,15 @@
 \makeoddfoot{AAU}{}{}{\thepage}
 
 \pagenumbering{gobble}
-\section{Discussion note about system identification}
+\section{Identification notes}
+
+\subsection{System equations}
 
 The output $\bar{p}_{\mathcal{K}}$ is given by \eqref{eq1}, which is a static equation
 
 \begin{equation}
   \label{eq1}
-  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - \underbrace{K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h}}_{\text{Linear term}} .
+  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - \underbrace{K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h}}_{\text{Linear term}} .
 \end{equation}
 
 We consider it as an input-output model where the inputs:
@@ -35,37 +37,143 @@ is the inlet flows, \\
 is the flows in $\mathcal{C}$.
 \end{minipage}
 
-and the output is $\bar{p}_{\mathcal{K}}$, which is the vector of inlet pressures. If we consider this input-output relation as a black-box model, all inputs and outputs are known and can be extracted (almost) directly from EPANET, except $q_\mathcal{C}$ for which we have the constraint. For the identification, Radial Basis Function(RBF) Networks can be used, assuming that we do not have any priori information about the system structure. 
+One way to identify the input-output relation is to introduce a new output, where
 
-For the dynamics, some non-recursive Neural Network(NN) based approach can be used, however the dynamics are also in terms of $q_\mathcal{C}$. 
- 
 \begin{equation}
-\label{eq2}
+  \label{eq2}
+  \tilde{y} =  \bar{p}_{\mathcal{K}} +  K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) + K^T\bar{h}.
+\end{equation}
+
+In \eqref{eq2}, the known linear terms are summed with the pressure outputs $\bar{p}_{\mathcal{K}}$. The right hand-side of the output equation in \eqref{eq1} is considered as a function, taking into account the input $q_\mathcal{C}$ implicitly
+
+\begin{equation}
+  \label{eq3}
+  \tilde{f}_1(\bar{d}_{\mathcal{K}}, \sigma) =  K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma).
+\end{equation}
+
+The constraint for the system is on $q_\mathcal{C}$, for which analytical solution cannot be given
+
+ \begin{equation}
+\label{eq4}
+f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0.
+\end{equation} 
+
+However, \eqref{eq4} is in the form of
+
+ \begin{equation}
+\label{eq5}
+q_\mathcal{C} = q_\mathcal{C}(\bar{d}_{\mathcal{K}}, \sigma) .
+\end{equation} 
+
+For this reason, the non-linear dependencies on $q_\mathcal{C}$, $\bar{d}_{\mathcal{K}}$ and $\sigma$ can be considered as
+
+ \begin{equation}
+\label{eq6}
+\tilde{y} = \tilde{f}_1(\bar{d}_{\mathcal{K}}, \sigma).
+\end{equation} 
+
+Another way to approximate the input-output relation is to keep the linear terms on the right side of \eqref{eq1}. In this case we introduce linear parameters in the regression model. For this case, the model is in the form of 
+
+\begin{equation}
+\label{eq7}
+\bar{p}_{\mathcal{K}} = \tilde{f}_2(\bar{d}_{\mathcal{K}}, \sigma, (\hat{p} + \hat{h}), \bar{h}_{\mathcal{K}})
+\end{equation} 
+
+If this is chosen, we do not need to use the system matrices to subtract the linear terms. When real data is used, the structure might be different from the network in EPANET. Furthermore, the parameter $v_{\mathcal{D}}$ is considered to be constant. In this case, the consumption data can be calculated back from the mass-balance equation written up for the network, assuming that flow is measured in the WTs. 
+
+\begin{equation}
+\label{eq7}
+ \sigma = 1^T \hat{d} + 1^T \bar{d}_{\mathcal{K}}.
+\end{equation}
+
+The equation which describes the dynamics is the following
+
+\begin{equation}
+\label{eq8}
 \Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
 \end{equation}
 
-The dynamics are linear, therefore some other linear black-box model methods are also suitable. 
+ For \eqref{eq8} the same considerations apply as for the output equation. Although it is a linear equation, by taking into $q_\mathcal{C}$ implicitly, the dynamics are non-linear. It can be written in the form
 
-The constraint on $q_\mathcal{C}$ is given by \eqref{eq3}
+\begin{equation}
+\label{eq9}
+\hat{p}_{k+1} = \tilde{f}_3(\bar{d}_{\mathcal{K}}, \sigma).
+\end{equation}
 
- \begin{equation}
-\label{eq3}
-f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2 f_{\mathcal{T}}(A_2^T q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0.
-\end{equation} 
+\vspace{-6mm}
+\subsection{Example on a small model}
 
-\begin{minipage}[t]{0.4\textwidth}
-where\\
-\hspace*{6mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$, \vspace*{1.5mm}  \\
-\hspace*{6mm} $A_2 = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
-\hspace*{6mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$. 
-\end{minipage}
+The network is shown in \figref{fig:example1}
+\vspace{-3mm}
+%Simple network
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{discussion_files/example1}
+%\input{report/tikz/PRV_control_EPANET.tex} 
+\caption{Example network.}
+\label{fig:example1}
+\end{figure}
+\vspace{-8mm}
+The input data for identification consists of both the linear and non-linear inputs. Furthermore, feed-forward backpropagation model has been chosen for training. \figref{fig:inputs} shows the non-constant training and target data. 
 
-This is an implicit function and $q_\mathcal{C}$ is unknown. Furthermore, $q_\mathcal{C}$ is defined by the partitioning of the network, therefore the only way to extract this data from EPANET is by defining the set $\mathcal{C}$ first. In order to solve for  $q_\mathcal{C}$, the structure of the system is considered and partitioned. The data used($\bar{d}_{\mathcal{K}},\hat{p},\hat{h},\sigma$) are the same as for the models regarding the dynamics and the outputs. 
+\begin{figure}[H]
+\centering
+%\includegraphics[width=1\textwidth]{discussion_files/example1}
+\input{discussion_files/inputs.tex} 
+\caption{Input data for training.}
+\label{fig:inputs}
+\end{figure}
 
-$q_\mathcal{C}$ is calculated using the system matrices for a 48 hours period, and then it can be used as the input signal for the dynamics and output model. 
+The performance of the validation is shown in \figref{fig:performance}
 
-\emph{Q1}: As there is no measurement data on $q_\mathcal{C}$, it is calculated  by using the measured inputs and using the system model. (The model is used, therefore the constraint is not treated as black-box.) Is the idea here a possible way to continue or should the constraints on $q_\mathcal{C}$ handled differently? 
+\begin{figure}[H]
+\centering
+%\includegraphics[width=1\textwidth]{discussion_files/example1}
+\input{discussion_files/performance.tex} 
+\caption{Performance - MSE.}
+\label{fig:performance}
+\end{figure}
 
-\emph{Q2}: In \eqref{eq1}, the linear terms can be separated from the non-linear part if we use the system matrices. $\hat{h}$ and $\bar{h}_{\mathcal{K}}$ are constants, therefore they are treated as an offset. They are subtracted from the measured $\bar{p}_{\mathcal{K}}$ inlet pressures. $\bar{p}$ is measured, therefore the linear term regarding $\bar{p}$ is also subtracted. When it is done, the identification is done on the non-linear terms, including only the remaining inputs ($\sigma,\bar{d}_{\mathcal{K}}, q_\mathcal{C}$). 
+The validation goal is $0.05$ in Mean Squared Error (MSE). The training is stopped if either the goal is reached or the validation failure is more than 10 epochs. 
+
+The training states are shown in \figref{fig:training}
+
+\begin{figure}[H]
+\centering
+%\includegraphics[width=1\textwidth]{discussion_files/example1}
+\input{discussion_files/training.tex} 
+\caption{Training states.}
+\label{fig:training}
+\end{figure}
+
+For the training, Levenberg-Marquardt optimization was chosen to update weight and bias values. The validation of the output on the same data is shown in \figref{fig:output}
+
+\begin{figure}[H]
+\centering
+%\includegraphics[width=1\textwidth]{discussion_files/example1}
+\input{discussion_files/output.tex} 
+\caption{Outputs.}
+\label{fig:output}
+\end{figure}
+
+The neurons used in this identification use Tan-Sigmoid transfer functions. Therefore the regression model with the corresponding weights and biases can be given 
+
+\begin{equation}
+\label{eq10}
+y = B_2 + LW \cdot transig(B_1 + IW \cdot u).
+\end{equation}
+
+\emph{The documentation of theory and introduction of neural networks and system identification is in progress. First, I used this simple example to study and understand this approach. Some concerns and questions came up however, which we could discuss at the meeting.}
+
+\subsection{Question reminders}
+\emph{Q1}: Creating the input data
+
+\emph{Q2}: Number of neurons
+
+\emph{Q3}: RBF vs. MPL, training. 
+
+\emph{Q4}: Validation on different data, check overfitting. 
+
+\emph{Q5}: How to define linear/non-linear mixed model
 
 \end{document}

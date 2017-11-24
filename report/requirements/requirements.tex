@@ -828,6 +828,8 @@ The underlying graph of the example network is shown in \figref{fig:example1_gra
 \label{fig:example1_graph}
 \end{figure}
 
+\vspace{-3mm}
+
 In \figref{fig:example1_graph}, arrows illustrate the in-and outflows such that input flows are present in $v_1 $ and $v_2$, and user-consumption is defined only in $v_3$ and $v_6$. The diameters are the same for all pipes, however regarding the length, there are two types of pipes in this network. The corresponding parameters of the pipes, pumps, the elevation profile and the hourly demand variation is described in detail and can be found in (appref). 
 
 The partitioning of edges in the network is chosen such that
@@ -1072,6 +1074,7 @@ it is seen that the flow, $\hat{d}_t$, needs to be expressed in terms of the inp
 \caption{Mass balance on the network with one WT.}
 \label{fig:onenode_system}
 \end{figure}
+\vspace{-3mm}
 
 According to the mass-balance in the network, and using the corresponding partitioning as shown in \figref{fig:onenode_system}, the balance equation on all demand flows can be written in the form of
 
@@ -1325,11 +1328,11 @@ Equivalently, \eqref{final_flowmodel} and \eqref{non-inlet_p_WT111} can be descr
 \label{final_flowmodel_abstract}
 \begin{cases}
     \dot{\hat{p}} = g_{v_{\mathcal{D}}}( \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})\\
-    \bar{p}_{\mathcal{K}} = h_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})
+    \bar{p}_{\mathcal{K}} =h_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})
 \end{cases}
 \end{equation}
 \begin{equation*}
-s.t. \:\:\:\:\: q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})
+s.t. \:\:\:\:\: q_\mathcal{C} = q_\mathcal{C}((\hat{p} + \hat{h}), \bar{d}_{\mathcal{K}}, \sigma)
 \end{equation*}
 
 with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \mathbb{R}^{c}$ the input vector, $\sigma \in \mathbb{R}_{+}$ the measurable disturbance, $v_{\mathcal{D}} \in \mathbb{R}^{(n-l-c)}$ the time-varying parameter and $\bar{p}_{\mathcal{K}} \in \mathbb{R}^{c}$ the output vector. 
@@ -1351,7 +1354,7 @@ It is worth noting here that this model with the flow inputs and the dynamics of
 \label{model_comparison}
 
 In this chapter, three different model arrangements have been proposed and two of them have been derived for control purposes. The main goal was to develop a model of a WSS with elevated reservoirs, thereby the Multi-inlet model described in the first column in \tabref{comparisontable}, was a baseline model to extend towards inclusion of WTs. Therefore, as a summary of the network modelling, the different approaches and system structures are compared. It should be noted again, that notation has been redefined through the modelling, therefore symbols for the Multi-inlet and Multi-inlet, single-WT models are different from the one describing the Multi-inlet, multi-WT model. With this in mind, the properties of the three network models are summed up in the following table
-
+\vspace{-2mm}
 \begin{center}
     \begin{tabular}{ | >{\centering\arraybackslash}m{1.8cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} |}
     \hline
@@ -1377,11 +1380,11 @@ In this chapter, three different model arrangements have been proposed and two o
     \textbf{Governing equations} & 
     \begin{equation*}
 \label{final_flowmodel_abstract}
-    \bar{p} = g_{v}( \hat{p}, \sigma, q_\mathcal{C})
+    \bar{p} = h_{v}( \hat{p}, \sigma, q_\mathcal{C})
 \end{equation*}
 \vspace{-10mm}
 \begin{equation*}
-q_\mathcal{C} = k_{v}(\hat{p}, \sigma, q_\mathcal{C})
+q_\mathcal{C} = q_\mathcal{C}(\hat{p}, \sigma)
 \end{equation*}  & \begin{equation*}
 \dot{\hat{p}}_t = e(\sigma, \hat{d}_c)
 \end{equation*}
@@ -1389,12 +1392,12 @@ q_\mathcal{C} = k_{v}(\hat{p}, \sigma, q_\mathcal{C})
 \label{final_flowmodel_abstract}
 \begin{cases}
     \dot{\hat{p}} = g_{v_{\mathcal{D}}}( \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})\\
-    \bar{p}_{\mathcal{D}} = h_{v_{\mathcal{D}}}(\hat{p}, \!\bar{d}_{\mathcal{K}}, \!\sigma, \! q_\mathcal{C})
+    \bar{p}_{\mathcal{K}} = h_{v_{\mathcal{D}}}(\hat{p}, \!\bar{d}_{\mathcal{K}}, \!\sigma, \! q_\mathcal{C})
 \end{cases}
 \end{equation*}
 \vspace{-7mm}
 \begin{equation*}
-q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\mathcal{C})
+q_\mathcal{C} = q_\mathcal{C}((\hat{p}+\hat{h}), \bar{d}_{\mathcal{K}}, \sigma)
 \end{equation*}\\ 
     \hline
       \multirow{1}{*}
@@ -1404,7 +1407,7 @@ q_\mathcal{C} = k_{v_{\mathcal{D}}}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma, q_\m
     \captionof{table}{Summary of the network models.}
     \label{comparisontable}
 \end{center}
-
+\vspace{-1mm}
 In the further discussion, the Multi-inlet, multi-WT network model is considered, as it is the most suitable model for describing the water network in Randers. 
 
 

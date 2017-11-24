@@ -24,3 +24,41 @@ Since there is no measurement noise, everything is assumed to be deterministic i
 -> There is no need of training and validation data, training data is sufficient, as the outcome for the
 two identification procedure would be the same
 A_2^T mistake !!!!!
+
+
+
+
+
+
+
+
+
+
+
+Supervisor meeting 21st 
+
+RBF -> can mimic |q|q -> polynomials might not ()
+Basis function -> more insight than neural networks
+Radial basis functions -> exponential, affine + linear transformations by changing 
+LW and B2 - >output weights
+
+input data -> length-> until reaches steady-state or
+
+Correct mistakes in the discussion notes ->
+
+next tuesday 10.00
+
+
+
+Practical applications of NNs most often employ supervised learning. For supervised learning, you must provide
+ training data that includes both the input and the desired result (the target value). After successful training,
+ you can present input data alone to the NN (that is, input data without the desired result), and the NN will compute
+ an output value that approximates the desired result. However, for training to be successful, you may need lots of training
+ data and lots of computer time to do the training. In many applications, such as image and text processing, you will have to do
+ a lot of work to select appropriate input data and to code the data as numeric values.
+
+In practice, NNs are especially useful for classification and function approximation/mapping problems which
+ are tolerant of some imprecision, which have lots of training data available, but to which hard and fast rules
+ (such as those that might be used in an expert system) cannot easily be applied. Almost any finite-dimensional 
+vector function on a compact set can be approximated to arbitrary precision by feedforward NNs (which are the type 
+most often used in practical applications) if you have enough data and enough computing resources.
