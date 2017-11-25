@@ -62,3 +62,15 @@ In practice, NNs are especially useful for classification and function approxima
  (such as those that might be used in an expert system) cannot easily be applied. Almost any finite-dimensional 
 vector function on a compact set can be approximated to arbitrary precision by feedforward NNs (which are the type 
 most often used in practical applications) if you have enough data and enough computing resources.
+
+
+https://se.mathworks.com/matlabcentral/answers/73346-how-to-use-different-transfer-functions-within-the-same-layer-of-a-neural-network
+https://se.mathworks.com/matlabcentral/fileexchange/52580-radial-basis-function-neural-networks--with-parameter-selection-using-k-means-
+http://dungba.org/linear-regression-with-neural-network/
+
+include a linear function through skip-layer connections.
+
+
+
+
+

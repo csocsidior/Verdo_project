@@ -63,13 +63,13 @@ The choice of the model architecture among many factors, depends on the type of 
     \textbf{Information sources} & First principles and insights. &  Some insights and some data. & Data and experiments.\\ 
     \hline
       \multirow{1}{*}
-    \textbf{Features} & Good understanding, high reliability and scalability. &  & Short development time and insight is not required.\\ 
+    \textbf{Features} & Good understanding, high reliability and scalability. & $\longleftrightarrow$  & Short development time and insight is not required.\\ 
     \hline
       \multirow{1}{*}
-    \textbf{Drawbacks} & Well described process is required. &  & Not scalable and the accuracy is restricted by the available data.\\ 
+    \textbf{Drawbacks} & Well described process is required. & $\longleftrightarrow$ & Not scalable and the accuracy is restricted by the available data.\\ 
     \hline
           \multirow{1}{*}
-    \textbf{Application} & Planning, simulation and design for simple processes. &  & Only for existing, rather complex processes.\\ 
+    \textbf{Application} & Planning, simulation and design for simple processes. & $\longleftrightarrow$ & Only for existing, rather complex processes.\\ 
     \hline
     \end{tabular}
     \captionof{table}{Comparison of system identification modelling approaches\cite{nelles2013nonlinear}.}
@@ -278,4 +278,45 @@ where $\mu_k \in \: \mathbb{R}^{p}$ determines the center of the RBFs, $\psi_k \
 
 \vspace{-3mm}
 
-Therefore, when a RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have to be somehow to be determined or optimized. 
+Therefore, when a RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have somehow to be determined or optimized. 
+
+\figref{fig:rbf_interpol} illustrates the interpolation and extrapolation behaviour of RBF networks. 
+
+ %Interpolation of RBFS
+\begin{figure}[H]
+\centering
+%\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/rbf_interpolation.tex} 
+\caption{Interpolation and extrapolation behaviour of an RBF network without offset.}
+\label{fig:rbf_interpol}
+\end{figure}
+
+\vspace{-3mm}
+
+In \figref{fig:rbf_interpol}, the basis functions are shown on the left, while the network outputs are shown on the right. The network interpolates  between the three data points marked in the output graph on the right. 
+
+\subsection{RBF training}
+\label{RBF_training}
+
+The process of estimating the basis functions $\phi_i$ consists of two problems. One task is to determine a set of $M$ RBFs and then estimate the output weights $w_i$ and bias parameter $w_0$. Therefore, the RBF network parameters are generally determined in a two-stage procedure, while in other type of networks the parameters are determined simultaneously by non-linear optimization\cite{RBF_article}. As the output layer of RBF networks linearly combines the Gaussian basis functions, most strategies determine the parameters $\mu$ and $\psi$ of the hidden layer, and then the output layer weighs $w$ by using some linear optimization methods, such as Least Squares(LS) methods. This two-step procedure allows to vary only the weights between the hidden and output layer of the network during the training. 
+
+As the first step, the parameters of the Gaussian basis functions, $\mu$ and $\psi$ are discussed. 
+
+\subsection{Determination of the hidden layer parameters}
+\label{determination_hidden_layer}
+
+As discussed in \secref{RBF_training}, the parameters $\mu$ and $\psi$ of the neurons are not determined through optimization. Instead, one approach is to determine these parameters only by using the input data set $u$. The most commonly applied approach for such tasks is the application of clustering techniques \cite{nelles2013nonlinear}. The clustering of the input data allows to determine the center $\mu$ of the basis functions, according to the distribution of the input data set. Thus, many RBFs are placed in regions where data is dense, and few RBFs are placed in regions where data is less dense.  
+
+\subsection{Determination of the weights}
+\label{determination_weights} 
+
+abcd
+
+\section{RBFNN model of the Multi-inlet,Multi-WT system}
+\label{RBFNN_model_multi_inlet_multi_WT_sys} 
+
+abcd
+
+\section{NN based identification on an example}
+\label{NN_based_example} 
+
