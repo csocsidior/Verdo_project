@@ -71,6 +71,18 @@ http://dungba.org/linear-regression-with-neural-network/
 include a linear function through skip-layer connections.
 
 
+11
+down vote
+In theory, skip-layer connections should not improve on the network performance. But, since complex networks are hard
+ to train and easy to overfit it may be very useful to explicitly add this as a linear regression term, when you know 
+that your data has a strong linear component. This hints the model in a right direction... In addition, this is more 
+interpretable since it presents your model as linear + perturbations, unraveling a bit of a structure behind the network, 
+which is usually seen merely as a black box
+
+
+The real advantage is that it makes estimating good values for the weights easier if the network architecture is well 
+matched to the problem, and you may be able to use a smaller network and obtain better generalisation performance.
+
 
 
 
