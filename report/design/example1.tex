@@ -279,7 +279,7 @@ where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \
 
 \vspace{-3mm}
 
-Therefore, when a RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have somehow to be determined or optimized. 
+Therefore, when a RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have somehow to be determined. 
 
 \figref{fig:rbf_interpol} illustrates the interpolation and extrapolation behaviour of RBF networks. 
 
@@ -370,23 +370,25 @@ As it was concluded, the output is governed by the non-linear function $\tilde{f
 \tilde{y}_1 = \sum_{i = 1}^M w_i \phi_i(u) +  w_{0,1},
 \end{equation}
 
-where $u = (\bar{d}_{\mathcal{K}} \ \sigma \ \hat{h}_t )^T$. Formulating \eqref{NN_output_eq1} into vector form, the following can be written
+where $u = (\bar{d}_{\mathcal{K}} \ \sigma \ \hat{h}_t )^T$. Using vector notation, \eqref{NN_output_eq1} can be written such that
 
   \begin{equation}
 \label{NN_output_vector1}
-\tilde{y} = \theta^T 
-\underbrace{\begin{pmatrix}
+\tilde{y} = \theta^T_{\tilde{y}} 
+          \begin{pmatrix}
            \phi_1(u) \\[1pt]
            \phi_2(u) \\[1pt]
            \vdots \\[1pt]
            \phi_M(u)\\[3pt]
            1 
-         \end{pmatrix}}_{\chi},
+         \end{pmatrix}
+         =
+         \theta^T_{\tilde{y}} \chi_{\tilde{y}},
 \end{equation}
 
-where $\theta$ is the regression matrix, including the output weights $w_i$ and the biases $w_0$. Furthermore, $\theta$ has as many columns as the number of inputs. $\chi$ is called the regressor vector, or in NN context the input vector, consisting of the basis functions and the vector $1 \in \: \mathbb{R}^{c} $, where $c$ is the number of outputs. 
+where $\theta_{\tilde{y}}$ is the regression matrix, including the output weights $w_i$ and the biases $w_0$. Furthermore, $\theta$ has as many columns as the number of inputs. $\chi_{\tilde{y}}$ is called the regressor vector, or in NN context the input vector, consisting of the basis functions and the vector $1 \in \: \mathbb{R}^{c} $, where $c$ is the number of outputs. 
 
-The state equation is governed by the non-linear function $\tilde{f}_2$ and furthermore, the states $\hat{p}$ and the elevation of the WTs $\hat{h}$ enter the system linearly. As a consequence of this, the measured data of the states have a strong linear component. In the NN representation this is taken into account such that skip-layer connections are introduced. These extra connections in the NN model are skipping the hidden layer, thereby contribute linearly to the outputs. The illustration of such network is shown in \figref{fig:nn_state}.
+The state equation is governed by the non-linear function $\tilde{f}_2$ and furthermore, the states $\hat{p}$ and the elevation of the WTs $\hat{h}$ enter the system linearly. As a consequence of this, the measured data of the states have a strong linear component. In the NN representation this is taken into account such that skip-layer connections are introduced. These extra connections in the NN model are skipping the hidden layer, thereby contribute linearly to the outputs. The illustration of such RBFNN is shown in \figref{fig:nn_state}.
 
    %NN model of the state eq.
  \begin{figure}[H]
@@ -399,9 +401,75 @@ The state equation is governed by the non-linear function $\tilde{f}_2$ and furt
 
  \vspace{-3mm}
 
- In \figref{fig:nn_state}, although the input neurons for the skip-layer connections are placed in line with the hidden layer, they are considered as simple inputs, effecting the output layer by the parameters $a_1$ and $a_2$. Nevertheless, the identification is treated as a black-box model, but since insight is given about the network architecture, the NN model can be better matched to the problem. 
+ In \figref{fig:nn_state}, although the input neurons for the skip-layer connections are placed in line with the hidden layer, they are considered as simple inputs, effecting the output layer by the parameters $a_1$ and $a_2$. Nevertheless, the identification is treated as a black-box model, but since insight is given about the network architecture, the NN model can be better matched to the problem. Furthermore, in \figref{fig:nn_state}, the inputs are all present values and the outputs are the future or predicted values of the states $\hat{p}_{k+1}$. 
+
+ Using vector notation, the NN model for the state equation can be given in the form as shown in eqref{}
+
+  \begin{equation}
+\label{NN_state_vector2}
+\hat{p}_{k+1} = \theta^T_{\hat{p}} 
+          \begin{pmatrix}
+           \phi_1(u_k) \\[1pt]
+           \phi_2(u_k) \\[1pt]
+           \vdots \\[1pt]
+           \phi_M(u_k)\\[3pt]
+           \hat{p}_k \\
+           \hat{h}\\
+           1 
+         \end{pmatrix}
+         =
+         \theta^T_{\hat{p}} \chi_{\hat{p}},
+\end{equation}
+
+where $\theta^T_{\hat{p}}$ is the regression matrix, including the output weights $w_i$, the skip-layer connection weights $a_i$ and the biases $w_0$. The regressor vector $\chi_{\hat{p}}$ consists of the basis functions, the linear inputs $\hat{p}_k$ and $\hat{h}$ and the vector $1 \in \: \mathbb{R}^{l} $, where $l$ is the number of states.
+
+\newpage
 
 \section{NN based identification on an example network}
 \label{NN_based_example} 
 
-(in progress)
+(implementation is in progress)
+
+  %Inlet flows
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/inlet_flows_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Inlet flows of the two pumping stations PU1 and PU2.}
+ \label{fig:inlet_flows_example1}
+ \end{figure}
+
+\vspace{-3mm}
+
+   %WT head
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/head_WT_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Head in the WT, TA1.}
+ \label{fig:WT_head_example}
+ \end{figure}
+
+  %Sigma
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/sigma_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Total demand in the network.}
+ \label{fig:sigma_example}
+ \end{figure}
+
+   %Inlet pressures
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/inlet_pressure_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Inlet pressuresof the two pumping stations PU1 and PU2.}
+ \label{fig:sigma_example}
+ \end{figure}
+
+
