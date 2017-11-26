@@ -13,11 +13,12 @@ Modelling and identification of non-linear systems is a challenging task because
 \centering
 %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
 \input{report/tikz/nonlin_block.tex} 
+\vspace{-3mm}
 \caption{Block diagram of system identification.}
 \label{fig:nonlin_block}
 \end{figure}
 
-\vspace{-3mm}
+\vspace{-4mm}
 
 The process and model are fed with the same input vectors, and their outputs are compared. This comparison gives an error signal $e$, which can be utilized for adapting the model. It should be noted, that in most cases the measurements on the output are disturbed by noise $n$. In order to carry out a succesful system identification, some major steps need to be performed, either by user interaction or using algorithms which can automatize these steps. \figref{fig:identification_loop} shows the system identification loop with the major steps
 
@@ -45,7 +46,7 @@ Some of these steps in \figref{fig:identification_loop} are discussed in the fur
 The first step in the identification is typically realized by a trial-and-error approach with the help of prior knowledge. In physical systems such as a WSS, the influence of the different variables is quite clear and the inputs can be chosen by the model equations which were presented in \secref{multi_inlet_multi_WT_model}. It should be noted that in more complex systems, where the number of inputs are high and their influence is not so well defined, some data-driven input selection might be very helpful. In this case, using all inputs can lead to extremely high-dimensional approximation problems, which implies the need for a huge number of parameters and increases the training time. Techniques for input data selection such as Principal Component Analysis(PCA) can be utilized in order to decide the relevance of certain inputs on the system. The main drawback of such techniques is that the relevance of an input is dependant only on the input data distribution, therefore sometimes highly relevant inputs are removed \cite{nelles2013nonlinear}.  Other techniques, such as correlation analysis for linear systems or genetic algorithms for non-linear systems can be also utilized, however it is not discussed further in the report, as in our case all inputs are relevant. 
 
 Furthermore, the choice of the input signal requires some prior knowledge about the operation of the system and the purpose of the model. For black box modelling, the measurement data is the most important source of information. The behaviour of the real world system that is not represented in the TS, cannot be described in the model, unless prior knowledge is explicitly incorporated. Therefore, the TS needs to be as representative as possible in order to represent the desired operation of the real world system. 
-
+\vspace{-3mm}
 \subsection{Choice of the model structure}
 \label{choice_of_the_model_architecture}
 
@@ -179,7 +180,7 @@ where $\tilde{f}_2$ is a non-linear function, describing the dependencies of the
   \end{cases}
 \end{equation} 
 
-It is important to point out that the presented model for identification is linear in their parameters, meaning that they can be estimated by linear optimization. For the linear optimization, only the parameters have to enter linearly, as the input can depend in any non-linear way on the input data sets. 
+It is important to point out that the presented model for identification is linear in the parameters, meaning that they can be estimated by linear optimization. For the linear optimization, only the parameters have to enter linearly, as the input can depend in any non-linear way on the input data sets. 
 
 The main goal of the system identification therefore, is to find a realization of $\tilde{f}_1$ and $\tilde{f}_2$, furthermore to find the parameters $a_1$, $a_2$ such that the identified model fits the TSs $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$. The tools for carrying out such identification procedure leads to the discussion of basis functions and neural networks, which are introduced and discussed in the following sections.   
 
@@ -217,7 +218,7 @@ Typically in literature such as \cite{nelles2013nonlinear, norgaard2003neural}, 
 
  \begin{equation}
 \label{basis_NN_eq_lin_bias}
-\tilde{y} = \sum_{i = 0}^M w_i \phi_i(u) \qquad \text{with} \quad \phi_0(\cdot).
+\tilde{y} = \sum_{i = 0}^M w_i \phi_i(u) \qquad \text{with} \quad \phi_0(\cdot) = 1.
 \end{equation}
 
 The basis functions in the NN formulation are generally multidimensional, defined by the number of inputs. For all NN approaches, however, the multi-variate basis functions are constructed by simple one dimensional functions\cite{nelles2013nonlinear}. This function is called the activation function. Such construction mechanism in the NN context is shown in \figref{fig:activation_mechanism}
@@ -326,12 +327,19 @@ After the clustering is completed, and the $c_k$ cluster centers are assigned to
 \subsection{Determination of the weights}
 \label{determination_weights} 
 
-(In progress)
+The determination of the weights $w_i$ is treated as a LS problem. Using the notation of \figref{fig:nonlin_block}, the error between the measured output data $y$ and the output of the model $\tilde{y}$ is used for the following loss function
+
+ \begin{equation}
+\label{loss_function}
+L(w) = \frac{1}{2} e^Te \ \rightarrow \ \underset{w}{min}. 
+\end{equation}
+
+This is the simplest loss function which says that the loss is proportional to the square of the difference between the model and the process output. 
 
 \section{RBFNN model of the Multi-inlet,Multi-WT system}
 \label{RBFNN_model_multi_inlet_multi_WT_sys} 
 
-As the tools are now given for identification, the interpretation of the Multi-inlet, Multi-WT system in the context of NNs is considered. In order to formulate a NN structure, let us first recall the system equations, described in \secref{model_structure_of_the_multi_inlet_multi_WT_system}. The corresponding output and state equations are shown in \eqref{identification_model11}. 
+As the tools for identification has been introduced in \secref{neural_networks} , the interpretation of the Multi-inlet, Multi-WT system in the context of NNs is considered. In order to formulate a NN structure, let us first recall the system equations, described in \secref{model_structure_of_the_multi_inlet_multi_WT_system}. The corresponding output and state equations are shown in \eqref{identification_model11}. 
 
 \begin{equation}
 \begin{cases}
@@ -340,6 +348,58 @@ As the tools are now given for identification, the interpretation of the Multi-i
   \hat{p}_{k+1} = \tilde{f}_2(\bar{d}_{\mathcal{K},k}, \sigma_k) + a_1 \hat{p}_k + a_2 \hat{h} .
   \end{cases}
 \end{equation} 
+
+As it was concluded, the output is governed by the non-linear function $\tilde{f}_1$, which maps the inputs $\bar{d}_{\mathcal{K}}$, $\sigma$ and $\hat{h}_t $ to the outputs $\tilde{y}$. This static input-output system can be represented with a RBFNN, shown in \figref{fig:nn_output}.
+
+  %NN model of the output eq.
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/output_NN1.tex} 
+  \vspace{-7mm}
+ \caption{NN model of the output equation.}
+ \label{fig:nn_output}
+ \end{figure}
+
+ \vspace{-3mm}
+
+ In \figref{fig:nn_output}, the first layer consists of the inputs, the hidden layer forms the set of RBFs and, as there are two outputs in the network, the output layer consists of two output neurons which linearly combine the weighted RBFs. Therefore, the output equation written in RBFNN formulation can be given such that 
+
+  \begin{equation}
+\label{NN_output_eq1}
+\tilde{y}_1 = \sum_{i = 1}^M w_i \phi_i(u) +  w_{0,1},
+\end{equation}
+
+where $u = (\bar{d}_{\mathcal{K}} \ \sigma \ \hat{h}_t )^T$. Formulating \eqref{NN_output_eq1} into vector form, the following can be written
+
+  \begin{equation}
+\label{NN_output_vector1}
+\tilde{y} = \theta^T 
+\underbrace{\begin{pmatrix}
+           \phi_1(u) \\[1pt]
+           \phi_2(u) \\[1pt]
+           \vdots \\[1pt]
+           \phi_M(u)\\[3pt]
+           1 
+         \end{pmatrix}}_{\chi},
+\end{equation}
+
+where $\theta$ is the regression matrix, including the output weights $w_i$ and the biases $w_0$. Furthermore, $\theta$ has as many columns as the number of inputs. $\chi$ is called the regressor vector, or in NN context the input vector, consisting of the basis functions and the vector $1 \in \: \mathbb{R}^{c} $, where $c$ is the number of outputs. 
+
+The state equation is governed by the non-linear function $\tilde{f}_2$ and furthermore, the states $\hat{p}$ and the elevation of the WTs $\hat{h}$ enter the system linearly. As a consequence of this, the measured data of the states have a strong linear component. In the NN representation this is taken into account such that skip-layer connections are introduced. These extra connections in the NN model are skipping the hidden layer, thereby contribute linearly to the outputs. The illustration of such network is shown in \figref{fig:nn_state}.
+
+   %NN model of the state eq.
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/output_NN.tex} 
+ \caption{NN model of the state equation.}
+ \label{fig:nn_state}
+ \end{figure}
+
+ \vspace{-3mm}
+
+ In \figref{fig:nn_state}, although the input neurons for the skip-layer connections are placed in line with the hidden layer, they are considered as simple inputs, effecting the output layer by the parameters $a_1$ and $a_2$. Nevertheless, the identification is treated as a black-box model, but since insight is given about the network architecture, the NN model can be better matched to the problem. 
 
 \section{NN based identification on an example network}
 \label{NN_based_example} 
