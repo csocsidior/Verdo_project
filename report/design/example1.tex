@@ -20,7 +20,7 @@ Modelling and identification of non-linear systems is a challenging task because
 
 \vspace{-4mm}
 
-The process and model are fed with the same input vectors, and their outputs are compared. This comparison gives an error signal $e$, which can be utilized for adapting the model. It should be noted, that in most cases the measurements on the output are disturbed by noise $n$. In order to carry out a succesful system identification, some major steps need to be performed, either by user interaction or using algorithms which can automatize these steps. \figref{fig:identification_loop} shows the system identification loop with the major steps
+The process and model are fed with the same input signals, and their outputs are compared. This comparison gives an error signal $e$, which can be utilized for adapting the model. It should be noted, that in most cases the measurements on the output are disturbed by noise $n$. In order to carry out a succesful system identification, some major steps need to be performed, either by user interaction or using algorithms which can automatize these steps. \figref{fig:identification_loop} shows the system identification loop with the major steps
 
  %system identification algorithm 
 \begin{figure}[H]
@@ -37,7 +37,7 @@ Some of these steps in \figref{fig:identification_loop} are discussed in the fur
 
 \begin{equation}
   \label{training set}
-  \mathcal{D} = \{u_i ; y_i\}_{i = 1,2, ..., N}.
+  \mathcal{D} = \{u_i , y_i\}_{i = 1,2, ..., N}.
 \end{equation}
 
 \subsection{Choice of the model inputs}
@@ -45,7 +45,7 @@ Some of these steps in \figref{fig:identification_loop} are discussed in the fur
 
 The first step in the identification is typically realized by a trial-and-error approach with the help of prior knowledge. In physical systems such as a WSS, the influence of the different variables is quite clear and the inputs can be chosen by the model equations which were presented in \secref{multi_inlet_multi_WT_model}. It should be noted that in more complex systems, where the number of inputs are high and their influence is not so well defined, some data-driven input selection might be very helpful. In this case, using all inputs can lead to extremely high-dimensional approximation problems, which implies the need for a huge number of parameters and increases the training time. Techniques for input data selection such as Principal Component Analysis(PCA) can be utilized in order to decide the relevance of certain inputs on the system. The main drawback of such techniques is that the relevance of an input is dependant only on the input data distribution, therefore sometimes highly relevant inputs are removed \cite{nelles2013nonlinear}.  Other techniques, such as correlation analysis for linear systems or genetic algorithms for non-linear systems can be also utilized, however it is not discussed further in the report, as in our case all inputs are relevant. 
 
-Furthermore, the choice of the input signal requires some prior knowledge about the operation of the system and the purpose of the model. For black box modelling, the measurement data is the most important source of information. The behaviour of the real world system that is not represented in the TS, cannot be described in the model, unless prior knowledge is explicitly incorporated. Therefore, the TS needs to be as representative as possible in order to represent the desired operation of the real world system. 
+Furthermore, the choice of the input signal requires some prior knowledge about the operation of the system and the purpose of the model. For black box modelling, the measurement data is the most important source of information. The behaviour of the real world system that is not represented in the TS, cannot be described in the model, unless prior knowledge is explicitly incorporated. Therefore, the TS needs to be as representative as possible in order to incorporate the desired operation of the real world system. 
 \vspace{-3mm}
 \subsection{Choice of the model structure}
 \label{choice_of_the_model_architecture}
@@ -77,21 +77,21 @@ The choice of the model architecture among many factors, depends on the type of 
     \label{comparisontable_sysid}
 \end{center}
 
-As shown in \tabref{comparisontable_sysid}, White box models are completely derived by first principles, i.e., by physical laws. The parameters and equations, describing the whole network can be determined by theoretical modelling, as it was done for our system in \chapref{system_modelling}. Furthermore, Black box models are based on measurement data, which means that the model describing the system is developed by the measured data. In order to carry out a successful Black box modelling, very little insight or prior knowledge is required, however it is important to know the input-output pairs. The combination or compromise between Black and White box models is called Gray box modelling. In this case, the knowledge from first principles and the information contained in the measurement data are both utilized. The blank fields in \tabref{comparisontable_sysid} for Grey box models are left blank because the properties of such models lie between White and Black box modelling. Typically, when Grey box modelling is considered, the main goal is to overcome some of the most restrictive factors of the white and black box approaches for the specific application. For example, some prior knowledge might be incorporated into a black box model in order to ensure reasonable behaviour\cite{nelles2013nonlinear}. 
+As shown in \tabref{comparisontable_sysid}, White box models are completely derived by first principles, i.e., by physical laws. The parameters and equations, describing the whole network can be determined by theoretical modelling, as it was done for our system in \chapref{system_modelling}. Black box models however, are based on measurement data, which means that the model describing the system is developed by the characteristics of the data. In order to carry out a successful Black box modelling, very little insight or prior knowledge is required, however it is important to have a well-describing TS. The combination or compromise between Black and White box models is called Gray box modelling. In this case, the knowledge from first principles and the information contained in the measurement data are both utilized. The blank fields in \tabref{comparisontable_sysid} for Grey box models are left blank because the properties of such models lie between White and Black box modelling. Typically, when Grey box modelling is considered, the main goal is to overcome some of the most restrictive factors of the White and Black box approaches for the specific application. For example, some prior knowledge might be incorporated into a Black box model in order to ensure reasonable behaviour\cite{nelles2013nonlinear}. 
 
 Often the structure may be determined by first principles but the model parameters may be estimated from data. It is important to note, that the WSS model presented in \chapref{system_modelling} has been derived by first principles, however due to complexity of the system and the available data, the identification will be carried out by Black box identification and approximation methods. 
 
 \subsection{Model validation}
 \label{model_validation}
 
-The easiest type of validation is to check the quality of the model on the TS. If this does not satisfactory result, the model is not accepted. In this case, it can be either concluded that information is missing from the input or the model is not flexible enough to describe the corresponding input-output relations. In case if the performance achieved on the TS is acceptable, it is desirable to test the model on a new data set, especially if noise is present in the system. It should be noted however, that this new testing data should excite the system in the same operating regions, as the model was trained on. Otherwise, the model fails the validation. 
+The easiest type of validation is to check the quality of the model on the TS. If this does not give satisfactory results, the model is not accepted. In this case, it can be either concluded that information is missing from the input or the model is not flexible enough to describe the corresponding input-output relations. In case if the performance achieved on the TS is acceptable, it is desirable to test the model on a new data set, especially if noise is present in the system. It should be noted however, that this new testing data should excite the system in the same operating regions, as the model was trained on. Otherwise, the model fails the validation. 
 
 \newpage
 
 \section{Model structure of the Multi-inlet, Multi-WT system}
 \label{model_structure_of_the_multi_inlet_multi_WT_system}
 
-In \chapref{system_modelling}, a non-linear SS model has been derived, describing the dynamics with multiple inlets and multiple WTs, constrained by the static network. This model description serves as a starting point for the system identification, therefore let us recall first the output equation. The output $\bar{p}_{\mathcal{K}}$ is given by \eqref{recall_output_eq}
+In \chapref{system_modelling}, a non-linear SS model has been derived, describing the dynamics with multiple inlets and multiple WTs, constrained by the static part of the network. This model description serves as a starting point for the system identification, therefore let us recall the output equation. The output vector $\bar{p}_{\mathcal{K}}$ is given by \eqref{recall_output_eq}
 
 \begin{equation}
   \label{recall_output_eq}
@@ -105,35 +105,35 @@ where\\
 \hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$.
 \end{minipage}
 
-Recalling the constraint on $q_\mathcal{C}$ given by \eqref{meshresult2_WT_model1}
+Furthermore, lets recall the constraint on $q_\mathcal{C}$ given by \eqref{meshresult2_WT_model1}
 
  \begin{equation}
 \label{recall_constraint eq}
 f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0,
 \end{equation} 
 
-with $\bar{d}_{\mathcal{K}}$ inlet flows, $\sigma$ total demand, $v_{\mathcal{D}}$ distribution parameter, $q_\mathcal{C}$ flows in set $\mathcal{C}$, $\hat{p}$ pressure in the WTs, $\hat{h}$ elevation of the WTs and $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ the elevation of the pumping stations. Furthermore, let us merge the pressure and elevation of the WTs and describe it in the output equation by the total head such that
+with $\bar{d}_{\mathcal{K}}$ inlet flows, $\sigma$ total demand, $v_{\mathcal{D}}$ distribution parameter, $q_\mathcal{C}$ flows in set $\mathcal{C}$, $\hat{p}$ pressure in the WTs, $\hat{h}$ elevation of the WTs and $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ the elevation of the pumping stations. For convenience, let us merge the pressure and elevation of the WTs and describe it in the output equation by the total head such that
 
  \begin{equation}
 \label{totalhead_output_eq}
 \hat{h}_t = \hat{p} + \hat{h}
 \end{equation} 
 
-Although in \chapref{system_modelling} the distribution parameter $v_{\mathcal{D}}$ was assumed to be a time-varying, in the further discussion we assume that it is constant. Furthermore, the constraint on $q_\mathcal{C}$ is given by an implicit expression for which solution cannot be given analytically. Therefore the constraint cannot be explicitly substituted into \eqref{recall_output_eq}, however considering that $q_\mathcal{C}$ is in the form of
+Although in \chapref{system_modelling} the distribution parameter $v_{\mathcal{D}}$ was assumed to be time-varying, in the further discussion we assume that it is constant. Furthermore, the constraint on $q_\mathcal{C}$ is given by an implicit expression for which solution cannot be given analytically. Therefore, the constraint cannot be explicitly substituted into \eqref{recall_output_eq}, however considering that $q_\mathcal{C}$ is in the form of
 
  \begin{equation}
 \label{qc_abstraction}
 q_\mathcal{C} = q_\mathcal{C}(\bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t ),
 \end{equation} 
 
-we can see that the dependencies for the $q_\mathcal{C}$ flows are the same as for the output model. The total demand $\sigma$ and the the inlet flows $\bar{d}_{\mathcal{K}}$ enter the model in a non-linear way and the total head of the WTs $\hat{h}_t$ enter the system linearly. Due to this consideration, an equivalent form of the output equation in \eqref{recall_output_eq} can be  rewritten such that
+we can see that the dependencies for the $q_\mathcal{C}$ flows are the same as for the output vector, i.e the output model. The total demand $\sigma$ and the the inlet flows $\bar{d}_{\mathcal{K}}$ enter the model in a non-linear way and the total head of the WTs $\hat{h}_t$ enter the system linearly. Due to this, an equivalent form of the output equation in \eqref{recall_output_eq} can be written such that
 
  \begin{equation}
   \label{recall_output_eq_2}
   \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C}(\bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t ) + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} \hat{h}_t - \bar{h}_{\mathcal{K}}. 
 \end{equation} 
 
-From \eqref{recall_output_eq_2} we can see that although the total head of the WTs $\hat{h}_t$ enters \eqref{recall_output_eq} linearly, after using the constraint on $q_\mathcal{C}$, this dependency becomes non-linear. Furthermore, the linear term in \eqref{recall_output_eq_2} is the elevation of the pumping stations $\bar{h}_{\mathcal{K}}$, therefore by adding it to the input pressures $\bar{p}_{\mathcal{K}}$, a new output equation can be given such that 
+From \eqref{recall_output_eq_2} we can see that although the total head of the WTs $\hat{h}_t$ enters \eqref{recall_output_eq} linearly, after using the constraint on $q_\mathcal{C}$, this dependency becomes non-linear. Furthermore, the linear term in \eqref{recall_output_eq_2} is the elevation of the pumping stations $\bar{h}_{\mathcal{K}}$, which is a constant, known parameter of the system. Therefore, by adding this elevation parameter to the input pressures $\bar{p}_{\mathcal{K}}$, we get the total head as the output. A reformulated output equation can be given such that 
 
  \begin{equation}
   \label{recall_output_eq_3}
@@ -149,7 +149,7 @@ This static model described in \eqref{recall_output_eq_3} is a mapping defined b
 
 With this, we assume that the flows in the WTs are measured. Nevertheless, the input and output set together forms the TS $\mathcal{D}_1 = \{u_i ; \tilde{y}_i\}_{i = 1,2, ..., N}$, which can be utilized to carry out the identification on the model. 
 
-Now lets recall the equation, governing the dynamics. As explained in \chapref{system_modelling}, the states of the system are the pressures $\hat{p}$ in the WTs. Recalling \eqref{WT_matrixform_final} in discrete form
+Now, lets recall the equation describing the dynamics. As it was explained in \chapref{system_modelling}, the states of the system are the pressures $\hat{p}$ in the WTs. Recalling \eqref{WT_matrixform_final} in discrete form the following is given
 
 \begin{equation}
 \label{WT_matrixform_final_discrete}
@@ -163,14 +163,16 @@ Substituting the constraint on $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final
 \Lambda \hat{p}_{k+1} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}(\bar{d}_{\mathcal{K},k}, \sigma_k, \hat{p}_k, \hat{h})  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k.
 \end{equation}
 
-The state equation in \eqref{WT_matrixform_final_discrete} describes a linear combination of the inputs, however by substituting the $q_\mathcal{C}$ flows it is shown that the inlet flows $\bar{d}_{\mathcal{K}}$ and total consumption $\sigma$ effects the states in a non-linear manner. However, the future state values linearly depend on the present values of the states $\hat{p}$ and the elevation of the WTs $\hat{h}$. With this in mind, similarly to the output equation a state equation can be formulated, such that 
+The state equation in \eqref{WT_matrixform_final_discrete} describes a linear combination of the inputs, however by substituting the $q_\mathcal{C}$ flows, it is shown that the inlet flows $\bar{d}_{\mathcal{K}}$ and total consumption $\sigma$ effects the states in a non-linear manner. Besides that, the future state values linearly depend on the present values of the states $\hat{p}$ and the elevation of the WTs $\hat{h}$. With this in mind, similarly as it was done for the output equation, the state equation can be reformulated, such that 
 
 \begin{equation}
 \label{WT_matrixform_final_discrete2}
 \hat{p}_{k+1} = \tilde{f}_2(\bar{d}_{\mathcal{K},k}, \sigma_k) + a_1 \hat{p}_k + a_2 \hat{h},
 \end{equation}
 
-where $\tilde{f}_2$ is a non-linear function, describing the dependencies of the inlet flows $\bar{d}_{\mathcal{K}}$ and the total consumption $\sigma$ on the next state. $a_1$ and $a_2$ describe parameters for the linear terms. Furthermore, the TS $\mathcal{D}_2$ can be built up the same way as for the output equation. The identification model is summarized such that 
+where $\tilde{f}_2$ is a non-linear function, describing the dependencies of the inlet flows $\bar{d}_{\mathcal{K}}$ and the total consumption $\sigma$ on the next state. $a_1$ and $a_2$ describe parameters for the linear terms. Furthermore, the TS $\mathcal{D}_2$ corresponding to the state equation, can be built up the same way as it was done for the output equation. 
+
+The complete identification model consists of the static output equation and the state equation describing the dynamics in the form of
 
 \begin{equation}
 \begin{cases}
@@ -182,7 +184,9 @@ where $\tilde{f}_2$ is a non-linear function, describing the dependencies of the
 
 It is important to point out that the presented model for identification is linear in the parameters, meaning that they can be estimated by linear optimization. For the linear optimization, only the parameters have to enter linearly, as the input can depend in any non-linear way on the input data sets. 
 
-The main goal of the system identification therefore, is to find a realization of $\tilde{f}_1$ and $\tilde{f}_2$, furthermore to find the parameters $a_1$, $a_2$ such that the identified model fits the TSs $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$. The tools for carrying out such identification procedure leads to the discussion of basis functions and neural networks, which are introduced and discussed in the following sections.   
+The main goal of the system identification therefore, is to find the realization of $\tilde{f}_1$ and $\tilde{f}_2$, furthermore to find the parameters $a_1$, $a_2$ such that the identified model fits the TSs $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$. The tools for carrying out such identification procedure leads to the discussion of basis functions and neural networks, which are introduced and discussed in the following sections.   
+
+\newpage
 
 \section{Neural networks}
 \label{neural_networks}
@@ -194,7 +198,7 @@ From all possible realizations of the non-linear functions $\tilde{f}_1$ and $\t
 \tilde{y} = \sum_{i = 1}^M w^{(l)}_i \phi_i(u, w^{(nl)}_i).
 \end{equation}
 
-The output $\tilde{y}$ is modelled as a weighted sum of $M$ basis functions $\phi_i(\cdot)$.The basis functions are weighted with the linear parameters $w_i$, and they depend on the inputs and set of parameters gathered in $w^{(nl)}_i$. In order to realize a non-linear model, the basis functions need to be some kind of non-linear functions. Therefore, the parameter on which the basis function depends is necessarily non-linear. In a general case, the non-linear parameters take part in the identification procedure, however we know that the model which is to be estimated is linear in the parameters. As a consequence of this, since $\tilde{f}_1$ and $\tilde{f}_2$ are linear parametrized, the weights can be calculated with linear optimization if the basis functions are known. Therefore, in the following \eqref{basis_NN_eq} is considered in the form of
+The output $\tilde{y}$ is modelled as a weighted sum of $M$ basis functions $\phi_i(\cdot)$.The basis functions are weighted with the linear parameters $w_i$, and they depend on the inputs and set of parameters gathered in $w^{(nl)}_i$. In order to realize a non-linear model, the basis functions need to be some kind of non-linear functions. Therefore, the parameter on which the basis function depends is necessarily non-linear. In a general case, the non-linear parameters take part in the identification procedure, however we know that the model which is to be estimated is linear in the parameters. As a consequence of this, since $\tilde{f}_1$ and $\tilde{f}_2$ are linear parametrized, the weights can be calculated with linear optimization if the basis functions are known. Although non-linear optimization can be also utilized for such problems as the one presented in the previous sections, it is chosen to determine the non-linear parameters priorly, instead of optimizing them. Therefore, in the further discussion, \eqref{basis_NN_eq} is considered in the form of
 
  \begin{equation}
 \label{basis_NN_eq_lin}
@@ -214,14 +218,14 @@ The models, described in \eqref{basis_NN_eq} and \eqref{basis_NN_eq_lin} are cal
 
 \vspace{-3mm}
 
-Typically in literature such as \cite{nelles2013nonlinear, norgaard2003neural}, a NNs is distinguished from a non-NN network, when its basis functions are of the same type. In the terminology of NNs, the network in \figref{fig:nn_example_block} is described as follows. The node at the output is called the output neuron, and all output neurons together form the output layer. In the example network only one output is considered, therefore the output layer consists of one neuron. All the $M$ nodes in the center that realizes a basis function is called the hidden-layer. The inputs are denoted with neurons and together they form the input layer. Furthermore, the linear parameters of the network associated with the output neuron(s) are called output weights. The output neuron is usually the linear combination of the basis functions in the hidden layer, with an additional possible offset $w_0$, called the bias. This offset parameter adjusts the operating point. Such an offset can be incorporated in the neural network model such that a basis function $\phi_0(\cdot)$ is introduced which is always equal to one. 
+Typically, in literature such as \cite{nelles2013nonlinear, norgaard2003neural}, a NN is distinguished from a non-NN network, when its basis functions are of the same type. In the terminology of NNs, the network in \figref{fig:nn_example_block} is described as follows. The node at the output is called the output neuron, and all output neurons together form the output layer. In the example network, in \figref{fig:nn_example_block}, only one output is considered, therefore the output layer consists of one neuron. The set of $M$ nodes in the center that realizes a basis function is called the hidden-layer. The inputs are denoted with neurons and together they form the input layer. Furthermore, the linear parameters of the network associated with the output neuron(s) are called output weights. The output neuron is usually the linear combination of the basis functions in the hidden layer, with an additional possible offset $w_0$, called the bias. This offset parameter adjusts the operating point. Such an offset can be incorporated in the neural network model such that a basis function $\phi_0(\cdot)$ is introduced which is always equals to one. 
 
  \begin{equation}
 \label{basis_NN_eq_lin_bias}
 \tilde{y} = \sum_{i = 0}^M w_i \phi_i(u) \qquad \text{with} \quad \phi_0(\cdot) = 1.
 \end{equation}
 
-The basis functions in the NN formulation are generally multidimensional, defined by the number of inputs. For all NN approaches, however, the multi-variate basis functions are constructed by simple one dimensional functions\cite{nelles2013nonlinear}. This function is called the activation function. Such construction mechanism in the NN context is shown in \figref{fig:activation_mechanism}
+The basis functions in the NN formulation are generally multidimensional, defined by the number of inputs. For all NN approaches, however, the multi-variate basis functions are constructed by simple one dimensional functions\cite{nelles2013nonlinear}. This function is called the activation function. Such construction mechanism in the context of NNs is shown in \figref{fig:activation_mechanism}
 
  %Activation mechanism of NN
 \begin{figure}[H]
@@ -246,7 +250,7 @@ Among several construction mechanism, the radial construction is further discuss
 x = ||u- \mu|| = \sqrt{(u-\mu)^T (u-\mu)},
 \end{equation}
 
-where $\mu = (\mu_1 \ \mu_2 \ ... \ \mu_p)^T$ is the center vector of the basis functions. The radial construction is utilized for Radial Basis Function(RBF) networks.
+where $\mu = (\mu_1 \ \mu_2 \ ... \ \mu_p)^T$ is the center vector of the basis functions. The radial construction is utilized for Radial Basis Function(RBF) networks, which is discussed in the following sections.
 
 
 \section{RBF networks}
@@ -259,14 +263,14 @@ where $\mu = (\mu_1 \ \mu_2 \ ... \ \mu_p)^T$ is the center vector of the basis 
 g(x) = exp \Big(-\frac{1}{2}x^2\Big).
 \end{equation}
 
-Expressing the distance $x$, the RBF can be given such that
+Substituting the distance $x$ into \eqref{Gaussian_activation}, one RBF neuron can be given such that
 
  \begin{equation}
 \label{Gaussian_activation1}
 \phi(u,\mu_k, \psi_k) = exp \Big(-\frac{||u-\mu_k||^2}{2\psi_k^2}\Big), 
 \end{equation}
 
-where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \in \: \mathbb{R}^{M}$ is the standard deviation of the Gaussian, i.e the width parameter and $||\cdot||$ is the Euclidean norm. In a NN, RBFs overlap each other to capture the information from the input data, and the width parameters $\psi_k$ control the amount of overlapping basis functions. An example is shown in \figref{fig:rbf_pram}, where the influence of these parameters is illustrated on one RBF neuron, with a single input $u$. 
+where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \in \: \mathbb{R}^{M}$ is the standard deviation of the Gaussian, i.e the width parameter and $||\cdot||$ is the Euclidean norm. In a NN, RBFs overlap each other to capture the information from the input data, and the width parameters $\psi_k$ control the amount of these overlapping basis functions. An example is shown in \figref{fig:rbf_pram}, where the influence of these parameters is illustrated on one RBF neuron, with a single input $u$. 
 
  %RBFs with different parameters
 \begin{figure}[H]
@@ -279,16 +283,16 @@ where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \
 
 \vspace{-3mm}
 
-Therefore, when a RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have somehow to be determined. 
+Therefore, when an RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have to be somehow determined and optimized. As it was mentioned in \secref{neural_networks}, the linear parameters are going to be optimized, while the non-linear properties of the RBFs is going to be determined with some technique, described in the following. 
 
-\figref{fig:rbf_interpol} illustrates the interpolation and extrapolation behaviour of RBF networks. 
+\figref{fig:rbf_interpol} illustrates the interpolation and extrapolation capability of the RBF networks. 
 
  %Interpolation of RBFS
 \begin{figure}[H]
 \centering
 %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
 \input{report/tikz/rbf_interpolation.tex} 
-\caption{Interpolation and extrapolation behaviour of an RBF network without offset.}
+\caption{Interpolation and extrapolation of an RBF network without offset.}
 \label{fig:rbf_interpol}
 \end{figure}
 
@@ -299,7 +303,7 @@ In \figref{fig:rbf_interpol}, the basis functions are shown on the left, while t
 \subsection{RBF training}
 \label{RBF_training}
 
-The process of estimating the basis functions $\phi_i$ consists of two problems. One task is to determine a set of $M$ RBFs and then estimate the output weights $w_i$ and bias parameter $w_0$. Therefore, the RBF network parameters are generally determined in a two-stage procedure, while in other type of networks the parameters are determined simultaneously by non-linear optimization\cite{RBF_article}. As the output layer of RBF networks linearly combines the Gaussian basis functions, most strategies determine the parameters $\mu$ and $\psi$ of the hidden layer, and then the output layer weighs $w$ by using some linear optimization methods, such as Least Squares(LS) methods. This two-step procedure allows to vary only the weights between the hidden and output layer of the network during the training. 
+The process of estimating the basis functions $\phi_i$ consists of two problems. One task is to determine a set of $M$ RBFs and then the other task is to estimate the optimal output weights $w_i$ and bias parameters $w_0$. Therefore, the RBF network parameters are generally determined in a two-stage procedure, while in other type of networks the parameters are determined simultaneously by non-linear optimization\cite{RBF_article}. As the output layer of RBF networks linearly combines the Gaussian basis functions, most strategies determine the parameters $\mu$ and $\psi$ of the hidden layer, and then the output layer weighs $w$ by using some linear optimization methods, such as Least Squares(LS) methods. This two-step procedure allows to vary only the weights between the hidden and output layer of the network during the training. 
 
 As the first step, the parameters of the Gaussian basis functions, $\mu$ and $\psi$ are discussed and then the calculation of the weight parameters is explained. 
 
@@ -363,14 +367,14 @@ As it was concluded, the output is governed by the non-linear function $\tilde{f
 
  \vspace{-3mm}
 
- In \figref{fig:nn_output}, the first layer consists of the inputs, the hidden layer forms the set of RBFs and, as there are two outputs in the network, the output layer consists of two output neurons which linearly combine the weighted RBFs. Therefore, the output equation written in RBFNN formulation can be given such that 
+ In \figref{fig:nn_output}, the first layer consists of the inputs, the hidden layer forms the set of RBFs and, as there are two outputs in the network. The output layer consists of two output neurons which linearly combine the weighted RBFs. Therefore, the output equation written in RBFNN formulation can be given such that 
 
   \begin{equation}
 \label{NN_output_eq1}
 \tilde{y}_1 = \sum_{i = 1}^M w_i \phi_i(u) +  w_{0,1},
 \end{equation}
 
-where $u = (\bar{d}_{\mathcal{K}} \ \sigma \ \hat{h}_t )^T$. Using vector notation, \eqref{NN_output_eq1} can be written such that
+where $u = (\bar{d}_{\mathcal{K}} \ \sigma \ \hat{h}_t )^T$. Using vector notation, \eqref{NN_output_eq1} can be rewritten such that
 
   \begin{equation}
 \label{NN_output_vector1}
@@ -401,9 +405,9 @@ The state equation is governed by the non-linear function $\tilde{f}_2$ and furt
 
  \vspace{-3mm}
 
- In \figref{fig:nn_state}, although the input neurons for the skip-layer connections are placed in line with the hidden layer, they are considered as simple inputs, effecting the output layer by the parameters $a_1$ and $a_2$. Nevertheless, the identification is treated as a black-box model, but since insight is given about the network architecture, the NN model can be better matched to the problem. Furthermore, in \figref{fig:nn_state}, the inputs are all present values and the outputs are the future or predicted values of the states $\hat{p}_{k+1}$. 
+ In \figref{fig:nn_state}, although the input neurons for the skip-layer connections are placed in line with the hidden layer, they are considered as simple inputs, effecting the output layer by the parameters $a_1$ and $a_2$. Nevertheless, the identification is treated as a black-box model, but since insight is given about the network architecture, the NN model can be better matched to the problem by utilizing these skip-layer connections. Furthermore, in \figref{fig:nn_state}, the inputs are all present values and the outputs are the future or predicted values of the states $\hat{p}_{k+1}$. $\hat{h}$ does not have a time step index, as this value is the elevation of WTs, which is time-invariant. 
 
- Using vector notation, the NN model for the state equation can be given in the form as shown in eqref{}
+ Using vector notation, the NN model for the state equation can be given in the form as shown in \eqref{NN_state_vector2}
 
   \begin{equation}
 \label{NN_state_vector2}

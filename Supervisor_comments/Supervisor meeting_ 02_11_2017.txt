@@ -83,6 +83,65 @@ which is usually seen merely as a black box
 The real advantage is that it makes estimating good values for the weights easier if the network architecture is well 
 matched to the problem, and you may be able to use a smaller network and obtain better generalisation performance.
 
+scale = 1,
+plain/.style={
+  draw=none,
+  fill=none,
+  },
+net/.style={
+  matrix of nodes,
+  nodes={
+    draw,
+    circle,
+    thick,
+    inner sep=8pt
+    },
+  nodes in empty cells,
+  column sep=1.5cm,
+  row sep=-8pt
+  },
+>=latex
+]
+
+\matrix[net] (mat)
+{
+  & |[plain]|  & |[plain]|  \\
+ |[plain]| & |[plain]|  \\
+|[plain]| & & \\
+ |[plain]| & |[plain]| \\
+ & |[plain]|   \\
+|[plain]| & |[plain]| &  |[plain]|\\
+|[plain]| &   &\\
+|[plain]|& |[plain]| \\
+&  |[plain]|  \\
+|[plain]| &   |[plain]| \\
+  |[plain]| &  |[plain]| \\
+};
+
+\foreach \ai [count=\mi ]in {1,5}
+     \draw[thick][<-] (mat-\ai-1) -- node[above] {$u_\mi$} +(-1.5cm,0);
+     \draw[thick][<-] (mat-9-1) -- node[above] {$u_{p-1}$} +(-1.5cm,0);
+ 
+
+\foreach \ai in {1,5,9}
+{\foreach \aii  in {3,7}
+  \draw[thick][->] (mat-\ai-1) -- (mat-\aii-2) ;
+}
+
+  \draw[->] (mat-1-1) -- (mat-3-2) node(){\footnotesize $\phi_1\!(\cdot)$};
+  \draw [->] (mat-5-1) -- (mat-7-2) node(){\footnotesize$\phi\!_M\!(\cdot)$};
+
+  \draw[thick][->] (mat-3-2) --node[above]{$w_1$} (mat-7-3)node(){ $\sum$};
+  \draw[thick][->] (mat-7-2) --node[above]{$w_j$} (mat-7-3);
+  
+    \draw[thick][->] (mat-3-2) --node[above]{$w_1$} (mat-3-3)node(){ $\sum$};
+  \draw[thick][->] (mat-7-2) --node[below]{$w_j$} (mat-3-3);
+
+  
+\draw[thick][->] (mat-6-3) -- node[above] {$\tilde{y}$} +(1.5cm,0);
+
+%COMMENTED
+%\draw[thick][<-] (mat-6-3) -- node[right] {$w_0$} +(0,1.5cm);
 
 
 
