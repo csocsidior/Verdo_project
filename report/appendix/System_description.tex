@@ -1,5 +1,5 @@
-\chapter{Example Network}
-\label{system_description}
+\chapter{NN based identification on an example network}
+\label{NN_based_example}
 
 \subsection{Simulation in EPANET}
 \label{example1_EPANET}
@@ -17,7 +17,52 @@ In EPANET, the simulation is built up in the same way as the network model. The 
 
 As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present as extra links and nodes in this simulation. These extra nodes and links are removed when data is extracted from the EPANET model due to the reason that the input pressures can be measured on $v_1$ and $v_2$. The input flows can be measured through the links, connecting the reservoirs to the nodes, $v_1$ and $v_2$. Furthermore, the elevations and the demands are attributes of the nodes. In this simulation only demands are changing according to hourly time steps. 
 
-%
+
+\section{NN based identification on an example network1}
+\label{NN_based_example1} 
+
+  %Inlet flows
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/inlet_flows_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Inlet flows of the two pumping stations PU1 and PU2.}
+ \label{fig:inlet_flows_example1}
+ \end{figure}
+
+\vspace{-3mm}
+
+   %WT head
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/head_WT_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Head in the WT, TA1.}
+ \label{fig:WT_head_example}
+ \end{figure}
+
+  %Sigma
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/sigma_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Total demand in the network.}
+ \label{fig:sigma_example}
+ \end{figure}
+
+   %Inlet pressures
+ \begin{figure}[H]
+ \centering
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/inlet_pressure_example.tex} 
+ \vspace{-1.5mm}
+ \caption{Inlet pressuresof the two pumping stations PU1 and PU2.}
+ \label{fig:sigma_example}
+ \end{figure}
+
 
 
 
