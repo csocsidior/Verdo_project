@@ -1,12 +1,12 @@
-\chapter{State of the art system identification analysis}
+\chapter{Overview of system identification}
 \label{identification_methods}
 
-\emph{In this chapter, first an overview is given about the different steps that one has to consider in non-linear system identification. Secondly, different approaches are explained and compared. As a conclusion of the comparison, the selected approach is further discussed which leads to the introduction of Artificial Neural Networks(ANNs). Afterwards, the system identification and validation is carried out using the available data from the EPANET framework.}
+\emph{In this part of the appendix, the basic steps of system identification are described. These principles are applied throughout the identification design.}
 
 \section{Tasks in non-linear system identification}
 \label{tasks_nonlinear_sys_identification}
 
-Modelling and identification of non-linear systems is a challenging task because non-linear processes do not share properties such as the superposition in linear systems. In this sense, non-linear systems are unique and the methods for describing structurally different systems are complex. However, as for any identification method, the goal is to find a model which is capable to represent the behaviour of a process as closely as possible. The quality of the model is typically measured in terms of the error between the output of the process and the model. In \figref{fig:nonlin_block} an illustration is shown for a system identification arrangement 
+Modelling and identifying a non-linear system is a challenging task because non-linear processes do not share properties such as the superposition law in linear systems. As for any identification method, the goal is to find a model which is capable to represent the behaviour of a process as closely as possible. The quality of the model is typically measured in terms of the error between the output of the process and the model. In \figref{fig:nonlin_block} an illustration is shown for a system identification arrangement 
 \vspace{-3mm}
  %Non-lin system identification 
 \begin{figure}[H]
@@ -33,24 +33,16 @@ The process and model are fed with the same input signals, and their outputs are
 
 \vspace{-3mm}
 
-Some of these steps in \figref{fig:identification_loop} are discussed in the further sections. Furthermore, in the following, the term Training Set(TS) is used to characterize the measurement data that is utilized to carry out the presented identification steps. A TS consists of $N$ input-output pairs such that
-
-\begin{equation}
-  \label{training set}
-  \mathcal{D} = \{u_i , y_i\}_{i = 1,2, ..., N}.
-\end{equation}
-
 \subsection{Choice of the model inputs}
 \label{choice_of_the_model_inputs}
 
-The first step in the identification is typically realized by a trial-and-error approach with the help of prior knowledge. In physical systems such as a WSS, the influence of the different variables is quite clear and the inputs can be chosen by the model equations which were presented in \secref{multi_inlet_multi_WT_model}. It should be noted that in more complex systems, where the number of inputs are high and their influence is not so well defined, some data-driven input selection might be very helpful. In this case, using all inputs can lead to extremely high-dimensional approximation problems, which implies the need for a huge number of parameters and increases the training time. Techniques for input data selection such as Principal Component Analysis(PCA) can be utilized in order to decide the relevance of certain inputs on the system. The main drawback of such techniques is that the relevance of an input is dependant only on the input data distribution, therefore sometimes highly relevant inputs are removed \cite{nelles2013nonlinear}.  Other techniques, such as correlation analysis for linear systems or genetic algorithms for non-linear systems can be also utilized, however it is not discussed further in the report, as in our case all inputs are relevant. 
+The first step in the identification is typically realized by a trial-and-error approach to find out the influence of the different inputs on the process with the help of prior knowledge. In complex systems, where the number of inputs are high and their influence is not so well defined, some data-driven input selection might be very helpful. In this case, using all inputs can lead to extremely high-dimensional approximation problems, which implies the need for a huge number of parameters and increases the training time. Techniques for input data selection such as Principal Component Analysis(PCA) can be utilized in order to decide the relevance of certain inputs on the system. The main drawback of such techniques is that the relevance of an input is dependant only on the input data distribution, therefore sometimes highly relevant inputs are removed \cite{nelles2013nonlinear}.  Other techniques, such as correlation analysis for linear systems or genetic algorithms for non-linear systems can be also utilized.
 
-Furthermore, the choice of the input signal requires some prior knowledge about the operation of the system and the purpose of the model. For black box modelling, the measurement data is the most important source of information. The behaviour of the real world system that is not represented in the TS, cannot be described in the model, unless prior knowledge is explicitly incorporated. Therefore, the TS needs to be as representative as possible in order to incorporate the desired operation of the real world system. 
 \vspace{-3mm}
 \subsection{Choice of the model structure}
 \label{choice_of_the_model_architecture}
 
-The choice of the model architecture among many factors, depends on the type of the problem, the intended use, the insight into the real system behaviour, the complexity and the available data. The type of the problem can be for instance the approximation of a static system, or identification of the dynamics. In our case, both of them are considered. The intended use for the model architecture can differ whether the model is to be used for simulation, control, fault detection, etc. Considering the insight, the complexity and the available data, three different modelling approaches can be distinguished\cite{nelles2013nonlinear}. These approaches are compared in \tabref{comparisontable_sysid}. 
+The choice of the model architecture depends, among many factors on the type of the problem, the intended use, the insight into the real system behaviour, the complexity and the available data. The type of the problem can be for instance the approximation of a static system, or identification of the dynamics. In case of the WSS problem, both of them are considered. The intended use for the model architecture can differ whether the model is to be used for simulation, control or fault detection. Considering the insight, the complexity and the available data, three different modelling approaches can be distinguished\cite{nelles2013nonlinear}. These approaches are compared in \tabref{comparisontable_sysid}. 
 
 \vspace{-3mm}
 
@@ -70,18 +62,16 @@ The choice of the model architecture among many factors, depends on the type of 
     \textbf{Drawbacks} & Well described process is required. & $\longleftrightarrow$ & Not scalable and the accuracy is restricted by the available data.\\ 
     \hline
           \multirow{1}{*}
-    \textbf{Application} & Planning, simulation and design for simple processes. & $\longleftrightarrow$ & Only for existing, rather complex processes.\\ 
+    \textbf{Application} & Planning, simulation and design for simple processes. & $\longleftrightarrow$ & Data-driven model design.\\ 
     \hline
     \end{tabular}
     \captionof{table}{Comparison of system identification modelling approaches\cite{nelles2013nonlinear}.}
     \label{comparisontable_sysid}
 \end{center}
 
-As shown in \tabref{comparisontable_sysid}, White box models are completely derived by first principles, i.e., by physical laws. The parameters and equations, describing the whole network can be determined by theoretical modelling, as it was done for our system in \chapref{system_modelling}. Black box models however, are based on measurement data, which means that the model describing the system is developed by the characteristics of the data. In order to carry out a successful Black box modelling, very little insight or prior knowledge is required, however it is important to have a well-describing TS. The combination or compromise between Black and White box models is called Gray box modelling. In this case, the knowledge from first principles and the information contained in the measurement data are both utilized. The blank fields in \tabref{comparisontable_sysid} for Grey box models are left blank because the properties of such models lie between White and Black box modelling. Typically, when Grey box modelling is considered, the main goal is to overcome some of the most restrictive factors of the White and Black box approaches for the specific application. For example, some prior knowledge might be incorporated into a Black box model in order to ensure reasonable behaviour\cite{nelles2013nonlinear}. 
-
-Often the structure may be determined by first principles but the model parameters may be estimated from data. It is important to note, that the WSS model presented in \chapref{system_modelling} has been derived by first principles, however due to complexity of the system and the available data, the identification will be carried out by Black box identification and approximation methods. 
+As shown in \tabref{comparisontable_sysid}, White box models are completely derived by first principles, i.e., by physical laws. The parameters and equations, describing the whole network can be determined by theoretical modelling, as it was done for our system in \chapref{system_modelling}. Black box models however, are based on measurement data, which means that the model describing the system is developed based on the characteristics of the data. In order to carry out a successful Black box modelling, very little insight or prior knowledge is required, however it is important to have a well-describing input-output data set. The combination or compromise between Black and White box models is called Gray box modelling. In this case, the knowledge from first principles and the information contained in the measurement data are both utilized. The blank fields in \tabref{comparisontable_sysid} for Grey box models are left blank because the properties of such models lie between White and Black box modelling. Typically, when Grey box modelling is considered, the main goal is to overcome some of the most restrictive factors of the White and Black box approaches for the specific application. For example, some prior knowledge might be incorporated into a Black box model in order to ensure reasonable behaviour\cite{nelles2013nonlinear}. 
 
 \subsection{Model validation}
 \label{model_validation}
 
-The easiest type of validation is to check the quality of the model on the TS. If this does not give satisfactory results, the model is not accepted. In this case, it can be either concluded that information is missing from the input or the model is not flexible enough to describe the corresponding input-output relations. In case if the performance achieved on the TS is acceptable, it is desirable to test the model on a new data set, especially if noise is present in the system. It should be noted however, that this new testing data should excite the system in the same operating regions, as the model was trained on. Otherwise, the model fails the validation. 
+The easiest type of validation is to check the quality of the model on the input-output data set. If this does not give satisfactory results, the model is not accepted. In this case, it can be either concluded that information is missing from the input or the model is not flexible enough to describe the corresponding input-output relations. In case if the performance achieved on the data set is acceptable, it is desirable to test the model on a new data set, especially if noise is present in the system. It should be noted however, that this new testing data should excite the system in the same operating regions, as the model was trained on. Otherwise, the model might fail the validation. 

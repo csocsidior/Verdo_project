@@ -1,7 +1,7 @@
-\chapter{Identification procedure}
-\label{identification_procedure}
+\chapter{System identification design}
+\label{identification_design}
 
-\emph{In this chapter, first an overview is given about the different steps that one has to consider in non-linear system identification. Secondly, different approaches are explained and compared. As a conclusion of the comparison, the selected approach is further discussed which leads to the introduction of Artificial Neural Networks(ANNs). Afterwards, the system identification and validation is carried out using the available data from the EPANET framework.}
+\emph{In this chapter, the Multi-inlet, Multi-WT model, which was derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, a model structure is chosen, then a Neural Network(NN) based model is created for identification purposes. In the first case, the identification is carried out on a simple example network, then on the EPANET model of the Randers WSS. Lastly, the identification is evaluated on measurements from the real-world network.}
 
 \section{Model structure of the Multi-inlet, Multi-WT system}
 \label{model_structure_of_the_multi_inlet_multi_WT_system}
@@ -104,7 +104,7 @@ The main goal of the system identification therefore, is to find the realization
 \section{RBFNN model of the Multi-inlet,Multi-WT system}
 \label{RBFNN_model_multi_inlet_multi_WT_sys} 
 
-As the tools for identification has been introduced in \secref{neural_networks} , the interpretation of the Multi-inlet, Multi-WT system in the context of NNs is considered. In order to formulate a NN structure, let us first recall the system equations, described in \secref{model_structure_of_the_multi_inlet_multi_WT_system}. The corresponding output and state equations are shown in \eqref{identification_model11}. 
+As the tools for identification has been introduced in \appref{neural_networks} , the interpretation of the Multi-inlet, Multi-WT system in the context of NNs is considered. In order to formulate a NN structure, let us first recall the system equations, described in \secref{model_structure_of_the_multi_inlet_multi_WT_system}. The corresponding output and state equations are shown in \eqref{identification_model11}. 
 
 \begin{equation}
 \begin{cases}

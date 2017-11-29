@@ -1,22 +1,26 @@
 
-\chapter{Neural networks overview}
+\chapter{Overview of neural networks}
 \label{neural_networks}
 
-From all possible realizations of the non-linear functions $\tilde{f}_1$ and $\tilde{f}_2$, which describe the output relation and the dynamics of the network, almost all alternatives can be written in the following basis function formulation \cite{norgaard2003neural}
+\emph{This part of the appendix gives a brief introduction to NNs and more specifically, to a special type of these networks, the RBFNNs. }
+
+From all possible realizations of functions with non-linear behaviour, almost all alternatives can be written in the following basis function formulation, if the number of basis functions is infinite \cite{norgaard2003neural}
 
 \begin{equation}
 \label{basis_NN_eq}
 \tilde{y} = \sum_{i = 1}^M w^{(l)}_i \phi_i(u, w^{(nl)}_i).
 \end{equation}
 
-The output $\tilde{y}$ is modelled as a weighted sum of $M$ basis functions $\phi_i(\cdot)$.The basis functions are weighted with the linear parameters $w_i$, and they depend on the inputs and set of parameters gathered in $w^{(nl)}_i$. In order to realize a non-linear model, the basis functions need to be some kind of non-linear functions. Therefore, the parameter on which the basis function depends is necessarily non-linear. In a general case, the non-linear parameters take part in the identification procedure, however we know that the model which is to be estimated is linear in the parameters. As a consequence of this, since $\tilde{f}_1$ and $\tilde{f}_2$ are linear parametrized, the weights can be calculated with linear optimization if the basis functions are known. Although non-linear optimization can be also utilized for such problems as the one presented in the previous sections, it is chosen to determine the non-linear parameters priorly, instead of optimizing them. Therefore, in the further discussion, \eqref{basis_NN_eq} is considered in the form of
+The output $\tilde{y}$ is modelled as a weighted sum of $M$ basis functions $\phi_i(\cdot)$.The basis functions are weighted with the linear parameters $w_i$, and they depend on the inputs and set of parameters gathered in $w^{(nl)}_i$. In order to realize a non-linear model, the basis functions need to be some kind of non-linear functions. The parameters of these non-linear functions can take part in the optimization or can be determined priorly. If the latter is the case, linear optimization can be used to find the optimal parameters $w^{(l)}_i$. Therefore, in the further discussion, \eqref{basis_NN_eq} is considered in the form of
 
  \begin{equation}
 \label{basis_NN_eq_lin}
 \tilde{y} = \sum_{i = 1}^M w_i \phi_i(u).
 \end{equation}
 
-The models, described in \eqref{basis_NN_eq} and \eqref{basis_NN_eq_lin} are called Neural Networks(NN) \footnote{Artificial Neural Networks(ANNs) in the further description are simply called NNs, as there is no biological consideration addressed.}. The illustration of NNs is shown in \figref{fig:nn_example_block}.
+The models in \eqref{basis_NN_eq} and \eqref{basis_NN_eq_lin} are describing NNs. The illustration of an NNs is shown in \figref{fig:nn_example_block}.
+
+\vspace{-5mm}
 
 %Neural network block example 
 \begin{figure}[H]
@@ -29,12 +33,7 @@ The models, described in \eqref{basis_NN_eq} and \eqref{basis_NN_eq_lin} are cal
 
 \vspace{-3mm}
 
-Typically, in literature such as \cite{nelles2013nonlinear, norgaard2003neural}, a NN is distinguished from a non-NN network, when its basis functions are of the same type. In the terminology of NNs, the network in \figref{fig:nn_example_block} is described as follows. The node at the output is called the output neuron, and all output neurons together form the output layer. In the example network, in \figref{fig:nn_example_block}, only one output is considered, therefore the output layer consists of one neuron. The set of $M$ nodes in the center that realizes a basis function is called the hidden-layer. The inputs are denoted with neurons and together they form the input layer. Furthermore, the linear parameters of the network associated with the output neuron(s) are called output weights. The output neuron is usually the linear combination of the basis functions in the hidden layer, with an additional possible offset $w_0$, called the bias. This offset parameter adjusts the operating point. Such an offset can be incorporated in the neural network model such that a basis function $\phi_0(\cdot)$ is introduced which is always equals to one. 
-
- \begin{equation}
-\label{basis_NN_eq_lin_bias}
-\tilde{y} = \sum_{i = 0}^M w_i \phi_i(u) \qquad \text{with} \quad \phi_0(\cdot) = 1.
-\end{equation}
+Typically, in literature such as \cite{nelles2013nonlinear, norgaard2003neural}, a NN is distinguished from a non-NN network, when its basis functions are of the same type. In the terminology of NNs, the network in \figref{fig:nn_example_block} is described as follows. The node at the output is called the output neuron, and all output neurons together form the output layer. In the example network, in \figref{fig:nn_example_block}, only one output is considered, therefore the output layer consists of one neuron. The set of $M$ nodes in the center, each of which realizing a basis function, is called the hidden-layer. The inputs are associated with neurons and together they form the input layer. Furthermore, the linear parameters of the network associated with the output neuron(s) are called output weights. The output neuron is usually the linear combination of the basis functions in the hidden layer, with an additional possible offset $w_0$, called the bias. This offset parameter adjusts the operating point. 
 
 The basis functions in the NN formulation are generally multidimensional, defined by the number of inputs. For all NN approaches, however, the multi-variate basis functions are constructed by simple one dimensional functions\cite{nelles2013nonlinear}. This function is called the activation function. Such construction mechanism in the context of NNs is shown in \figref{fig:activation_mechanism}
 
@@ -43,7 +42,7 @@ The basis functions in the NN formulation are generally multidimensional, define
 \centering
 %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
 \input{report/tikz/activation_mechanism.tex} 
-\caption{Operation of construction mechanism.}
+\caption{Operation of construction mechanism \cite{nelles2013nonlinear}.}
 \label{fig:activation_mechanism}
 \end{figure}
 
@@ -88,7 +87,7 @@ where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \
 \centering
 %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
 \input{report/tikz/rbf_example.tex} 
-\caption{The width and the position of the Gaussian activation function in terms of $\psi$ and $\mu$.}
+\caption{The width and the position of the Gaussian basis function in terms of $\psi$ and $\mu$.}
 \label{fig:rbf_pram}
 \end{figure}
 
@@ -146,7 +145,7 @@ The determination of the weights $w_i$ is treated as a LS problem. Using the not
 
  \begin{equation}
 \label{loss_function}
-L(w) = \frac{1}{2} e^Te \ \rightarrow \ \underset{w}{min}. 
+L(w) = \frac{1}{2} e^Te. 
 \end{equation}
 
 This is the simplest loss function which says that the loss is proportional to the square of the difference between the model and the process output. 
