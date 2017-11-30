@@ -328,7 +328,7 @@ is the cross sectional area of the $i^{th}$ tank.
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
 
-Most of the tools, used by Circuit Theory(CT), are developed based on Graph Theory(GT). A WSS can be modelled as a directed graph with the set of vertices, representing the water sources and consumption nodes, and the set of edges, representing pipes, pumps and valves. 
+Tools from Graph Theory(GT) can be utilized to model a WSS as a directed graph, similarly as in Circuit Theory(CT). In the graph the set of vertices represent sources, consumption nodes and reservoirs, while the set of edges, represent pipes, pumps and valves. 
 
 In order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the corresponding edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems such as water networks for large cities, these systems of equations are difficult to handle individually and typically cannot be solved explicitly if the system consists of loops. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make the handling of algebraic constraints easier by exploiting the properties of linear algebra. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
 

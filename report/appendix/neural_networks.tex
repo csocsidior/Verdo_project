@@ -2,9 +2,9 @@
 \chapter{Overview of neural networks}
 \label{neural_networks}
 
-\emph{This part of the appendix gives a brief introduction to NNs and more specifically, to a special type of these networks, the RBFNNs. }
+\emph{In this part, a brief introduction is given to NNs, and more specifically, to RBFNNs, which are a special type of these networks. }
 
-From all possible realizations of functions with non-linear behaviour, almost all alternatives can be written in the following basis function formulation, if the number of basis functions is infinite \cite{norgaard2003neural}
+From all possible realizations of functions with non-linear behaviour, almost all alternatives can be written in the following basis function formulation, if we assume that the number of basis functions is infinite \cite{norgaard2003neural}
 
 \begin{equation}
 \label{basis_NN_eq}
@@ -53,14 +53,14 @@ The basis function of the neurons is based on the construction mechanism, that m
 \subsection{Radial construction}
 \label{radial construction}
 
-Among several construction mechanism, the radial construction is further discussed. In this approach the scalar $x$ is calculated as the distance between the inputs and the center of the basis functions such that 
+Among several construction mechanisms, the radial construction is further discussed. In this approach, the scalar $x$ is calculated as the distance between the inputs and the center of the basis functions such that 
 
  \begin{equation}
 \label{radial_structure}
 x = ||u- \mu|| = \sqrt{(u-\mu)^T (u-\mu)},
 \end{equation}
 
-where $\mu = (\mu_1 \ \mu_2 \ ... \ \mu_p)^T$ is the center vector of the basis functions. The radial construction is utilized for Radial Basis Function(RBF) networks, which is discussed in the following sections.
+where $\mu = (\mu_1 \ \mu_2 \ ... \ \mu_M)^T$ is the center vector of the basis functions. The radial construction is utilized for RBF networks, which is discussed in the following sections.
 
 
 \section{RBF networks}
@@ -70,17 +70,10 @@ where $\mu = (\mu_1 \ \mu_2 \ ... \ \mu_p)^T$ is the center vector of the basis 
 
 \begin{equation}
 \label{Gaussian_activation}
-g(x) = exp \Big(-\frac{1}{2}x^2\Big).
-\end{equation}
-
-Substituting the distance $x$ into \eqref{Gaussian_activation}, one RBF neuron can be given such that
-
- \begin{equation}
-\label{Gaussian_activation1}
 \phi(u,\mu_k, \psi_k) = exp \Big(-\frac{||u-\mu_k||^2}{2\psi_k^2}\Big), 
 \end{equation}
 
-where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \in \: \mathbb{R}^{M}$ is the standard deviation of the Gaussian, i.e the width parameter and $||\cdot||$ is the Euclidean norm. In a NN, RBFs overlap each other to capture the information from the input data, and the width parameters $\psi_k$ control the amount of these overlapping basis functions. An example is shown in \figref{fig:rbf_pram}, where the influence of these parameters is illustrated on one RBF neuron, with a single input $u$. 
+where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \in \: \mathbb{R}^{M}$ is the standard deviation of the Gaussian, i.e the width parameter and $||\cdot||$ is the Euclidean norm. Depending on the choice of $\mu$ parameters, the RBFs can overlap each other to capture the information from the input data, while the width parameters $\psi_k$ control the amount of these overlapping basis functions. An example is shown in \figref{fig:rbf_pram}, where the influence of these parameters is illustrated on one RBF neuron, with a single input $u$. 
 
  %RBFs with different parameters
 \begin{figure}[H]
@@ -93,59 +86,45 @@ where $\mu_k \in \: \mathbb{R}^{M}$ determines the center of the RBFs, $\psi_k \
 
 \vspace{-3mm}
 
-Therefore, when an RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have to be somehow determined and optimized. As it was mentioned in \secref{neural_networks}, the linear parameters are going to be optimized, while the non-linear properties of the RBFs is going to be determined with some technique, described in the following. 
-
-\figref{fig:rbf_interpol} illustrates the interpolation and extrapolation capability of the RBF networks. 
+Therefore, when an RBF network is chosen for identification, three types of parameters need to be considered. The output weights $w_i$ are linear parameters. They define the heights of the basis functions and the bias, i.e the offset value. The centers $\mu$ are non-linear parameters of the hidden layer neurons. They determine the positions of the basis functions. Furthermore, the standard deviations $\psi$ are also non-linear parameters of the hidden-layer neurons. During the optimization, these parameters have to be somehow determined and optimized. \figref{fig:rbf_interpol} illustrates the interpolation capability of RBF networks. 
 
  %Interpolation of RBFS
 \begin{figure}[H]
 \centering
 %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
-\input{report/tikz/rbf_interpolation.tex} 
-\caption{Interpolation and extrapolation of an RBF network without offset.}
+\input{report/tikz/4poly_example.tex} 
+\caption{Interpolation of an RBF network with different number of basis functions.}
 \label{fig:rbf_interpol}
 \end{figure}
 
 \vspace{-3mm}
 
-In \figref{fig:rbf_interpol}, the basis functions are shown on the left, while the network outputs are shown on the right. The network interpolates  between the three data points marked in the output graph on the right. 
+In \figref{fig:rbf_interpol}, a $4^{th}$-order polynomial is approximated with different number of Gaussian basis functions. As can be seen, with increased number of basis functions the estimation error decreases, and eventually a perfect interpolation can be achieved. 
 
 \subsection{RBF training}
 \label{RBF_training}
 
-The process of estimating the basis functions $\phi_i$ consists of two problems. One task is to determine a set of $M$ RBFs and then the other task is to estimate the optimal output weights $w_i$ and bias parameters $w_0$. Therefore, the RBF network parameters are generally determined in a two-stage procedure, while in other type of networks the parameters are determined simultaneously by non-linear optimization\cite{RBF_article}. As the output layer of RBF networks linearly combines the Gaussian basis functions, most strategies determine the parameters $\mu$ and $\psi$ of the hidden layer, and then the output layer weighs $w$ by using some linear optimization methods, such as Least Squares(LS) methods. This two-step procedure allows to vary only the weights between the hidden and output layer of the network during the training. 
-
-As the first step, the parameters of the Gaussian basis functions, $\mu$ and $\psi$ are discussed and then the calculation of the weight parameters is explained. 
+The process of estimating the parameters of the basis functions $\phi_i$ consists of two problems. One task is to determine a set of $M$ RBFs and then the other task is to estimate the optimal output weights $w_i$ and bias parameters $w_0$. Therefore, the RBF network parameters are generally determined in a two-stage procedure, while in other type of networks the parameters are determined simultaneously by non-linear optimization\cite{RBF_article}. As the output layer of RBF networks linearly combines the Gaussian basis functions, most strategies for RBF networks determine the parameters $\mu$ and $\psi$ of the hidden layer, and then the output layer weighs $w$ by using some linear optimization methods, such as LS methods \cite{nelles2013nonlinear}. This two-step procedure allows to vary only the weights between the hidden and output layer of the network during the training. 
 
 \subsection{Determination of the hidden layer parameters}
 \label{determination_hidden_layer}
 
-As discussed in \secref{RBF_training}, the parameters $\mu$ and $\psi$ of the neurons are not determined through optimization. Instead, one approach is to determine these parameters only by using the input data set $u$. The most commonly applied approach for such tasks is the application of clustering techniques \cite{nelles2013nonlinear}. The clustering of the input data allows to determine the center $\mu$ of the basis functions, according to the distribution of the input data set. Thus, many RBFs are placed in regions where data is dense, and few RBFs are placed in regions where data is less dense.  
+The parameters $\mu$ and $\psi$ of the neurons are not determined through optimization. Instead, one approach is to determine these parameters only by using the input data set $u$. The most commonly applied approach for such tasks is the application of clustering techniques \cite{nelles2013nonlinear}. The clustering of the input data allows to determine the center $\mu$ of the basis functions, according to the distribution of the input data set. Thus, many RBFs are placed in regions where data is dense, and few RBFs are placed in regions where data is less dense.  
 
 The most commonly applied clustering technique in RBF networks is the k-means algorithm \cite{nelles2013nonlinear}. A cluster in the input data set can be defined as a group of data that are more similar to each other than data belonging to other clusters. Initially, the values for the $M$ number of center points is chosen\footnote{The $M$ number of center points of the clusters correspond to the number of basis functions, thus the number of neurons.}. This can be done by choosing randomly $M$ different data samples. Then the algorithm assigns all data samples to their nearest cluster center. When the $M$ clusters are separated, a new mean is calculated for each cluster. Each cluster center is set to the mean of its cluster such that
 
 \begin{equation}
-\label{cluster_center}
+\label{cluster_center1}
 c_k = \frac{1}{N_k} \sum_{i \in \mathcal{A}_k}  u_i,
 \end{equation}
 
-where $i$ runs over the $N_k$ data samples that belong to cluster $k$, which are in the set $\mathcal{A}_k$ and $N_k$ is the number of elements in the set $\mathcal{A}_k$. Eventually, the algorithm stops when the center values $c_k$ do not change in the further iteration steps. The $c_k$ center parameters of the clusters then define the centers $\mu_k$ of the activation functions. Therefore, the k-means algorithm determines the centers $\mu$, in an unsupervised manner, meaning that the RBFs are not automatically moving to the regions where they are required for a good approximation of the system. However, if the number of RBF neurons is being sufficient enough, the NN can give a good approximation of the process. Compared to the supervised learning techniques, where the basis function parameters are to be optimized, the increased number of neurons does not cause increased training time, since both the k-means and LS algorithms are very fast \cite{nelles2013nonlinear}. 
+where $i$ runs over the $N_k$ data samples that belong to cluster $k$, which are in the set $\mathcal{A}_k$ and $N_k$ is the number of elements in the set $\mathcal{A}_k$. Eventually, the algorithm stops when the center values $c_k$ do not change. The $c_k$ center parameters of the clusters then define the centers $\mu_k$ of the basis functions. Therefore, the k-means algorithm determines the centers $\mu$, in an unsupervised manner, meaning that the RBFs are not automatically moving to the regions where they are required for a good approximation of the system. However, if the number of RBF neurons is sufficient, the NN can give a good approximation of the process. Compared to the supervised learning techniques, where the basis function parameters are to be optimized, the increased number of neurons does not cause increased training time, since both the k-means and LS algorithms are very fast \cite{nelles2013nonlinear}. 
 
-After the clustering is completed, and the $c_k$ cluster centers are assigned to the $\mu$ basis function centers, the width parameters $\psi$ can be determined by the k-nearest rule. This method assigns each RBF a width parameter proportional to the average distance between its center and the input data set in the corresponding cluster such that 
+After the clustering is completed, and the $c_k$ cluster centers are assigned to the $\mu$ basis function centers, the width parameters $\psi$ can be determined by the k-nearest rule. This method assigns each RBF a width parameter proportional to the variance of the values in the corresponding cluster such that 
 
  \begin{equation}
-\label{cluster center}
+\label{cluster_center2}
 \psi^2 = \frac{1}{N_k} \sum_{i \in \mathcal{A}_k}  ||u_i - \mu_k||^2.
 \end{equation}
 
-\subsection{Determination of the weights}
-\label{determination_weights} 
-
-The determination of the weights $w_i$ is treated as a LS problem. Using the notation of \figref{fig:nonlin_block}, the error between the measured output data $y$ and the output of the model $\tilde{y}$ is used for the following loss function
-
- \begin{equation}
-\label{loss_function}
-L(w) = \frac{1}{2} e^Te. 
-\end{equation}
-
-This is the simplest loss function which says that the loss is proportional to the square of the difference between the model and the process output. 
+With \eqref{cluster_center1} and \eqref{cluster_center2}, the two parameters of the basis functions are defined. 

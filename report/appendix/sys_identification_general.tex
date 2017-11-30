@@ -31,14 +31,13 @@ The process and model are fed with the same input signals, and their outputs are
 \label{fig:identification_loop}
 \end{figure}
 
-\vspace{-3mm}
+\vspace{-5mm}
 
 \subsection{Choice of the model inputs}
 \label{choice_of_the_model_inputs}
 
-The first step in the identification is typically realized by a trial-and-error approach to find out the influence of the different inputs on the process with the help of prior knowledge. In complex systems, where the number of inputs are high and their influence is not so well defined, some data-driven input selection might be very helpful. In this case, using all inputs can lead to extremely high-dimensional approximation problems, which implies the need for a huge number of parameters and increases the training time. Techniques for input data selection such as Principal Component Analysis(PCA) can be utilized in order to decide the relevance of certain inputs on the system. The main drawback of such techniques is that the relevance of an input is dependant only on the input data distribution, therefore sometimes highly relevant inputs are removed \cite{nelles2013nonlinear}.  Other techniques, such as correlation analysis for linear systems or genetic algorithms for non-linear systems can be also utilized.
+The first step in the identification is typically realized by a trial-and-error approach to find out the influence of the different inputs on the process with the help of prior knowledge. In complex systems, where the number of inputs are high and their influence is not so well defined, some data-driven input selection might be very helpful. In this case, using all inputs can lead to extremely high-dimensional approximation problems, which implies the need for a huge number of parameters and increases the training time. Techniques for input data selection such as Principal Component Analysis(PCA) can be utilized in order to decide the relevance of certain inputs on the system. The main drawback of such techniques is that the relevance of an input is dependant only on the input data distribution, therefore sometimes highly relevant inputs are removed \cite{nelles2013nonlinear}. 
 
-\vspace{-3mm}
 \subsection{Choice of the model structure}
 \label{choice_of_the_model_architecture}
 
@@ -69,7 +68,9 @@ The choice of the model architecture depends, among many factors on the type of 
     \label{comparisontable_sysid}
 \end{center}
 
-As shown in \tabref{comparisontable_sysid}, White box models are completely derived by first principles, i.e., by physical laws. The parameters and equations, describing the whole network can be determined by theoretical modelling, as it was done for our system in \chapref{system_modelling}. Black box models however, are based on measurement data, which means that the model describing the system is developed based on the characteristics of the data. In order to carry out a successful Black box modelling, very little insight or prior knowledge is required, however it is important to have a well-describing input-output data set. The combination or compromise between Black and White box models is called Gray box modelling. In this case, the knowledge from first principles and the information contained in the measurement data are both utilized. The blank fields in \tabref{comparisontable_sysid} for Grey box models are left blank because the properties of such models lie between White and Black box modelling. Typically, when Grey box modelling is considered, the main goal is to overcome some of the most restrictive factors of the White and Black box approaches for the specific application. For example, some prior knowledge might be incorporated into a Black box model in order to ensure reasonable behaviour\cite{nelles2013nonlinear}. 
+\vspace{-3mm}
+
+As shown in \tabref{comparisontable_sysid}, White box models are completely derived by first principles, i.e., by physical laws. The parameters and equations, describing the whole network can be determined by theoretical modelling, as it was done for our system in \chapref{system_modelling}. Black box models however, are based on measurement data, which means that the model describing the system is developed based on the characteristics of the data. In order to carry out a successful Black box modelling, very little insight or prior knowledge is required, however it is important to have a well-describing input-output data set. The combination between Black and White box models is called Gray box modelling. In this case, the knowledge from first principles and the information contained in the measurement data are both utilized. The blank fields in \tabref{comparisontable_sysid} for Grey box models are left blank because the properties of such models lie between White and Black box modelling. Typically, when Grey box modelling is considered, the main goal is to overcome some of the most restrictive factors of the White and Black box approaches for the specific application. For example, some prior knowledge might be incorporated into a Black box model in order to ensure reasonable behaviour\cite{nelles2013nonlinear}. 
 
 \subsection{Model validation}
 \label{model_validation}
