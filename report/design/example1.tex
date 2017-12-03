@@ -1,12 +1,12 @@
 \chapter{System identification design}
 \label{identification_design}
 
-\emph{In this chapter, the Multi-inlet, Multi-WT model, which was derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, a model structure is chosen, then a Neural Network(NN) based Radial Basis Function(RBF) model is created for identification purposes. In the first case, the identification is carried out on a simple example, then on the EPANET model of the Randers WSS. Lastly, the identification is evaluated on measurements from the real-world network.}
+\emph{In this chapter, the Multi-inlet, Multi-WT model, which was derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, the model structure is chosen, then a Neural Network(NN) based Radial Basis Function(RBF) model is created for identification purposes. In the first case, the identification is carried out on a simple example, then on the EPANET model of the Randers WSS. Lastly, the identification is evaluated on measurements from the real-world network.}
 
 \section{Model structure of the Multi-inlet, Multi-WT system}
 \label{model_structure_of_the_multi_inlet_multi_WT_system}
 
-In \chapref{system_modelling}, a non-linear SS model has been derived, describing the dynamics with multiple inlets and multiple WTs, constrained by the static part of the network. This model description serves as a starting point for the system identification, therefore let us recall the output equation. The output vector $\bar{p}_{\mathcal{K}}$ is given by \eqref{recall_output_eq}
+In \chapref{system_modelling}, a general non-linear SS model has been derived, which describes the dynamics with multiple inlets and multiple WTs and constrained by the static part of the network. This model description serves as a starting point for the system identification, therefore let us recall the output equation. The output vector $\bar{p}_{\mathcal{K}}$ is given by \eqref{recall_output_eq}
 
 \begin{equation}
   \label{recall_output_eq}
@@ -82,7 +82,7 @@ The state equation in \eqref{WT_matrixform_final_discrete} describes a linear co
 
 \begin{equation}
 \label{WT_matrixform_final_discrete2}
-\hat{p}_{k+1} = \tilde{f}_2(\bar{d}_{\mathcal{K},k}, \sigma_k) + a_1 \hat{p}_k + a_2 \hat{h},
+\hat{p}_{k+1} = \tilde{f}_2(\bar{d}_{\mathcal{K},k}, \hat{p}_k, \sigma_k) + a_1 \hat{p}_k + a_2 \hat{h},
 \end{equation}
 
 where $\tilde{f}_2$ is a non-linear function, describing the dependencies of the inlet flows $\bar{d}_{\mathcal{K}}$ and the total consumption $\sigma$ on the next state. $a_1$ and $a_2$ describe parameters for the linear terms. Furthermore, the TS $\mathcal{D}_2$ corresponding to the state equation, can be built up the same way as it was done for the output equation. 

@@ -6,174 +6,151 @@
 \makeoddfoot{AAU}{}{}{\thepage}
 
 \pagenumbering{gobble}
-\section{Identification notes}
+\section{EPANET model - Samlet\_slutmodel\_juni\_2013.net}
 
-\subsection{System equations}
+All the unconnected parts in the EPANET model are listed in the table below. The program which finds the unconnected parts was tested on Samlet\_slutmodel\_juni\_2013.net.
 
-The output $\bar{p}_{\mathcal{K}}$ is given by \eqref{eq1}, which is a static equation
+\begin{center}
+\label{mistake_table}
+    \begin{tabular}{ | p{3cm} | p{3cm} | p{3cm} | p{3cm} |}
+    \hline
+    \textbf{} & \textbf{Node IDs} & \textbf{Link IDs}  & \textbf{Description of the problem}  \\ 
+    \hline
+    1 & 20102476, ...& NY1037, ... & Tjærby is not connected to the main pipeline. Therefore, Bunkedal Vandværk does not operate. \\ 
+    \hline
+    2 &533, 1999 & 12757 & A pipeline left in the model, probably by accident. The presence of this does not affect anything.  \\ 
+    \hline
+    3 & 20102158,
+    20102159& NY328 & In the low zone, a nodes and links are overlapping but not connected. \\ 
+    \hline
+    4 & 20102163,
+    20102164 & NY331 & Same error as for Nr. 2. An unconnected pipeline under the connected links. The presence of this does not cause any error. \\ 
+    \hline
+    5 & 20102323, 
+    2010232  & NY624 & A single unconnected pipeline. \\ 
+    \hline
+    6 & 20102490,
+    20102491,
+    20102492 & NY1065, NY1074 & A small unconnected part.  \\ 
+    \hline
+    \end{tabular}
+    %\captionof{table}{Number of WSS elements.}
+\end{center}
 
-\begin{equation}
-  \label{eq1}
-  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - \underbrace{K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h}}_{\text{Linear term}} .
-\end{equation}
 
-We consider it as an input-output model where the inputs:
 
- \begin{minipage}[t]{0.2\textwidth}
-\hspace*{6mm} $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ \\
-\hspace*{6mm} $\hat{p}$  \\
-\hspace*{6mm} $\hat{h}$ \\
-\hspace*{6mm} $\sigma$ \\
-\hspace*{6mm} $\bar{d}_{\mathcal{K}}$ \\
-\hspace*{6mm} $q_\mathcal{C}$
-\end{minipage}
-\begin{minipage}[t]{0.58\textwidth}
-%\vspace*{2mm}
-is the elevation of inlets ,\\
-is the pressure in the WTs, \\
-is the elevation of the WTs, \\
-is the total demand, \\
-is the inlet flows, \\
-is the flows in $\mathcal{C}$.
-\end{minipage}
 
-One way to identify the input-output relation is to introduce a new output, where
 
-\begin{equation}
-  \label{eq2}
-  \tilde{y} =  \bar{p}_{\mathcal{K}} +  K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) + K^T\bar{h}.
-\end{equation}
 
-In \eqref{eq2}, the known linear terms are summed with the pressure outputs $\bar{p}_{\mathcal{K}}$. The right hand-side of the output equation in \eqref{eq1} is considered as a function, taking into account the input $q_\mathcal{C}$ implicitly
 
-\begin{equation}
-  \label{eq3}
-  \tilde{f}_1(\bar{d}_{\mathcal{K}}, \sigma) =  K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma).
-\end{equation}
 
-The constraint for the system is on $q_\mathcal{C}$, for which analytical solution cannot be given
 
- \begin{equation}
-\label{eq4}
-f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0.
-\end{equation} 
 
-However, \eqref{eq4} is in the form of
 
- \begin{equation}
-\label{eq5}
-q_\mathcal{C} = q_\mathcal{C}(\bar{d}_{\mathcal{K}}, \sigma) .
-\end{equation} 
 
-For this reason, the non-linear dependencies on $q_\mathcal{C}$, $\bar{d}_{\mathcal{K}}$ and $\sigma$ can be considered as
 
- \begin{equation}
-\label{eq6}
-\tilde{y} = \tilde{f}_1(\bar{d}_{\mathcal{K}}, \sigma).
-\end{equation} 
 
-Another way to approximate the input-output relation is to keep the linear terms on the right side of \eqref{eq1}. In this case we introduce linear parameters in the regression model. For this case, the model is in the form of 
 
-\begin{equation}
-\label{eq7}
-\bar{p}_{\mathcal{K}} = \tilde{f}_2(\bar{d}_{\mathcal{K}}, \sigma, (\hat{p} + \hat{h}), \bar{h}_{\mathcal{K}})
-\end{equation} 
 
-If this is chosen, we do not need to use the system matrices to subtract the linear terms. When real data is used, the structure might be different from the network in EPANET. Furthermore, the parameter $v_{\mathcal{D}}$ is considered to be constant. In this case, the consumption data can be calculated back from the mass-balance equation written up for the network, assuming that flow is measured in the WTs. 
 
-\begin{equation}
-\label{eq7}
- \sigma = 1^T \hat{d} + 1^T \bar{d}_{\mathcal{K}}.
-\end{equation}
 
-The equation which describes the dynamics is the following
 
-\begin{equation}
-\label{eq8}
-\Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
-\end{equation}
 
- For \eqref{eq8} the same considerations apply as for the output equation. Although it is a linear equation, by taking into $q_\mathcal{C}$ implicitly, the dynamics are non-linear. It can be written in the form
 
-\begin{equation}
-\label{eq9}
-\hat{p}_{k+1} = \tilde{f}_3(\bar{d}_{\mathcal{K}}, \sigma).
-\end{equation}
 
-\vspace{-6mm}
-\subsection{Example on a small model}
 
-The network is shown in \figref{fig:example1}
-\vspace{-3mm}
-%Simple network
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.65\textwidth]{discussion_files/example1}
-%\input{report/tikz/PRV_control_EPANET.tex} 
-\caption{Example network.}
-\label{fig:example1}
-\end{figure}
-\vspace{-8mm}
-The input data for identification consists of both the linear and non-linear inputs. Furthermore, feed-forward backpropagation model has been chosen for training. \figref{fig:inputs} shows the non-constant training and target data. 
 
-\begin{figure}[H]
-\centering
-%\includegraphics[width=1\textwidth]{discussion_files/example1}
-\input{discussion_files/inputs.tex} 
-\caption{Input data for training.}
-\label{fig:inputs}
-\end{figure}
 
-The performance of the validation is shown in \figref{fig:performance}
 
-\begin{figure}[H]
-\centering
-%\includegraphics[width=1\textwidth]{discussion_files/example1}
-\input{discussion_files/performance.tex} 
-\caption{Performance - MSE.}
-\label{fig:performance}
-\end{figure}
 
-The validation goal is $0.05$ in Mean Squared Error (MSE). The training is stopped if either the goal is reached or the validation failure is more than 10 epochs. 
+% Let us write the output and constraint equations in discrete time. The output $\bar{p}_{\mathcal{K},k}$ is given by \eqref{eq1}.
 
-The training states are shown in \figref{fig:training}
+% \begin{equation}
+%   \label{eq1}
+%   \bar{p}_{\mathcal{K},k} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}.
+% \end{equation}
 
-\begin{figure}[H]
-\centering
-%\includegraphics[width=1\textwidth]{discussion_files/example1}
-\input{discussion_files/training.tex} 
-\caption{Training states.}
-\label{fig:training}
-\end{figure}
 
-For the training, Levenberg-Marquardt optimization was chosen to update weight and bias values. The validation of the output on the same data is shown in \figref{fig:output}
+% The constraint for the system is on $q_\mathcal{C}$
 
-\begin{figure}[H]
-\centering
-%\includegraphics[width=1\textwidth]{discussion_files/example1}
-\input{discussion_files/output.tex} 
-\caption{Outputs.}
-\label{fig:output}
-\end{figure}
+%  \begin{equation}
+% \label{eq2}
+% f_{\mathcal{C}}(q_{\mathcal{C},k}) - A_1(\hat{p}_k + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) = 0.
+% \end{equation} 
 
-The neurons used in this identification use Tan-Sigmoid transfer functions. Therefore the regression model with the corresponding weights and biases can be given 
+% Reformulating \eqref{eq2} yields 
 
-\begin{equation}
-\label{eq10}
-y = B_2 + LW \cdot transig(B_1 + IW \cdot u).
-\end{equation}
+%  \begin{equation}
+% \label{eq3}
+% q_{\mathcal{C},k} = q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) .
+% \end{equation} 
 
-\emph{The documentation of theory and introduction of neural networks and system identification is in progress. First, I used this simple example to study and understand this approach. Some concerns and questions came up however, which we could discuss at the meeting.}
+% Substituting \eqref{eq3} into \eqref{eq1}, we get the following
 
-\subsection{Question reminders}
-\emph{Q1}: Creating the input data
 
-\emph{Q2}: Number of neurons
+% \begin{align}
+%   \label{eq4}
+%       \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} &= \nonumber K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k)   \\ &  - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) .
+% \end{align}
 
-\emph{Q3}: RBF vs. MPL, training. 
+% In \eqref{eq4}, we have the elevation of the pumping stations $(\bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}})$ given by the expression on the right-hand side. Let us write \eqref{eq4} in a form where the expression is replaced with a non-linear function $\tilde{f}_1$ with an unknown structure but with the same variables in the argument.
 
-\emph{Q4}: Validation on different data, check overfitting. 
+% \begin{equation}
+%   \label{eq5}
+%      \tilde{y}_k = \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big).
+% \end{equation}
 
-\emph{Q5}: How to define linear/non-linear mixed model
+% \subsection{State equation}
+
+% The state equation in continuous form is given by \eqref{eq6}.
+
+% \begin{equation}
+% \label{eq6}
+% \Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
+% \end{equation}
+
+% After substituting the constraint on $q_{\mathcal{C},k}$, the discrete form, using Euler-method, is given by \eqref{eq7}.
+
+% \begin{align}
+% \label{eq7}
+% \Lambda\nonumber \frac{1}{T_s} (\hat{p}_{k+1} - \hat{p}_k)  &= - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C}}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k.
+% \end{align}
+
+% \underline{Original idea:}
+
+% The original idea was to choose a structure for \eqref{eq7} such that 
+
+% \begin{equation}
+% \label{eq8}
+% \hat{p}_{k+1} = \tilde{f}_2\big( (\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + a_2 \hat{p}_k,
+% \end{equation}
+
+% where $a$ is a linear parameter.
+
+% \newpage
+
+% \underline{Other idea:} 
+
+% \eqref{eq7} can be written in the form
+
+% \begin{align}
+% \label{eq9}
+% \nonumber  \hat{p}_{k+1} - \hat{p}_k  &= T_s \Lambda^{-1} \big[- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k \big].
+% \end{align}
+
+% In this arrangement, let us keep the tank pressures $\hat{p}_k$ on the left hand-side. Thus, $\hat{p}_{k+1}$ can be reconstructed by adding the current values $\hat{p}_k$ to both sides in the equation. Thereby, we do not need to introduce the linear parameter when we identify the state equation.  
+
+% ($\Lambda$ is invertible, as it is a diagonal matrix, with positive values in each diagonal entry.)
+
+% \underline{+1 on the state model:} 
+
+% Let us recall \eqref{eq8}.
+
+% \begin{equation}
+% \label{eq10}
+% \hat{p}_{k+1} = \tilde{f}_2\big( (\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + a_2 \hat{p}_k,
+% \end{equation}
+
+% In this equation, the present values of the states are already represented inside the non-linear term $\tilde{f}_2$ as $(\hat{p}_k + \hat{h}_k)$. $\hat{p}$ and $(\hat{p}_k + \hat{h}_k)$ are dependant variables, and we did not introduce linear terms for variables that are dependant e.g. in the output equation in \eqref{eq5}. 
 
 \end{document}
