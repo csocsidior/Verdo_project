@@ -1,7 +1,7 @@
 \chapter{System identification design}
 \label{identification_design}
 
-\emph{In this chapter, the Multi-inlet, Multi-WT model, which has been derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, a model structure is selected, then a Neural Network(NN) based Radial Basis Function(RBF) model is formulated. In the first case, the identification is carried out on a simple example, then on the Randers WSS EPANET model. Lastly, the identification is carried out based on measurements from the real-world network.}
+\emph{In this chapter, the Multi-inlet, Multi-WT model, which has been derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, a model structure is selected, then a Neural Network(NN) based Radial Basis Function(RBF) model is presented. In the first case, the identification is carried out on a simple example, then on the Randers WSS EPANET model. In the second case, the identification is carried out based on measurements from the real-world network.}
 
 \section{Model structure of the Multi-inlet, Multi-WT system}
 \label{model_structure_of_the_multi_inlet_multi_WT_system}
@@ -20,7 +20,6 @@ The model is going to be utilized for identification purposes, therefore let us 
 
 \begin{minipage}[t]{0.4\textwidth}
 where\\
-\hspace*{8mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$, \vspace*{1.5mm}  \\
 \hspace*{8mm} $A_2 = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
 \hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$.
 \end{minipage}
@@ -58,8 +57,6 @@ In \eqref{recall_output_eq_2}, the total head in the pumping stations $(\bar{p}_
   \label{recall_output_eq_3}
      \tilde{y}_k = \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_1 (\hat{p}_k + \hat{h}), 
 \end{equation} 
-
-
 
 The static model described in \eqref{recall_output_eq_3} is a mapping defined by the non-linear function $\tilde{f}_1$ and the linear term, which maps the input set, $u = \{(\hat{p}_k + \hat{h}), \bar{d}_{\mathcal{K}}, \sigma \}$ to the outputs $\tilde{y} = \{ \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} \}$. In the input set, the total consumption can be calculated according to the mass-balance in the whole network such that
 
@@ -99,44 +96,47 @@ where\\
 \vspace*{2mm}
  is the sampling time.
 \end{minipage}
+\begin{minipage}[t]{0.10\textwidth}
+\vspace*{2mm}
+\textcolor{White}{te}$\unit{h}$
+\end{minipage} 
 
-The state equation in \eqref{WT_matrixform_final_discrete} describes a linear combination of the inputs, however by substituting the $q_\mathcal{C}$ flows, it is shown that the inlet flows $\bar{d}_{\mathcal{K}}$ and total consumption $\sigma$ effects the states in a non-linear manner. Besides that, the future state values linearly depend on the present values of the states $\hat{p}$ and the elevation of the WTs $\hat{h}$. With this in mind, similarly as it was done for the output equation, the state equation can be reformulated, such that 
+The state equation in \eqref{WT_matrixform_final_discrete} describes the linear combination of the the flows $q_\mathcal{C}$, the total head in the WTs $(\hat{p}_k + \hat{h})$ and the total consumption $\sigma$. However, by substituting the $q_\mathcal{C}$ flows with their implicit non-linear expression, the structure of the state equation is not a linear combination of the corresponding signals anymore. Therefore, let us write \eqref{WT_matrixform_final_discrete1} in a form where the non-linear and linear terms are described by a non-linear $\tilde{f}_2(\cdot)$ function with unknown structure and linear terms with parameters, respectively. Thus, a reformulated state equation can be given such that
 
-\begin{equation}
-\label{WT_matrixform_final_discrete2}
-\hat{p}_{k+1} = \tilde{f}_2(\bar{d}_{\mathcal{K},k}, \hat{p}_k, \sigma_k) + a_1 \hat{p}_k + a_2 \hat{h},
-\end{equation}
-
-where $\tilde{f}_2$ is a non-linear function, describing the dependencies of the inlet flows $\bar{d}_{\mathcal{K}}$ and the total consumption $\sigma$ on the next state. $a_1$ and $a_2$ describe parameters for the linear terms. Furthermore, the TS $\mathcal{D}_2$ corresponding to the state equation, can be built up the same way as it was done for the output equation. 
-
-The complete identification model consists of the static output equation and the state equation describing the dynamics in the form of
-
-\begin{equation}
-\begin{cases}
-  \label{identification_model}
-    \tilde{y}  = \tilde{f}_1(\bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t )\\
-  \hat{p}_{k+1} = \tilde{f}_2(\bar{d}_{\mathcal{K},k}, \sigma_k) + a_1 \hat{p}_k + a_2 \hat{h} .
-  \end{cases}
+ \begin{equation}
+  \label{WT_matrixform_final_discrete2}
+     \hat{p}_{k+1} - \hat{p}_k = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k,
 \end{equation} 
 
-It is important to point out that the presented model for identification is linear in the parameters, meaning that they can be estimated by linear optimization. For the linear optimization, only the parameters have to enter linearly, as the input can depend in any non-linear way on the input data sets. 
 
-The main goal of the system identification therefore, is to find the realization of $\tilde{f}_1$ and $\tilde{f}_2$, furthermore to find the parameters $a_1$, $a_2$ such that the identified model fits the TSs $\mathcal{D}_{1}$ and $\mathcal{D}_{2}$. The tools for carrying out such identification procedure leads to the discussion of basis functions and neural networks, which are introduced and discussed in the following sections.   
+where $\tilde{f}_2$ is a non-linear function, $\tilde{a}_2$ and $\tilde{a}_3$ are parameters of the inlet flows $\bar{d}_{\mathcal{K},k}$ and total consumption $\sigma_k$. 
+
 
 \section{RBFNN model of the Multi-inlet,Multi-WT system}
 \label{RBFNN_model_multi_inlet_multi_WT_sys} 
 
-As the tools for identification has been introduced in \appref{neural_networks} , the interpretation of the Multi-inlet, Multi-WT system in the context of NNs is considered. In order to formulate a NN structure, let us first recall the system equations, described in \secref{model_structure_of_the_multi_inlet_multi_WT_system}. The corresponding output and state equations are shown in \eqref{identification_model11}. 
+As a result of substituting the constraints on the flows $q_{\mathcal{C},k}$, the system description has been reduced to a non-linear SS problem with state equation given in \eqref {WT_matrixform_final_discrete2} and output equation in \eqref {recall_output_eq_3}. The complete identification model is summarized in \eqref{identification_model}. 
 
 \begin{equation}
 \begin{cases}
-  \label{identification_model11}
-    \tilde{y}  = \tilde{f}_1(\bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t )\\
-  \hat{p}_{k+1} = \tilde{f}_2(\bar{d}_{\mathcal{K},k}, \sigma_k) + a_1 \hat{p}_k + a_2 \hat{h} .
+  \label{identification_model}
+    \hat{p}_{k+1} - \hat{p}_k = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k,\\
+  \tilde{y}_k  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_1 (\hat{p}_k + \hat{h}).
   \end{cases}
 \end{equation} 
 
+The main goal of the system identification is to find a realization of the functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, furthermore to find the parameters $\tilde{a}_1$, $\tilde{a}_2$ and $\tilde{a}_3$. Therefore, the parameters need to be identified, such that the model is able to reproduce the approximate of the state derivatives $(\hat{p}_{k+1} - \hat{p}_k)$ and the outputs $\tilde{y}_k$ from any input set $u = \{(\hat{p}_k + \hat{h}), \bar{d}_{\mathcal{K}}, \sigma \}$ within the operating regions where we are mapping from.
+
+The identification model shown in \eqref{identification_model} is an abstraction of the first principle model derived in \chapref{system_modelling}. For the constraint on $q_{\mathcal{C},k}$, existence has been implied, however exact structure has not been given. I.e. we know that the relationship exists but an analytical first principle solution for $q_{\mathcal{C},k}$ has not been derived. Therefore, by substituting the implicit expression of the constraint into the state and output equations, some of the insights on the structure of the model are lost. Thus, it is crucial to put a structure on the non-linear functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ in \eqref{identification_model}. 
+
+From a technical point of view, it is beneficial to describe the system by a linear-in-the-parameters model. By restricting ourselves such that the structure of both functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ are linear in the parameters, the parameters of the model can be estimated by simple linear optimization methods, such as Least Squares(LS). For any linear optimization, only the parameters have to enter linearly, as the inputs can depend on any non-linear way on the input data sets. 
+
+By making the restriction on $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, the two non-linear terms will be approximated by some non-linear functions in both the state and output equations of the model. The tools for carrying out such identification procedure leads to the discussion of basis functions and neural networks, which are discussed in \appref{neural_networks} in detail. 
+
+\newpage
+
 As it was concluded, the output is governed by the non-linear function $\tilde{f}_1$, which maps the inputs $\bar{d}_{\mathcal{K}}$, $\sigma$ and $\hat{h}_t $ to the outputs $\tilde{y}$. This static input-output system can be represented with a RBFNN, shown in \figref{fig:nn_output}.
+the interpretation of the Multi-inlet, Multi-WT system in the context of NNs is considered. 
 
   %NN model of the output eq.
  \begin{figure}[H]
