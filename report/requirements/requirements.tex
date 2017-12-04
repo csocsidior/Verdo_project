@@ -1180,9 +1180,9 @@ where\\
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
 is the vector including the inlet pressures ,\\
-is the the vector including the non-inlet pressures, \\
-is the the vector including the controlled inlet flows, \\
-is the the vector including the non-inlet demands, \\
+is the vector including the non-inlet pressures, \\
+is the vector including the controlled inlet flows, \\
+is the vector including the non-inlet demands, \\
 is a mapping which selects the nodes belonging to the inlets, \\
 is a mapping which selects the remaining vertices.
 \end{minipage}
@@ -1301,7 +1301,7 @@ Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_
 
 The states of the system are the pressures in the WTs. Therefore when the model equations are solved for $q_\mathcal{C}$, initial information of the pressure values, $\hat{p}$, is required. Equivalently, the initial water levels in the tanks have to be known, as for any ODE. Furthermore, the initial value should be inside the set described by the algebraic constraint. 
 
-In order to calculate back the corresponding pressure inputs, $\bar{p}_{\mathcal{K}}$, first $\bar{p}$ is expressed from Ohm's law as proposed in \secref{multi_inlet_reduced_network_description}
+In order to calculate the corresponding pressure inputs, $\bar{p}_{\mathcal{K}}$, first $\bar{p}$ is expressed from Ohm's law as proposed in \secref{multi_inlet_reduced_network_description}
 
 \begin{equation}
   \label{non-inlet_p_WT}
@@ -1332,14 +1332,14 @@ Equivalently, \eqref{final_flowmodel} and \eqref{non-inlet_p_WT111} can be descr
 \end{cases}
 \end{equation}
 \begin{equation*}
-s.t. \:\:\:\:\: q_\mathcal{C} = q_\mathcal{C}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
+s.t. \:\:\:\:\: q_\mathcal{C} = q_\mathcal{C}((\hat{p}+\hat{h}), \bar{d}_{\mathcal{K}}, \sigma)
 \end{equation*}
 
 with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \mathbb{R}^{c}$ the input vector, $\sigma \in \mathbb{R}_{+}$ the measurable disturbance, $v_{\mathcal{D}} \in \mathbb{R}^{(n-l-c)}$ the time-varying parameter and $\bar{p}_{\mathcal{K}} \in \mathbb{R}^{c}$ the output vector. 
 
 Although the ODE describing the dynamics is linear, the output and constraint equations are non-linear. Therefore the system is treated as a non-linear problem since the input-output relation is non-linear.  
 
-It is worth noting here that this model with the flow inputs and the dynamics of the WTs results in a scalar dynamic equation in case of one tank. Therefore, the proposed restructuring of the model here is suitable for describing one tank systems as well, and capable of replacing the mass-balance based system dynamics, proposed in \secref{multi_inlet_single_WT_model}. Therefore the single-WT network model, presented in \secref{multi_inlet_single_WT_model} is a special case of the Multi-inlet, Multi-WT model framework derived here. 
+It is worth noting that this model with the flow inputs and the dynamics of the WTs results in a scalar dynamic equation in case of one tank. Therefore, the proposed restructuring of the model here is suitable for describing one tank systems as well, and capable of replacing the mass-balance based system dynamics, proposed in \secref{multi_inlet_single_WT_model}. Therefore, the single-WT network model, presented in \secref{multi_inlet_single_WT_model} is a special case of the Multi-inlet, Multi-WT model framework derived here. 
 
 %q_\mathcal{C} = k_{v_{\mathcal{D}}}(q_\mathcal{C},\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
 
@@ -1397,7 +1397,7 @@ q_\mathcal{C} = q_\mathcal{C}(\hat{p}, \sigma)
 \end{equation*}
 \vspace{-7mm}
 \begin{equation*}
-q_\mathcal{C} = q_\mathcal{C}(\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
+q_\mathcal{C} = q_\mathcal{C}((\hat{p}+\hat{h}), \bar{d}_{\mathcal{K}}, \sigma)
 \end{equation*}\\ 
     \hline
       \multirow{1}{*}

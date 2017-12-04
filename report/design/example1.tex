@@ -1,16 +1,21 @@
 \chapter{System identification design}
 \label{identification_design}
 
-\emph{In this chapter, the Multi-inlet, Multi-WT model, which was derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, the model structure is chosen, then a Neural Network(NN) based Radial Basis Function(RBF) model is created for identification purposes. In the first case, the identification is carried out on a simple example, then on the EPANET model of the Randers WSS. Lastly, the identification is evaluated on measurements from the real-world network.}
+\emph{In this chapter, the Multi-inlet, Multi-WT model, which has been derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, a model structure is selected, then a Neural Network(NN) based Radial Basis Function(RBF) model is formulated. In the first case, the identification is carried out on a simple example, then on the Randers WSS EPANET model. Lastly, the identification is carried out based on measurements from the real-world network.}
 
 \section{Model structure of the Multi-inlet, Multi-WT system}
 \label{model_structure_of_the_multi_inlet_multi_WT_system}
 
-In \chapref{system_modelling}, a general non-linear SS model has been derived, which describes the dynamics with multiple inlets and multiple WTs and constrained by the static part of the network. This model description serves as a starting point for the system identification, therefore let us recall the output equation. The output vector $\bar{p}_{\mathcal{K}}$ is given by \eqref{recall_output_eq}
+In \chapref{system_modelling}, the model of a multi-inlet WSS with the extension of multiple WTs has been derived. The presented model has been given by a non-linear SS representation, which consists of the equations describing the dynamics, the outputs and the constraints on the network. As the model derivation is based on first principles, some insight into the structure and the input-output relation is available. 
+
+\subsection{Output equation}
+\label{output_eq_identification}
+
+The model is going to be utilized for identification purposes, therefore let us recall the governing equations. The output vector $\bar{p}_{\mathcal{K}}$ of the inlet pressures is given in discrete form such that
 
 \begin{equation}
   \label{recall_output_eq}
-  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h} ,
+  \bar{p}_{\mathcal{K},k} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) - K^T\bar{h} ,
 \end{equation} 
 
 \begin{minipage}[t]{0.4\textwidth}
@@ -20,63 +25,80 @@ where\\
 \hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$.
 \end{minipage}
 
-Furthermore, lets recall the constraint on $q_\mathcal{C}$ given by \eqref{meshresult2_WT_model1}
+Furthermore, let us recall the constraint on $q_\mathcal{C}$, and rewrite it in discrete-time form such that
 
  \begin{equation}
 \label{recall_constraint eq}
-f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0,
+f_{\mathcal{C}}(q_{\mathcal{C},k}) - A_1(\hat{p}_k + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) = 0,
 \end{equation} 
 
-with $\bar{d}_{\mathcal{K}}$ inlet flows, $\sigma$ total demand, $v_{\mathcal{D}}$ distribution parameter, $q_\mathcal{C}$ flows in set $\mathcal{C}$, $\hat{p}$ pressure in the WTs, $\hat{h}$ elevation of the WTs and $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ the elevation of the pumping stations. For convenience, let us merge the pressure and elevation of the WTs and describe it in the output equation by the total head such that
+with $\bar{d}_{\mathcal{K},k}$ inlet flows, $\sigma_k$ total demand, $v_{\mathcal{D}}$ distribution parameter, $q_{\mathcal{C},k}$ flows in set $\mathcal{C}$, $\hat{p}_k$ pressures in the WTs, $\hat{h}$ elevations of the WTs and $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ the elevations of the pumping stations. The corresponding values of the pressures and flows in the network are evaluated at each time step $k$. 
 
- \begin{equation}
-\label{totalhead_output_eq}
-\hat{h}_t = \hat{p} + \hat{h}
-\end{equation} 
+It is important to point out that the model in \chapref{system_modelling} has been derived in a general manner, taking into account that $v_{\mathcal{D}}$ is a time-varying distribution parameter of the demands. However, in the further description, let us restrict ourselves and assume that $v_{\mathcal{D}}$ is constant. This assumption is beneficial from the system point of view, as the total consumption $\sigma_k$ can be represented simply by the sum of the hourly demand variations $1^T \bar{d}_{\mathcal{D}}$. From the technical point of view, the identification becomes less complex, as in this case $v_{\mathcal{D}}$ is a linear constant parameter. In \eqref{recall_constraint eq} and \eqref{recall_output_eq} this assumption is already taken into account, therefore $v_{\mathcal{D}}$ does not have any time index. 
 
-Although in \chapref{system_modelling} the distribution parameter $v_{\mathcal{D}}$ was assumed to be time-varying, in the further discussion we assume that it is constant. Furthermore, the constraint on $q_\mathcal{C}$ is given by an implicit expression for which solution cannot be given analytically. Therefore, the constraint cannot be explicitly substituted into \eqref{recall_output_eq}, however considering that $q_\mathcal{C}$ is in the form of
+The constraint on $q_\mathcal{C}$ in \eqref{recall_constraint eq} is given by an implicit expression for which analytical soulution has not been derived. Therefore, the constraint cannot be substituted explicitly into \eqref{recall_output_eq}, but can be given in the following following implicit form in \eqref{qc_abstraction}.
 
  \begin{equation}
 \label{qc_abstraction}
-q_\mathcal{C} = q_\mathcal{C}(\bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t ),
+q_{\mathcal{C},k} = q_\mathcal{C} \big( (\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big).
 \end{equation} 
 
-we can see that the dependencies for the $q_\mathcal{C}$ flows are the same as for the output vector, i.e the output model. The total demand $\sigma$ and the the inlet flows $\bar{d}_{\mathcal{K}}$ enter the model in a non-linear way and the total head of the WTs $\hat{h}_t$ enter the system linearly. Due to this, an equivalent form of the output equation in \eqref{recall_output_eq} can be written such that
+It is shown in \eqref{qc_abstraction} that the $q_\mathcal{C}$ flows in the network depend on the same physical measures, i.e. the same variables as the outputs $\bar{p}_{\mathcal{K}}$. By substituting \eqref{qc_abstraction} into \eqref{recall_output_eq}, we get the following output equation
 
- \begin{equation}
+\vspace{-4mm}
+\begin{align}
   \label{recall_output_eq_2}
-  \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C}(\bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t ) + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} \hat{h}_t - \bar{h}_{\mathcal{K}}. 
-\end{equation} 
+      \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} = & \nonumber K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}[A_2 q_{\mathcal{C}}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k]   \\ &  - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) .
+\end{align}
 
-From \eqref{recall_output_eq_2} we can see that although the total head of the WTs $\hat{h}_t$ enters \eqref{recall_output_eq} linearly, after using the constraint on $q_\mathcal{C}$, this dependency becomes non-linear. Furthermore, the linear term in \eqref{recall_output_eq_2} is the elevation of the pumping stations $\bar{h}_{\mathcal{K}}$, which is a constant, known parameter of the system. Therefore, by adding this elevation parameter to the input pressures $\bar{p}_{\mathcal{K}}$, we get the total head as the output. A reformulated output equation can be given such that 
+\vspace{-4mm}
+In \eqref{recall_output_eq_2}, the total head in the pumping stations $(\bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}})$ is given by the expression on the right-hand side. Let us write \eqref{recall_output_eq_2} in a form where the non-linear expression on the right-hand side is replaced with a non-linear function $\tilde{f}_1(\cdot)$,which has an unknown structure but has the same variables in the argument. Thus, a reformulated output equation can be given such that 
 
  \begin{equation}
   \label{recall_output_eq_3}
-  \tilde{y} = \bar{p}_{\mathcal{K}} + \bar{h}_{\mathcal{K}} = \tilde{f}_1(\bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t ). 
+     \tilde{y}_k = \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_1 (\hat{p}_k + \hat{h}), 
 \end{equation} 
 
-This static model described in \eqref{recall_output_eq_3} is a mapping defined by the function $\tilde{f}_1$, which maps the input set, $u = \{ \bar{d}_{\mathcal{K}}, \sigma, \hat{h}_t \}$ to the outputs $\tilde{y}$. In the input set, the total consumption can be calculated back from the mass-balance equation written up for the whole network such that
+
+
+The static model described in \eqref{recall_output_eq_3} is a mapping defined by the non-linear function $\tilde{f}_1$ and the linear term, which maps the input set, $u = \{(\hat{p}_k + \hat{h}), \bar{d}_{\mathcal{K}}, \sigma \}$ to the outputs $\tilde{y} = \{ \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} \}$. In the input set, the total consumption can be calculated according to the mass-balance in the whole network such that
 
 \begin{equation}
 \label{massbalance_identification}
- \sigma = 1^T \hat{d} + 1^T \bar{d}_{\mathcal{K}}.
+ \sigma_k = 1^T \hat{d}_k + 1^T \bar{d}_{\mathcal{K},k}.
 \end{equation}
 
-With this, we assume that the flows in the WTs are measured. Nevertheless, the input and output set together forms the TS $\mathcal{D}_1 = \{u_i ; \tilde{y}_i\}_{i = 1,2, ..., N}$, which can be utilized to carry out the identification on the model. 
+ In \eqref{massbalance_identification}, we assume that the flows in the WTs are measured. 
 
-Now, lets recall the equation describing the dynamics. As it was explained in \chapref{system_modelling}, the states of the system are the pressures $\hat{p}$ in the WTs. Recalling \eqref{WT_matrixform_final} in discrete form the following is given
+ % Nevertheless, the input and output set together forms the TS $\mathcal{D}_1 = \{u_i ; \tilde{y}_i\}_{i = 1,2, ..., N}$, which can be utilized to carry out the identification on the model.
+
+ \subsection{State equation}
+\label{state_eq_identification} 
+
+The state equation is a first-order system of ODEs, which has been formulated on the pressures $\hat{p}$ in the WTs. In order to give a discretization for the approximate solution of the ODEs, Euler-method is applied. The Euler-method is the simplest Runge-Kutte method, which provides an acceptable precision for our problem\cite{chicone2006ordinary}. Thus, the discretized state equation yields as follows
 
 \begin{equation}
-\label{WT_matrixform_final_discrete}
-\Lambda \hat{p}_{k+1} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k.
+  \label{WT_matrixform_final_discrete}
+\Lambda \frac{1}{T_s} (\hat{p}_{k+1} - \hat{p}_k)  = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k.
 \end{equation}
 
-Substituting the constraint on $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final_discrete}, without merging the WT pressure and elevation variables, the following dynamics description can be given
+Substituting the constraint on $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final_discrete}, and expressing the approximation of the derivative term on the left-hand side, the following yields
 
-\begin{equation}
+\vspace{-4mm}
+\begin{align}
 \label{WT_matrixform_final_discrete1}
-\Lambda \hat{p}_{k+1} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}(\bar{d}_{\mathcal{K},k}, \sigma_k, \hat{p}_k, \hat{h})  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k.
-\end{equation}
+\nonumber  \hat{p}_{k+1} - \hat{p}_k  =& T_s \Lambda^{-1} \big[- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k \big].
+\end{align}
+\vspace{-4mm}
+
+\begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $T_s$
+\end{minipage}
+\begin{minipage}[t]{0.68\textwidth}
+\vspace*{2mm}
+ is the sampling time.
+\end{minipage}
 
 The state equation in \eqref{WT_matrixform_final_discrete} describes a linear combination of the inputs, however by substituting the $q_\mathcal{C}$ flows, it is shown that the inlet flows $\bar{d}_{\mathcal{K}}$ and total consumption $\sigma$ effects the states in a non-linear manner. Besides that, the future state values linearly depend on the present values of the states $\hat{p}$ and the elevation of the WTs $\hat{h}$. With this in mind, similarly as it was done for the output equation, the state equation can be reformulated, such that 
 
