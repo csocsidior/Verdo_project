@@ -1,35 +1,58 @@
 \chapter{RBFNN-based identification on a simple network}
 \label{NN_based_example}
 
-\subsection{Simulation in EPANET}
+\emph{In this part of the appendix, a numerical example of system identification is carried out on a simple network.}
+
+\section{The EPANET model}
 \label{example1_EPANET}
 
-In EPANET, the simulation is built up in the same way as the network model. The simulation model is shown in the figure below. 
+The reason for testing the identification method on data from a simple EPANET model is that, in simulation, several different operations of the network can be studied. On a real world network, typically the system cannot be operated arbitrarily. Therefore, the network shown in \figref{fig:epanet_example1_id} has been created to mimic the behaviour of a multi-inlet, single-WT system. 
 
-%EPANET example1 network
+%EPANET example network for identification
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{report/pictures/example1_epanetmodel}
-%\input{report/tikz/example1_graph.tex} 
-\caption{Non-inlet pressures in .}
-\label{fig:epanet_example1}
+%\includegraphics[width=0.6\textwidth]{report/pictures/example1_epanetmodel}
+\input{report/tikz/example1_id.tex} 
+\caption{Multi-inlet, Single-WT example network.}
+\label{fig:epanet_example1_id}
 \end{figure}
+\vspace{-3mm}
 
-As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present as extra links and nodes in this simulation. These extra nodes and links are removed when data is extracted from the EPANET model due to the reason that the input pressures can be measured on $v_1$ and $v_2$. The input flows can be measured through the links, connecting the reservoirs to the nodes, $v_1$ and $v_2$. Furthermore, the elevations and the demands are attributes of the nodes. In this simulation only demands are changing according to hourly time steps. 
+The network shown in \figref{fig:epanet_example1_id} consists of two pumping stations $PU_1$ and $PU_2$ and a Water Tank $TA$. Furthermore, in EPANET reservoirs are required for operating the pumps. The reservoirs $RE_1$ and $RE_2$ are different from WTs in a sense that they cannot be emptied in the simulation. Additionally, the physical properties of the network can be found in \appref{physical_properties_example1}. 
 
+The controls implemented on the network are based on simple time scheduling of the two pumping stations. Both pumps turn off when the pressure head is above $19.85 [m]$ in the WT. $PU_2$ turns on again if the pressure head in the WT decreases to $19.55 [m]$. Furthermore, $PU_2$ turns on again only if the pressure head delivered by $PU_1$ exceeds $43 [m]$. The initial pressure head in the WT is $19.5 [m]$.
 
 \section{NN based identification on an example network1}
 \label{NN_based_example1} 
 
-  %Inlet flows
- \begin{figure}[H]
+\newpage
+
+
+  %Inlet flow1
+ \begin{figure}[h!]
  \centering
+ %\hspace{0mm}
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/inlet_flows_example.tex} 
+ %\vspace{-1.5mm}
+ %\caption{}
+ \label{fig:inlet_flows_example1}
+ \end{figure}
+
+\vspace{-8mm}
+
+   %Inlet flow2
+ \begin{figure}[h!]
+ \centering
+ \hspace{0.15mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/inlet_flows_example1.tex} 
  \vspace{-1.5mm}
  \caption{Inlet flows of the two pumping stations PU1 and PU2.}
  \label{fig:inlet_flows_example1}
  \end{figure}
+
+ 
 
 \vspace{-3mm}
 
@@ -63,10 +86,15 @@ As can be seen in \figref{fig:epanet_example1}, reservoirs and pumps are present
  \label{fig:sigma_example}
  \end{figure}
 
+\section{Validation tests}
+\label{validation_tests} 
 
+abcd
 
+\chapter{Example network description}
+\label{physical_properties_example1}
 
-
+\emph{In this part of the appendix, the corresponding physical parameters of the Multi-inlet, Single-WT example network are given.}
 
 
 
