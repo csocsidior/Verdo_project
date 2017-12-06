@@ -13,8 +13,8 @@ net2/.style={
     inner sep=8pt
     },
   nodes in empty cells,
-  column sep=2.3cm,
-  row sep=-8pt
+  column sep=1.75cm,
+  row sep=-10pt
   },
 >=latex
 ]
@@ -23,58 +23,55 @@ net2/.style={
 {
  |[plain]|   &  & |[plain]|  \\
  |[plain]| & |[plain]|  \\
-|[plain]| & |[plain]|  & \\
+ & |[plain]|  & |[plain]| \\
  |[plain]| & |[plain]| \\
- &    \\
+  |[plain]|&    \\
 |[plain]| & |[plain]| \\
-|[plain]| & |[plain]|  &\\
+ & |[plain]|  &\\
 |[plain]|& |[plain]| \\
-&  \\
+ |[plain]| &  \\
 |[plain]| &   |[plain]| \\
-|[plain]| & |[plain]|  & \\
+ & |[plain]|  & |[plain]|  \\
   |[plain]| &  |[plain]| \\
    |[plain]|   &  & |[plain]|  \\
 };
 
-\draw[thick][<-] (mat-5-1) -- node[above] {$\bar{d}_{\mathcal{K},k}$} +(-1.5cm,0);
-\draw[thick][<-] (mat-9-1) -- node[above] {$\sigma_k$} +(-1.5cm,0);
-\draw[thick][<-] (mat-1-2) -- node[above] {$\hat{p}_k$} +(-1.5cm,0);
-\draw[thick][<-] (mat-13-2) -- node[above] {$\hat{h}$} +(-1.5cm,0);
+\draw[thick][<-] (mat-3-1) -- node[above] {$\bar{d}_{\mathcal{K},k}$} +(-1.5cm,0);
+\draw[thick][<-] (mat-7-1) -- node[above] {$\hat{p}_k + \hat{h}$} +(-1.5cm,0);
+\draw[thick][<-] (mat-11-1) -- node[above] {$\sigma_k$} +(-1.5cm,0);
+
   
  
-    \draw[->] (mat-5-1) -- (mat-5-2) node(){\footnotesize $\phi_1\!(\cdot)$};
-    \draw [->] (mat-9-1) -- (mat-9-2) node(){\footnotesize$\phi\!_M\!(\cdot)$};
+    \draw[->] (mat-3-1) -- (mat-5-2) node(){\footnotesize $\phi_1\!(\cdot)$};
+    \draw[thick][->] (mat-3-1) -- (mat-1-2) node(){\footnotesize $$};
+    \draw[thick][->] (mat-11-1) -- (mat-13-2) node(){\footnotesize $$};
+    \draw [->] (mat-11-1) -- (mat-9-2) node(){\footnotesize$\phi\!_M\!(\cdot)$};
     
-   \foreach \ai in {5,9}
+   \foreach \ai in {3,7,11}
   {\foreach \aii  in {5,9}
     \draw[thick][->] (mat-\ai-1) -- (mat-\aii-2) ;
   }
   
-    \foreach \ai in {3,7,11}
+    \foreach \ai in {7}
   {\foreach \aii  in {1,5,9,13}
     \draw[thick][<-] (mat-\ai-3) -- (mat-\aii-2) ;
   }
-  \draw[<-] (mat-3-3) --node[above]{} (mat-1-2)node(){ /};
-    \draw[<-] (mat-11-3) --node[above]{} (mat-13-2)node(){ /};
-  \draw[->] (mat-5-2) --node[above]{} (mat-7-3)node(){ $\sum$};
-   \draw[->] (mat-5-2) --node[above]{} (mat-3-3)node(){ $\sum$};
-   \draw[->] (mat-5-2) --node[above]{} (mat-11-3)node(){ $\sum$};
 
-   
-%     \draw[thick][->] (mat-3-2) --node[above]{$w\!_{1\!,1}$} (mat-3-3)node(){ $\sum$};
-%   \draw[thick][->] (mat-7-2) --node[below]{} (mat-3-3);
+  \draw[<-] (mat-7-3) -- (mat-1-2) node(){\footnotesize $/$};
+   \draw[<-] (mat-7-3) -- (mat-13-2) node(){\footnotesize $/$};
+ 
 % 
-  \draw[thick][->] (mat-3-3) -- node[above] {$\hat{p}_{1\!A,(k+1)}$} +(2.8cm,0);
- \draw[thick][->] (mat-7-3) -- node[above] {$\hat{p}_{1\!B,(k+1)}$} +(2.8cm,0);
-  \draw[thick][->] (mat-11-3) -- node[above] {$\hat{p}_{2,(k+1)}$} +(2.8cm,0);
+
+ \draw[thick][->] (mat-7-3) -- node[above] {$\hat{p}_{k+1} - \hat{p}_{k}$} +(2.8cm,0);
+
 
  \node[circle,fill,inner sep=0.4pt] (A) at (0,-0.25) {};
  \node[circle,fill,inner sep=0.4pt] (A) at (0,0) {};
  \node[circle,fill,inner sep=0.4pt] (A) at (0,0.25) {};
  
- \draw[thick][<-] (mat-3-3) -- node[right] {$w_{0,1}$} +(0,1.1cm);
- \draw[thick][<-] (mat-7-3) -- node[right] {$w_{0,2}$} +(0,1.1cm);
-  \draw[thick][<-] (mat-11-3) -- node[right] {$w_{0,3}$} +(0,1.1cm);
+
+ \draw[thick][<-] (mat-7-3) -- node[right] {$w_{0,2}$} +(0,1.3cm);
+
 % 
 % \node at (0.85,1.1) {$w\!_{1\!,2}$};
 % \node at (0.99,-0.1) {$w\!_{M\!,1}$};

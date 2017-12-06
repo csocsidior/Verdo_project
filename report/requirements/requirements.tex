@@ -40,14 +40,14 @@ are the absolute pressures.
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
 \textcolor{White}{te}$\unit{Pa}$\\
-\textcolor{White}{te}$\unit{\frac{m^3}{s}}$\\
+\textcolor{White}{te}$\unit{m^3/s}$\\
 \textcolor{White}{te}$\unit{Pa}$
 \end{minipage}
 
 \subsection{Hydraulic head}
 \label{hydraulic_head}
 
-As can be seen in \eqref{onecomponent}, the measure of pressure is in $[Pa]$ and the measure of volumetric flow is in $[\frac{m^3}{s}]$. In the further report, the units used for calculation are in SI, however sometimes results are shown in non-SI units. Non-SI units are considered due to the fact that EPANET uses meter head and liters instead of pascals and cubic meters for pressure and flow simulations, respectively. The unit conversion between liters and cubic meters is a constant, however meter head expresses pressure in terms of length. The link between pressure and pressure head is explained in \eqref{pressurehead} below. 
+As can be seen in \eqref{onecomponent}, the measure of pressure is in $[Pa]$ and the measure of volumetric flow is in $[\frac{m^3}{s}]$. In the further report, the units used for calculation are in SI, however sometimes results are shown in non-SI units. Non-SI units are considered due to the fact that EPANET uses meter head and liters instead of pascals and cubic meters for pressure and flow simulations, respectively. The unit conversion between liters and cubic meters is a constant, however meter head expresses pressure in terms of length. The relation between pressure and pressure head is explained in \eqref{pressurehead} below. 
 
 %\begin{ceqn} 
 \begin{equation}
@@ -1268,7 +1268,7 @@ Now, with the partitioning of $\bar{d}$, the inlet and non-inlet demands are ins
 \Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
 \end{equation}
 
-As shown in \eqref{WT_matrixform_final}, the dynamics are now in terms of the inputs, $\bar{d}_{\mathcal{K}}$, the overall demand in the network, $\sigma$ and $q_\mathcal{C}$. Recalling \eqref{meshresult2} in \secref{multi_inlet_reduced_network_description} and using the abbreviations for the corresponding matrices, Ohm's law was reformulated such that
+As shown in \eqref{WT_matrixform_final}, the dynamics are now in terms of the inputs, $\bar{d}_{\mathcal{K}}$, the overall demand in the network, $\sigma$ and $q_\mathcal{C}$. Recalling \eqref{meshresult2} in \secref{multi_inlet_reduced_network_description} and using the abbreviations for the corresponding matrices, Ohm's law has been reformulated such that
 
  \begin{equation}
 \label{meshresult2_WT_model}
@@ -1299,7 +1299,7 @@ Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_
 \end{cases}
 \end{equation}
 
-\eqref{final_flowmodel} is a system of first-order Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states $\hat{p}$, the inputs $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter $v_{\mathcal{D}}$. The constraint set by the algebraic equations regarding the static network defines the manifold on which the trajectory of the ODE solution can be found. 
+\eqref{final_flowmodel} is a system of first-order Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states $\hat{p}$, the inputs $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter $v_{\mathcal{D}}$. The constraint which is given by the algebraic equations regarding the static network, defines the manifold on which the trajectory of the ODE solution can be found. 
 
 The states of the system are the pressures in the WTs. Therefore when the model equations are solved for $q_\mathcal{C}$, initial information of the pressure values, $\hat{p}$, is required. Equivalently, the initial water levels in the tanks have to be known, as for any ODE. Furthermore, the initial value should be inside the set described by the algebraic constraint. 
 
@@ -1345,10 +1345,10 @@ It is worth noting that this model with the flow inputs and the dynamics of the 
 
 %q_\mathcal{C} = k_{v_{\mathcal{D}}}(q_\mathcal{C},\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
 
-\subsection{Simulation example}
-\label{simulation_example2}
+% \subsection{Simulation example}
+% \label{simulation_example2}
 
-(in progress)
+% (in progress)
 
 \newpage
 
@@ -1410,7 +1410,7 @@ q_\mathcal{C} = q_\mathcal{C}((\hat{p}+\hat{h}), \bar{d}_{\mathcal{K}}, \sigma)
     \label{comparisontable}
 \end{center}
 \vspace{-1mm}
-In the further discussion, the Multi-inlet, multi-WT network model is considered, as it is the most suitable model for describing the water network in Randers. 
+In the next chapters, the Multi-inlet, multi-WT network model is discussed, as it is the suitable model for describing the water network in Randers. 
 
 
 
