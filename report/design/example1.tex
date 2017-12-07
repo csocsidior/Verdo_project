@@ -57,7 +57,7 @@ In \eqref{recall_output_eq_2}, the pressure head in the pumping stations $\bar{p
 
  \begin{equation}
   \label{recall_output_eq_3}
-     \bar{p}_{\mathcal{K},k}  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_1 (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}, 
+     \bar{p}_{\mathcal{K},k}  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_{\mathcal{K}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}, 
 \end{equation} 
 
 The output equation described in \eqref{recall_output_eq_3} is a mapping defined by the non-linear function $\tilde{f}_1$ and the linear term, which maps the input set, $u_k = ( \hat{p}_k+\hat{h} \ \bar{d}_{\mathcal{K},k} \ \sigma_k )^T$ to the outputs $\bar{p}_{\mathcal{K},k} $. Typically, the pressure is measured in the WTs not the total head, therefore the elevation $\bar{h}_{\mathcal{K}}$ is not added to $\bar{p}_{\mathcal{K},k}$ on the left-hand side in \eqref{recall_output_eq_3}. In the input set, the total consumption can be calculated according to the mass-balance in the whole network such that
@@ -124,7 +124,7 @@ As a result of substituting the constraints on the flows $q_{\mathcal{C},k}$, th
 \begin{cases}
   \label{identification_model}
     \hat{p}_{k+1} - \hat{p}_k = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k,\\
-  \bar{p}_{\mathcal{K},k}  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_1 (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}.
+  \bar{p}_{\mathcal{K},k}  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_{\mathcal{K}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}.
   \end{cases}
 \end{equation} 
 

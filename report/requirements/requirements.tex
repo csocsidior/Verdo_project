@@ -63,19 +63,19 @@ where\\
 \hspace*{8mm} $g$ \\
 \hspace*{8mm} $\rho$ 
 \end{minipage}
-\begin{minipage}[t]{0.68\textwidth}
+\begin{minipage}[t]{0.63\textwidth}
 \vspace*{2mm}
 is the pressure head,\\
-is the absolute pressure pascals, \\
+is the absolute pressure in pascals, \\
 is the gravitational constant, \\
 is the density of the fluid.
 \end{minipage}
-\begin{minipage}[t]{0.1\textwidth}
+\begin{minipage}[t]{0.15\textwidth}
 \vspace*{2mm}
 \textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{\frac{kg}{ms^2}}$\\
-\textcolor{White}{te}$\unit{\frac{m}{s^2}}$\\
-\textcolor{White}{te}$\unit{\frac{kg}{m^3}}$
+\textcolor{White}{te}$\unit{kg/ms^2}$\\
+\textcolor{White}{te}$\unit{m/s^2}$\\
+\textcolor{White}{te}$\unit{kg/m^3}$
 \end{minipage}
 
 As can be seen in \eqref{pressurehead}, if the density of the liquid is a known parameter, the conversion can be made easily between pressure and pressure head. In this project, water is considered and its density is assumed to be constant. 
@@ -192,7 +192,7 @@ is the length of the pipe.
 \textcolor{White}{te}$\unit{m}$\\
 \textcolor{White}{te}$\unit{m}$ \\
 \textcolor{White}{te}$\unit{\cdot}$ \\
-\textcolor{White}{te}$\unit{\frac{s^2}{m}}$ \\
+\textcolor{White}{te}$\unit{s^2/m}$ \\
 \textcolor{White}{te}$\unit{m}$
 \end{minipage}
 
@@ -258,7 +258,7 @@ is the impeller rotational speed.
 \vspace*{2mm}
 \textcolor{White}{te}$\unit{Pa}$\\
 \textcolor{White}{te}$\unit{\cdot}$\\
-\textcolor{White}{te}$\unit{\frac{rad}{s}}$
+\textcolor{White}{te}$\unit{rad/s}$
 \end{minipage}  
 
 The model described in \eqref{eq:PumpModel}, works only for positive flows, therefore it is assumed that liquid cannot flow back to the pump. 
@@ -281,19 +281,19 @@ where\\
 \newline
 \hspace*{8mm} $q_i$ 
 \end{minipage}
-\begin{minipage}[t]{0.68\textwidth}
+\begin{minipage}[t]{0.63\textwidth}
 \vspace*{2mm}
 is the pressure at the node connected to the tank,\\ 
 is the water level in the tank,\\ 
 is the parameter in terms of the cross sectional area and the pressure/water level ratio in the tank,\\
 is the flow into the tank if $q_i < 0$ and flow out of the tank if $q_i > 0$.
 \end{minipage}
-\begin{minipage}[t]{0.10\textwidth}
+\begin{minipage}[t]{0.15\textwidth}
 \vspace*{2mm}
 \textcolor{White}{te}$\unit{Pa}$\\
 \textcolor{White}{te}$\unit{m}$\\
-\textcolor{White}{te}$\unit{\frac{Pa}{m^3}}$\\
-\textcolor{White}{te}$\unit{\frac{m^3}{s}}$
+\textcolor{White}{te}$\unit{Pa/m^3}$\\
+\textcolor{White}{te}$\unit{m^3/s}$
 \end{minipage} 
 
 As can be seen in \eqref{wt_model1}, in general, the parameter of the tank depends on the pressure and water level ratio, if the cross sectional are is not constant along the height of the tank. However, it is assumed that tanks have the same cross sectional areas in the entire height. Then \eqref{wt_model1} simplifies to
@@ -307,7 +307,7 @@ In this case the parameter of the tank is given by
 
 \begin{equation}
 \label{wt_model3}
-\tau_i = \rho g \frac{1}{A_{wt,i}}
+\tau_i = \rho g \frac{1}{A_{wt,i}},
 \end{equation}
 
  \begin{minipage}[t]{0.20\textwidth}
@@ -389,7 +389,7 @@ A special case of connected tree sub-graphs is the spanning tree of the network.
 
 \begin{equation}
   \label{Numberofchords}
-  \mathcal{T}^*_{span} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}^*}} \} 
+  \mathcal{T}^*_{span} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}^*}} \}.
 \end{equation}
 
 In order to obtain a spanning tree, an edge has to be removed from each cycle. The removed edges are $\mathcal{G} - \mathcal{T}^*$, and called the chords of $\mathcal{T}^*$ with respect to $\mathcal{G}$. By adding a chord to $\mathcal{T}^*$, a cycle is created which is called a fundamental cycle. A graph is conformed by as many fundamental cycles as the number of chords \cite{deo2017graph}.
@@ -431,7 +431,7 @@ is the vector of nodal demands, with $d_i > 0$ when demand flow is into vertex $
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
-\textcolor{White}{te}$\unit{\frac{m^3}{s}}$
+\textcolor{White}{te}$\unit{m^3/s}$
 \end{minipage}
 
 Nodal demands are seen as the end-user consumption, which means that water is taken out from the network. The mass conservation corresponds to the fact that what is consumed from the system must also be produced. Due to mass conservation, there can be only $(n-1)$ independent nodal demands in the network
