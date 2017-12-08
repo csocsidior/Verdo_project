@@ -14,7 +14,7 @@ net2/.style={
     },
   nodes in empty cells,
   column sep=1.75cm,
-  row sep=-11.5pt
+  row sep=-12pt
   },
 >=latex
 ]
@@ -45,7 +45,7 @@ net2/.style={
     \draw[->] (mat-3-1) -- (mat-5-2) node(){\footnotesize $\phi_1\!(\cdot)$};
     \draw[thick][->] (mat-3-1) -- (mat-1-2) node(){\footnotesize $$};
     \draw[thick][->] (mat-11-1) -- (mat-13-2) node(){\footnotesize $$};
-    \draw [->] (mat-11-1) -- (mat-9-2) node(){\footnotesize$\phi\!_N\!(\cdot)$};
+    \draw [->] (mat-11-1) --  (mat-9-2) node(){\footnotesize$\phi\!_N\!(\cdot)$};
     
    \foreach \ai in {3,7,11}
   {\foreach \aii  in {5,9}
@@ -57,12 +57,16 @@ net2/.style={
     \draw[thick][<-] (mat-\ai-3) -- (mat-\aii-2) ;
   }
 
-  \draw[<-] (mat-7-3) -- (mat-1-2) node(){\footnotesize $/$};
-   \draw[<-] (mat-7-3) -- (mat-13-2) node(){\footnotesize $/$};
+  \draw[thin][<-] (mat-7-3) --node[above = 0.001cm]{$w_{\!\mathcal{S}1,1}$} (mat-5-2) ;
+  \draw[thin][<-] (mat-7-3) --node[above = 0.001cm]{$w_{\!\mathcal{S}1,N}$} (mat-9-2) ;
+%node[above = 0.001cm]{$w_{\mathcal{K}1,1}$}
+
+  \draw[<-] (mat-7-3) --node[above, right]{$\tilde{a}_{\mathcal{S}1_A}$} (mat-1-2) node(){\footnotesize $/$};
+   \draw[<-] (mat-7-3) -- node[above, right = 0.6mm]{$\tilde{a}_{\mathcal{S}1_B}$} (mat-13-2) node(){\footnotesize $/$};
  
 % 
 
- \draw[thick][->] (mat-7-3) -- node[above] {$\hat{p}_{k+1} - \hat{p}_{k}$} +(2.8cm,0);
+ \draw[thick][->] (mat-7-3) -- node[above] {$\hat{p}_{k+1} \!- \!\hat{p}_{k}$} +(2.8cm,0);
 
 
  \node[circle,fill,inner sep=0.4pt] (A) at (0,-0.25) {};
@@ -70,7 +74,7 @@ net2/.style={
  \node[circle,fill,inner sep=0.4pt] (A) at (0,0.25) {};
  
 
- \draw[thick][<-] (mat-7-3) -- node[right] {$w_{0,2}$} +(0,1.3cm);
+ \draw[thick][<-] (mat-7-3) -- node[right] {$b_{\mathcal{S}1}$} +(0,1.3cm);
 
 % 
 % \node at (0.85,1.1) {$w\!_{1\!,2}$};

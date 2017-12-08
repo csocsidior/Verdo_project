@@ -94,12 +94,12 @@ where\\
 \textcolor{White}{te}$\unit{h}$
 \end{minipage} 
 
-Substituting the expression for $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final_discrete}, and expressing the approximation of the derivative term on the left-hand side, the following yields
+Substituting the expression for $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final_discrete}, and expressing the predicted values of the WT pressures on the left-hand side, the following yields
 
 \vspace{-4mm}
 \begin{align}
 \label{WT_matrixform_final_discrete1}
-\nonumber  \hat{p}_{k+1} - \hat{p}_k  =& T_s \Lambda^{-1} \big(- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k \big).
+\nonumber  \hat{p}_{k+1}  =& T_s \Lambda^{-1} \big(- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k \big) + \hat{p}_k .
 \end{align}
 \vspace{-4mm}
 
@@ -108,7 +108,7 @@ The state equation in \eqref{WT_matrixform_final_discrete} describes the relatio
 
  \begin{equation}
   \label{WT_matrixform_final_discrete2}
-     \hat{p}_{k+1} - \hat{p}_k = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k,
+     \hat{p}_{k+1}  = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k + \hat{p}_k,
 \end{equation} 
 
 
@@ -123,12 +123,12 @@ As a result of substituting the constraints on the flows $q_{\mathcal{C},k}$, th
 \begin{equation}
 \begin{cases}
   \label{identification_model}
-    \hat{p}_{k+1} - \hat{p}_k = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k,\\
+    \hat{p}_{k+1}  = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k + \hat{p}_k,\\
   \bar{p}_{\mathcal{K},k}  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_{\mathcal{K}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}.
   \end{cases}
 \end{equation} 
 
-The main goal of the system identification is to find a realization of the functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, furthermore to find the parameters $\tilde{a}_1$, $\tilde{a}_2$ and $\tilde{a}_3$. Therefore, the parameters need to be identified, such that the model is able to reproduce the approximate of the state derivatives $(\hat{p}_{k+1} - \hat{p}_k)$ and the outputs $\bar{p}_{\mathcal{K},k}$ from any input set $u_k = ( \hat{p}_k\! + \!\hat{h} \ \bar{d}_{\mathcal{K},k} \ \sigma_k )^T$ within the operating regions where we are mapping from.
+The main goal of the system identification is to find a realization of the functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, furthermore to find the parameters $\tilde{a}_1$, $\tilde{a}_2$ and $\tilde{a}_3$. Therefore, the parameters need to be identified, such that the model is able to reproduce the approximate of the state derivatives $(\hat{p}_{k+1} - \hat{p}_k)$ and the total inlet head $\bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}}$ from any input set $u_k = ( \hat{p}_k\! + \!\hat{h} \ \bar{d}_{\mathcal{K},k} \ \sigma_k )^T$ within the operating regions where we are mapping from.
 
 The identification model shown in \eqref{identification_model} is an abstraction of the first principle model derived in \chapref{system_modelling}. For the constraint on $q_{\mathcal{C},k}$, existence has been implied, however exact structure has not been given. I.e. we know that the relationship exists but an analytical first principle solution for $q_{\mathcal{C},k}$ has not been derived. Therefore, by substituting the implicit expression of the constraint into the state and output equations, some of the insights on the structure of the model are lost. Thus, it is crucial to put a structure on the non-linear functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ in \eqref{identification_model}. 
 
@@ -139,7 +139,7 @@ By making the restriction on $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, the 
  \subsection{Output RBFNN}
 \label{output_rbfnn}
 
-The output equation described in \eqref{identification_model} is going to be approximated for two pumping stations, with RBFs in the form as shown in \eqref{output_RBFNNnetwork_approx}.
+The output equation described in \eqref{identification_model} is going to be approximated with RBFs in the form as shown in \eqref{output_RBFNNnetwork_approx} for two pressure inlets.
 
 \vspace{-2mm}
 
@@ -159,7 +159,7 @@ The output equation described in \eqref{identification_model} is going to be app
 
 where $\bar{p}_{\mathcal{K},k} = (\bar{p}_{\mathcal{K}1,k} \ \bar{p}_{\mathcal{K}2,k})^T$ is the inlet pressure vector, $w_{\mathcal{K}1,i}$ is the output weight of the $i^{th}$ RBF neuron $\phi_i(u_k)$ , $\tilde{a}_{\mathcal{K}} = (\tilde{a}_{\mathcal{K}1} \ \tilde{a}_{\mathcal{K}2})^T$ is the parameter vector of the linear terms, $b_{\mathcal{K}} = (b_{\mathcal{K}1} \ b_{\mathcal{K}2})^T$ is the bias vector and $h_{\mathcal{K}} = (h_{\mathcal{K}1} \ h_{\mathcal{K}2})^T$ a constant vector which describes the elevation of the pumping stations. Furthermore, $l$ is the number of WTs and $M$ is the number of RBFs with which the non-linear terms are approximated. 
 
-The NN model of the output equation is shown in \figref{fig:nn_output}, with the corresponding parameter and weigh vectors.
+The NN model for the inlet pressure $\bar{p}_{\mathcal{K}1,k}$ is shown in \figref{fig:nn_output}, with the corresponding parameters and weighs.
 
   %NN model of the output eq.
  \begin{figure}[H]
@@ -167,35 +167,34 @@ The NN model of the output equation is shown in \figref{fig:nn_output}, with the
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/output_NN1.tex} 
   \vspace{-7mm}
- \caption{NN model of the output equation.}
+ \caption{NN identification model of the total inlet head $\bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1}$.}
  \label{fig:nn_output}
  \end{figure}
 
  \vspace{-3mm}
 
- In \figref{fig:nn_output}, the first layer consists of the input vectors. The hidden layer consists of the set of RBFs and one linear neuron. The one linear neuron defines a skip-layer connection in the model. This extra connection allows us to introduce the linear terms in our identification model, thereby letting  $\hat{p}_{k} \!+\! \hat{h}$ directly influence the output. 
+ In \figref{fig:nn_output}, the first layer consists of the input vectors. The hidden layer consists of the set of RBFs and one linear neuron. The linear neuron defines a skip-layer connection in the model. This extra connection allows us to introduce the linear terms in our identification model, thereby letting  $\hat{p}_{k} \!+\! \hat{h}$ directly influence the output. 
 
- Furthermore, the output layer consists of the output neuron which computes $\bar{p}_{\mathcal{K},k}$ by summing the weighted RBFs, the weighted linear signals, the output biases and the constant inlet elevation parameters. Thus, identification for the inlet pressure vector $\bar{p}_{\mathcal{K},k} $ is carried out according to \eqref{inletpressures_ident_matrix}
+ Furthermore, the output layer consists of the output neuron which computes $\bar{p}_{\mathcal{K}1,k}$ by summing the weighted RBFs, the weighted linear signals, the output bias and the elevation constant. For convenience, the elevation constants are added to the measured pressure inlets $\bar{p}_{\mathcal{K}1,k}$ in the identification. Thus, identification for the total inlet head vector $\bar{p}_{\mathcal{K1},k} \! + \! \bar{h}_{\mathcal{K1}} $ is carried out according to \eqref{inletpressures_ident_matrix}
 
   \begin{equation}
 \label{inletpressures_ident_matrix}
-\bar{p}_{\mathcal{K},k} = \theta^T_{\mathcal{K}} \chi(u_k),
+\bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1} = \theta^T_{\mathcal{K}1} \chi(u_k),
 \end{equation}
 
-where the parameter matrix $\theta_{\mathcal{K}}$ and regression matrix $\chi$ is given such that
+where the parameter vector $\theta_{\mathcal{K}1}$ and regression vector $\chi$ is given such that
 
   \begin{equation}
 \label{par_regr_matrix}
-\theta_{\mathcal{K}} = 
+\theta_{\mathcal{K}1} = 
           \begin{pmatrix}
-           w_{\mathcal{K}1,1} & w_{\mathcal{K}2,1} \\[1pt]
-           \vdots & \vdots \\[1pt]
-           w_{\mathcal{K}1,M} & w_{\mathcal{K}2,M} \\[1pt]
-           \tilde{a}_{\mathcal{K}1,1} & \tilde{a}_{\mathcal{K}2,1}\\[1pt]
-           \vdots & \vdots \\[1pt]
-           \tilde{a}_{\mathcal{K}1,l} & \tilde{a}_{\mathcal{K}2,l}\\[1pt]
-           1 & 1\\[1pt]
-           b_{\mathcal{K}1} & b_{\mathcal{K}2}\\[1pt]
+           w_{\mathcal{K}1,1}  \\[1pt]
+           \vdots  \\[1pt]
+           w_{\mathcal{K}1,M}  \\[1pt]
+           \tilde{a}_{\mathcal{K}1,1} \\[1pt]
+           \vdots \\[1pt]
+           \tilde{a}_{\mathcal{K}1,l} \\[1pt]
+           b_{\mathcal{K}1} \\[1pt]
          \end{pmatrix}
          ,
          \hspace{5mm}
@@ -207,68 +206,128 @@ where the parameter matrix $\theta_{\mathcal{K}}$ and regression matrix $\chi$ i
            \hat{p}_{1,k} \!+ \!\hat{h}_1 \\[1pt]
            \vdots  \\[1pt]
            \hat{p}_{l,k} \!+ \!\hat{h}_1 \\[1pt]
-           \bar{h}_{\mathcal{K}} \\[1pt]
            1 \\[1pt]
          \end{pmatrix}.
 \end{equation}
 
-With a given input set $u_k$ and output $\bar{p}_{\mathcal{K},k}$ set, the optimal solution for the parameters is calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. Thus, the parameter matrix is given by \eqref{inletpressures_ident_matrix1}
+With a given input measurements $u_k$ and inlet pressure measurements $\bar{p}_{\mathcal{K}1,k}$, the optimal solution for the parameters is calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. Thus, the parameter matrix is given by \eqref{inletpressures_ident_matrix1}
 
   \begin{equation}
 \label{inletpressures_ident_matrix1}
- \theta^T_{\mathcal{K}} = \bar{p}_{\mathcal{K},k} \chi^{\dagger}(u_k), 
+ \theta^T_{\mathcal{K}1} = (\bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1}) \chi^{\dagger}(u_k), 
 \end{equation}
 
-where the Moore-Penrose pseudoinverse of the regression vector is computed.   
+where the Moore-Penrose pseudoinverse of the regression vector is computed.  
 
+In case of $c$ pumping stations, the inlet pressure vector $\bar{p}_{\mathcal{K},k}$ is given as shown in \eqref{complete_output_parameter_eq}
 
+ \begin{equation}
+\label{complete_output_parameter_eq}
+         \begin{pmatrix}
+           \bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1} \\[1pt]
+           \vdots\\[1pt]
+           \bar{p}_{\mathcal{K}c,k} + \bar{h}_{\mathcal{K}c} \\[1pt]
+         \end{pmatrix}
+         =
+          \begin{pmatrix}
+           \theta_{\mathcal{K}1} & \! \hdots \! & \theta_{\mathcal{K}c} \\[1pt]
+         \end{pmatrix}^T
+\chi(u_k).
+\end{equation}
  \subsection{State RBFNN}
 \label{state_rbfnn}
 
-The state equation, described in \eqref{identification_model} is going to be approximated with RBFs in the same way as it has been done for the inlet pressures. Therefore, the state derivative $\hat{p}_{k+1} \!-\! \hat{p}_k$ of one WT, Tank A is given in the form as shown in \eqref{state_der_ident_approx}
+The state equation, described in \eqref{identification_model} is going to be approximated with RBFs in the same way as it has been done for the inlet pressures. Therefore, the approximate of the state derivative $\hat{p}_{k+1} \!-\! \hat{p}_k$ of Tank $A$ and Tank $B$ is given in the form as shown in \eqref{state_der_ident_approx}
 
-
-  \begin{equation}
+\begin{subequations}
 \label{state_der_ident_approx}
- \hat{p}_{A,k+1} - \hat{p}_{A,k} = \sum_{i = 1}^N w_{A1,i} \phi_i(u_k) + \sum_{j = 1}^c \tilde{a}_{A1,j} \bar{d}_{\mathcal{K}j,k} + \tilde{a}_{A2} \sigma_k
+
+\begin{equation}
+\hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k} = \sum_{i = 1}^N w_{\mathcal{S}1,i} \phi_i(u_k) + \sum_{j = 1}^c \tilde{a}_{\mathcal{S}1_A,j} \bar{d}_{\mathcal{K}j,k} + \tilde{a}_{\mathcal{S}1_B} \sigma_k + b_{\mathcal{S}1},
 \end{equation}
 
+\vspace{-2mm}
 
+\begin{equation}
+\hat{p}_{\mathcal{S}2,k+1} - \hat{p}_{\mathcal{S}2,k} = \sum_{i = 1}^N w_{\mathcal{S}2,i} \phi_i(u_k) + \sum_{j = 1}^c \tilde{a}_{\mathcal{S}2_A,j} \bar{d}_{\mathcal{K}j,k} + \tilde{a}_{\mathcal{S}2_B} \sigma_k + b_{\mathcal{S}2},
+\end{equation}
 
+\end{subequations}
+
+where $w_{\mathcal{S}1,i}$ is the weight of the $i^{th}$ RBF, $\tilde{a}_{\mathcal{S}1_A,j}$ is the parameter of the $j^{th}$ inlet flow and $\tilde{a}_{\mathcal{S}1_B}$ is the parameter of the linear total demand. Furthermore, $N$ is the number of RBFs with which the non-linear terms are approximated and $c$ is the number of pumping stations. 
+
+The NN model for the state derivative approximate of one tank $\hat{p}_{\mathcal{S}1,k+1} \! - \! \hat{p}_{\mathcal{S}1,k}$, with the corresponding weight and parameters is shown in \figref{fig:nn_state}.
 
    %NN model of the state eq.
  \begin{figure}[H]
  \centering
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/output_NN.tex} 
- \caption{NN model of the state equation.}
+ \caption{NN model of the state derivative approximate $\hat{p}_{\mathcal{S}1,k+1} \! - \! \hat{p}_{\mathcal{S}1,k}$.}
  \label{fig:nn_state}
  \end{figure}
 
  \vspace{-3mm}
 
- In \figref{fig:nn_state}, although the input neurons for the skip-layer connections are placed in line with the hidden layer, they are considered as simple inputs, effecting the output layer by the parameters $a_1$ and $a_2$. Nevertheless, the identification is treated as a black-box model, but since insight is given about the network architecture, the NN model can be better matched to the problem by utilizing these skip-layer connections. Furthermore, in \figref{fig:nn_state}, the inputs are all present values and the outputs are the future or predicted values of the states $\hat{p}_{k+1}$. $\hat{h}$ does not have a time step index, as this value is the elevation of WTs, which is time-invariant. 
-
- Using vector notation, the NN model for the state equation can be given in the form as shown in \eqref{NN_state_vector2}
+The identification of the state derivative approximate is carried out according to \eqref{statederiv_ident_matrix}
 
   \begin{equation}
-\label{NN_state_vector2}
-\hat{p}_{k+1} = \theta^T_{\hat{p}} 
-          \begin{pmatrix}
-           \phi_1(u_k) \\[1pt]
-           \phi_2(u_k) \\[1pt]
-           \vdots \\[1pt]
-           \phi_M(u_k)\\[3pt]
-           \hat{p}_k \\
-           \hat{h}\\
-           1 
-         \end{pmatrix}
-         =
-         \theta^T_{\hat{p}} \chi_{\hat{p}},
+\label{statederiv_ident_matrix}
+\hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k} = \theta_{{\mathcal{S}1}} \chi(u_k),
 \end{equation}
 
-where $\theta^T_{\hat{p}}$ is the regression matrix, including the output weights $w_i$, the skip-layer connection weights $a_i$ and the biases $w_0$. The regressor vector $\chi_{\hat{p}}$ consists of the basis functions, the linear inputs $\hat{p}_k$ and $\hat{h}$ and the vector $1 \in \: \mathbb{R}^{l} $, where $l$ is the number of states.
+where the parameter vector $\theta_{{\mathcal{S}1}}$ and regression vector $\chi$ is given such that
 
+  \begin{equation}
+\label{par_regr_matrix1}
+\theta_{\mathcal{S}1} = 
+          \begin{pmatrix}
+           w_{\mathcal{S}1,1}  \\[1pt]
+           \vdots  \\[1pt]
+           w_{\mathcal{S}1,N}  \\[1pt]
+           \tilde{a}_{\mathcal{S}1_A,1} \\[1pt]
+           \vdots \\[1pt]
+           \tilde{a}_{\mathcal{S}1_A,c} \\[1pt]
+           \tilde{a}_{\mathcal{S}1_B} \\[1pt]
+           b_{\mathcal{S}1} \\[1pt]
+         \end{pmatrix}
+         ,
+         \hspace{5mm}
+         \chi = 
+         \begin{pmatrix}
+           \phi_{1}(u_k)  \\[1pt]
+           \vdots  \\[1pt]
+           \phi_{N}(u_k)  \\[1pt]
+           \bar{d}_{\mathcal{K}1,k} \\[1pt]
+           \vdots  \\[1pt]
+           \bar{d}_{\mathcal{K}c,k} \\[1pt]
+           \sigma_k \\[1pt]
+           1 \\[1pt]
+         \end{pmatrix}.
+\end{equation}
+
+The parameter matrix is computed equivalently as for the output equation with the Moore-Penrose pseudoinverse of the regression vector, shown in \eqref{inletpressures_ident_matrix1111}.
+
+  \begin{equation}
+\label{inletpressures_ident_matrix1111}
+ \theta^T_{\mathcal{S}1} = (\hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k})  \chi^{\dagger}(u_k). 
+\end{equation}
+
+In case of $l$ WTs, the state derivative approximates $\hat{p}_{\mathcal{S}2,k+1}\! -\! \hat{p}_{\mathcal{S}2,k}$ are given as shown in \eqref{complete_state_parameter_eq}
+
+\begin{equation}
+\label{complete_state_parameter_eq}
+         \begin{pmatrix}
+           \hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k} \\[1pt]
+           \vdots\\[1pt]
+           \hat{p}_{\mathcal{S}l,k+1} - \hat{p}_{\mathcal{S}l,k} \\[1pt]
+         \end{pmatrix}
+         =
+          \begin{pmatrix}
+           \theta_{\mathcal{S}1} & \! \hdots \! & \theta_{\mathcal{S}l} \\[1pt]
+         \end{pmatrix}^T
+\chi(u_k).
+\end{equation}
 
 \section{Identification of the Randers WSS}
 \label{identification_of_the_randers_WSS} 
