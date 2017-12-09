@@ -34,7 +34,7 @@ pk_2_mod1 = 46.67-0.009525.*dk_2_mod1.^2;
 X = [sigma, p_h + h_h, dk_1, dk_2]';
 Y = [pk_1, pk_2]';
 
-spread = 75;                 %25 %28
+spread = 70;                 %25 %28
 % number of neurons
 K = 12;                       %10 %8
 % performance goal 

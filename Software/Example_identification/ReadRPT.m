@@ -4,8 +4,8 @@ clear all;
 % %fid = fopen('Samlet_slutmodel_2013_net_opdateret.rpt','r');
 % fid = fopen('Samlet_slutmodel_2013_net_opdateret_ALT_V2V_CURVE.rpt','r');
 
-comma2point_overwrite('example1_1.rpt')
-fid = fopen('example1_1.rpt','r');
+comma2point_overwrite('example1_2.rpt')
+fid = fopen('example1_2.rpt','r');
 str = fgetl(fid);
 
 %Tom's version 
@@ -112,11 +112,11 @@ title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
-dk_1_mod1 = link_flows(:,1);
+dk_1_mod2 = link_flows(:,1);
 sigma_v0 = nodal_demands(:,1)/5;
-sigma_mod1 = sigma_v0*40;
-dk_2_mod1 = link_flows(:,2);
-p_h_mod1 = nodal_pressures(:,1);
+sigma_mod2 = sigma_v0*20;
+dk_2_mod2 = link_flows(:,2);
+p_h_mod2 = nodal_pressures(:,1);
 
 fclose(fid);
 
