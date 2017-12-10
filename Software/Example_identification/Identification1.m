@@ -161,7 +161,7 @@ set(0,'DefaultFigureVisible','on')
 figure(1)
 stairs(tk,p_hkplus1,'LineWidth',1.2)
 hold on
-stairs(tk, Ys_net' + p_hk ,'LineWidth',1.2)
+stairs(tk, Ys_net_c' + p_hk ,'LineWidth',1.2)
 xlim([0 73])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
@@ -218,7 +218,7 @@ ylabel('Pressure  [m]','interpreter','latex')
 
 %% Plots
 
-set(0,'DefaultFigureVisible','on')
+
 % 
 % figure(2)
 % stairs(t,pk_1(:,1),'LineWidth',1.2)
@@ -229,6 +229,7 @@ set(0,'DefaultFigureVisible','on')
 % xlabel('Time [h]','interpreter','latex');
 % ylabel('Pressure  [m]','interpreter','latex')
 % 
+set(0,'DefaultFigureVisible','on')
 figure(4)
 stairs(t,dk_1_mod2(:,1),'LineWidth',1.2)
 hold on
