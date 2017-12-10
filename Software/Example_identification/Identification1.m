@@ -298,3 +298,18 @@ xlim([0 73])
 title('Validation 2 - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
+
+%% Sigma_plots
+
+set(0,'DefaultFigureVisible','on')
+figure(11)
+stairs(t,sigma,'LineWidth',1.2)
+hold on
+stairs(t,sigma_mod1,'LineWidth',1.2)
+hold on
+stairs(t,sigma_mod2,'LineWidth',1.2)
+xlim([0 25])
+%title('Total consumption - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
+legend('\sigma_1','\sigma_2','\sigma_3','Interpreter', 'latex');
+xlabel('Time [h]','interpreter','latex');
+ylabel('Flow  [LPS]','interpreter','latex')

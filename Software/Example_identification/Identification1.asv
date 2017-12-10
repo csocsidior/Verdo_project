@@ -298,3 +298,7 @@ xlim([0 73])
 title('Validation 2 - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
+
+%% Sigma_plots
+
+

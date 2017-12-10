@@ -1,7 +1,7 @@
 \chapter{RBFNN-based identification on an example network}
 \label{NN_based_example}
 
-\emph{In Appendix F., a numerical example of the system identification is carried out on a simple network.}
+\emph{In Appendix F. a numerical example of the system identification is carried out on a simple network.}
 
 \section{The EPANET model}
 \label{example1_EPANET}
@@ -22,13 +22,21 @@ The network shown in \figref{fig:epanet_example1_id} consists of two pumping sta
 
 The controls implemented on the network are based on simple time scheduling of the two pumping stations. Both pumps turn off when the pressure head in the WT is above $19.85 [m]$. $PU_2$ turns on again if the pressure head in the WT decreases to $19.55 [m]$. Furthermore, $PU_2$ turns on again only if the pressure head in node $n_1$ exceeds $43 [m]$. The initial pressure head in the WT is $19.5 [m]$.
 
-\section{Identification}
-\label{NN_based_example1} 
+\section{Identification and validation of the output equation}
+\label{identification_and_validation_of_the_output_eq} 
 
-The identification is carried out on the simulation data, exported from EPANET. In order to validate the identification, in the first case, the total consumption is increased and then in the second case it is reduced. It is important to mention, that the control properties of the network are kept the same, as any modification in control would mean a new operating point of the WSS. Thus, the model is tested by modifying the demand and therefore creating different inlet pressure and flow settings of the pumping stations.  
+The identification is carried out on the simulation data, exported from EPANET. In order to validate the identified model, scenarios with increased and decreased consumption patterns are taken intro account. It is worth noting, that the control properties of the network are kept the same, as any modification in control would mean a new operating point in the WSS. Thus, the model is tested by modifying the total demand and therefore creating different inlet pressure and flow settings of the pumping stations. The identification is carried out on the network when the total consumption is $\sigma_1$. The validation is done when the total consumption is increased in the network to $\sigma_2$ and when decreased to $\sigma_3$, respectively. \figref{fig:sigma123} shows the three different consumption patterns for a 24-hour long period. Furthermore, all three consumptions curves are periodic with a time period of 24 hours. 
 
-\newpage
-
+  %Inlet flow1
+ \begin{figure}[h!]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/sigma123.tex} 
+ %\vspace{-1.5mm}
+ \caption{Three different consumption patterns used for identification and validation.}
+ \label{fig:sigma123}
+ \end{figure}
 
   %Inlet flow1
  \begin{figure}[h!]
