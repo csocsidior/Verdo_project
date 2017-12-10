@@ -229,15 +229,21 @@ ylabel('Pressure  [m]','interpreter','latex')
 % xlabel('Time [h]','interpreter','latex');
 % ylabel('Pressure  [m]','interpreter','latex')
 % 
+
+%% Inlet flow plots
 set(0,'DefaultFigureVisible','on')
 figure(4)
-stairs(t,dk_1_mod2(:,1),'LineWidth',1.2)
+stairs(t,dk_1(:,1),'LineWidth',1.2)
 hold on
-stairs(t,dk_2_mod2(:,1),'LineWidth',1.2)
+stairs(t,dk_2(:,1),'LineWidth',1.2)
 xlim([0 73])
-title('Inlet flow - $\bar{d}_{\mathcal{K},1}$','interpreter','latex')
+%title('Inlet flow - $\bar{d}_{\mathcal{K},1}$','interpreter','latex')
+h1 = legend('$\bar{d}_{\mathcal{K},1}$','$\bar{d}_{\mathcal{K},1}$');
+set(h1, 'Interpreter', 'latex');
 xlabel('Time [h]','interpreter','latex');
 ylabel('Flow  [LPS]','interpreter','latex')
+
+%% Identification output Pk1
 
 set(0,'DefaultFigureVisible','on')
 figure(5)
@@ -249,6 +255,8 @@ title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
+%% Identification output Pk2
+
 set(0,'DefaultFigureVisible','on')
 figure(6)
 stairs(t,pk_2,'LineWidth',1.2)
@@ -258,6 +266,8 @@ xlim([0 73])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
+
+%% Validation 1 output Pk1
 
 set(0,'DefaultFigureVisible','on')
 figure(7)
@@ -269,6 +279,8 @@ title('Validation 1 - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
+%% Validation 1 output Pk2
+
 set(0,'DefaultFigureVisible','on')
 figure(8)
 stairs(t,pk_2_mod1,'LineWidth',1.2)
@@ -279,6 +291,8 @@ title('Validation 1 - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
+%% Validation 2 output Pk1
+
 set(0,'DefaultFigureVisible','on')
 figure(9)
 stairs(t,pk_1_mod2,'LineWidth',1.2)
@@ -288,6 +302,8 @@ xlim([0 73])
 title('Validation 2 - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
+
+%% Validation 2 output Pk2
 
 set(0,'DefaultFigureVisible','on')
 figure(10)
@@ -313,3 +329,15 @@ xlim([0 25])
 legend('\sigma_1','\sigma_2','\sigma_3','Interpreter', 'latex');
 xlabel('Time [h]','interpreter','latex');
 ylabel('Flow  [LPS]','interpreter','latex')
+
+%% WT_plots
+
+set(0,'DefaultFigureVisible','on')
+figure(12)
+stairs(t,p_h,'LineWidth',1.2)
+xlim([0 73])
+%title('Total consumption - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
+h = legend('$\hat{p}$');
+set(h, 'Interpreter', 'latex');
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')

@@ -3,7 +3,7 @@
 
 \emph{In Appendix F. a numerical example of the system identification is carried out on a simple network.}
 
-\section{The EPANET model}
+\section{The example network in EPANET}
 \label{example1_EPANET}
 
 The reason for testing the identification method on data from a simple EPANET model is that, in simulation, several different operations of the network can be studied. On a real world network, typically the operation or control cannot be taken to its extremes, as this would mean undesired service to the customers . Therefore, the network shown in \figref{fig:epanet_example1_id} has been created to mimic the behaviour of a multi-inlet, single-WT system, such that the identification method, presented in \chapref{identification_design} is being tested. 
@@ -25,81 +25,70 @@ The controls implemented on the network are based on simple time scheduling of t
 \section{Identification and validation of the output equation}
 \label{identification_and_validation_of_the_output_eq} 
 
-The identification is carried out on the simulation data, exported from EPANET. In order to validate the identified model, scenarios with increased and decreased consumption patterns are taken intro account. It is worth noting, that the control properties of the network are kept the same, as any modification in control would mean a new operating point in the WSS. Thus, the model is tested by modifying the total demand and therefore creating different inlet pressure and flow settings of the pumping stations. The identification is carried out on the network when the total consumption is $\sigma_1$. The validation is done when the total consumption is increased in the network to $\sigma_2$ and when decreased to $\sigma_3$, respectively. \figref{fig:sigma123} shows the three different consumption patterns for a 24-hour long period. Furthermore, all three consumptions curves are periodic with a time period of 24 hours. 
+The identification is carried out on the simulation data, exported from EPANET. In order to validate the identified model, scenarios with increased and decreased consumption patterns are taken intro account. It is worth noting, that the control properties of the network are kept the same, as any modification in control would mean a new operating point in the WSS. Thus, the model is tested by modifying the total demand and therefore creating different inlet pressure and flow settings of the pumping stations. The identification is carried out on the network when the total consumption is $\sigma_1$. The validation is done when the total consumption is increased($\sigma_2$) and when decreased($\sigma_3$), respectively. Furthermore, all three consumption curves are periodic with a time period of 24 hours, however the validation has been done on a 72 hours long test data. \figref{fig:sigma123} shows the three different consumption patterns.
 
-  %Inlet flow1
- \begin{figure}[h!]
+  %Total consumptions
+ \begin{figure}[H]
  \centering
  %\hspace{0mm}
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/example_net/sigma123.tex} 
- %\vspace{-1.5mm}
- \caption{Three different consumption patterns used for identification and validation.}
+ \vspace{-2.5mm}
+ \caption{Consumption patterns used for identification and validation.}
  \label{fig:sigma123}
- \end{figure}
-
-  %Inlet flow1
- \begin{figure}[h!]
- \centering
- %\hspace{0mm}
- %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/inlet_flows_example.tex} 
- %\vspace{-1.5mm}
- %\caption{}
- \label{fig:inlet_flows_example1}
- \end{figure}
-
-\vspace{-8mm}
-
-   %Inlet flow2
- \begin{figure}[h!]
- \centering
- \hspace{0.15mm}
- %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/inlet_flows_example1.tex} 
- \vspace{-1.5mm}
- \caption{Inlet flows $\bar{d}_{\mathcal{K},1}$ (red) and $\bar{d}_{\mathcal{K},2}$ (blue) of the two pumping stations PU1 and PU2, respectively.}
- \label{fig:inlet_flows_example1}
- \end{figure}
-
- 
-
-\vspace{-3mm}
-
-   %WT head
- \begin{figure}[H]
- \centering
- %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/head_WT_example.tex} 
- \vspace{-1.5mm}
- \caption{Head in the WT, TA1.}
- \label{fig:WT_head_example}
  \end{figure}
 
  \vspace{-3mm}
 
-  %Sigma
+ The inlet flows of the two pumping stations $PU_1$ and $PU_2$, respectively, and the WT pressure $\hat{p}$ are shown in \figref{fig:WT_sigma1}. 
+
+ \vspace{-3mm}
+
+   %Inlet flow - sigma1
  \begin{figure}[H]
  \centering
+ %\hspace{0mm}
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/sigma_example.tex} 
- \vspace{-1.5mm}
- \caption{Total demand in the network.}
- \label{fig:sigma_example}
+ \input{report/tikz/example_net/dk_sigma1.tex} 
+ \vspace{-2.5mm}
+ %\caption{Inlet flows of $PU_1$ and $PU_2$.}
+ \label{fig:dk_sigma1}
  \end{figure}
 
-   %Inlet pressures
+ \vspace{-5mm}
+
+   %WT - sigma1
  \begin{figure}[H]
  \centering
+ \hspace{-4.5mm}
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/inlet_pressure_example.tex} 
- \vspace{-1.5mm}
- \caption{Inlet pressuresof the two pumping stations PU1 and PU2.}
- \label{fig:sigma_example}
+ \input{report/tikz/example_net/WT_sigma1.tex} 
+ \vspace{-2.5mm}
+ \caption{Inlet flows of $PU_1$ and $PU_2$(above) and the pressure in the WT(below).}
+ \label{fig:WT_sigma1}
  \end{figure}
 
-\section{Validation}
-\label{validation_tests} 
+ \vspace{-3mm}
+
+For the two inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$, the identification has been carried out with 10 RBF neurons. The performance goal has been chosen of the order of $10^{-4}$. \figref{fig:MSE_output} shows the mean of squared errors in terms of RBF neurons. 
+
+   %MSE output
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/MSE_output.tex} 
+ \vspace{-2.5mm}
+ \caption{The network’s performance according to the mean of squared errors.}
+ \label{fig:MSE_output}
+ \end{figure}
+
+ \vspace{-3mm}
+
+
+
+\section{Identification and validation of the state equation}
+\label{identification_and_validation_of_the_state_eq}  
 
 abcd
 
