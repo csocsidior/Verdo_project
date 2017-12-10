@@ -139,7 +139,7 @@ By making the restriction on $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, the 
  \subsection{Output RBFNN}
 \label{output_rbfnn}
 
-The output equation described in \eqref{identification_model} is going to be approximated with RBFs in the form as shown in \eqref{output_RBFNNnetwork_approx} for two pressure inlets.
+The output equation described in \eqref{identification_model} is going to be approximated with RBFs in the form as shown in \eqref{output_RBFNNnetwork_approx}, for two pressure inlets.
 
 \vspace{-2mm}
 
@@ -157,9 +157,9 @@ The output equation described in \eqref{identification_model} is going to be app
 
 \end{subequations}
 
-where $\bar{p}_{\mathcal{K},k} = (\bar{p}_{\mathcal{K}1,k} \ \bar{p}_{\mathcal{K}2,k})^T$ is the inlet pressure vector, $w_{\mathcal{K}1,i}$ is the output weight of the $i^{th}$ RBF neuron $\phi_i(u_k)$ , $\tilde{a}_{\mathcal{K}} = (\tilde{a}_{\mathcal{K}1} \ \tilde{a}_{\mathcal{K}2})^T$ is the parameter vector of the linear terms, $b_{\mathcal{K}} = (b_{\mathcal{K}1} \ b_{\mathcal{K}2})^T$ is the bias vector and $h_{\mathcal{K}} = (h_{\mathcal{K}1} \ h_{\mathcal{K}2})^T$ a constant vector which describes the elevation of the pumping stations. Furthermore, $l$ is the number of WTs and $M$ is the number of RBFs with which the non-linear terms are approximated. 
+where $\bar{p}_{\mathcal{K},k} = (\bar{p}_{\mathcal{K}1,k} \ \bar{p}_{\mathcal{K}2,k})^T$ is the inlet pressure vector, $w_{\mathcal{K}1,i}$ is the output weight of the $i^{th}$ RBF neuron $\phi_i(u_k)$ , $\tilde{a}_{\mathcal{K}} = (\tilde{a}_{\mathcal{K}1} \ \tilde{a}_{\mathcal{K}2})^T$ is the parameter vector of the linear terms, $b_{\mathcal{K}} = (b_{\mathcal{K}1} \ b_{\mathcal{K}2})^T$ is the bias vector and $h_{\mathcal{K}} = (h_{\mathcal{K}1} \ h_{\mathcal{K}2})^T$ is a constant vector which describes the elevation of the pumping stations. Furthermore, $l$ is the number of WTs and $M$ is the number of RBFs with which the non-linear terms are approximated. 
 
-The NN model for the inlet pressure $\bar{p}_{\mathcal{K}1,k}$ is shown in \figref{fig:nn_output}, with the corresponding parameters and weighs.
+The NN model for the inlet pressure $\bar{p}_{\mathcal{K}1,k}$ is shown in \figref{fig:nn_output}, with the corresponding  parameters and weighs.
 
   %NN model of the output eq.
  \begin{figure}[H]
@@ -173,9 +173,9 @@ The NN model for the inlet pressure $\bar{p}_{\mathcal{K}1,k}$ is shown in \figr
 
  \vspace{-3mm}
 
- In \figref{fig:nn_output}, the first layer consists of the input vectors. The hidden layer consists of the set of RBFs and one linear neuron. The linear neuron defines a skip-layer connection in the model. This extra connection allows us to introduce the linear terms in our identification model, thereby letting  $\hat{p}_{k} \!+\! \hat{h}$ directly influence the output. 
+ In \figref{fig:nn_output}, the first layer consists of the first layer neurons with the input vectors. The hidden layer consists of the set of RBFs and one linear neuron. The linear neuron defines a skip-layer connection in the model. This extra connection allows us to introduce the linear terms in our identification model, thereby letting  $\hat{p}_{k} \!+\! \hat{h}$ directly influence the inlet pressures. 
 
- Furthermore, the output layer consists of the output neuron which computes $\bar{p}_{\mathcal{K}1,k}$ by summing the weighted RBFs, the weighted linear signals, the output bias and the elevation constant. For convenience, the elevation constants are added to the measured pressure inlets $\bar{p}_{\mathcal{K}1,k}$ in the identification. Thus, identification for the total inlet head vector $\bar{p}_{\mathcal{K1},k} \! + \! \bar{h}_{\mathcal{K1}} $ is carried out according to \eqref{inletpressures_ident_matrix}
+ Furthermore, the output layer consists of the output neuron which computes $\bar{p}_{\mathcal{K}1,k}$ by summing the weighted RBFs, the weighted linear signals, the output bias and the elevation constant. For convenience, while identifying the model, the elevation constants are added to the measured pressure inlets $\bar{p}_{\mathcal{K}1,k}$. Thus, the identification for the total inlet head vector $\bar{p}_{\mathcal{K1},k} \! + \! \bar{h}_{\mathcal{K1}} $ is carried out according to \eqref{inletpressures_ident_matrix}
 
   \begin{equation}
 \label{inletpressures_ident_matrix}
@@ -210,7 +210,7 @@ where the parameter vector $\theta_{\mathcal{K}1}$ and regression vector $\chi$ 
          \end{pmatrix}.
 \end{equation}
 
-With a given input measurements $u_k$ and inlet pressure measurements $\bar{p}_{\mathcal{K}1,k}$, the optimal solution for the parameters is calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. Thus, the parameter matrix is given by \eqref{inletpressures_ident_matrix1}
+With a given input measurement set $u_k$ and inlet pressure measurements $\bar{p}_{\mathcal{K}1,k}$, the optimal solution for the parameters is calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. Thus, the parameter vector is given by \eqref{inletpressures_ident_matrix1}
 
   \begin{equation}
 \label{inletpressures_ident_matrix1}
@@ -218,6 +218,8 @@ With a given input measurements $u_k$ and inlet pressure measurements $\bar{p}_{
 \end{equation}
 
 where the Moore-Penrose pseudoinverse of the regression vector is computed.  
+
+\newpage
 
 In case of $c$ pumping stations, the inlet pressure vector $\bar{p}_{\mathcal{K},k}$ is given as shown in \eqref{complete_output_parameter_eq}
 
@@ -237,7 +239,7 @@ In case of $c$ pumping stations, the inlet pressure vector $\bar{p}_{\mathcal{K}
  \subsection{State RBFNN}
 \label{state_rbfnn}
 
-The state equation, described in \eqref{identification_model} is going to be approximated with RBFs in the same way as it has been done for the inlet pressures. Therefore, the approximate of the state derivative $\hat{p}_{k+1} \!-\! \hat{p}_k$ of Tank $A$ and Tank $B$ is given in the form as shown in \eqref{state_der_ident_approx}
+The state equation, described in \eqref{identification_model} is going to be approximated with RBFs in the same way as it has been done for the inlet pressures. Therefore, the approximate of the state derivative $\hat{p}_{k+1} \!-\! \hat{p}_k$ of Tank $1$ and Tank $2$ is given in the form as shown in \eqref{state_der_ident_approx}
 
 \begin{subequations}
 \label{state_der_ident_approx}

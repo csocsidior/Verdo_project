@@ -229,7 +229,7 @@ set(0,'DefaultFigureVisible','on')
 % xlabel('Time [h]','interpreter','latex');
 % ylabel('Pressure  [m]','interpreter','latex')
 % 
-figure(3)
+figure(4)
 stairs(t,dk_1_mod2(:,1),'LineWidth',1.2)
 hold on
 stairs(t,dk_2_mod2(:,1),'LineWidth',1.2)
@@ -239,7 +239,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Flow  [LPS]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(4)
+figure(5)
 stairs(t,pk_1,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_c(1,:),'LineWidth',1.2)
@@ -249,7 +249,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(5)
+figure(6)
 stairs(t,pk_2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_c(2,:),'LineWidth',1.2)
@@ -259,7 +259,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(6)
+figure(7)
 stairs(t,pk_1_mod1,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod1_c(1,:),'LineWidth',1.2)
@@ -269,7 +269,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(7)
+figure(8)
 stairs(t,pk_2_mod1,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod1_c(2,:),'LineWidth',1.2)
@@ -279,7 +279,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(8)
+figure(9)
 stairs(t,pk_1_mod2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod2_c(1,:),'LineWidth',1.2)
@@ -289,7 +289,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(9)
+figure(10)
 stairs(t,pk_2_mod2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod2_c(2,:),'LineWidth',1.2)
