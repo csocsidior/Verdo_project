@@ -51,6 +51,18 @@ load('dk_2_mod2.mat')
 load('p_h_mod2.mat')
 load('sigma_mod2.mat')
 
+%for state validation:
+dk_1k_mod2 = dk_1_mod2;
+dk_1k_mod2(73) = [];
+dk_2k_mod2 = dk_2_mod2;
+dk_2k_mod2(73) = [];
+p_hk_mod2 = p_h_mod2;
+p_hk_mod2(73) = [];
+p_hkplus1_mod2 = p_h_mod2;
+p_hkplus1_mod2(1) = [];
+sigmak_mod2 = sigma_mod2;
+sigmak_mod2(73) = [];
+
 %% Pressure calculation - case 1
 
 %Pump 1
@@ -127,11 +139,11 @@ Y_net_mod2_c = theta_k*chi_mod2
 Xs = [sigmak, p_hk + h_hk, dk_1k, dk_2k]';
 Ys = [p_hkplus1 - p_hk]';
 
-spread_s = 1;                 %25 %28
+spread_s = 8.5;                 %25 %28
 % number of neurons
-K_s = 30;                       %10 %8
+K_s = 10;                       %10 %8
 % performance goal 
-goal_s = 0.0000005;
+goal_s = 0.00005;
 % neuron step
 Ki_s = 1;
 
@@ -149,7 +161,7 @@ set(0,'DefaultFigureVisible','on')
 figure(1)
 stairs(tk,p_hkplus1,'LineWidth',1.2)
 hold on
-stairs(tk, Ys_net' + p_hk ,'LineWidth',1.2)
+stairs(tk, Ys_net_c' + p_hk ,'LineWidth',1.2)
 xlim([0 73])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
@@ -169,14 +181,36 @@ Ys_net_mod1_c_try = net_s(Xs_mod1);
 set(0,'DefaultFigureVisible','on')
 figure(2)
 stairs(tk,p_hkplus1_mod1,'LineWidth',1.2)
-% hold on
-% stairs(tk,  Ys_net_mod1_c' + p_hk_mod1 ,'LineWidth',1.2)
+hold on
+stairs(tk,  Ys_net_mod1_c' + p_hk_mod1 ,'LineWidth',1.2)
 % hold on
 % stairs(tk, Ys_net_mod1_c_try' + p_hk_mod1 ,'LineWidth',1.2)
 % hold on
 % stairs(tk,  p_hkplus1_mod1 - p_hk_mod1 ,'LineWidth',1.2)
+% stairs(t, p_h ,'LineWidth',1.2)
+% hold on
+% stairs(tk, p_hkplus1 ,'LineWidth',1.2)
+xlim([0 73])
+title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
+
+
+% Validation - case 3
+
+Xs_mod2 = [sigmak_mod2, p_hk_mod2 + h_hk, dk_1k_mod2, dk_2k_mod2]';
+Ys_mod2 = [p_hkplus1_mod2 - p_hk_mod2]';
+
+a_s_mod2{1} = radbas(netprod(dist(net_s.IW{1,1},Xs_mod2),net_s.b{1}));
+chi_s_mod2 = [a_s_mod2{1} ; dk_1k_mod2' ; dk_2k_mod2' ; sigmak_mod2' ; ones(1,72)];
+
+Ys_net_mod2_c = theta_s*chi_s_mod2;
+
+set(0,'DefaultFigureVisible','on')
+figure(3)
+stairs(tk,p_hkplus1_mod2,'LineWidth',1.2)
 hold on
-stairs(tk, sigmak ,'LineWidth',1.2)
+stairs(tk,  Ys_net_mod2_c' + p_hk_mod2 ,'LineWidth',1.2)
 xlim([0 73])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
@@ -184,7 +218,7 @@ ylabel('Pressure  [m]','interpreter','latex')
 
 %% Plots
 
-set(0,'DefaultFigureVisible','on')
+
 % 
 % figure(2)
 % stairs(t,pk_1(:,1),'LineWidth',1.2)
@@ -195,7 +229,8 @@ set(0,'DefaultFigureVisible','on')
 % xlabel('Time [h]','interpreter','latex');
 % ylabel('Pressure  [m]','interpreter','latex')
 % 
-figure(3)
+set(0,'DefaultFigureVisible','on')
+figure(4)
 stairs(t,dk_1_mod2(:,1),'LineWidth',1.2)
 hold on
 stairs(t,dk_2_mod2(:,1),'LineWidth',1.2)
@@ -205,7 +240,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Flow  [LPS]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(4)
+figure(5)
 stairs(t,pk_1,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_c(1,:),'LineWidth',1.2)
@@ -215,7 +250,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(5)
+figure(6)
 stairs(t,pk_2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_c(2,:),'LineWidth',1.2)
@@ -225,7 +260,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(6)
+figure(7)
 stairs(t,pk_1_mod1,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod1_c(1,:),'LineWidth',1.2)
@@ -235,7 +270,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(7)
+figure(8)
 stairs(t,pk_2_mod1,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod1_c(2,:),'LineWidth',1.2)
@@ -245,7 +280,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(8)
+figure(9)
 stairs(t,pk_1_mod2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod2_c(1,:),'LineWidth',1.2)
@@ -255,7 +290,7 @@ xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
 set(0,'DefaultFigureVisible','on')
-figure(9)
+figure(10)
 stairs(t,pk_2_mod2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod2_c(2,:),'LineWidth',1.2)
