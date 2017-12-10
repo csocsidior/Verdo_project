@@ -51,6 +51,18 @@ load('dk_2_mod2.mat')
 load('p_h_mod2.mat')
 load('sigma_mod2.mat')
 
+%for state validation:
+dk_1k_mod2 = dk_1_mod2;
+dk_1k_mod2(73) = [];
+dk_2k_mod2 = dk_2_mod2;
+dk_2k_mod2(73) = [];
+p_hk_mod2 = p_h_mod2;
+p_hk_mod2(73) = [];
+p_hkplus1_mod2 = p_h_mod2;
+p_hkplus1_mod2(1) = [];
+sigmak_mod2 = sigma_mod2;
+sigmak_mod2(73) = [];
+
 %% Pressure calculation - case 1
 
 %Pump 1
@@ -127,11 +139,11 @@ Y_net_mod2_c = theta_k*chi_mod2
 Xs = [sigmak, p_hk + h_hk, dk_1k, dk_2k]';
 Ys = [p_hkplus1 - p_hk]';
 
-spread_s = 4;                 %25 %28
+spread_s = 8.5;                 %25 %28
 % number of neurons
-K_s = 22;                       %10 %8
+K_s = 10;                       %10 %8
 % performance goal 
-goal_s = 0.000005;
+goal_s = 0.00005;
 % neuron step
 Ki_s = 1;
 
@@ -150,6 +162,55 @@ figure(1)
 stairs(tk,p_hkplus1,'LineWidth',1.2)
 hold on
 stairs(tk, Ys_net' + p_hk ,'LineWidth',1.2)
+xlim([0 73])
+title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
+
+% Validation - case 2
+
+Xs_mod1 = [sigmak_mod1, p_hk_mod1 + h_hk, dk_1k_mod1, dk_2k_mod1]';
+Ys_mod1 = [p_hkplus1_mod1 - p_hk_mod1]';
+
+a_s_mod1{1} = radbas(netprod(dist(net_s.IW{1,1},Xs_mod1),net_s.b{1}));
+chi_s_mod1 = [a_s_mod1{1} ; dk_1k_mod1' ; dk_2k_mod1' ; sigmak_mod1' ; ones(1,72)];
+
+Ys_net_mod1_c = theta_s*chi_s_mod1;
+Ys_net_mod1_c_try = net_s(Xs_mod1);
+
+set(0,'DefaultFigureVisible','on')
+figure(2)
+stairs(tk,p_hkplus1_mod1,'LineWidth',1.2)
+hold on
+stairs(tk,  Ys_net_mod1_c' + p_hk_mod1 ,'LineWidth',1.2)
+% hold on
+% stairs(tk, Ys_net_mod1_c_try' + p_hk_mod1 ,'LineWidth',1.2)
+% hold on
+% stairs(tk,  p_hkplus1_mod1 - p_hk_mod1 ,'LineWidth',1.2)
+% stairs(t, p_h ,'LineWidth',1.2)
+% hold on
+% stairs(tk, p_hkplus1 ,'LineWidth',1.2)
+xlim([0 73])
+title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
+
+
+% Validation - case 3
+
+Xs_mod2 = [sigmak_mod2, p_hk_mod2 + h_hk, dk_1k_mod2, dk_2k_mod2]';
+Ys_mod2 = [p_hkplus1_mod2 - p_hk_mod2]';
+
+a_s_mod2{1} = radbas(netprod(dist(net_s.IW{1,1},Xs_mod2),net_s.b{1}));
+chi_s_mod2 = [a_s_mod2{1} ; dk_1k_mod2' ; dk_2k_mod2' ; sigmak_mod2' ; ones(1,72)];
+
+Ys_net_mod2_c = theta_s*chi_s_mod2;
+
+set(0,'DefaultFigureVisible','on')
+figure(3)
+stairs(tk,p_hkplus1_mod2,'LineWidth',1.2)
+hold on
+stairs(tk,  Ys_net_mod2_c' + p_hk_mod2 ,'LineWidth',1.2)
 xlim([0 73])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');

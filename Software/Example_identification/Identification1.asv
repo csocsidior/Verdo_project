@@ -32,6 +32,18 @@ load('dk_2_mod1.mat')
 load('p_h_mod1.mat')
 load('sigma_mod1.mat')
 
+%for state validation:
+dk_1k_mod1 = dk_1_mod1;
+dk_1k_mod1(73) = [];
+dk_2k_mod1 = dk_2_mod1;
+dk_2k_mod1(73) = [];
+p_hk_mod1 = p_h_mod1;
+p_hk_mod1(73) = [];
+p_hkplus1_mod1 = p_h_mod1;
+p_hkplus1_mod1(1) = [];
+sigmak_mod1 = sigma_mod1;
+sigmak_mod1(73) = [];
+
 %% Case 3
 
 load('dk_1_mod2.mat')
@@ -115,29 +127,56 @@ Y_net_mod2_c = theta_k*chi_mod2
 Xs = [sigmak, p_hk + h_hk, dk_1k, dk_2k]';
 Ys = [p_hkplus1 - p_hk]';
 
-spread_s = 5;                 %25 %28
+spread_s = 1;                 %25 %28
 % number of neurons
-K_s = 22;                       %10 %8
+K_s = 30;                       %10 %8
 % performance goal 
-goal_s = 0.000005;
+goal_s = 0.0000005;
 % neuron step
 Ki_s = 1;
 
-nets = newrb(Xs,Ys,goal_s,spread_s,K_s,Ki_s);
-Ys_net = nets(Xs);
+net_s = newrb(Xs,Ys,goal_s,spread_s,K_s,Ki_s);
+Ys_net = net_s(Xs);
 
-a_s{1} = radbas(netprod(dist(nets.IW{1,1},Xs),nets.b{1}));
+a_s{1} = radbas(netprod(dist(net_s.IW{1,1},Xs),net_s.b{1}));
 
-chi_s = [a_s{1} ; dk_1k' ; dk_2k ; sigma_ ; ones(1,72)];
-theta_k = Y/chi
+chi_s = [a_s{1} ; dk_1k' ; dk_2k' ; sigmak' ; ones(1,72)];
+theta_s = Ys/chi_s;
 
-Y_net_c = theta_k*chi;
+Ys_net_c = theta_s*chi_s;
 
 set(0,'DefaultFigureVisible','on')
 figure(1)
 stairs(tk,p_hkplus1,'LineWidth',1.2)
 hold on
 stairs(tk, Ys_net' + p_hk ,'LineWidth',1.2)
+xlim([0 73])
+title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
+
+% Validation - case 2
+
+Xs_mod1 = [sigmak_mod1, p_hk_mod1 + h_hk, dk_1k_mod1, dk_2k_mod1]';
+Ys_mod1 = [p_hkplus1_mod1 - p_hk_mod1]';
+
+a_s_mod1{1} = radbas(netprod(dist(net_s.IW{1,1},Xs_mod1),net_s.b{1}));
+chi_s_mod1 = [a_s_mod1{1} ; dk_1k_mod1' ; dk_2k_mod1' ; sigmak_mod1' ; ones(1,72)];
+
+Ys_net_mod1_c = theta_s*chi_s_mod1;
+Ys_net_mod1_c_try = net_s(Xs_mod1);
+
+set(0,'DefaultFigureVisible','on')
+figure(2)
+stairs(tk,p_hkplus1_mod1,'LineWidth',1.2)
+% hold on
+% stairs(tk,  Ys_net_mod1_c' + p_hk_mod1 ,'LineWidth',1.2)
+% hold on
+% stairs(tk, Ys_net_mod1_c_try' + p_hk_mod1 ,'LineWidth',1.2)
+% hold on
+% stairs(tk,  p_hkplus1_mod1 - p_hk_mod1 ,'LineWidth',1.2)
+hold on
+stairs(tk, sigmak ,'LineWidth',1.2)
 xlim([0 73])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
