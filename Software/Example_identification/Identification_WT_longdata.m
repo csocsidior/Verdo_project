@@ -66,6 +66,8 @@ hold on
 stairs(t, Ys_net_c' + p_h_longk ,'LineWidth',1.2)
 xlim([0 148])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+h1 = legend('Measurement','Model');
+set(h1, 'Interpreter', 'latex');
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
@@ -81,12 +83,16 @@ chi_s_mod1 = [a_s_mod1{1} ; dk_1_long_mod1' ; dk_2_long_mod1' ; sigma_long_mod1'
 Ys_net_mod1_c = theta_s*chi_s_mod1;
 Ys_net_mod1_c_try = net_s(Xs_mod1);
 
+%%
+
 set(0,'DefaultFigureVisible','on')
 figure(2)
 stairs(t,p_h_long_kplus1_mod1,'LineWidth',1.2)
 hold on
 stairs(t,  Ys_net_mod1_c' + p_h_longk_mod1 ,'LineWidth',1.2)
 xlim([0 148])
-title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+%title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+h1 = legend('Measurement','Model');
+set(h1, 'Interpreter', 'latex');
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')

@@ -1,5 +1,5 @@
 clear all
-
+%%
 t=0:1:72; % Time vector
 tk = 0:1:71;
 
@@ -70,14 +70,14 @@ pk_1 = 53.33-0.008334.*dk_1.^2;
 %Pump 2
 pk_2 = 46.67-0.009525.*dk_2.^2;
 
-%% Pressure calculation - case 1
+%% Pressure calculation - case 2
 
 %Pump1
 pk_1_mod1 = 53.33-0.008334.*dk_1_mod1.^2;
 %Pump2
 pk_2_mod1 = 46.67-0.009525.*dk_2_mod1.^2;
 
-%% Pressure calculation - case 2
+%% Pressure calculation - case 3
 
 %Pump1
 pk_1_mod2 = 53.33-0.008334.*dk_1_mod2.^2;
@@ -233,9 +233,9 @@ ylabel('Pressure  [m]','interpreter','latex')
 %% Inlet flow plots
 set(0,'DefaultFigureVisible','on')
 figure(4)
-stairs(t,dk_1(:,1),'LineWidth',1.2)
+stairs(t,dk_1_mod2(:,1),'LineWidth',1.2)
 hold on
-stairs(t,dk_2(:,1),'LineWidth',1.2)
+stairs(t,dk_2_mod2(:,1),'LineWidth',1.2)
 xlim([0 73])
 %title('Inlet flow - $\bar{d}_{\mathcal{K},1}$','interpreter','latex')
 h1 = legend('$\bar{d}_{\mathcal{K},1}$','$\bar{d}_{\mathcal{K},1}$');
@@ -243,15 +243,30 @@ set(h1, 'Interpreter', 'latex');
 xlabel('Time [h]','interpreter','latex');
 ylabel('Flow  [LPS]','interpreter','latex')
 
-%% Identification output Pk1
+%% Identification output Pk1 - pk2
 
 set(0,'DefaultFigureVisible','on')
 figure(5)
+subplot(1,2,1) 
 stairs(t,pk_1,'LineWidth',1.2)
-hold on
-stairs(t,Y_net_c(1,:),'LineWidth',1.2)
+hold on 
+stairs(t,Y_net_c(1,:),'--','LineWidth',1.2)
 xlim([0 73])
+ylim([40.5 55.5])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+h1 = legend('Measurement','Model');
+set(h1, 'Interpreter', 'latex');
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
+subplot(1,2,2) 
+stairs(t,pk_2,'LineWidth',1.2)
+hold on
+stairs(t,Y_net_c(2,:),'LineWidth',1.2)
+xlim([0 73])
+ylim([43.2 47.3])
+title('Inlet pressure - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
+h1 = legend('Measurement','Model');
+set(h1, 'Interpreter', 'latex');
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
@@ -264,6 +279,8 @@ hold on
 stairs(t,Y_net_c(2,:),'LineWidth',1.2)
 xlim([0 73])
 title('Inlet pressure - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
+h1 = legend('Measurement','Model');
+set(h1, 'Interpreter', 'latex');
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
@@ -279,10 +296,37 @@ title('Validation 1 - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
 xlabel('Time [h]','interpreter','latex');
 ylabel('Pressure  [m]','interpreter','latex')
 
-%% Validation 1 output Pk2
+%% Validation 1 output pk1 pk2
 
 set(0,'DefaultFigureVisible','on')
 figure(8)
+subplot(1,2,1) 
+stairs(t,pk_1_mod1,'LineWidth',1.2)
+hold on 
+stairs(t,Y_net_mod1_c(1,:),'LineWidth',1.2)
+xlim([0 73])
+ylim([40 55.5])
+title('Inlet pressure - $\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+h1 = legend('Measurement','Model');
+set(h1, 'Interpreter', 'latex');
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
+subplot(1,2,2) 
+stairs(t,pk_2_mod1,'LineWidth',1.2)
+hold on
+stairs(t,Y_net_mod1_c(2,:),'LineWidth',1.2)
+xlim([0 73])
+ylim([42.5 47.3])
+title('Inlet pressure - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
+h1 = legend('Measurement','Model');
+set(h1, 'Interpreter', 'latex');
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
+
+%% Validation 1 output Pk2
+
+set(0,'DefaultFigureVisible','on')
+figure(9)
 stairs(t,pk_2_mod1,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod1_c(2,:),'LineWidth',1.2)
@@ -294,7 +338,7 @@ ylabel('Pressure  [m]','interpreter','latex')
 %% Validation 2 output Pk1
 
 set(0,'DefaultFigureVisible','on')
-figure(9)
+figure(10)
 stairs(t,pk_1_mod2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod2_c(1,:),'LineWidth',1.2)
@@ -306,7 +350,7 @@ ylabel('Pressure  [m]','interpreter','latex')
 %% Validation 2 output Pk2
 
 set(0,'DefaultFigureVisible','on')
-figure(10)
+figure(11)
 stairs(t,pk_2_mod2,'LineWidth',1.2)
 hold on
 stairs(t,Y_net_mod2_c(2,:),'LineWidth',1.2)
@@ -318,7 +362,7 @@ ylabel('Pressure  [m]','interpreter','latex')
 %% Sigma_plots
 
 set(0,'DefaultFigureVisible','on')
-figure(11)
+figure(12)
 stairs(t,sigma,'LineWidth',1.2)
 hold on
 stairs(t,sigma_mod1,'LineWidth',1.2)
@@ -333,8 +377,8 @@ ylabel('Flow  [LPS]','interpreter','latex')
 %% WT_plots
 
 set(0,'DefaultFigureVisible','on')
-figure(12)
-stairs(t,p_h,'LineWidth',1.2)
+figure(13)
+stairs(t,p_h_mod2,'LineWidth',1.2)
 xlim([0 73])
 %title('Total consumption - $\bar{p}_{\mathcal{K},2}$','interpreter','latex')
 h = legend('$\hat{p}$');

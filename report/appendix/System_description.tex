@@ -1,9 +1,9 @@
 \chapter{RBFNN-based identification on an example network}
 \label{NN_based_example}
 
-\emph{In Appendix F. a numerical example of the system identification is carried out on a simple network.}
+\emph{In Appendix F. a numerical example for the system identification is given. }
 
-\section{The example network in EPANET}
+\section{The network in EPANET}
 \label{example1_EPANET}
 
 The reason for testing the identification method on data from a simple EPANET model is that, in simulation, several different operations of the network can be studied. On a real world network, typically the operation or control cannot be taken to its extremes, as this would mean undesired service to the customers . Therefore, the network shown in \figref{fig:epanet_example1_id} has been created to mimic the behaviour of a multi-inlet, single-WT system, such that the identification method, presented in \chapref{identification_design} is being tested. 
@@ -22,7 +22,7 @@ The network shown in \figref{fig:epanet_example1_id} consists of two pumping sta
 
 The controls implemented on the network are based on simple time scheduling of the two pumping stations. Both pumps turn off when the pressure head in the WT is above $19.85 [m]$. $PU_2$ turns on again if the pressure head in the WT decreases to $19.55 [m]$. Furthermore, $PU_2$ turns on again only if the pressure head in node $n_1$ exceeds $43 [m]$. The initial pressure head in the WT is $19.5 [m]$.
 
-\section{Identification and validation of the output equation}
+\section{Identification and validation}
 \label{identification_and_validation_of_the_output_eq} 
 
 The identification is carried out on the simulation data, exported from EPANET. In order to validate the identified model, scenarios with increased and decreased consumption patterns are taken intro account. It is worth noting, that the control properties of the network are kept the same, as any modification in control would mean a new operating point in the WSS. Thus, the model is tested by modifying the total demand and therefore creating different inlet pressure and flow settings for the two pumping stations. The identification is carried out on the network when the total consumption is $\sigma_1$. The validation is done when the total consumption is increased($\sigma_2$) and when decreased($\sigma_3$), respectively. Furthermore, all three consumption curves are periodic with a time period of 24 hours, however the validation has been done on a 72 hours long test data. \figref{fig:sigma123} shows the three different consumption patterns.
@@ -55,7 +55,7 @@ The identification is carried out on the simulation data, exported from EPANET. 
  \label{fig:dk_sigma1}
  \end{figure}
 
- \vspace{-5mm}
+ \vspace{-6.5mm}
 
    %WT - sigma1
  \begin{figure}[H]
@@ -64,13 +64,16 @@ The identification is carried out on the simulation data, exported from EPANET. 
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/example_net/WT_sigma1.tex} 
  \vspace{-2.5mm}
- \caption{Inlet flows of $PU_1$ and $PU_2$(above) and the pressure in the WT(below).}
+ \caption{Inlet flows of $PU_1$ and $PU_2$(above) and the pressure in the WT(below) under $\sigma_1$ total demands.}
  \label{fig:WT_sigma1}
  \end{figure}
 
  \vspace{-3mm}
 
-For the two inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$, the identification has been carried out with 12 RBF neurons. The performance goal has been chosen to the order of $10^{-4}$. \figref{fig:MSE_output} shows the mean of squared errors in terms of RBF neurons. 
+ \subsection{Identification on $\sigma_1$ total demands}
+ \label{identification_sigma1}
+
+For the two inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$, the identification has been carried out with ten RBF neurons. The performance goal has been chosen to the order of $10^{-4}$. \figref{fig:MSE_output} shows the mean of squared errors in terms of RBF neurons. 
 
    %MSE output
  \begin{figure}[H]
@@ -83,19 +86,225 @@ For the two inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}
  \label{fig:MSE_output}
  \end{figure}
 
+ \vspace{-4mm}
+
+As it is shown in \figref{fig:MSE_output}, a very accurate fit is achieved for the model which is capable of generalizing the output equation. It is worth to mention that although more RBF neurons results in a more accurate fit, however it does not generalize the model as well as ten RBF neurons. In case of increasing the number of neurons, the identification resulted in overfit and the validation failed. The identification of $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$ inlet pressures in case of $\sigma_1$ total demand is shown in \figref{fig:pk1_sigma1}.
+
+\vspace{-2mm}
+
+   %pk1 - pk2 - sigma1
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/pk1_pk2_sigma1.tex} 
+ \vspace{-2.5mm}
+ \caption{Identification of the inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$.}
+ \label{fig:pk1_sigma1}
+ \end{figure}
+
+ \vspace{-4mm}
+
+ As can be seen in \figref{fig:pk1_sigma1}, the inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$ of the identified model and the measurements are almost identical. 
+
+For the WT pressure $\hat{p}$, the identification has been carried out with six RBF neurons. The identification on the 72 hours-long data did not result in good fit and generalization, therefore the measurement data from the EPANET simulation has been extended to a 140 hours-long data set. \figref{fig:MSE_state} shows the mean squared errors in terms of RBF neurons on the identified network model.
+
+\vspace{-1mm}
+
+  %MSE state
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/MSE_state.tex} 
+ \vspace{-3.5mm}
+ \caption{The network’s performance according to the mean of squared errors.}
+ \label{fig:MSE_state}
+ \end{figure}
+
  \vspace{-3mm}
 
-As it is shown, a very good fit is achieved for a model which generalizes well the state equation. It is worth to mention that although more RBF neurons results in a more accurate fit, however it does not generalize so well the model as 12 RBF neurons do. In case of increasing the number of neurons, the identification resulted in overfit and the validation failed. The identification of $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$ inlet pressures in case of $\sigma_1$ is shown in figref{}
+ \figref{fig:MSE_state} shows, that adding more neurons to the network, the performance does not increase significantly. The network has been tested with more than six neurons, however the best validation result turned out to be the best at $N = 6$ RBF neurons. The WT pressure is shown in \figref{fig:WT_ident_sigma1}
 
-\section{Identification and validation of the state equation}
-\label{identification_and_validation_of_the_state_eq}  
 
-abcd
+
+   %WT - sigma1 identification
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/WT_ident_sigma1.tex} 
+ \vspace{-2.5mm}
+ \caption{Identification of the WT pressure $\hat{p}$.}
+ \label{fig:WT_ident_sigma1}
+ \end{figure}
+
+ \vspace{-4mm}
+
+The output parameter vectors $\theta_{\mathcal{K}1}$, $\theta_{\mathcal{K}2}$ and the state parameter vector $\theta_{\mathcal{S}1}$, including the output weights, linear parameters and biases are shown in \eqref{par_matrices_output_example123}.
+
+\vspace{-2mm}
+
+ \begin{equation}
+\label{par_matrices_output_example123}
+         \theta_{\mathcal{K}1} = 
+          \begin{pmatrix}
+           -321.27  \\
+           -101.81  \\
+           -391.47  \\
+           -382.66  \\
+           -4.48 \cdot 10^6  \\
+           4.55 \cdot 10^6 \\
+           9.23 \cdot 10^3 \\
+           4.48 \cdot 10^6 \\
+           394.62 \\
+           -4.57 \cdot 10^6\\
+           -0.27 \\
+           37.33 \\
+         \end{pmatrix}
+         ,
+         \hspace{5mm}
+         \theta_{\mathcal{K}2} = 
+          \begin{pmatrix}
+           -102.36  \\
+           10.88  \\
+           -89.94  \\
+           115.19  \\
+           -3.28 \cdot 10^5  \\
+           1.42 \cdot 10^5 \\
+           -1.78 \cdot 10^3 \\
+           3.27 \cdot 10^5 \\
+           35.35 \\
+           -1.39 \cdot 10^5\\
+           -0.33 \\
+           60.14 \\
+         \end{pmatrix}
+\hspace{5mm}
+         \theta_{\mathcal{S}1} = 
+          \begin{pmatrix}
+           4.15 \cdot 10^{3} \\
+            2.64 \cdot 10^{4} \\
+             -5.15 \cdot 10^{4} \\
+              2.51 \cdot 10^{4} \\
+               0.42 \\
+                -4.15 \cdot 10^{3} \\
+                  3.4 \cdot 10^{-3} \\
+                   -8.08 \cdot 10^{-4} \\
+                   -5.8 \cdot 10^{-3} \\
+                    0.16 
+
+         \end{pmatrix}
+\end{equation}
+
+ \subsection{Validation on $\sigma_2$ total demands}
+ \label{validation_sigma1}
+
+ With the increase in total water consumption, the controls change. The new inlet flows of the two pumping stations $PU_1$, $PU_2$ and the pressure in the WT is shown in \figref{fig:WT_sigma2}.
+
+\vspace{-2mm}
+
+ %Inlet flow - sigma2
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/dk_sigma2.tex} 
+ \vspace{-2.5mm}
+ %\caption{Inlet flows of $PU_1$ and $PU_2$.}
+ \label{fig:dk_sigma2}
+ \end{figure}
+
+ \vspace{-6.5mm}
+
+   %WT - sigma2
+ \begin{figure}[H]
+ \centering
+ \hspace{-3.5mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/WT_sigma2.tex} 
+ \vspace{-2.5mm}
+ \caption{Inlet flows of $PU_1$ and $PU_2$(above) and the pressure in the WT(below).}
+ \label{fig:WT_sigma2}
+ \end{figure}
+
+ \vspace{-3mm}
+
+The simulation results for $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$ inlet pressures on the new validation data when $\sigma_2$ is the total demand in the network are shown in \figref{fig:pk1_sigma2}
+
+\vspace{-2mm}
+
+   %pk1 - pk2 - sigma2
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/pk1_pk2_sigma2.tex} 
+ \vspace{-2.5mm}
+ \caption{Simulation of $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$ pressures on validation data.}
+ \label{fig:pk1_sigma2}
+ \end{figure}
+
+ \vspace{-4mm}
+
+ The simulation results for $\hat{p}$ WT pressure on the new validation data when $\sigma_2$ is the total demand in the network are shown in \figref{fig:WT_ident_sigma2}
+
+   %WT - sigma2 identification
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/WT_ident_sigma2.tex} 
+ \vspace{-2.5mm}
+ \caption{Identification of the WT pressure $\hat{p}$.}
+ \label{fig:WT_ident_sigma2}
+ \end{figure}
+
+ \vspace{-4mm}
+
+
+\subsection{Validation on $\sigma_3$ total demands}
+ \label{validation_sigma2}
+
+
+\vspace{-2mm}
+
+ %Inlet flow - sigma3
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/dk_sigma3.tex} 
+ \vspace{-2.5mm}
+ %\caption{Inlet flows of $PU_1$ and $PU_2$.}
+ \label{fig:dk_sigma3}
+ \end{figure}
+
+ \vspace{-6.5mm}
+
+   %WT - sigma2
+ \begin{figure}[H]
+ \centering
+ \hspace{-3.5mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/example_net/WT_sigma3.tex} 
+ \vspace{-2.5mm}
+ \caption{Inlet flows of $PU_1$ and $PU_2$(above) and the pressure in the WT(below).}
+ \label{fig:WT_sigma3}
+ \end{figure}
+
+ \vspace{-3mm}
+
 
 \chapter{Example network description}
 \label{physical_properties_example1}
 
 \emph{In this part of the appendix, the corresponding physical parameters, control properties and consumption properties of the Multi-inlet, Single-WT example network are listed.}
+
+%Work in progress
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{report/pictures/missingfigure}
+\end{figure}
 
 
 
