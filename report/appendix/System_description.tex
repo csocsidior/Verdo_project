@@ -25,7 +25,7 @@ The controls implemented on the network are based on simple time scheduling of t
 \section{Identification and validation of the output equation}
 \label{identification_and_validation_of_the_output_eq} 
 
-The identification is carried out on the simulation data, exported from EPANET. In order to validate the identified model, scenarios with increased and decreased consumption patterns are taken intro account. It is worth noting, that the control properties of the network are kept the same, as any modification in control would mean a new operating point in the WSS. Thus, the model is tested by modifying the total demand and therefore creating different inlet pressure and flow settings of the pumping stations. The identification is carried out on the network when the total consumption is $\sigma_1$. The validation is done when the total consumption is increased($\sigma_2$) and when decreased($\sigma_3$), respectively. Furthermore, all three consumption curves are periodic with a time period of 24 hours, however the validation has been done on a 72 hours long test data. \figref{fig:sigma123} shows the three different consumption patterns.
+The identification is carried out on the simulation data, exported from EPANET. In order to validate the identified model, scenarios with increased and decreased consumption patterns are taken intro account. It is worth noting, that the control properties of the network are kept the same, as any modification in control would mean a new operating point in the WSS. Thus, the model is tested by modifying the total demand and therefore creating different inlet pressure and flow settings for the two pumping stations. The identification is carried out on the network when the total consumption is $\sigma_1$. The validation is done when the total consumption is increased($\sigma_2$) and when decreased($\sigma_3$), respectively. Furthermore, all three consumption curves are periodic with a time period of 24 hours, however the validation has been done on a 72 hours long test data. \figref{fig:sigma123} shows the three different consumption patterns.
 
   %Total consumptions
  \begin{figure}[H]
@@ -40,7 +40,7 @@ The identification is carried out on the simulation data, exported from EPANET. 
 
  \vspace{-3mm}
 
- The inlet flows of the two pumping stations $PU_1$ and $PU_2$, respectively, and the WT pressure $\hat{p}$ are shown in \figref{fig:WT_sigma1}. 
+ The inlet flows of the two pumping stations $PU_1$ and $PU_2$, and the WT pressure $\hat{p}$ are shown in \figref{fig:WT_sigma1}. 
 
  \vspace{-3mm}
 
@@ -70,7 +70,7 @@ The identification is carried out on the simulation data, exported from EPANET. 
 
  \vspace{-3mm}
 
-For the two inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$, the identification has been carried out with 10 RBF neurons. The performance goal has been chosen of the order of $10^{-4}$. \figref{fig:MSE_output} shows the mean of squared errors in terms of RBF neurons. 
+For the two inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$, the identification has been carried out with 12 RBF neurons. The performance goal has been chosen to the order of $10^{-4}$. \figref{fig:MSE_output} shows the mean of squared errors in terms of RBF neurons. 
 
    %MSE output
  \begin{figure}[H]
@@ -85,7 +85,7 @@ For the two inlet pressures $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}
 
  \vspace{-3mm}
 
-
+As it is shown, a very good fit is achieved for a model which generalizes well the state equation. It is worth to mention that although more RBF neurons results in a more accurate fit, however it does not generalize so well the model as 12 RBF neurons do. In case of increasing the number of neurons, the identification resulted in overfit and the validation failed. The identification of $\bar{p}_{\mathcal{K}1}$ and $\bar{p}_{\mathcal{K}2}$ inlet pressures in case of $\sigma_1$ is shown in figref{}
 
 \section{Identification and validation of the state equation}
 \label{identification_and_validation_of_the_state_eq}  
