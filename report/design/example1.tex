@@ -1,12 +1,12 @@
 \chapter{System identification}
 \label{identification_design}
 
-\emph{In this chapter, the Multi-inlet, Multi-WT model, which has been derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, the structure of the model is discussed, then a Neural Network(NN) based identification method is presented. In the first case, the identification is carried out on a simple example, then on the Randers WSS EPANET model. In the second case, the identification is carried out based on measurements from the real-world network.}
+\emph{In this chapter, the Multi-inlet, Multi-WT model, which has been derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, the structure of the model is discussed, then a Neural Network(NN) based identification method is presented. In the first case, the identification is tested on a simple example, then on the Randers WSS EPANET model. In the second case, the identification is carried out based on measurements from the real-world network.}
 
 \section{Model structure of the Multi-inlet, Multi-WT system}
 \label{model_structure_of_the_multi_inlet_multi_WT_system}
 
-In \chapref{system_modelling}, the model of a multi-inlet WSS with the extension of multiple WTs has been derived. The presented model has been given by a non-linear SS representation, which consists of the equations describing the dynamics, the outputs and the constraints on the network. As the model derivation is based on first principles, some insight into the structure and the input-output relation is available. 
+In \chapref{system_modelling}, the model of a multi-inlet WSS with the extension of multiple WTs has been derived. The network has been represented by a non-linear State Space model, which includes the equations describing the dynamics, the outputs and the equations describing a constraint on certain flows in the network. As the derivation of the model has been carried out based on first principles, insight has been given into the structure and into the relation of the inputs and outputs. 
 
 \subsection{Output equation}
 \label{output_eq_identification}
@@ -15,7 +15,7 @@ The model needs to be identified in order to utilize it for control purposes. Th
 
 \begin{equation}
   \label{recall_output_eq}
-  \bar{p}_{\mathcal{K},k} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) - K^T\bar{h} ,
+  \bar{p}^{k}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q^{k}_{\mathcal{C}} + A_3 K \bar{d}^{k}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma^{k}) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}^{k} + \hat{h}) - K^T\bar{h} ,
 \end{equation} 
 
 \begin{minipage}[t]{0.4\textwidth}
@@ -24,27 +24,27 @@ where\\
 \hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$,
 \end{minipage}
 
-and furthermore, $\bar{d}_{\mathcal{K},k}$ inlet flows, $\sigma_k$ total demand, $v_{\mathcal{D}}$ distribution parameter, $q_{\mathcal{C},k}$ flows in set $\mathcal{C}$, $\hat{p}_k$ pressures in the WTs, $\hat{h}$ elevations of the WTs and $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ the elevations of the pumping stations. The corresponding values of the pressures and flows in the network are evaluated at each time step $k$. 
+and furthermore, $\bar{d}^{k}_{\mathcal{K}}$ inlet flows, $\sigma^{k}$ total demand, $v_{\mathcal{D}}$ distribution parameter, $q^{k}_{\mathcal{C}}$ flows in set $\mathcal{C}$, $\hat{p}^{k}$ pressures in the WTs, $\hat{h}$ elevations of the WTs and $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ the elevations of the pumping stations. The corresponding values of the pressures and flows in the network are evaluated at each time step $k$. 
 
 Additionally, let us recall the constraint on $q_\mathcal{C}$, and rewrite it in discrete-time form such that
 
  \begin{equation}
 \label{recall_constraint eq}
-f_{\mathcal{C}}(q_{\mathcal{C},k}) - A_1(\hat{p}_k + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) = 0.
+f_{\mathcal{C}}(q^{k}_{\mathcal{C}}) - A_1(\hat{p}^{k} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q^{k}_{\mathcal{C}} + A_3 K \bar{d}^{k}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma^{k}) = 0.
 \end{equation} 
 
 It is important to point out that the model in \chapref{system_modelling} has been derived in a general manner, taking into account that $v_{\mathcal{D}}$ is a time-varying distribution parameter of the demands. However, in the further description, let us restrict ourselves and assume that $v_{\mathcal{D}}$ is constant.  From the technical point of view, the identification becomes less complex, as in this case $v_{\mathcal{D}}$ is a linear constant parameter. Furthermore, there is no need to introduce $v_{\mathcal{D}}$ as a time-varying parameter on the EPANET data, however on the real measurement data, the possible demand variations might be experienced. In \eqref{recall_constraint eq} and \eqref{recall_output_eq} the assumption of $v_{\mathcal{D}}$ being constant is already taken into account, therefore $v_{\mathcal{D}}$ does not have any time index.
 
 % This assumption is beneficial from the system point of view, as the total consumption $\sigma_k$ can be represented simply by the sum of the hourly demand variations $1^T \bar{d}_{\mathcal{D}}$. 
 
-The constraint on $q_\mathcal{C}$ in \eqref{recall_constraint eq} is given by an implicit expression for which an analytical soulution has not been derived. The explicit solution for the constraint has a structure like \eqref{qc_abstraction}, however we do not know how it looks exactly.
+The constraint on $q^{k}_{\mathcal{C}}$ in \eqref{recall_constraint eq} is given by an implicit expression for which an analytical solution has not been derived. The explicit solution for the constraint has a structure like \eqref{qc_abstraction}, however we do not know how it looks exactly.
 
  \begin{equation}
 \label{qc_abstraction}
-q_{\mathcal{C},k} = q_\mathcal{C} \big( (\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big).
+q^{k}_{\mathcal{C}} = q_{\mathcal{C}} \big( (\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k} \big).
 \end{equation} 
 
-It is shown in \eqref{qc_abstraction} that the $q_\mathcal{C}$ flows in the network depend on the same physical measures, i.e. the same variables as the outputs $\bar{p}_{\mathcal{K}}$. By substituting \eqref{qc_abstraction} into \eqref{recall_output_eq}, we get the following output equation
+It is shown in \eqref{qc_abstraction} that the $q^{k}_{\mathcal{C}}$ flows in the network depend on the same physical measures, i.e. the same variables as the outputs $\bar{p}^{k}_{\mathcal{K}}$. By substituting \eqref{qc_abstraction} into \eqref{recall_output_eq}, we get the following output equation
 
 \vspace{-4mm}
 \begin{align}
