@@ -49,27 +49,25 @@ It is shown in \eqref{qc_abstraction} that the $q^{k}_{\mathcal{C}}$ flows in th
 \vspace{-4mm}
 \begin{align}
   \label{recall_output_eq_2}
-      \bar{p}_{\mathcal{K},k}  = & \nonumber K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}} \big (A_2 q_{\mathcal{C}}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k \big)   \\ &  - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}} .
+      \bar{p}^{k}_{\mathcal{K}}  = & \nonumber K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}} \big (A_2 q_{\mathcal{C}}\big ((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k} \big) + A_3 K \bar{d}^{k}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma^{k} \big)   \\ &  - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}^{k} + \hat{h}) - \bar{h}_{\mathcal{K}} .
 \end{align}
 
 \vspace{-4mm}
-In \eqref{recall_output_eq_2}, the pressure head in the pumping stations $\bar{p}_{\mathcal{K},k}$ is given by the expression on the right-hand side. Let us write \eqref{recall_output_eq_2} in a form where the non-linear expression on the right-hand side is replaced with a non-linear function $\tilde{f}_1(\cdot)$, which has an unknown structure but has the same variables in the argument. Thus, a reformulated output equation can be given such that 
+In \eqref{recall_output_eq_2}, the pressure head in the pumping stations $\bar{p}^{k}_{\mathcal{K}}$ is given by the expression on the right-hand side. Let us write \eqref{recall_output_eq_2} in a form where the non-linear expression on the right-hand side is replaced with a non-linear function $\tilde{f}_1(\cdot)$, which has an unknown structure but has the same variables in the argument. Thus, a reformulated output equation can be given such that 
 
  \begin{equation}
   \label{recall_output_eq_3}
-     \bar{p}_{\mathcal{K},k}  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_{\mathcal{K}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}, 
+     \bar{p}^{k}_{\mathcal{K}}  = \tilde{f}_1 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{K}} (\hat{p}^{k} + \hat{h}) - \bar{h}_{\mathcal{K}}, 
 \end{equation} 
 
-The output equation described in \eqref{recall_output_eq_3} is a mapping defined by the non-linear function $\tilde{f}_1$ and the linear term, which maps the input set, $u_k = ( \hat{p}_k\!+\!\hat{h} \ \bar{d}_{\mathcal{K},k} \ \sigma_k )^T$ to the outputs $\bar{p}_{\mathcal{K},k} $. Typically, the pressure is measured in the WTs not the total head, therefore the elevation $\bar{h}_{\mathcal{K}}$ is not added to $\bar{p}_{\mathcal{K},k}$ on the left-hand side in \eqref{recall_output_eq_3}. In the input set, the total consumption can be calculated according to the mass-balance in the whole network such that
+The output equation described in \eqref{recall_output_eq_3} is a mapping defined by the non-linear function $\tilde{f}_1$ and the linear term, which maps the input set, $u^{k} = ( \hat{p}^{k}\!+\!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$ to the outputs $\bar{p}^{k}_{\mathcal{K}}$. Typically, the pressure is measured in the WTs not the total head, therefore the elevation $\bar{h}_{\mathcal{K}}$ is not added to $\bar{p}^{k}_{\mathcal{K}}$ on the left-hand side in \eqref{recall_output_eq_3}. In the input set, the total consumption can be calculated according to the mass-balance in the whole network such that
 
 \begin{equation}
 \label{massbalance_identification}
- \sigma_k = 1^T \hat{d}_k + 1^T \bar{d}_{\mathcal{K},k}.
+ \sigma^{k} = 1^T \hat{d}^{k} + 1^T \bar{d}^{k}_{\mathcal{K}}.
 \end{equation}
 
- In \eqref{massbalance_identification}, we assume that the flows in the WTs are measured, as the demand flows $\bar{d}_{\mathcal{D},k} $ in the network are not measurable. 
-
- % Nevertheless, the input and output set together forms the TS $\mathcal{D}_1 = \{u_i ; \tilde{y}_i\}_{i = 1,2, ..., N}$, which can be utilized to carry out the identification on the model.
+ In \eqref{massbalance_identification}, we assume that the flows in the WTs are measured, as the demand flows $\bar{d}^{k}_{\mathcal{D}} $ are not measurable in the network. 
 
  \subsection{State equation}
 \label{state_eq_identification} 
@@ -78,7 +76,7 @@ The state equation is a first-order system of ODEs, which has been formulated on
 
 \begin{equation}
   \label{WT_matrixform_final_discrete}
-\Lambda \frac{1}{T_s} (\hat{p}_{k+1} - \hat{p}_k)  = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k.
+\Lambda \frac{1}{T_s} (\hat{p}^{(k+1)} - \hat{p}^{k})  = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q^{k}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}^{k}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma^{k}.
 \end{equation}
 
 \begin{minipage}[t]{0.20\textwidth}
@@ -99,26 +97,26 @@ Substituting the expression for $q_{\mathcal{C}}$ into \eqref{WT_matrixform_fina
 \vspace{-4mm}
 \begin{align}
 \label{WT_matrixform_final_discrete1}
-\nonumber  \hat{p}_{k+1}  =& T_s \Lambda^{-1} \big(- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k \big) + \hat{p}_k .
+\nonumber  \hat{p}^{(k+1)}  =& T_s \Lambda^{-1} \big(- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q^{k}_{\mathcal{C}}\big ((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k} \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}^{k}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma^{k} \big) + \hat{p}^{k} .
 \end{align}
 \vspace{-4mm}
 
 
-The state equation in \eqref{WT_matrixform_final_discrete} describes the relation between the the flows $q_{\mathcal{C},k}$, the total head in the WTs $(\hat{p}_k + \hat{h})$ and the total consumption $\sigma_k$. However, by substituting the $q_{\mathcal{C},k}$ flows with their non-linear expression, the structure of the state equation is not a linear combination of the corresponding signals anymore. Therefore, let us write \eqref{WT_matrixform_final_discrete1} in a form where the non-linear terms are described by a non-linear $\tilde{f}_2(\cdot)$ function with unknown structure. Thus, a reformulated state equation can be given such that
+\eqref{WT_matrixform_final_discrete} describes the relation between the the flows $q^{k}_{\mathcal{C}}$, the total head in the WTs $(\hat{p}^{k} + \hat{h})$ and the total consumption $\sigma^{k}$. However, by substituting the $q^{k}_{\mathcal{C}}$ flows with their non-linear expression, the structure of the state equation is not a linear combination of the corresponding signals anymore. Therefore, let us write \eqref{WT_matrixform_final_discrete1} in a form where the non-linear terms are described by a non-linear function $\tilde{f}_2(\cdot)$ with unknown structure. Thus, a reformulated state equation can be given such that
 
  \begin{equation}
   \label{WT_matrixform_final_discrete2}
-     \hat{p}_{k+1}  = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k + \hat{p}_k,
+     \hat{p}^{(k+1)}  = \tilde{f}_2 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{S}1} \bar{d}^{k}_{\mathcal{K}} + \tilde{a}_{\mathcal{S}2} \sigma^{k} + \hat{p}^{k},
 \end{equation} 
 
 
-where $\tilde{f}_2$ is a non-linear function, $\tilde{a}_2$ and $\tilde{a}_3$ are parameters of the inlet flows $\bar{d}_{\mathcal{K},k}$ and total consumption $\sigma_k$. 
+where $\tilde{f}_2$ is a non-linear function, $\tilde{a}_{\mathcal{S}1}$ and $\tilde{a}_{\mathcal{S}2}$ are parameters of the inlet flows $\bar{d}^{k}_{\mathcal{K}}$ and total consumption $\sigma^{k}$. 
 
 
 \section{RBFNN model of the Multi-inlet,Multi-WT system}
 \label{RBFNN_model_multi_inlet_multi_WT_sys} 
 
-As a result of substituting the constraints on the flows $q_{\mathcal{C},k}$, the system description has been reduced to a non-linear State Space model with state equation given in \eqref {WT_matrixform_final_discrete2} and output equation in \eqref {recall_output_eq_3}. The complete identification model is summarized in \eqref{identification_model}. 
+As a result of substituting the constraints on the flows $q^{k}_{\mathcal{C}}$, the system description has been reduced to a non-linear State Space model with state equation given in \eqref {WT_matrixform_final_discrete2} and output equation in \eqref {recall_output_eq_3}. The complete identification model is summarized in \eqref{identification_model}. 
 
 \begin{equation}
 \begin{cases}
