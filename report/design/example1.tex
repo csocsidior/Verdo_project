@@ -1,27 +1,29 @@
 \chapter{System identification}
 \label{identification_design}
 
-\emph{In this chapter, the Multi-inlet, Multi-WT model, which has been derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, the structure of the model is discussed, then a Neural Network(NN) based identification method is presented. In the first case, the identification is tested on a simple example, then on the Randers WSS EPANET model. In the second case, the identification is carried out based on measurements from the real-world network.}
+\emph{In this chapter, the Multi-inlet, Multi-WT model, which has been derived based on first principles in \chapref{system_modelling}, is reformulated such that it is suitable for system identification. First, the structure of the model is discussed, then a Neural Network(NN) based identification method is presented. In the first case, the identification is tested on a simple example, then on the Randers EPANET WSS model. In the second case, the identification is carried out based on measurements from the real-world network.}
 
 \section{Model structure of the Multi-inlet, Multi-WT system}
 \label{model_structure_of_the_multi_inlet_multi_WT_system}
 
-In \chapref{system_modelling}, the model of a multi-inlet WSS with the extension of multiple WTs has been derived. The network has been represented by a non-linear State Space model, which includes the equations describing the dynamics, the outputs and the equations describing a constraint on certain flows in the network. As the derivation of the model has been carried out based on first principles, insight has been given into the structure and into the relation of the inputs and outputs. 
+In \chapref{system_modelling}, the model of a multi-inlet WSS with the extension of multiple WTs has been derived. The network has been represented by a non-linear State Space model, which includes the equations describing the dynamics, the outputs and the equations describing a constraint on certain flows in the network. As the derivation of the model has been carried out based on first principles, insight has been given into the structure and between all the describing physical variables. 
 
 \subsection{Output equation}
 \label{output_eq_identification}
 
-The model needs to be identified in order to utilize it for control purposes. Therefore, let us recall the governing equations. The output vector $\bar{p}_{\mathcal{K}}$ of the inlet pressures is given in discrete form such that
+In order to utilize the presented model for control, identification is required. For identification purposes, the non-linear SS representation of the system is going to be used, therefore let us recall the governing equations. The output vector describes the inlet pressure $\bar{p}_{\mathcal{K}}$ which is given in discrete form such that
 
 \begin{equation}
   \label{recall_output_eq}
   \bar{p}^{k}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q^{k}_{\mathcal{C}} + A_3 K \bar{d}^{k}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma^{k}) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}^{k} + \hat{h}) - K^T\bar{h} ,
 \end{equation} 
 
+\vspace{-1mm}
+
 \begin{minipage}[t]{0.4\textwidth}
 where\\
 \hspace*{8mm} $A_2 = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
-\hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$,
+\hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$.
 \end{minipage}
 
 and furthermore, $\bar{d}^{k}_{\mathcal{K}}$ inlet flows, $\sigma^{k}$ total demand, $v_{\mathcal{D}}$ distribution parameter, $q^{k}_{\mathcal{C}}$ flows in set $\mathcal{C}$, $\hat{p}^{k}$ pressures in the WTs, $\hat{h}$ elevations of the WTs and $K^T\bar{h} = \bar{h}_{\mathcal{K}} $ the elevations of the pumping stations. The corresponding values of the pressures and flows in the network are evaluated at each time step $k$. 
@@ -32,6 +34,13 @@ Additionally, let us recall the constraint on $q_\mathcal{C}$, and rewrite it in
 \label{recall_constraint eq}
 f_{\mathcal{C}}(q^{k}_{\mathcal{C}}) - A_1(\hat{p}^{k} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q^{k}_{\mathcal{C}} + A_3 K \bar{d}^{k}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma^{k}) = 0.
 \end{equation} 
+
+\vspace{-1mm}
+
+\begin{minipage}[t]{0.4\textwidth}
+where\\
+\hspace*{8mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$. 
+\end{minipage}
 
 It is important to point out that the model in \chapref{system_modelling} has been derived in a general manner, taking into account that $v_{\mathcal{D}}$ is a time-varying distribution parameter of the demands. However, in the further description, let us restrict ourselves and assume that $v_{\mathcal{D}}$ is constant.  From the technical point of view, the identification becomes less complex, as in this case $v_{\mathcal{D}}$ is a linear constant parameter. Furthermore, there is no need to introduce $v_{\mathcal{D}}$ as a time-varying parameter on the EPANET data, however on the real measurement data, the possible demand variations might be experienced. In \eqref{recall_constraint eq} and \eqref{recall_output_eq} the assumption of $v_{\mathcal{D}}$ being constant is already taken into account, therefore $v_{\mathcal{D}}$ does not have any time index.
 
@@ -60,19 +69,28 @@ In \eqref{recall_output_eq_2}, the pressure head in the pumping stations $\bar{p
      \bar{p}^{k}_{\mathcal{K}}  = \tilde{f}_1 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{K}} (\hat{p}^{k} + \hat{h}) - \bar{h}_{\mathcal{K}}, 
 \end{equation} 
 
-The output equation described in \eqref{recall_output_eq_3} is a mapping defined by the non-linear function $\tilde{f}_1$ and the linear term, which maps the input set, $u^{k} = ( \hat{p}^{k}\!+\!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$ to the outputs $\bar{p}^{k}_{\mathcal{K}}$. Typically, the pressure is measured in the WTs not the total head, therefore the elevation $\bar{h}_{\mathcal{K}}$ is not added to $\bar{p}^{k}_{\mathcal{K}}$ on the left-hand side in \eqref{recall_output_eq_3}. In the input set, the total consumption can be calculated according to the mass-balance in the whole network such that
+\vspace{-1mm}
+
+\begin{minipage}[t]{0.4\textwidth}
+where\\
+\hspace*{8mm} $\tilde{a}_{\mathcal{K}} = - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} $. 
+\end{minipage}
+
+The output equation described in \eqref{recall_output_eq_3} is a mapping defined by the non-linear function $\tilde{f}_1$ and the remaining linear terms, which map the input set, $u^{k} = ( \hat{p}^{k}\!+\!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$ to the outputs $\bar{p}^{k}_{\mathcal{K}}$. 
+
+Typically, the pressure is measured in the WTs not the total head, therefore the elevation $\bar{h}_{\mathcal{K}}$ is not added to $\bar{p}^{k}_{\mathcal{K}}$, although in some cases it can be assumed to be known. In the input set, the total consumption can be calculated according to the mass-balance in the network such that
 
 \begin{equation}
 \label{massbalance_identification}
  \sigma^{k} = 1^T \hat{d}^{k} + 1^T \bar{d}^{k}_{\mathcal{K}}.
 \end{equation}
 
- In \eqref{massbalance_identification}, we assume that the flows in the WTs are measured, as the demand flows $\bar{d}^{k}_{\mathcal{D}} $ are not measurable in the network. 
+ In \eqref{massbalance_identification}, we assume that the flows in the WTs are measured, as the demand flows $\bar{d}^{k}_{\mathcal{D}} $ are not measurable. 
 
  \subsection{State equation}
 \label{state_eq_identification} 
 
-The state equation is a first-order system of ODEs, which has been formulated on the pressures $\hat{p}$ in the WTs. In order to give a discretization for the approximate solution of the ODEs, Euler-method is used. The Euler-method is the simplest Runge-Kutta method, which provides an acceptable precision for our problem\cite{chicone2006ordinary}. Thus, the discretized state equation yields as follows
+The state equation is a first-order system of ODEs, which has been formulated on the pressures $\hat{p}$ in the WTs. In order to give the discrete form of the approximate solution of the ODEs, Euler-method is used. The Euler-method is the simplest Runge-Kutta method, which provides an acceptable precision for our problem\cite{chicone2006ordinary}. Thus, the discrete state equation yields
 
 \begin{equation}
   \label{WT_matrixform_final_discrete}
@@ -92,7 +110,7 @@ where\\
 \textcolor{White}{te}$\unit{h}$
 \end{minipage} 
 
-Substituting the expression for $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final_discrete}, and expressing the predicted values of the WT pressures on the left-hand side, the following yields
+Substituting the constraint on $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final_discrete}, and expressing the predicted values of the WT pressures on the left-hand side, the following can be written
 
 \vspace{-4mm}
 \begin{align}
@@ -102,138 +120,129 @@ Substituting the expression for $q_{\mathcal{C}}$ into \eqref{WT_matrixform_fina
 \vspace{-4mm}
 
 
-\eqref{WT_matrixform_final_discrete} describes the relation between the the flows $q^{k}_{\mathcal{C}}$, the total head in the WTs $(\hat{p}^{k} + \hat{h})$ and the total consumption $\sigma^{k}$. However, by substituting the $q^{k}_{\mathcal{C}}$ flows with their non-linear expression, the structure of the state equation is not a linear combination of the corresponding signals anymore. Therefore, let us write \eqref{WT_matrixform_final_discrete1} in a form where the non-linear terms are described by a non-linear function $\tilde{f}_2(\cdot)$ with unknown structure. Thus, a reformulated state equation can be given such that
+\eqref{WT_matrixform_final_discrete} describes the relation between the flows $q^{k}_{\mathcal{C}}$, the total head in the WTs $(\hat{p}^{k} + \hat{h})$ and the total consumption $\sigma^{k}$. However, by substituting the $q^{k}_{\mathcal{C}}$ flows with their non-linear expression, the structure of the state equation is not a linear combination of the corresponding signals anymore. Therefore, let us write \eqref{WT_matrixform_final_discrete1} in a form where the non-linear terms are described by a non-linear function $\tilde{f}_2(\cdot)$ with unknown structure, similarly as it has been done for the output equation. Thus, the reformulated state equation can be given such that
 
  \begin{equation}
   \label{WT_matrixform_final_discrete2}
      \hat{p}^{(k+1)}  = \tilde{f}_2 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{S}1} \bar{d}^{k}_{\mathcal{K}} + \tilde{a}_{\mathcal{S}2} \sigma^{k} + \hat{p}^{k},
-\end{equation} 
+\end{equation}
 
+\vspace{-1mm} 
 
-where $\tilde{f}_2$ is a non-linear function, $\tilde{a}_{\mathcal{S}1}$ and $\tilde{a}_{\mathcal{S}2}$ are parameters of the inlet flows $\bar{d}^{k}_{\mathcal{K}}$ and total consumption $\sigma^{k}$. 
+\begin{minipage}[t]{0.4\textwidth}
+where\\
+\hspace*{8mm} $\tilde{a}_{\mathcal{S}1} = - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K $, \vspace*{1.5mm}\\
+\hspace*{8mm} $\tilde{a}_{\mathcal{S}1} = \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} $.
+\end{minipage}
 
+Additionally to \eqref{WT_matrixform_final_discrete2}, it has more physical meaning to carry out the identification not only on the state prediction, but on the state difference $(\hat{p}^{(k+1)} \! - \!\hat{p}^{k})$.
 
 \section{RBFNN model of the Multi-inlet,Multi-WT system}
 \label{RBFNN_model_multi_inlet_multi_WT_sys} 
 
-As a result of substituting the constraints on the flows $q^{k}_{\mathcal{C}}$, the system description has been reduced to a non-linear State Space model with state equation given in \eqref {WT_matrixform_final_discrete2} and output equation in \eqref {recall_output_eq_3}. The complete identification model is summarized in \eqref{identification_model}. 
+As the result of substituting the constraints on the flows $q^{k}_{\mathcal{C}}$, the system description has been reduced to a non-linear State Space model with state equation given in \eqref {WT_matrixform_final_discrete2} and output equation in \eqref {recall_output_eq_3}. The complete identification model is shown in \eqref{identification_model}. 
 
 \begin{equation}
 \begin{cases}
   \label{identification_model}
-    \hat{p}_{k+1}  = \tilde{f}_2 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_2 \bar{d}_{\mathcal{K},k} + \tilde{a}_3 \sigma_k + \hat{p}_k,\\
-  \bar{p}_{\mathcal{K},k}  = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + \tilde{a}_{\mathcal{K}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}.
+    \hat{p}^{(k+1)} - \hat{p}^{k} = \tilde{f}_2 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{S}1} \bar{d}^{k}_{\mathcal{K}} + \tilde{a}_{\mathcal{S}2} \sigma^{k},\vspace{2mm}\\ 
+  \bar{p}^{k}_{\mathcal{K}}  = \tilde{f}_1 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{K}} (\hat{p}^{k} + \hat{h}) - \bar{h}_{\mathcal{K}}.
   \end{cases}
 \end{equation} 
 
-The main goal of the system identification is to find a realization of the functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, furthermore to find the parameters $\tilde{a}_1$, $\tilde{a}_2$ and $\tilde{a}_3$. Therefore, the parameters need to be identified, such that the model is able to reproduce the approximate of the state derivatives $(\hat{p}_{k+1} - \hat{p}_k)$ and the total inlet head $\bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}}$ from any input set $u_k = ( \hat{p}_k\! + \!\hat{h} \ \bar{d}_{\mathcal{K},k} \ \sigma_k )^T$ within the operating regions where we are mapping from.
+The main goal of the system identification is to find a realization of the functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, furthermore to find the parameters $\tilde{a}_{\mathcal{K}}$, $\tilde{a}_{\mathcal{S}1}$ and $\tilde{a}_{\mathcal{S}2}$. Therefore, the parameters need to be identified, such that the model is able to reproduce the approximate of the state derivatives $(\hat{p}^{(k+1)} \! - \! \hat{p}^{k})$ and the inlet pressures $\bar{p}^{k}_{\mathcal{K}}$ from any input set $u_k = ( \hat{p}^{k}\! + \!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$ within the operating regions.
 
-The identification model shown in \eqref{identification_model} is an abstraction of the first principle model derived in \chapref{system_modelling}. For the constraint on $q_{\mathcal{C},k}$, existence has been implied, however exact structure has not been given. I.e. we know that the relationship exists but an analytical first principle solution for $q_{\mathcal{C},k}$ has not been derived. Therefore, by substituting the implicit expression of the constraint into the state and output equations, some of the insights on the structure of the model are lost. Thus, it is crucial to put a structure on the non-linear functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ in \eqref{identification_model}. 
+The identification model shown in \eqref{identification_model} is an abstraction of the first principle model derived in \chapref{system_modelling}. It has been shown in \cite{oneinput_paper}, that the constraint relation on $q^{k}_{\mathcal{C}}$ exists, however analytical first principle solution has not been derived. Therefore, by substituting the constraint into the state and output equations, some of the insights on the structure of the model are lost. Thus, it is crucial to put a structure on the non-linear functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ in \eqref{identification_model}. 
 
-From a practical point of view, it is beneficial to describe the system by a linear-in-the-parameters model. By restricting ourselves such that the structure of both functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ are linear in the parameters, the parameters of the model can be estimated by simple linear optimization methods, such as Least Squares(LS). For any linear optimization, only the parameters have to enter linearly, as the inputs can depend on any non-linear way on the input data sets. 
+From a practical point of view, it is beneficial to describe the system by a linear-in-the-parameters model. By restricting ourselves such that the structure of both functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ are linear in the parameters, the model can be estimated by simple linear optimization methods, such as Least Squares(LS). 
 
-By making the restriction on $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, the two non-linear terms will be approximated by some non-linear functions in both the state and output equations of the model. The tools for carrying out such identification procedure leads to the discussion of Radial Basis Functions(RBFs) and neural networks, which are introduced in \appref{neural_networks}. In \appref{neural_networks}, the main properties of such networks are explained in detail, therefore during the construction of the identification model, these properties are used and applied. 
+Due to the restriction on $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, the two non-linear terms will be approximated by some non-linear functions in both the state and output model equations. The tools for carrying out such identification procedure leads to the discussion of Radial Basis Functions(RBFs) and NNs, which are introduced in \appref{neural_networks}. As the main properties of such networks are explained in detail in \appref{neural_networks}, during the derivation of a RBF identification model these properties are utilized. 
 
  \subsection{Output RBFNN}
 \label{output_rbfnn}
 
-The output equation described in \eqref{identification_model} is going to be approximated with RBFs in the form as shown in \eqref{output_RBFNNnetwork_approx}, for two pressure inlets.
-
-\vspace{-2mm}
-
-\begin{subequations}
-\label{output_RBFNNnetwork_approx}
-  \begin{equation}
-\bar{p}_{\mathcal{K}1,k} = \sum_{i = 1}^M w_{\mathcal{K}1,i} \phi_i(u_k) + \sum_{j = 1}^l \tilde{a}_{\mathcal{K}1,j} (\hat{p}_{j,k} + \hat{h}_j) + b_{\mathcal{K}1} - \bar{h}_{\mathcal{K}1},
-\end{equation}
+The output equation described in \eqref{identification_model} is going to be approximated with RBFs. \eqref{output_RBFNNnetwork_approx} shows the structure of the model for identifying the pressure of pumping station $\mathcal{K}1$.
 
 \vspace{-2mm}
 
   \begin{equation}
-\bar{p}_{\mathcal{K}2,k} = \sum_{i = 1}^M w_{\mathcal{K}2,i} \phi_i(u_k) + \sum_{j = 1}^l \tilde{a}_{\mathcal{K}2,j} (\hat{p}_{j,k} + \hat{h}_j) + b_{\mathcal{K}2} - \bar{h}_{\mathcal{K}2},
+  \label{output_RBFNNnetwork_approx}
+\bar{p}^{\hspace{0.2mm} k}_{\mathcal{K}1} = \sum_{i = 1}^M w_{\mathcal{K}1,i} \phi_i(u^k) + \sum_{j = 1}^l \tilde{a}_{\mathcal{K}1,j} (\hat{p}^{k}_{j} + \hat{h}_j) + b_{\mathcal{K}1}.
 \end{equation}
 
-\end{subequations}
+$\bar{p}^{k}_{\mathcal{K}1}$ is the inlet pressure of $\mathcal{K}1$ pumping station, $w_{\mathcal{K}1,i}$ is the output weight of the $i^{th}$ RBF neuron $\phi_i(u^k)$ , $\tilde{a}_{\mathcal{K}1} $ is the parameter of the $l^{th}$ WT and $b_{\mathcal{K}1}$ is the bias representing the elevation constants in the network. Furthermore, $l$ is the number of WTs and $M$ is the number of RBFs with which the non-linear terms are approximated. 
 
-where $\bar{p}_{\mathcal{K},k} = (\bar{p}_{\mathcal{K}1,k} \ \bar{p}_{\mathcal{K}2,k})^T$ is the inlet pressure vector, $w_{\mathcal{K}1,i}$ is the output weight of the $i^{th}$ RBF neuron $\phi_i(u_k)$ , $\tilde{a}_{\mathcal{K}} = (\tilde{a}_{\mathcal{K}1} \ \tilde{a}_{\mathcal{K}2})^T$ is the parameter vector of the linear terms, $b_{\mathcal{K}} = (b_{\mathcal{K}1} \ b_{\mathcal{K}2})^T$ is the bias vector and $h_{\mathcal{K}} = (h_{\mathcal{K}1} \ h_{\mathcal{K}2})^T$ is a constant vector which describes the elevation of the pumping stations. Furthermore, $l$ is the number of WTs and $M$ is the number of RBFs with which the non-linear terms are approximated. 
-
-The NN model for the inlet pressure $\bar{p}_{\mathcal{K}1,k}$ is shown in \figref{fig:nn_output}, with the corresponding  parameters and weighs.
+The NN model for the inlet pressure $\bar{p}^{k}_{\mathcal{K}1}$ is shown in \figref{fig:nn_output}, with the corresponding  parameters and weighs.
 
   %NN model of the output eq.
  \begin{figure}[H]
  \centering
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/output_NN1.tex} 
-  \vspace{-7mm}
- \caption{NN identification model of the total inlet head $\bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1}$.}
+  \vspace{-8mm}
+ \caption{NN-based identification model of the inlet pressure $\bar{p}^k_{\mathcal{K}1} $ with one skip-layer connection.}
  \label{fig:nn_output}
  \end{figure}
 
  \vspace{-3mm}
 
- In \figref{fig:nn_output}, the first layer consists of the first layer neurons with the input vectors. The hidden layer consists of the set of RBFs and one linear neuron. The linear neuron defines a skip-layer connection in the model. This extra connection allows us to introduce the linear terms in our identification model, thereby letting  $\hat{p}_{k} \!+\! \hat{h}$ directly influence the inlet pressures. 
+ In \figref{fig:nn_output}, the first layer consists of the first layer neurons with the input vectors. The hidden layer consists of the set of RBFs and one linear neuron which defines the skip-layer connection due to the presence of the linear terms. This extra connection allows us to $\hat{p}^{k} \!+\! \hat{h}$ directly affect the inlet pressures. Furthermore, the output layer consists of the output neuron which computes $\bar{p}^{k}_{\mathcal{K}1}$ by summing the weighted RBFs, the weighted signals and the output bias. The elevation constants $\bar{h}_{\mathcal{K}1}$ of the pumping stations are taken into account by the bias. 
 
- Furthermore, the output layer consists of the output neuron which computes $\bar{p}_{\mathcal{K}1,k}$ by summing the weighted RBFs, the weighted linear signals, the output bias and the elevation constant. For convenience, while identifying the model, the elevation constants are added to the measured pressure inlets $\bar{p}_{\mathcal{K}1,k}$. Thus, the identification for the total inlet head vector $\bar{p}_{\mathcal{K1},k} \! + \! \bar{h}_{\mathcal{K1}} $ is carried out according to \eqref{inletpressures_ident_matrix}
+Using $m$ measurement of the inlet pressures and $m$ measurement of the input set $u^k = ( \hat{p}^{k}\! + \!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$, the identification of the parameter vector $\theta_{\mathcal{K}1}$ is carried out according to \eqref{inletpressures_ident_matrix}. 
 
   \begin{equation}
 \label{inletpressures_ident_matrix}
-\bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1} = \theta^T_{\mathcal{K}1} \chi(u_k),
+\underbrace{\begin{pmatrix}
+           \bar{p}^{k}_{\mathcal{K}1} & \bar{p}^{(k+1)}_{\mathcal{K}1} & \hdots & \bar{p}^{m}_{\mathcal{K}1}\\
+         \end{pmatrix}}_{\bar{P}_{\mathcal{K}1}  \in  \mathbb{R}^{m}} 
+         = \theta^T_{\mathcal{K}1}    
+         \underbrace{\begin{pmatrix}
+           \chi_{\mathcal{K}1}(u^{k}) & \chi_{\mathcal{K}1}(u^{(k+1)}) & \hdots & \chi_{\mathcal{K}1}(u^{m})\\
+         \end{pmatrix}}_{X_{\mathcal{K}1} \in \mathbb{R}^{(r \times m)}} \ ,
 \end{equation}
 
-where the parameter vector $\theta_{\mathcal{K}1}$ and regression vector $\chi$ is given such that
+where the inlet pressure vector $\bar{P}_{\mathcal{K}1}$ of pumping station $\mathcal{K}1$ consists of $m$ samples, and the regression matrix $X_{\mathcal{K}1}$ consists of $m$ regression vectors of $\chi_{\mathcal{K}1}$, evaluated at different time steps. Furthermore, $r = M \!+\! l\! +\! 1$, which represents the number of RBFs, WTs and the bias parameter. With this notation, the parameter vector $\theta_{\mathcal{K}1}$ and the regression vector $\chi_{\mathcal{K}1}(u^k)$ at $u^k$ is given such that
 
   \begin{equation}
 \label{par_regr_matrix}
 \theta_{\mathcal{K}1} = 
           \begin{pmatrix}
-           w_{\mathcal{K}1,1}  \\[1pt]
-           \vdots  \\[1pt]
-           w_{\mathcal{K}1,M}  \\[1pt]
-           \tilde{a}_{\mathcal{K}1,1} \\[1pt]
-           \vdots \\[1pt]
-           \tilde{a}_{\mathcal{K}1,l} \\[1pt]
-           b_{\mathcal{K}1} \\[1pt]
-         \end{pmatrix}
-         ,
+           w_{\mathcal{K}1,1}  \\
+           \vdots  \\
+           w_{\mathcal{K}1,M}  \\
+           \tilde{a}_{\mathcal{K}1,1} \\
+           \vdots \\
+           \tilde{a}_{\mathcal{K}1,l} \\
+           b_{\mathcal{K}1} \\
+         \end{pmatrix} \in  \mathbb{R}^{r},
          \hspace{5mm}
-         \chi = 
+         \chi_{\mathcal{K}1}(u^k) = 
          \begin{pmatrix}
-           \phi_{1}(u_k)  \\[1pt]
-           \vdots  \\[1pt]
-           \phi_{M}(u_k)  \\[1pt]
-           \hat{p}_{1,k} \!+ \!\hat{h}_1 \\[1pt]
-           \vdots  \\[1pt]
-           \hat{p}_{l,k} \!+ \!\hat{h}_1 \\[1pt]
-           1 \\[1pt]
-         \end{pmatrix}.
+           \phi_{\mathcal{K}1,1}(u^k)  \\
+           \vdots  \\
+           \phi_{\mathcal{K}1,M}(u^k)  \\
+           \hat{p}^k_{\mathcal{K}1,1} \!+ \!\hat{h}_{\mathcal{K}1,1} \\
+           \vdots  \\
+           \hat{p}^k_{\mathcal{K}1,l} \!+ \!\hat{h}_{\mathcal{K}1,l} \\
+           1 \\
+         \end{pmatrix}\in  \mathbb{R}^{r}.
 \end{equation}
 
-With a given input measurement set $u_k$ and inlet pressure measurements $\bar{p}_{\mathcal{K}1,k}$, the optimal solution for the parameters is calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. Thus, the parameter vector is given by \eqref{inletpressures_ident_matrix1}
+The optimal solution for the parameters can be calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. 
 
-  \begin{equation}
+Thus, the parameter vector is given by \eqref{inletpressures_ident_matrix1}
+
+\begin{equation}
 \label{inletpressures_ident_matrix1}
- \theta^T_{\mathcal{K}1} = (\bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1}) \chi^{\dagger}(u_k), 
+ \theta^T_{\mathcal{K}1} = \bar{P}_{\mathcal{K}1} X_{\mathcal{K}1}^{\dagger}, 
 \end{equation}
 
-where the Moore-Penrose pseudoinverse of the regression vector is computed.  
+where the Moore-Penrose pseudoinverse of the regression matrix $X_{\mathcal{K}1}$ is computed. $X_{\mathcal{K}1}$consists of as many $\chi_{\mathcal{K}1}$ regression vectors, as the number of samples, in order to have
 
-\newpage
-
-In case of $c$ pumping stations, the inlet pressure vector $\bar{p}_{\mathcal{K},k}$ is given as shown in \eqref{complete_output_parameter_eq}
-
- \begin{equation}
-\label{complete_output_parameter_eq}
-         \begin{pmatrix}
-           \bar{p}_{\mathcal{K}1,k} + \bar{h}_{\mathcal{K}1} \\[1pt]
-           \vdots\\[1pt]
-           \bar{p}_{\mathcal{K}c,k} + \bar{h}_{\mathcal{K}c} \\[1pt]
-         \end{pmatrix}
-         =
-          \begin{pmatrix}
-           \theta_{\mathcal{K}1} & \! \hdots \! & \theta_{\mathcal{K}c} \\[1pt]
-         \end{pmatrix}^T
-\chi(u_k).
+\begin{equation}
+rank(\chi_{\mathcal{K}1}(u^k)) \geq r.
 \end{equation}
+
  \subsection{State RBFNN}
 \label{state_rbfnn}
 
