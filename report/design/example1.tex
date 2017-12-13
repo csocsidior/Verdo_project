@@ -124,18 +124,18 @@ Substituting the constraint on $q_{\mathcal{C}}$ into \eqref{WT_matrixform_final
 
  \begin{equation}
   \label{WT_matrixform_final_discrete2}
-     \hat{p}^{(k+1)}  = \tilde{f}_2 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{S}1} \bar{d}^{k}_{\mathcal{K}} + \tilde{a}_{\mathcal{S}2} \sigma^{k} + \hat{p}^{k},
+     \hat{p}^{(k+1)}  = \tilde{f}_2 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{W}} \bar{d}^{k}_{\mathcal{K}} + \tilde{b}_{\mathcal{W}} \sigma^{k} + \hat{p}^{k},
 \end{equation}
 
 \vspace{-1mm} 
 
 \begin{minipage}[t]{0.4\textwidth}
 where\\
-\hspace*{8mm} $\tilde{a}_{\mathcal{S}1} = - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K $, \vspace*{1.5mm}\\
-\hspace*{8mm} $\tilde{a}_{\mathcal{S}1} = \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} $.
+\hspace*{8mm} $\tilde{a}_{\mathcal{W}} = - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K $, \vspace*{1.5mm}\\
+\hspace*{8mm} $\tilde{b}_{\mathcal{W}} = \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} $.
 \end{minipage}
 
-Additionally to \eqref{WT_matrixform_final_discrete2}, it has more physical meaning to carry out the identification not only on the state prediction, but on the state difference $(\hat{p}^{(k+1)} \! - \!\hat{p}^{k})$.
+Additionally to \eqref{WT_matrixform_final_discrete2}, it has more physical meaning to carry out the identification not only on the state prediction, but on the approximate of the state derivative $(\hat{p}^{(k+1)} \! - \!\hat{p}^{k})$. 
 
 \section{RBFNN model of the Multi-inlet,Multi-WT system}
 \label{RBFNN_model_multi_inlet_multi_WT_sys} 
@@ -145,12 +145,12 @@ As the result of substituting the constraints on the flows $q^{k}_{\mathcal{C}}$
 \begin{equation}
 \begin{cases}
   \label{identification_model}
-    \hat{p}^{(k+1)} - \hat{p}^{k} = \tilde{f}_2 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{S}1} \bar{d}^{k}_{\mathcal{K}} + \tilde{a}_{\mathcal{S}2} \sigma^{k},\vspace{2mm}\\ 
+    \hat{p}^{(k+1)} - \hat{p}^{k} = \tilde{f}_2 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{W}} \bar{d}^{k}_{\mathcal{K}} + \tilde{b}_{\mathcal{W}} \sigma^{k},\vspace{2mm}\\ 
   \bar{p}^{k}_{\mathcal{K}}  = \tilde{f}_1 \big((\hat{p}^{k} + \hat{h}),\bar{d}^{k}_{\mathcal{K}}, \sigma^{k}\big) + \tilde{a}_{\mathcal{K}} (\hat{p}^{k} + \hat{h}) - \bar{h}_{\mathcal{K}}.
   \end{cases}
 \end{equation} 
 
-The main goal of the system identification is to find a realization of the functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, furthermore to find the parameters $\tilde{a}_{\mathcal{K}}$, $\tilde{a}_{\mathcal{S}1}$ and $\tilde{a}_{\mathcal{S}2}$. Therefore, the parameters need to be identified, such that the model is able to reproduce the approximate of the state derivatives $(\hat{p}^{(k+1)} \! - \! \hat{p}^{k})$ and the inlet pressures $\bar{p}^{k}_{\mathcal{K}}$ from any input set $u_k = ( \hat{p}^{k}\! + \!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$ within the operating regions.
+The main goal of the system identification is to find a realization of the functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$, furthermore to find the parameters $\tilde{a}_{\mathcal{K}}$, $\tilde{a}_{\mathcal{W}}$ and $\tilde{b}_{\mathcal{W}}$. Therefore, the parameters need to be identified, such that the model is able to reproduce the approximate of the state derivatives $(\hat{p}^{(k+1)} \! - \! \hat{p}^{k})$ and the inlet pressures $\bar{p}^{k}_{\mathcal{K}}$ from any input set $u_k = ( \hat{p}^{k}\! + \!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$ within the operating regions.
 
 The identification model shown in \eqref{identification_model} is an abstraction of the first principle model derived in \chapref{system_modelling}. It has been shown in \cite{oneinput_paper}, that the constraint relation on $q^{k}_{\mathcal{C}}$ exists, however analytical first principle solution has not been derived. Therefore, by substituting the constraint into the state and output equations, some of the insights on the structure of the model are lost. Thus, it is crucial to put a structure on the non-linear functions $\tilde{f}_1(\cdot)$ and $\tilde{f}_2(\cdot)$ in \eqref{identification_model}. 
 
@@ -172,13 +172,13 @@ The output equation described in \eqref{identification_model} is going to be app
 
 $\bar{p}^{k}_{\mathcal{K}1}$ is the inlet pressure of $\mathcal{K}1$ pumping station, $w_{\mathcal{K}1,i}$ is the output weight of the $i^{th}$ RBF neuron $\phi_i(u^k)$ , $\tilde{a}_{\mathcal{K}1} $ is the parameter of the $l^{th}$ WT and $b_{\mathcal{K}1}$ is the bias representing the elevation constants in the network. Furthermore, $l$ is the number of WTs and $M$ is the number of RBFs with which the non-linear terms are approximated. 
 
-The NN model for the inlet pressure $\bar{p}^{k}_{\mathcal{K}1}$ is shown in \figref{fig:nn_output}, with the corresponding  parameters and weighs.
+The NN-based identification model for the inlet pressure $\bar{p}^{k}_{\mathcal{K}1}$ is shown in \figref{fig:nn_output}, with the corresponding  parameters and weighs.
 
   %NN model of the output eq.
  \begin{figure}[H]
  \centering
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/output_NN1.tex} 
+ \hspace*{1.7cm}\input{report/tikz/output_NN1.tex} 
   \vspace{-8mm}
  \caption{NN-based identification model of the inlet pressure $\bar{p}^k_{\mathcal{K}1} $ with one skip-layer connection.}
  \label{fig:nn_output}
@@ -237,41 +237,37 @@ Thus, the parameter vector is given by \eqref{inletpressures_ident_matrix1}
  \theta^T_{\mathcal{K}1} = \bar{P}_{\mathcal{K}1} X_{\mathcal{K}1}^{\dagger}, 
 \end{equation}
 
-where the Moore-Penrose pseudoinverse of the regression matrix $X_{\mathcal{K}1}$ is computed. $X_{\mathcal{K}1}$consists of as many $\chi_{\mathcal{K}1}$ regression vectors, as the number of samples, in order to have
+where the Moore-Penrose pseudoinverse of the regression matrix $X_{\mathcal{K}1}$ is computed. $X_{\mathcal{K}1}$consists of as many $\chi_{\mathcal{K}1}$ regression vectors, as the number of samples. Furthermore, the number of samples $m$ need to fulfil \eqref{rankeq}.
 
 \begin{equation}
-rank(\chi_{\mathcal{K}1}(u^k)) \geq r.
+\label{rankeq}
+ m \geq rank(\chi_{\mathcal{K}1}(u^k)),
 \end{equation}
+
+\vspace{-3mm}
+
+where $rank(\chi_{\mathcal{K}1}(u^k)) = r$. 
 
  \subsection{State RBFNN}
 \label{state_rbfnn}
 
-The state equation, described in \eqref{identification_model} is going to be approximated with RBFs in the same way as it has been done for the inlet pressures. Therefore, the approximate of the state derivative $\hat{p}_{k+1} \!-\! \hat{p}_k$ of Tank $1$ and Tank $2$ is given in the form as shown in \eqref{state_der_ident_approx}
-
-\begin{subequations}
-\label{state_der_ident_approx}
-
-\begin{equation}
-\hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k} = \sum_{i = 1}^N w_{\mathcal{S}1,i} \phi_i(u_k) + \sum_{j = 1}^c \tilde{a}_{\mathcal{S}1_A,j} \bar{d}_{\mathcal{K}j,k} + \tilde{a}_{\mathcal{S}1_B} \sigma_k + b_{\mathcal{S}1},
-\end{equation}
+The state equation, described in \eqref{identification_model} is going to be approximated with RBFs the same way as it has been done for the inlet pressures $\bar{p}^{k}_{\mathcal{K}}$. \eqref{state_der_ident_approx} shows the structure of the model for identifying the approximate of the pressure derivative $\hat{p}^{(k+1)}_{\mathcal{W}1} \!-\! \hat{p}^{k}_{\mathcal{W}1}$ of Water Tank $\mathcal{W}1$.
 
 \vspace{-2mm}
 
 \begin{equation}
-\hat{p}_{\mathcal{S}2,k+1} - \hat{p}_{\mathcal{S}2,k} = \sum_{i = 1}^N w_{\mathcal{S}2,i} \phi_i(u_k) + \sum_{j = 1}^c \tilde{a}_{\mathcal{S}2_A,j} \bar{d}_{\mathcal{K}j,k} + \tilde{a}_{\mathcal{S}2_B} \sigma_k + b_{\mathcal{S}2},
+\label{state_der_ident_approx}
+\hat{p}^{(k+1)}_{\mathcal{W}1} \!-\! \hat{p}^{k}_{\mathcal{W}1} = \sum_{i = 1}^N w_{\mathcal{W}1,i} \phi_i(u^{k}) + \sum_{j = 1}^c \tilde{a}_{\mathcal{W}1,j} \bar{d}^{k}_{\mathcal{K},j} + \tilde{b}_{\mathcal{W}1} \sigma^{k},
 \end{equation}
 
-\end{subequations}
-
-where $w_{\mathcal{S}1,i}$ is the weight of the $i^{th}$ RBF, $\tilde{a}_{\mathcal{S}1_A,j}$ is the parameter of the $j^{th}$ inlet flow and $\tilde{a}_{\mathcal{S}1_B}$ is the parameter of the linear total demand. Furthermore, $N$ is the number of RBFs with which the non-linear terms are approximated and $c$ is the number of pumping stations. 
-
-The NN model for the state derivative approximate of one tank $\hat{p}_{\mathcal{S}1,k+1} \! - \! \hat{p}_{\mathcal{S}1,k}$, with the corresponding weight and parameters is shown in \figref{fig:nn_state}.
+where $w_{\mathcal{W}1,i}$ is the weight of the $i^{th}$ RBF, $\tilde{a}_{\mathcal{W}1,j}$ is the parameter of the $j^{th}$ inlet flow and $\tilde{b}_{\mathcal{W}1}$ is the parameter of the total flow demand. Furthermore, $N$ is the number of RBFs with which the non-linear terms are approximated and $c$ is the number of pumping stations. The NN model of the state derivative approximate of $\mathcal{W}1$ WT, with the corresponding weight and parameters is shown in \figref{fig:nn_state}.
 
    %NN model of the state eq.
  \begin{figure}[H]
  \centering
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/output_NN.tex} 
+  \vspace{-3mm}
  \caption{NN model of the state derivative approximate $\hat{p}_{\mathcal{S}1,k+1} \! - \! \hat{p}_{\mathcal{S}1,k}$.}
  \label{fig:nn_state}
  \end{figure}
@@ -337,6 +333,8 @@ In case of $l$ WTs, the state derivative approximates $\hat{p}_{\mathcal{S}2,k+1
          \end{pmatrix}^T
 \chi(u_k).
 \end{equation}
+
+\newpage
 
 \section{Identification of the Randers WSS}
 \label{identification_of_the_randers_WSS} 
