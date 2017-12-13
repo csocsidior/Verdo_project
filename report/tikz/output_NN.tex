@@ -36,9 +36,9 @@ net2/.style={
    |[plain]|   &  & |[plain]|  \\
 };
 
-\draw[thick][<-] (mat-3-1) -- node[above] {$\bar{d}_{\mathcal{K},k}$} +(-1.5cm,0);
-\draw[thick][<-] (mat-7-1) -- node[above] {$\hat{p}_k + \hat{h}$} +(-1.5cm,0);
-\draw[thick][<-] (mat-11-1) -- node[above] {$\sigma_k$} +(-1.5cm,0);
+\draw[thick][<-] (mat-3-1) -- node[above] {$\bar{d}^k_{\mathcal{K}}$} +(-1.5cm,0);
+\draw[thick][<-] (mat-7-1) -- node[above] {$\hat{p}^k + \hat{h}$} +(-1.5cm,0);
+\draw[thick][<-] (mat-11-1) -- node[above] {$\sigma^k$} +(-1.5cm,0);
 
   
  
@@ -57,16 +57,16 @@ net2/.style={
     \draw[thick][<-] (mat-\ai-3) -- (mat-\aii-2) ;
   }
 
-  \draw[thin][<-] (mat-7-3) --node[above = 0.001cm]{$w_{\!\mathcal{S}1,1}$} (mat-5-2) ;
-  \draw[thin][<-] (mat-7-3) --node[above = 0.001cm]{$w_{\!\mathcal{S}1,N}$} (mat-9-2) ;
+  \draw[thin][<-] (mat-7-3) --node[above = 0.001cm]{$w_{\!\mathcal{W}1,1}$} (mat-5-2) ;
+  \draw[thin][<-] (mat-7-3) --node[above = 0.001cm]{$w_{\!\mathcal{W}1,N}$} (mat-9-2) ;
 %node[above = 0.001cm]{$w_{\mathcal{K}1,1}$}
 
-  \draw[<-] (mat-7-3) --node[above, right]{$\tilde{a}_{\mathcal{S}1_A}$} (mat-1-2) node(){\footnotesize $/$};
-   \draw[<-] (mat-7-3) -- node[above, right = 0.6mm]{$\tilde{a}_{\mathcal{S}1_B}$} (mat-13-2) node(){\footnotesize $/$};
+  \draw[<-] (mat-7-3) --node[above, right]{$\tilde{a}_{\mathcal{W}1}$} (mat-1-2) node(){\footnotesize $/$};
+   \draw[<-] (mat-7-3) -- node[above, right = 1mm]{$\tilde{b}_{\mathcal{W}1}$} (mat-13-2) node(){\footnotesize $/$};
  
 % 
 
- \draw[thick][->] (mat-7-3) -- node[above] {$\hat{p}_{k+1} \!- \!\hat{p}_{k}$} +(2.8cm,0);
+ \draw[thick][->] (mat-7-3) -- node[above] {$\hat{p}_{\mathcal{W}1}^{(k+1)} \!- \!\hat{p}_{\mathcal{W}1}^{k}$} +(2.3cm,0);
 
 
  \node[circle,fill,inner sep=0.4pt] (A) at (0,-0.18) {};
@@ -74,7 +74,7 @@ net2/.style={
  \node[circle,fill,inner sep=0.4pt] (A) at (0,0.18) {};
  
 
- \draw[thick][<-] (mat-7-3) -- node[right] {$b_{\mathcal{S}1}$} +(0,1.3cm);
+ %\draw[thick][<-] (mat-7-3) -- node[right] {$b_{\mathcal{S}1}$} +(0,1.3cm);
 
 % 
 % \node at (0.85,1.1) {$w\!_{1\!,2}$};

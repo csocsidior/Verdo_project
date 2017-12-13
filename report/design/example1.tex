@@ -167,7 +167,7 @@ The output equation described in \eqref{identification_model} is going to be app
 
   \begin{equation}
   \label{output_RBFNNnetwork_approx}
-\bar{p}^{\hspace{0.2mm} k}_{\mathcal{K}1} = \sum_{i = 1}^M w_{\mathcal{K}1,i} \phi_i(u^k) + \sum_{j = 1}^l \tilde{a}_{\mathcal{K}1,j} (\hat{p}^{k}_{j} + \hat{h}_j) + b_{\mathcal{K}1}.
+\bar{p}^{\hspace{0.2mm} k}_{\mathcal{K}1} = \sum_{i = 1}^M w_{\mathcal{K}1,i} \phi_{i}(u^k) + \sum_{j = 1}^l \tilde{a}_{\mathcal{K}1,j} (\hat{p}^{k}_{j} + \hat{h}_j) + b_{\mathcal{K}1}.
 \end{equation}
 
 $\bar{p}^{k}_{\mathcal{K}1}$ is the inlet pressure of $\mathcal{K}1$ pumping station, $w_{\mathcal{K}1,i}$ is the output weight of the $i^{th}$ RBF neuron $\phi_i(u^k)$ , $\tilde{a}_{\mathcal{K}1} $ is the parameter of the $l^{th}$ WT and $b_{\mathcal{K}1}$ is the bias representing the elevation constants in the network. Furthermore, $l$ is the number of WTs and $M$ is the number of RBFs with which the non-linear terms are approximated. 
@@ -180,13 +180,13 @@ The NN-based identification model for the inlet pressure $\bar{p}^{k}_{\mathcal{
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \hspace*{1.7cm}\input{report/tikz/output_NN1.tex} 
   \vspace{-8mm}
- \caption{NN-based identification model of the inlet pressure $\bar{p}^k_{\mathcal{K}1} $ with one skip-layer connection.}
+ \caption{NN-based model of the inlet pressure $\bar{p}^k_{\mathcal{K}1} $ with one skip-layer connection.}
  \label{fig:nn_output}
  \end{figure}
 
  \vspace{-3mm}
 
- In \figref{fig:nn_output}, the first layer consists of the first layer neurons with the input vectors. The hidden layer consists of the set of RBFs and one linear neuron which defines the skip-layer connection due to the presence of the linear terms. This extra connection allows us to $\hat{p}^{k} \!+\! \hat{h}$ directly affect the inlet pressures. Furthermore, the output layer consists of the output neuron which computes $\bar{p}^{k}_{\mathcal{K}1}$ by summing the weighted RBFs, the weighted signals and the output bias. The elevation constants $\bar{h}_{\mathcal{K}1}$ of the pumping stations are taken into account by the bias. 
+ In \figref{fig:nn_output}, the first layer consists of the first layer neurons with the input vectors. The hidden layer consists of the set of RBFs and one linear neuron which defines the skip-layer connection due to the presence of the linear terms. This extra connection allows us to $\hat{p}^{k} \!+\! \hat{h}$ directly affect the inlet pressures. Furthermore, the output layer consists of the output neuron which computes $\bar{p}^{k}_{\mathcal{K}1}$ by summing the weighted RBFs, the weighted signals and the output bias. The elevation constant $\bar{h}_{\mathcal{K}1}$ of the pumping station is taken into account by the bias. 
 
 Using $m$ measurement of the inlet pressures and $m$ measurement of the input set $u^k = ( \hat{p}^{k}\! + \!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$, the identification of the parameter vector $\theta_{\mathcal{K}1}$ is carried out according to \eqref{inletpressures_ident_matrix}. 
 
@@ -197,11 +197,11 @@ Using $m$ measurement of the inlet pressures and $m$ measurement of the input se
          \end{pmatrix}}_{\bar{P}_{\mathcal{K}1}  \in  \mathbb{R}^{m}} 
          = \theta^T_{\mathcal{K}1}    
          \underbrace{\begin{pmatrix}
-           \chi_{\mathcal{K}1}(u^{k}) & \chi_{\mathcal{K}1}(u^{(k+1)}) & \hdots & \chi_{\mathcal{K}1}(u^{m})\\
-         \end{pmatrix}}_{X_{\mathcal{K}1} \in \mathbb{R}^{(r \times m)}} \ ,
+           \chi_{\mathcal{K}}(u^{k}) & \chi_{\mathcal{K}}(u^{(k+1)}) & \hdots & \chi_{\mathcal{K}}(u^{m})\\
+         \end{pmatrix}}_{X_{\mathcal{K}} \in \mathbb{R}^{(r \times m)}} \ ,
 \end{equation}
 
-where the inlet pressure vector $\bar{P}_{\mathcal{K}1}$ of pumping station $\mathcal{K}1$ consists of $m$ samples, and the regression matrix $X_{\mathcal{K}1}$ consists of $m$ regression vectors of $\chi_{\mathcal{K}1}$, evaluated at different time steps. Furthermore, $r = M \!+\! l\! +\! 1$, which represents the number of RBFs, WTs and the bias parameter. With this notation, the parameter vector $\theta_{\mathcal{K}1}$ and the regression vector $\chi_{\mathcal{K}1}(u^k)$ at $u^k$ is given such that
+where the inlet pressure vector $\bar{P}_{\mathcal{K}1}$ of pumping station $\mathcal{K}1$ consists of $m$ samples, and the regression matrix $X_{\mathcal{K}}$ consists of $m$ regression vectors of $\chi_{\mathcal{K}}$, evaluated at different time steps. Furthermore, $r = M \!+\! l\! +\! 1$, which represents the number of RBFs, WTs and the bias parameter. With this notation, the parameter vector $\theta_{\mathcal{K}1}$ and the regression vector $\chi_{\mathcal{K}}(u^k)$ at $u^k$ is given such that
 
   \begin{equation}
 \label{par_regr_matrix}
@@ -216,14 +216,14 @@ where the inlet pressure vector $\bar{P}_{\mathcal{K}1}$ of pumping station $\ma
            b_{\mathcal{K}1} \\
          \end{pmatrix} \in  \mathbb{R}^{r},
          \hspace{5mm}
-         \chi_{\mathcal{K}1}(u^k) = 
+         \chi_{\mathcal{K}}(u^k) = 
          \begin{pmatrix}
-           \phi_{\mathcal{K}1,1}(u^k)  \\
+           \phi_{1}(u^k)  \\
            \vdots  \\
-           \phi_{\mathcal{K}1,M}(u^k)  \\
-           \hat{p}^k_{\mathcal{K}1,1} \!+ \!\hat{h}_{\mathcal{K}1,1} \\
+           \phi_{M}(u^k)  \\
+           \hat{p}^k_{1} \!+ \!\hat{h}_{1} \\
            \vdots  \\
-           \hat{p}^k_{\mathcal{K}1,l} \!+ \!\hat{h}_{\mathcal{K}1,l} \\
+           \hat{p}^k_{l} \!+ \!\hat{h}_{l} \\
            1 \\
          \end{pmatrix}\in  \mathbb{R}^{r}.
 \end{equation}
@@ -234,19 +234,19 @@ Thus, the parameter vector is given by \eqref{inletpressures_ident_matrix1}
 
 \begin{equation}
 \label{inletpressures_ident_matrix1}
- \theta^T_{\mathcal{K}1} = \bar{P}_{\mathcal{K}1} X_{\mathcal{K}1}^{\dagger}, 
+ \theta^T_{\mathcal{K}1} = \bar{P}_{\mathcal{K}1} X_{\mathcal{K}}^{\dagger}, 
 \end{equation}
 
-where the Moore-Penrose pseudoinverse of the regression matrix $X_{\mathcal{K}1}$ is computed. $X_{\mathcal{K}1}$consists of as many $\chi_{\mathcal{K}1}$ regression vectors, as the number of samples. Furthermore, the number of samples $m$ need to fulfil \eqref{rankeq}.
+where the Moore-Penrose pseudoinverse of the regression matrix $X_{\mathcal{K}}$ is computed. $X_{\mathcal{K}}$consists of as many $\chi_{\mathcal{K}}$ regression vectors, as the number of samples. Furthermore, the number of samples $m$ need to fulfil \eqref{rankeq}.
 
 \begin{equation}
 \label{rankeq}
- m \geq rank(\chi_{\mathcal{K}1}(u^k)),
+ m \geq rank(\chi_{\mathcal{K}}(u^k)),
 \end{equation}
 
 \vspace{-3mm}
 
-where $rank(\chi_{\mathcal{K}1}(u^k)) = r$. 
+where $rank(\chi_{\mathcal{K}}(u^k)) = r$. 
 
  \subsection{State RBFNN}
 \label{state_rbfnn}
@@ -268,18 +268,25 @@ where $w_{\mathcal{W}1,i}$ is the weight of the $i^{th}$ RBF, $\tilde{a}_{\mathc
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
  \input{report/tikz/output_NN.tex} 
   \vspace{-3mm}
- \caption{NN model of the state derivative approximate $\hat{p}_{\mathcal{S}1,k+1} \! - \! \hat{p}_{\mathcal{S}1,k}$.}
+  \caption{NN-based model of the of the pressure derivative approximate $\hat{p}^{(k+1)}_{\mathcal{W}1} \!-\! \hat{p}^{k}_{\mathcal{W}1}$ with two skip-layer connections.}
  \label{fig:nn_state}
  \end{figure}
 
  \vspace{-3mm}
 
-The identification of the state derivative approximate is carried out according to \eqref{statederiv_ident_matrix}
+Using $n$ samples of the state approximate and $n$ measurement on the input set $u^k = ( \hat{p}^{k}\! + \!\hat{h} \ \bar{d}^{k}_{\mathcal{K}} \ \sigma^{k} )^T$, the identification of the parameter vector $\theta_{\mathcal{W}1}$ is carried out according to \eqref{wtpressure_ident_matrix}. 
 
   \begin{equation}
-\label{statederiv_ident_matrix}
-\hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k} = \theta_{{\mathcal{S}1}} \chi(u_k),
+\label{wtpressure_ident_matrix}
+\underbrace{\begin{pmatrix}
+           \! \hat{p}^{(\!k+1\!)}_{\! \mathcal{W}1} \!-\! \hat{p}^{k}_{\!\mathcal{W}1} & \hat{p}^{(\!k+2\!)}_{\! \mathcal{W}1} \!-\! \hat{p}^{(\!k+1\!)}_{\!\mathcal{W}1}\! & \!\hdots \! & \!\hat{p}^{n}_{\! \mathcal{W}1} \!-\! \hat{p}^{(\!n-1\!)}_{\!\mathcal{W}1}\!
+         \end{pmatrix}}_{\hat{P}_{\mathcal{W}1}  \in  \mathbb{R}^{n}} 
+         = \theta^T_{\mathcal{W}1} \!   
+         \underbrace{\!\begin{pmatrix}
+           \! \chi_{\mathcal{W}}(u^{k}) & \chi_{\mathcal{W}}(u^{(k+1)})\! & \!\hdots\! &\! \chi_{\mathcal{W}}(u^{m})\!
+         \end{pmatrix}}_{X_{\mathcal{W}} \in \mathbb{R}^{(s \times n)}}
 \end{equation}
+
 
 where the parameter vector $\theta_{{\mathcal{S}1}}$ and regression vector $\chi$ is given such that
 
