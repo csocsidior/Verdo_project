@@ -201,7 +201,7 @@ Using $m$ measurement of the inlet pressures and $m$ measurement of the input se
          \end{pmatrix}}_{X_{\mathcal{K}} \in \mathbb{R}^{(r \times m)}} \ ,
 \end{equation}
 
-where the inlet pressure vector $\bar{P}_{\mathcal{K}1}$ of pumping station $\mathcal{K}1$ consists of $m$ samples, and the regression matrix $X_{\mathcal{K}}$ consists of $m$ regression vectors of $\chi_{\mathcal{K}}$, evaluated at different time steps. Furthermore, $r = M \!+\! l\! +\! 1$, which represents the number of RBFs, WTs and the bias parameter. With this notation, the parameter vector $\theta_{\mathcal{K}1}$ and the regression vector $\chi_{\mathcal{K}}(u^k)$ at $u^k$ is given such that
+where the inlet pressure vector $\bar{P}_{\mathcal{K}1}$ of pumping station $\mathcal{K}1$ consists of $m$ samples, and the regression matrix $X_{\mathcal{K}}$ consists of $m$ regression vectors of $\chi_{\mathcal{K}}$, evaluated at different time steps. Furthermore, $r = M \!+\! l\! +\! 1$, which represents the number of RBFs, WTs and the bias parameter. Using the notation in \eqref{inletpressures_ident_matrix}, the parameter vector $\theta_{\mathcal{K}1}$ and the regression vector $\chi_{\mathcal{K}}(u^k)$  at the $k^{th}$ time step is given such that
 
   \begin{equation}
 \label{par_regr_matrix}
@@ -228,9 +228,7 @@ where the inlet pressure vector $\bar{P}_{\mathcal{K}1}$ of pumping station $\ma
          \end{pmatrix}\in  \mathbb{R}^{r}.
 \end{equation}
 
-The optimal solution for the parameters can be calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. 
-
-Thus, the parameter vector is given by \eqref{inletpressures_ident_matrix1}
+The optimal solution for the parameters can be calculated by using LS method, as \eqref{inletpressures_ident_matrix} is a linear matrix equation. Thus, the parameter vector is given by \eqref{inletpressures_ident_matrix1}
 
 \begin{equation}
 \label{inletpressures_ident_matrix1}
@@ -266,7 +264,7 @@ where $w_{\mathcal{W}1,i}$ is the weight of the $i^{th}$ RBF, $\tilde{a}_{\mathc
  \begin{figure}[H]
  \centering
  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/output_NN.tex} 
+ \hspace*{1.7cm}\input{report/tikz/output_NN.tex} 
   \vspace{-3mm}
   \caption{NN-based model of the of the pressure derivative approximate $\hat{p}^{(k+1)}_{\mathcal{W}1} \!-\! \hat{p}^{k}_{\mathcal{W}1}$ with two skip-layer connections.}
  \label{fig:nn_state}
@@ -281,48 +279,45 @@ Using $n$ samples of the state approximate and $n$ measurement on the input set 
 \underbrace{\begin{pmatrix}
            \! \hat{p}^{(\!k+1\!)}_{\! \mathcal{W}1} \!-\! \hat{p}^{k}_{\!\mathcal{W}1} & \hat{p}^{(\!k+2\!)}_{\! \mathcal{W}1} \!-\! \hat{p}^{(\!k+1\!)}_{\!\mathcal{W}1}\! & \!\hdots \! & \!\hat{p}^{n}_{\! \mathcal{W}1} \!-\! \hat{p}^{(\!n-1\!)}_{\!\mathcal{W}1}\!
          \end{pmatrix}}_{\hat{P}_{\mathcal{W}1}  \in  \mathbb{R}^{n}} 
-         = \theta^T_{\mathcal{W}1} \!   
+         \!=\! \theta^T_{\mathcal{W}1} \!   
          \underbrace{\!\begin{pmatrix}
            \! \chi_{\mathcal{W}}(u^{k}) & \chi_{\mathcal{W}}(u^{(k+1)})\! & \!\hdots\! &\! \chi_{\mathcal{W}}(u^{m})\!
          \end{pmatrix}}_{X_{\mathcal{W}} \in \mathbb{R}^{(s \times n)}}
 \end{equation}
 
-
-where the parameter vector $\theta_{{\mathcal{S}1}}$ and regression vector $\chi$ is given such that
+The vector $\hat{P}_{\mathcal{W}1}$ of the WT $\mathcal{W}1$ consists of $n$ samples, while the regression matrix $X_{\mathcal{W}}$ consists of $n$ regression vectors of $\chi_{\mathcal{W}}$, evaluated at $n$ different time steps. Furthermore, $s = N \!+\! c \! + \!1$, which is the dimension of the regression vector. Using the notation in \eqref{wtpressure_ident_matrix}, the parameter vector $\theta_{\mathcal{W}1}$ and the regression vector $\chi_{\mathcal{W}}(u^k)$ at the $k^{th}$ time step is given such that
 
   \begin{equation}
 \label{par_regr_matrix1}
-\theta_{\mathcal{S}1} = 
+\theta_{\mathcal{W}1} = 
           \begin{pmatrix}
-           w_{\mathcal{S}1,1}  \\[1pt]
-           \vdots  \\[1pt]
-           w_{\mathcal{S}1,N}  \\[1pt]
-           \tilde{a}_{\mathcal{S}1_A,1} \\[1pt]
-           \vdots \\[1pt]
-           \tilde{a}_{\mathcal{S}1_A,c} \\[1pt]
-           \tilde{a}_{\mathcal{S}1_B} \\[1pt]
-           b_{\mathcal{S}1} \\[1pt]
+           w_{\mathcal{W}1,1}  \\
+           \vdots  \\
+           w_{\mathcal{W}1,N}  \\
+           \tilde{a}_{\mathcal{W}1,1} \\
+           \vdots \\
+           \tilde{a}_{\mathcal{W}1,c} \\
+           \tilde{b}_{\mathcal{W}1} \\
          \end{pmatrix}
-         ,
+         \in  \mathbb{R}^{s},
          \hspace{5mm}
-         \chi = 
+         \chi_{\mathcal{W}}(u^k) = 
          \begin{pmatrix}
-           \phi_{1}(u_k)  \\[1pt]
-           \vdots  \\[1pt]
-           \phi_{N}(u_k)  \\[1pt]
-           \bar{d}_{\mathcal{K}1,k} \\[1pt]
-           \vdots  \\[1pt]
-           \bar{d}_{\mathcal{K}c,k} \\[1pt]
-           \sigma_k \\[1pt]
-           1 \\[1pt]
+           \phi_{1}(u^k)  \\
+           \vdots  \\
+           \phi_{N}(u^k)  \\
+           \bar{d}_{\mathcal{K}1}^k \\
+           \vdots  \\
+           \bar{d}_{\mathcal{K}c}^k \\[1pt]
+           \sigma^k \\
          \end{pmatrix}.
 \end{equation}
 
 The parameter matrix is computed equivalently as for the output equation with the Moore-Penrose pseudoinverse of the regression vector, shown in \eqref{inletpressures_ident_matrix1111}.
 
-  \begin{equation}
+\begin{equation}
 \label{inletpressures_ident_matrix1111}
- \theta^T_{\mathcal{S}1} = (\hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k})  \chi^{\dagger}(u_k). 
+ \theta^T_{\mathcal{W}1} = \bar{P}_{\mathcal{W}1} X_{\mathcal{W}}^{\dagger}, 
 \end{equation}
 
 In case of $l$ WTs, the state derivative approximates $\hat{p}_{\mathcal{S}2,k+1}\! -\! \hat{p}_{\mathcal{S}2,k}$ are given as shown in \eqref{complete_state_parameter_eq}
