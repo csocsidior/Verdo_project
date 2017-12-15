@@ -13,7 +13,7 @@ str = fgetl(fid);
 % pattern_L = {'12328', '18336', '18878'};
 %cripressure_2
 pattern_M = {'3'};
-pattern_N = {'cripressure_2'};
+pattern_N = {'1'};
 pattern_L = {'PU2','PU3'};
 
 nodal_demands = ones(0,length(pattern_M));
@@ -118,7 +118,7 @@ dk_1_v2 = link_flows(:,1);
 dk_2_v2 = link_flows(:,2);
 sigma_v0 = nodal_demands(:,1)/5;
 sigma_v2 = sigma_v0*sigma_base;
-pk_2_v2 = nodal_pressures(:,1);
+p_WT_v2 = nodal_pressures(:,1);
 
 %save('dk_1.mat','dk_1')
 

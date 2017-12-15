@@ -59,10 +59,39 @@ Y_K_v1 = [pk_1_v1, pk_2_v1]';
 X_W_v1 = [sigma_v1, p_WT_k_v1 + h_WT, dk_1_v1, dk_2_v1]';
 Y_W_v1 = [p_WT_kp1_v1 - p_WT_k_v1]';
 
+%%
+%//////////Validation data 2, CONTROL: turn-off - 19.4,PU3 open if above 48, PU2 open if TA2 below 19.2, sigma = 35 //////////
+
+load('dk_1_v2.mat');
+load('dk_2_v2.mat');
+load('pk_1_v2.mat');
+load('pk_2_v2.mat');
+load('p_WT_v2.mat');
+load('sigma_v2.mat');
+
+dk_1_v2(149) = [];
+dk_2_v2(149) = [];
+pk_1_v2(149) = [];
+pk_2_v2(149) = [];
+sigma_v2(149) = [];
+p_WT_k_v2 = p_WT_v2;
+p_WT_k_v2(149) = [];
+p_WT_kp1_v2 = p_WT_v2;
+p_WT_kp1_v2(1) = [];
+
+%Training set for the output validation 1
+X_K_v2 = [sigma_v2, p_WT_k_v2 + h_WT, dk_1_v2, dk_2_v2]';
+Y_K_v2 = [pk_1_v2, pk_2_v2]';
+
+%Training set for the state validation 1
+X_W_v2 = [sigma_v2, p_WT_k_v2 + h_WT, dk_1_v2, dk_2_v2]';
+Y_W_v2 = [p_WT_kp1_v2 - p_WT_k_v2]';
+
 
 %  figure(1)
-%  stairs(t,p_WT_kp1 - p_WT_k,'LineWidth',1.2)
+%  stairs(t,sigma_v1,'LineWidth',1.2)
+%  hold on
+%  stairs(t,sigma,'LineWidth',1.2)
 %  xlim([0 148])
-
-
+% 
 
