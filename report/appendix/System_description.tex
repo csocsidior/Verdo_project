@@ -1,12 +1,12 @@
 \chapter{RBFNN-based identification on an example network}
 \label{NN_based_example}
 
-\emph{In Appendix F. a numerical example for the system identification is given. }
+\emph{In this part, the test results of the chosen identification method are presented on a simple EPANET example. }
 
 \section{The network in EPANET}
 \label{example1_EPANET}
 
-The reason for testing the identification method on data from a simple EPANET model is that, in simulation, several different operations of the network can be studied. On a real world network, typically the operation or control cannot be taken to its extremes, as this would mean undesired service to the customers . Therefore, the network shown in \figref{fig:epanet_example1_id} has been created to mimic the behaviour of a multi-inlet, single-WT system, such that the identification method, presented in \chapref{identification_design} is being tested. 
+A simple test network in EPANET has been used for testing the presented identification method. On a real world network, typically the operation or control cannot be taken to its extremes, as this would mean undesired service to the customers. Therefore, the network shown in \figref{fig:epanet_example1_id} has been created to mimic the behaviour of a multi-inlet, single-WT system, such that the identification method, presented in \chapref{identification_design}, can be be tested under different operations. 
 
 %EPANET example network for identification
 \begin{figure}[H]
@@ -18,9 +18,9 @@ The reason for testing the identification method on data from a simple EPANET mo
 \end{figure}
 \vspace{-3mm}
 
-The network shown in \figref{fig:epanet_example1_id} consists of two pumping stations $PU_1$ and $PU_2$ and a Water Tank $TA$. Furthermore, reservoirs are present in the network, as in EPANET reservoirs are required for simulating pumps. These reservoirs $RE_1$ and $RE_2$ are different from WTs in the sense that they cannot be emptied in the simulation. Additionally, the physical and operational properties of the network can be found in \appref{physical_properties_example1}. 
+The network shown in \figref{fig:epanet_example1_id} consists of two pumping stations $PU_1$, $PU_2$ and a Water Tank $TA$. The reservoirs $RE_1$ and $RE_2$ are required for simulating the pumps, however they differ from WTs in the sense that they cannot be emptied in the simulation. Furthermore, the physical and operational properties of this test network are collected in \appref{physical_properties_example1}.
 
-The controls implemented on the network are based on simple time scheduling of the two pumping stations. Both pumps turn off when the pressure head in the WT is above $19.85 [m]$. $PU_2$ turns on again if the pressure head in the WT decreases to $19.55 [m]$. Furthermore, $PU_2$ turns on again only if the pressure head in node $n_1$ exceeds $43 [m]$. The initial pressure head in the WT is $19.5 [m]$.
+The controls implemented on the network are based on simple time scheduling of the two pumping stations. Both pumps turn off when the pressure head in the WT is above a certain pressure head. $PU_2$ turns on again if the pressure head in the WT decreases to some lower limit. Furthermore, $PU_2$ turns on again only if the pressure head provided by $PU_2$ exceeds some upper bound. 
 
 \section{Identification and validation}
 \label{identification_and_validation_of_the_output_eq} 

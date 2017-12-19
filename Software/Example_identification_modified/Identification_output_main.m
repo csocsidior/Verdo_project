@@ -42,7 +42,7 @@ Z_K_v2 = theta_K*chi_K_v2;
  stairs(t,Z_K(2,:),'LineWidth',1.2)
  hold on
  stairs(t,pk_2,'LineWidth',1.2)
- xlim([0 148])
+ xlim([0 96])
 subplot(3,1,2) 
  stairs(t,Z_K_v1(2,:),'LineWidth',1.2)
  hold on
@@ -52,7 +52,7 @@ subplot(3,1,2)
   stairs(t,Z_K_v2(2,:),'LineWidth',1.2)
  hold on
  stairs(t,pk_2_v2,'LineWidth',1.2)
- xlim([0 148])
+ xlim([0 96])
 
 % figure(8)
 % plot(t,a{1}(1,:),'LineWidth',1.2)
