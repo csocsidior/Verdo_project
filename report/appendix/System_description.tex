@@ -324,7 +324,7 @@ The output parameter vectors $\theta_{\mathcal{K}1}$, $\theta_{\mathcal{K}2}$ an
          \end{pmatrix}
 \end{equation}
 
-\chapter{Example network description}
+\chapter{Test network description}
 \label{physical_properties_example1}
 
 \emph{In this part of the appendix, the corresponding physical parameters, control properties and consumption properties are listed for the Multi-inlet, Single-WT example network.}
@@ -341,6 +341,132 @@ In order to describe the network, the IDs shown in \figref{fig:epanet_example1_i
 \end{figure}
 \vspace{-3mm}
 
+The physical properties of pipes are shown in \tabref{pipes_table_example1}.
+
+\vspace{-3mm}
+
+\begin{center}
+    \begin{tabular}{ | >{\centering\arraybackslash}m{1.8cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} |}
+    \hline
+    \multirow{1}{*}
+     Pipe ID & Length, l[m] & Diameter, D[mm] & Roughness, $\epsilon$[mm] \\ 
+     \hline
+     \multirow{1}{*}
+    \text{$e_1$} & 350 & 200 & 50 \\ 
+    \hline
+      \multirow{1}{*}
+    \text{$e_2$} & 500 & 200  & 150 \\ 
+    \hline
+      \multirow{1}{*}
+    \text{$e_3$} & 500 & 200 & 30 \\ 
+    \hline
+      \multirow{1}{*}
+    \text{$e_4$} & 350 & 200 & 50 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_5$} & 500 & 200 & 30 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_6$} & 500 & 200 & 10 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_7$} & 350 & 200 & 10 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_8$} & 350 & 200 & 0.005 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_9$} & 350 & 200 & 0.005 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_{10}$} & 350 & 200 & 0.005 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_{11}$} & 350 & 200 & 10 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_{12}$} & 350 & 200 & 50 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_{13}$} & 350 & 200 & 50 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_{14}$} & 350 & 200 & 1 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$e_{15}$} & 350 & 200 & 0.005 \\ 
+    \hline
+    \end{tabular}
+    \captionof{table}{Physical properties of pipes in the test network.}
+    \label{pipes_table_example1}
+\end{center}
+
+The pumping stations $PU_1$ and $PU_2$ are described by \eqref{pu1_pumpcurve} and \eqref{pu2_pumpcurve} pump curves, respectively. 
 
 
+\begin{subequations}
 
+\begin{equation}
+\label{pu1_pumpcurve}
+h = 53.33 - 0.008334 q^2, 
+\end{equation}
+
+\vspace{-2mm}
+
+\begin{equation}
+\label{pu2_pumpcurve}
+h = 46.67 - 0.009525 q^2. 
+\end{equation}
+
+\end{subequations}
+
+Furthermore, the elevation of the WT is 21 meters, the initial level is 19.5 meters, the minimum level is 2 meters and the maximum level is 21 meters. The diameter of the WT is 50 meters. 
+
+The physical properties of the nodes are shown in \tabref{pipes_table_example1_nodes}.
+
+\begin{center}
+    \begin{tabular}{ | >{\centering\arraybackslash}m{1.8cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} | }
+    \hline
+    \multirow{1}{*}
+     Node ID & Elevation, h[m] & Diameter, D[m]  \\ 
+     \hline
+     \multirow{1}{*}
+    \text{$n_1$} & 0 & 0 \\ 
+    \hline
+      \multirow{1}{*}
+    \text{$n_2$} & 2 & 5   \\ 
+    \hline
+      \multirow{1}{*}
+    \text{$n_3$} & 0 & 0 \\ 
+    \hline
+      \multirow{1}{*}
+    \text{$n_4$} & 0 & 0  \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_5$} & 20 & 15 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_6$} & 0 & 5 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_7$} & 0 & 5  \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_8$} & 0 & 5  \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_9$} & 0 & 0  \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_{10}$} & 0 & 0  \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_{11}$} & 0 & 0 \\ 
+    \hline
+    \multirow{1}{*}
+    \text{$n_{12}$} & 0 & 0 \\ 
+    \hline
+    \end{tabular}
+    \captionof{table}{Physical properties of nodes in the test network.}
+    \label{pipes_table_example1_nodes}
+\end{center}
