@@ -1,0 +1,63 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor2}{rgb}{0.49400,0.18400,0.55600}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=1.3521in,
+height=1.066in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmin=0,
+xmax=6,
+xlabel style={font=\color{white!15!black}},
+xlabel={6 Epochs},
+ymode=log,
+ymin=0.0001,
+ymax=100,
+yminorticks=true,
+ylabel style={font=\color{white!15!black}},
+ylabel={Performance},
+axis background/.style={fill=white},
+title style={},
+%title={Performance is 0.00877771, Goal is 0.001},
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot [color=black, line width=2.0pt, forget plot]
+  table[row sep=crcr]{%
+0	0.001\\
+1	0.001\\
+2	0.001\\
+3	0.001\\
+4	0.001\\
+5	0.001\\
+6	0.001\\
+};
+\addplot [color=blue, line width=2.0pt]
+  table[row sep=crcr]{%
+0	16.3846300173484\\
+1	10.0091945672363\\
+2	2.0638352955794\\
+3	0.968913605070296\\
+4	0.400445250550717\\
+5	0.100325503339624\\
+6	0.00877770646781167\\
+};
+\addlegendentry{\tiny Train}
+
+\addplot [color=mycolor1, forget plot]
+  table[row sep=crcr]{%
+0	0\\
+};
+\addplot [color=mycolor2, forget plot]
+  table[row sep=crcr]{%
+0	0\\
+};
+\end{axis}
+\end{tikzpicture}%

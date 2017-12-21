@@ -87,11 +87,20 @@ Y_K_v2 = [pk_1_v2, pk_2_v2]';
 X_W_v2 = [sigma_v2, p_WT_k_v2 + h_WT, dk_1_v2, dk_2_v2]';
 Y_W_v2 = [p_WT_kp1_v2 - p_WT_k_v2]';
 
-
+% %% Plot 1
 %  figure(1)
-%  stairs(t,sigma_v1,'LineWidth',1.2)
+%  stairs(t,dk_1_v2,'LineWidth',1.2)
 %  hold on
-%  stairs(t,sigma,'LineWidth',1.2)
-%  xlim([0 148])
-% 
-
+%  stairs(t,dk_2_v2,'LineWidth',1.2)
+%  xlim([0 120])
+%  xlabel('Time [h]','interpreter','latex');
+% %ylabel('Pressure  [m]','interpreter','latex')
+% ylabel('Flow  [LPS]','interpreter','latex')
+% h1 = legend('$\bar{d}_{\mathcal{K}1}$','$\bar{d}_{\mathcal{K}2}$','Location','SouthWest');
+% set(h1, 'Interpreter', 'latex');
+% %% Plot 2
+% figure(2)
+%  stairs(t,p_WT_k_v2,'LineWidth',1.2)
+% xlim([0 120])
+%  xlabel('Time [h]','interpreter','latex');
+%  ylabel('Head  [m]','interpreter','latex');

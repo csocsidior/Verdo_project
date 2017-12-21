@@ -1,0 +1,61 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor2}{rgb}{0.49400,0.18400,0.55600}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=1.3521in,
+height=1.066in,
+at={(0.758in,0.481in)},
+scale only axis,
+xmin=0,
+xmax=5,
+xlabel style={font=\color{white!15!black}},
+xlabel={5 Epochs},
+ymode=log,
+ymin=1e-05,
+ymax=0.01,
+yminorticks=true,
+ylabel style={font=\color{white!15!black}},
+ylabel={Performance},
+axis background/.style={fill=white},
+title style={},
+%title={Performance is 0.000110874, Goal is 0.0001},
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot [color=black, line width=2.0pt, forget plot]
+  table[row sep=crcr]{%
+0	0.0001\\
+1	0.0001\\
+2	0.0001\\
+3	0.0001\\
+4	0.0001\\
+5	0.0001\\
+};
+\addplot [color=blue, line width=2.0pt]
+  table[row sep=crcr]{%
+0	0.00227799032140248\\
+1	0.000579231145498518\\
+2	0.000314828855310372\\
+3	0.000175750288046433\\
+4	0.000113694020777771\\
+5	0.000110874217700856\\
+};
+\addlegendentry{Train}
+
+\addplot [color=mycolor1, forget plot]
+  table[row sep=crcr]{%
+0	0\\
+};
+\addplot [color=mycolor2, forget plot]
+  table[row sep=crcr]{%
+0	0\\
+};
+\end{axis}
+\end{tikzpicture}%

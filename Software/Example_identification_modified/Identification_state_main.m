@@ -56,14 +56,26 @@ Z_W_v2 = theta_W*chi_W_v2;
  xlim([0 96])
  grid on
  
- figure(8)
-stairs(t,a{1}(1,:),'LineWidth',1.2)
-hold on
-stairs(t,a{1}(2,:),'LineWidth',1.2)
-hold on
-stairs(t,a{1}(3,:),'LineWidth',1.2)
-hold on
-stairs(t,a{1}(4,:),'LineWidth',1.2)
-hold on
-stairs(t,a{1}(5,:),'LineWidth',1.2)
+ %%
+ figure(2)
+ stairs(t,p_WT_kp1_v2 - p_WT_k_v2 ,'LineWidth',1.2)
+ hold on
+ stairs(t,Z_W_v2','LineWidth',1.2)
+ xlim([0 120])
+ xlabel('Time [h]','interpreter','latex');
+ ylabel('Head  [m]','interpreter','latex')
+ h1 = legend('Measurement','Model','Location','NorthEast');
+ set(h1, 'Interpreter', 'latex');
+ title('$\bar{p}_{\mathcal{K},1}$','interpreter','latex')
+ 
+%  figure(8)
+% stairs(t,a{1}(1,:),'LineWidth',1.2)
+% hold on
+% stairs(t,a{1}(2,:),'LineWidth',1.2)
+% hold on
+% stairs(t,a{1}(3,:),'LineWidth',1.2)
+% hold on
+% stairs(t,a{1}(4,:),'LineWidth',1.2)
+% hold on
+% stairs(t,a{1}(5,:),'LineWidth',1.2)
 
