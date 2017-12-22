@@ -126,7 +126,7 @@ Along with pumps, valves can be also seen as actuators. Unlike pumps, valves are
 \section{The Randers water supply network}
 \label{the_randers_water_supply_network}
 
-The Randers drinking WSS is managed by Verdo A/S, which is the main supplier of drinking water and heating to the city of Randers. Verdo supplies water to approximately 46.000 customers in Randers Municipality \cite{verdo}. The WSS is a complex, looped configuration with many different distribution areas. The coverage of the distribution areas is shown in \figref{fig:level_zones} below.
+The Randers drinking WSS is managed by Verdo A/S, which is the main supplier of drinking water and heating to the city of Randers. Verdo supplies water to approximately 46.000 customers in the municipality \cite{verdo}. The WSS is a complex, mixed loop and tree configuration with many different distribution areas. The coverage of the distribution areas is shown in \figref{fig:level_zones}.
 
 %illustration of distribution regions in Randers
 \begin{figure}[H]
@@ -138,9 +138,9 @@ The Randers drinking WSS is managed by Verdo A/S, which is the main supplier of 
 
 \vspace{-3mm}
 
-Although the network consists of many different distribution zones, the distribution in the city can be split into four main parts, regarding the different geographical properties of the different areas. Furthermore, Randers is split into two regions, Randers North and Randers South. This is due to the fact that Randers fjord divides the city into a northern and a southern part\cite{verdo}. 
+Although the network consists of many different distribution zones, the distribution in the city can be split into four main areas regarding the different geographical properties of the different parts. Furthermore, Randers can be split into two regions, Randers North and Randers South. This is due to the fact that Randers fjord divides the city into a northern and a southern part\cite{verdo}. 
 
-Furthermore, it is important to note that the distribution coverage illustrated in \figref{fig:level_zones}, describes the network in its current form from the year 2013. Since 2013, additional pipelines and smaller distribution parts have been added to the network, meaning that Verdo's distribution coverage has grown during the past few years. Although the structure has slightly changed, the main water works and pumping stations are still the same, therefore the characteristics and operation of the network has not changed significantly. Due to this, the network topology is considered to be sufficiently updated for modelling and control purposes. 
+Furthermore, it is important to note that the distribution coverage illustrated in \figref{fig:level_zones}, describes the network in its form from the year 2013. Since 2013, additional pipelines and smaller distribution areas have been added to the network, meaning that Verdo's distribution coverage has grown during the past few years. Although the structure has slightly changed, the main water works and pumping stations are still the same, therefore the characteristics and operation of the network has not changed significantly. Consequently, the structure of the network is considered to be sufficiently updated for modelling and control purposes. 
 
 The distribution network which is located in the southern part of the city is called Vilstrup. This zone has its own waterwork and pumping station which allows to supply the whole southern area by itself. The distribution area on the southern part to Randers fjord consists of this zone only, with one water work and the corresponding pumping station. This zone is shown in \figref{fig:vilstrup_region} below.
 
@@ -299,7 +299,7 @@ Furthermore, in Hornbæk, the elevation is above sea level, therefore the static
 
 As it was described in \secref{the_randers_water_supply_network}, if normal operation is assumed, Vilstrup is an individual distribution area. Therefore, VSV is able to provide all flow demands in Randers South, without the help of the other waterworks in Randers North. Due to this consideration, the WSS in Randers South can be separated when the control of Randers North is analysed. 
 
-Taking into account the properties of the network explained in this chapter, a brief summary of the operation can be given. The control is focused on the two main pumping stations, TBP and OMV, which are both operated by controlling the flow, according to the water level in the corresponding WTs. The region called VSV in the southern part of the network is discarded from the distribution, furthermore the region called HNP is seen as a region which demands a certain amount of flow, however the control of the boosting pumps are not considered. Similarly to the water works BKV and ØSV, they treated as water sources, however in the control it it not taken into account that water comes from them. Rather, TBP main pumping station is considered as a source of the water. With these considerations, the network simplifies to the following, shown in \figref{fig:simplified_network}
+Taking into account the properties of the network explained in this chapter, a brief summary of the operation is given. The control is focused on the two main pumping stations, TBP and OMV, which are both operated by controlling the flow, according to the water level in the corresponding WTs. The region called VSV in the southern part of the network is discarded from the distribution, furthermore the region called HNP is seen as a region which demands a certain amount of flow, however the control of the boosting pumps are not considered. Similarly to the water works BKV and ØSV, they treated as water sources, however in the control it it not taken into account that water comes from them. Rather, TBP main pumping station is considered as a source of the water. With these considerations, the network simplifies to the following, shown in \figref{fig:simplified_network}
 
  %Simplified network map
 \begin{figure}[H]
