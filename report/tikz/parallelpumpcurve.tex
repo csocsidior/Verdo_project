@@ -1,0 +1,18 @@
+\begin{tikzpicture}[scale=1.15,transform shape]
+
+      \draw[->][thick] (0,0) -- (4.2,0) node[below] {\tiny Flow};
+ \draw[->][thick] (0,0) -- (0,2.7) node[above] {\tiny Pressure};
+      \draw[scale=0.5,domain=0:2.94,smooth,variable=\x,blue,thick] plot ({\x},{4.33-0.5*\x*\x});
+      \draw[scale=0.5,domain=0:6.58,smooth,variable=\x,red,thick] plot ({\x},{4.33-0.1*\x*\x});
+    
+    
+    
+\draw [dashed](0,1.4) -- (1.96,1.4);
+\node at (-0.4,1.4) {\tiny $p_1$\!=\!$p_2$};
+\node at (1.7,0.5) {\tiny $C_1$,$C_2$};
+\node at (3.4,0.5) {\tiny $C_1$\!+\!$C_2$};
+
+
+\draw [decorate,decoration={brace,amplitude=3pt,mirror,raise=2pt},yshift=0pt]
+(0,1.4) -- (1.96,1.4) node [black,below,midway,xshift=0.0cm,yshift=-0.15cm] {\tiny $q_1+q_2$};
+\end{tikzpicture}
