@@ -68,6 +68,11 @@ Z_W_v2 = theta_W*chi_W_v2;
  set(h1, 'Interpreter', 'latex');
  title('$\bar{p}_{\mathcal{K},1}$','interpreter','latex')
  
+ cost_func = 'NRMSE';
+ fit = 100*goodnessOfFit(Z_W',p_WT_kp1 - p_WT_k,cost_func);
+ fit_v1 = 100*goodnessOfFit(Z_W_v1',p_WT_kp1_v1 - p_WT_k_v1,cost_func);
+fit_v2 = 100*goodnessOfFit(Z_W_v2',p_WT_kp1_v2 - p_WT_k_v2,cost_func);
+ 
 %  figure(8)
 % stairs(t,a{1}(1,:),'LineWidth',1.2)
 % hold on
