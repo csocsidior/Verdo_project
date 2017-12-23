@@ -58,14 +58,14 @@ Loop networks are usually composed of smaller loops which are composed of smalle
 \subsection{Elevated reservoirs}
 \label{elevated_reservoirs}
 
-Elevated reservoirs, or equivalently WTs, are typically present in the system in order to use them as buffers and level out the pressure and flow demand differences. When the demand is high, the waterworks might not be able to provide the sufficient amount of water in the network. In these cases, the WT supplies the remaining demand. When the user consumption decreases, the system can be controlled such that the WT is being refilled to provide the required demand for the next peak time of consumption. Having WTs in the network, the system becomes more independent of the pumping stations, meaning that the refilled tank can itself maintain the desired pressure and flow for a limited time. 
+Elevated reservoirs, or equivalently WTs, are typically present in the system in order to use them as buffers and level out the pressure and flow demand differences. When the demand is high, the waterworks might not be able to provide the sufficient amount of water in the network. In this case, the WT supplies the remaining demand. When the user consumption decreases, the system can be controlled such that the WT is being refilled to provide the required demand for the next peak time of the consumption. Having WTs in the network, the system becomes more independent from the pumping stations, meaning that the refilled tank can itself maintain the desired pressure and flow for a limited time. 
 
-Due to the elevation of the tank, when it is filled up, the pumping stations need to provide a pressure higher than the pressure in the WT. Therefore when the tank is being emptied, the pumping stations can reduce the amount of pressure they provide to the system, since the pressure from the elevated reservoir becomes dominant. This is due to the fact that the dynamics of WSSs with large storages come primarily from the pressure of the WT \cite{8thsemester_project}. However, it should be noted that normally the level in the tank is varying less than a meter. This means that the effect on the pump operation is limited. Due to these considerations, the dynamics of these WTs has to be taken into account while modelling the system. 
+Due to the elevation of the tank, when it is filled up, the pumping stations need to provide a pressure higher than the pressure in the WT. Therefore when the tank is being emptied, the pumping stations can reduce the amount of pressure they provide to the system, since the pressure from the elevated reservoir becomes dominant. This is due to the fact that the dynamics of WSSs with large storages come primarily from the pressure of the WTs \cite{8thsemester_project}. However, it should be noted that normally the level in the tank is varying less than a meter. This means that the effect on the pump operation is limited. Due to these considerations, the dynamics of WTs has to be taken into account while modelling a WSS. 
 
 \subsection{Pumps}
 \label{pumps}
 
-Water pumps are used to increase pressure in hydraulic systems, thus making the water flow. Pumps are typically the main actuators of a WSS and they can be either flow or pressure controlled. The control is done by changing the rotational speed of the pump. In this way, when the pump has a reference pressure or flow, simple control makes it possible to produce the desired flow and pressure \cite{kallesoePHD}.The pressure required to make the water reach some height is the sum of the pressure required to overcome the elevation and the friction losses in the pipe network. 
+Water pumps are used to increase pressure in hydraulic systems, thus making the water flow. Pumps are typically the main actuators of a WSS and they can be either flow or pressure controlled. The control is done by changing the rotational speed of the pump. Therefore, the pump has a reference and simple control makes it possible to produce the desired flow and pressure \cite{kallesoePHD}.The pressure required to make the water reach some height is the sum of the pressure required to overcome the elevation and the friction losses in the pipe network. 
 
 In WSSs, typically centrifugal pumps are used. The characteristics of such pumps are described by two pump curves. The two curves depict the volume flow versus the pressure and the power of the pump, respectively. Normally the curves describe the characteristics for one particular speed, which is the nominal speed \cite{kallesoePHD}. An example of the two pump curves is shown in \figref{fig:pump_curves}.
 
@@ -119,14 +119,21 @@ Additionally, a system configuration with parallel pumps provides flexibility by
 \subsection{Valves}
 \label{valves}
 
-Along with pumps, valves can be also seen as actuators. Unlike pumps, valves are passive actuators in the sense that they do not consume energy. In principle, there exist many types of different valves. They can be categorized as non-return valves, control valves, shut-off valves and the combination of the two former one. Non-return valves allow flow only in one direction, while control valves can either adjust the flow or the pressure on their two endpoints. The former category is typically called a Flow Control Valve(FCV), while the latter is called a Pressure Reducer Valve or Pressure Regulating Valve(PRV). Shut-off valves are important components of the network since they can change the structure of the system, when for instance the network is under maintenance or the flow is being redirected. By closing a valve in the system, certain parts of the network can be isolated.
+Along with pumps, valves can be also seen as actuators. Unlike pumps, valves are passive actuators in the sense that they do not consume energy. In principle, there exist many types of different valves. They can be categorized as non-return valves, control valves, shut-off valves and the combination of the two former one. Non-return valves allow flow only in one direction, while control valves can either adjust the flow or the pressure on the two endpoints. The former category is typically called a Flow Control Valve(FCV), while the latter is called a Pressure Reducer Valve or Pressure Regulating Valve(PRV). Shut-off valves are important components of the network since they can change the structure of the system, when for instance the network is under maintenance or the flow is being redirected. By closing a valve in the system, certain parts of the network can be isolated.
+
+\section{Distribution system solutions}
+\label{distribution_system_solutions}
+
+As it has been explained in \secref{pipe_networks}, WSSs can have different structures, operation rules, complexity and can consists of different hydraulic components. The main structural and operational differences between drinking water networks are typically due to the different attributes of the landscape and the different water consumption by the users. The main purpose of such systems, however, is usually the same; to maintain the water at positive pressure in order to ensure that water reaches all parts of the network, that a sufficient flow is available and to ensure that untreated water cannot enter the network. 
+
+In Denmark, in WSSs, the water is typically pressurised by pumps that pump water into one or more WTs, constructed at the highest local point in the network. Although the operation is similar in these networks, usually unique solutions are required for specific distribution networks such as WSSs for whole cities. Therefore, in the following discussion, the WSS in Randers is introduced in order to get an overview of the operation and to explain the necessary structural and physical properties of the network which can be utilized for modelling purposes. 
 
 \newpage
 
 \section{The Randers water supply network}
 \label{the_randers_water_supply_network}
 
-The Randers drinking WSS is managed by Verdo A/S, which is the main supplier of drinking water and heating to the city of Randers. Verdo supplies water to approximately 46.000 customers in the municipality \cite{verdo}. The WSS is a complex, mixed loop and tree configuration with many different distribution areas. The coverage of the distribution areas is shown in \figref{fig:level_zones}.
+The Randers drinking WSS is managed by Verdo A/S, which is the main supplier of drinking water and heating to the city of Randers. Verdo supplies water to approximately 46.000 customers in the municipality \cite{verdo}. The WSS is a complex, mixed loop and tree configuration with many different distribution areas. The coverage of these distribution areas is shown in \figref{fig:level_zones}.
 
 %illustration of distribution regions in Randers
 \begin{figure}[H]
@@ -138,23 +145,21 @@ The Randers drinking WSS is managed by Verdo A/S, which is the main supplier of 
 
 \vspace{-3mm}
 
-Although the network consists of many different distribution zones, the distribution in the city can be split into four main areas regarding the different geographical properties of the different parts. Furthermore, Randers can be split into two regions, Randers North and Randers South. This is due to the fact that Randers fjord divides the city into a northern and a southern part\cite{verdo}. 
+Although the network consists of many different distribution zones, the distribution in the city can be split into four main areas regarding the different geographical properties of the landscape. Randers can be split into two regions, Randers North and Randers South. This is due to the fact that Randers fjord divides the city into a northern and a southern half \cite{verdo}. Furthermore, it is important to note that the distribution coverage illustrated in \figref{fig:level_zones}, describes the network in its form from the year 2013. Since 2013, additional pipelines and smaller distribution areas have been added to the network, meaning that Verdo's supply network has grown during the past few years. Although the structure has slightly changed, the main water works and pumping stations are still the same, therefore the characteristics and operation of the network has not changed significantly. Consequently, the structure of the network is considered to be sufficiently updated for modelling and control purposes. 
 
-Furthermore, it is important to note that the distribution coverage illustrated in \figref{fig:level_zones}, describes the network in its form from the year 2013. Since 2013, additional pipelines and smaller distribution areas have been added to the network, meaning that Verdo's distribution coverage has grown during the past few years. Although the structure has slightly changed, the main water works and pumping stations are still the same, therefore the characteristics and operation of the network has not changed significantly. Consequently, the structure of the network is considered to be sufficiently updated for modelling and control purposes. 
-
-The distribution network which is located in the southern part of the city is called Vilstrup. This zone has its own waterwork and pumping station which allows to supply the whole southern area by itself. The distribution area on the southern part to Randers fjord consists of this zone only, with one water work and the corresponding pumping station. This zone is shown in \figref{fig:vilstrup_region} below.
+The distribution network which is located in the southern part of the city is called Vilstrup. This zone has its own waterwork and pumping station which makes it possible to supply the whole Randers South by itself. The distribution area on the southern part to Randers fjord consists of this zone, with one water work and with the corresponding pumping station. Vilstrup is shown in \figref{fig:vilstrup_region}.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.49\textwidth}
 \centering
-\includegraphics[width=0.6\textwidth]{report/pictures/Vilstrup_region}
-  \caption{Vilstrup zone.}
+\includegraphics[width=0.5\textwidth]{report/pictures/Vilstrup_region}
+  \caption{Vilstrup.}
   \label{fig:vilstrup_region}
 \end{subfigure}
 \begin{subfigure}{.49\textwidth}
 \centering
-\includegraphics[width=0.6\textwidth]{report/pictures/Highzone_region}
+\includegraphics[width=0.5\textwidth]{report/pictures/Highzone_region}
   \caption{High Zone.}
   \label{fig:highzone_region}
 \end{subfigure}
@@ -172,46 +177,47 @@ The distribution network which is located in the southern part of the city is ca
 % \label{fig:vilstrup_region}
 % \end{figure}
 
-The only connection between Vilstrup and the northern region is through an emergency line, which is indeed used in emergency cases when the waterwork and pumping station in Vilstrup malfunctions or if there is a pollution in the WTs. In these cases waterworks from the northern parts can provide water. An emergency case is for instance when the drilled water in the water works becomes contaminated due to the intensive farming activity in this area. It is important to note that the emergency line is closed in most of the time by a valve, however this valve opens every night for approximately one hour to let the stored water out from this pipeline. It is important to let fresh water through this pipe every day, since otherwise it never gets cleaned. Besides the emergency cases, however, the drinking water distribution in Vilstrup does not rely on the waterworks and pumping stations in Randers North.  
+The connection between Vilstrup and Randers North is through an emergency line, which is  used in emergency cases when the waterwork and pumping station in Vilstrup malfunctions or if there is a pollution in the WTs. In these cases waterworks from the northern parts can provide water. An emergency case is for instance when the drilled water in the water works becomes contaminated due to the intensive farming activity in this area. It is important to note that the emergency line is closed in most of the time by a valve, however this valve opens every night for approximately one hour to let the stored water out from this pipeline. It is necessary to let fresh water through every day, since otherwise there is a risk that water quality falls below the accepted level. Besides the emergency cases, the  water distribution in Vilstrup does not rely on the waterworks and pumping stations in Randers North.  
 
-Randers North consists of three different areas, each having its own particular geographical property. The water distribution in these regions are strongly related to each other, meaning that the pump schedules rely on the water levels in different WTs or on the consumption in the different regions. 
+Randers North consists of three different areas each having its own particular geographical property. The water distribution in these regions are strongly related to each other, meaning that the pump schedules rely on the water levels in the WTs and on the end-user consumption in the different regions. 
 
-The area shown in \figref{fig:highzone_region} above is called the High Zone(HZ) due to the high elevation level of the region. This part of the city lies approximately 55 meters above sea level, which means that high pumping effort is required to deliver the sufficient amount of pressure. Furthermore, this area has a grid structure with several loops, which is not surprising since the city center lies on this high elevation region.  
+The area shown in \figref{fig:highzone_region} above is called the High Zone(HZ) due to the high elevation level of the region. This part of the city lies approximately 55 meters above sea level, which means that high pumping effort is required to deliver the pressure here. Furthermore, this area has mainly a grid structure with several loops, which is due to the fact that the city center lies on part of the city.  
 
-The area underneath the HZ is called the Low Zone(LZ). This zone in Randers lies approximately on sea level. Therefore, the HZ and LZ have a significant elevation difference which requires special pumping solutions in this area. In order to get a visual overview of the geographical properties of the HZ and LZ, the elevation profile is shown between these two areas in \appref{elevation_profile_of_randers}, in \figref{fig:elev_profile} and \figref{fig:elev_profile1}. The area is illustrated in \figref{fig:lowzone_region}.
+The area underneath the HZ is called the Low Zone(LZ). This area in Randers lies approximately on sea level. Therefore, the HZ and LZ have a significant elevation difference which requires special pumping solutions in this area. In order to get a visual overview of the geographical properties of the HZ and LZ, elevation profiles are shown between these two areas in \appref{elevation_profile_of_randers}, in \figref{fig:elev_profile} and \figref{fig:elev_profile1}. The area is illustrated in \figref{fig:lowzone_region}.
 
-  %LZ region
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{report/pictures/Lowzone_region}
-\caption{Low Zone.}
-\label{fig:lowzone_region}
-\end{figure}
-
-\vspace{-3mm}
-
-The fourth main area in the Randers WSS is an area, which according to its elevation, neither belongs to the HZ, nor to the LZ. This area is called Hornbæk and shown in \figref{fig:hornbaek_region}.
-
-  %Hornbaek region
-\begin{figure}[H]
+\begin{subfigure}{.49\textwidth}
 \centering
-\includegraphics[width=0.15\textwidth]{report/pictures/Hornbaek_region}
-\caption{Hornbæk zone.}
-\label{fig:hornbaek_region}
+\hspace{3mm}
+\includegraphics[width=1.1\textwidth]{report/pictures/Lowzone_region}
+\vspace{2mm}
+  \caption{Low Zone.}
+  \label{fig:lowzone_region}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+\hspace{3mm}
+\includegraphics[width=0.35\textwidth]{report/pictures/Hornbaek_region}
+  \caption{Hornbæk.}
+  \label{fig:hornbaek_region}
+\end{subfigure}
+\caption{Geographical illustration of Low Zone and Hornbæk distribution areas in Randers.}
+\label{fig:lz_hbp_pic}
 \end{figure}
-
 \vspace{-3mm}
 
-The elevation in this area is around 30 meters above sea level and covers the western part of the city. This zone is connected to the rest of the distribution network through a transmission line and the properties of the structure is mainly of a tree configuration network. 
+The fourth main area in the Randers WSS is an area, which according to its elevation, neither belongs to the HZ, nor to the LZ. This area is called Hornbæk and shown in \figref{fig:hornbaek_region}. The elevation in this area is around 30 meters above sea level and covers the western part of the city. This zone is connected to the rest of the distribution network through a transmission line and the structure is mainly a tree configuration. 
 
 \subsection{Waterworks and pumping stations}
 \label{waterworks_and_pumping_stations}
 
-Verdo provides drinking water by pumping water from groundwater bases and treating the water in four different water works. Due to the high quality of ground water, this water treatment is only an aeration process in all areas, except the Vilstrup zone. In the Vilstrup zone, as mentioned above, farming activity is high, therefore the water often gets contaminated. 
+Verdo provides drinking water by pumping water from groundwater bases and treating the water in four different water works. Due to the high quality of ground water, this water treatment is only an aeration process in all areas, except the Vilstrup zone. In Vilstrup, as mentioned above, farming activity is high, therefore the water gets contaminated very often. 
 
-The WSS in Randers has four waterworks and four pumping stations, located in different locations in the city. In order to draw a better picture and to introduce in a simple way the corresponding pumping and water works in the system, first they are listed and their name is given, secondly their geographical locations and properties are described. The water works and pumping stations are the following
+The WSS in Randers has four waterworks and four pumping stations, located in different locations points in the city. In order to draw a better picture and to introduce the corresponding pumping stations and water works in a simple way, they are listed according to their names, then their geographical locations and properties are described. The water works and pumping stations are listed in \tabref{waterworks_tab} and \tabref{pumpingstations_tab}, respectively.
 
-\begin{table}[H]
+\begin{table}[!htp]
+\begin{subtable}{.52\linewidth}
 \begin{center}
     \begin{tabular}{| l | l | l |}
     \hline
@@ -223,12 +229,10 @@ The WSS in Randers has four waterworks and four pumping stations, located in dif
     \end{tabular}
 \end{center}
 \vspace{-3mm}
-\caption{Waterworks in the network.}
-\end{table}
-
-\vspace{-3mm}
-
-\begin{table}[H]
+\caption{Waterworks.}
+\label{waterworks_tab}
+\end{subtable}
+\begin{subtable}{.4\linewidth}
 \begin{center}
     \begin{tabular}{| l | l | l |}
     \hline
@@ -238,14 +242,17 @@ The WSS in Randers has four waterworks and four pumping stations, located in dif
     HNP & Hornbæk Pumping Station   \\
     \hline
     \end{tabular}
-\end{center}
+    \end{center}
 \vspace{-3mm}
-\caption{Pumping stations in the network.}
+\caption{Pumping stations.}
+\label{pumpingstations_tab}
+\end{subtable}
 \end{table}
-
 \vspace{-3mm}
 
-In order to show the geographical location of the waterworks and pumping stations, an illustration of the network model is shown where each pumping station and waterwork are labelled with their names. It is also important to point out, which station belongs to the corresponding supply zones. The illustration is shown in \figref{fig:pumping_stations_and_waterworks}.
+In order to show the geographical location of the waterworks and pumping stations, an illustration of the network is shown, where each pumping station and waterwork are labelled with their names. It is also necessary to illustrate, which station belongs to the corresponding supply zones. The illustration is shown in \figref{fig:pumping_stations_and_waterworks}.
+
+\vspace{-5mm}
 
   %Pumping stations and waterworks in Randers
 \begin{figure}[H]
@@ -257,11 +264,11 @@ In order to show the geographical location of the waterworks and pumping station
 \label{fig:pumping_stations_and_waterworks}
 \end{figure}
 
-The two main water works in the northern region are Bunkedal and Østrup Skov. In these areas, the water quality is sufficiently good, therefore the water pumped to the surface is considered very clean and suitable for distribution. This is due to the fact that this groundwater lies under the ground such that it is protected by certain layers of the ground which makes it possible to distribute this water without any kind of cleaning process, except aeration. These protection layers has been created by Randers fjord due to glacial erosion over the past few centuries \cite{geological1909water}. In this case, contamination by farming is not an option since these drilling stations are located very close to the fjord and therefore considered as reliable groundwater sources. 
+The main water works in Randers North are Oust Mølle, Bunkedal and Østrup Skov. In the two latter ones, the quality of water is very good. This is due to the fact that the groundwater lies under the ground such that it is protected by certain ground layers. These layers make it possible to distribute the water without any kind of cleaning process, except aeration. These protection layers has been created by Randers fjord due to glacial erosion over the past few centuries \cite{geological1909water}. In this case, contamination by farming is not an option since these drilling stations are located very close to the fjord and therefore considered as reliable groundwater sources. 
 
-One of the drawbacks, however, is that the fresh water sources are located in the LZ, therefore the water has to be pumped from BKV, ØSV and OMV to locations with higher elevation. Since BKV, ØSV and OMV are the main sources to the HZ and LZ areas, water has to be pumped to approximately 55 meters above sea level. For this reason, the supply pumping stations Toldbodgade and Oust Mølle provide the pressurized water to the pumping stations and corresponding elevated reservoirs in the HZ area. In the HZ, at the border of the LZ and HZ, two pumping stations are located, Hadsundvej and Hobrovej, which pump the water towards the HZ areas. The water is coming from the mentioned main supply stations in the LZ. 
+One of the drawbacks, however, is that the fresh water sources are located in the LZ. Therefore, the water has to be pumped from BKV, ØSV and OMV to locations with higher elevation. Since BKV, ØSV and OMV are the main sources to the HZ and LZ areas, in some cases water has to be pumped to approximately 55 meters above sea level. For this reason, Toldbodgade(TBP) pumping station and the puming station in OMV provide the pressurized water to other pumping stations and to the corresponding WTs in the HZ area. In the HZ, at the border of the LZ and HZ, two pumping stations are located. These pumping stations, Hadsundvej(HSP) and Hobrovej(HPB), pump the water towards the grid in the HZ areas. The water is delivered with the help of transmission lines from the three main water works in the LZ to HSP and HBP. 
 
-As can be seen in \figref{fig:pumping_stations_and_waterworks}, and as mentioned before, the network topology in the HZ is a grid. The two main pump stations, HSP and HBP provide the pressure and flow to this grid and to the LZ areas, such that they keep a balance in pressure and flow. Furthermore, there are WTs placed both at HSP and HBP. The main supply stations, OMV and TBP in the LZ operate such that the pumps are controlled according to the water level in the WTs in HBP and HSP, respectively. Since the HZ has an elevation of approximately 55 meters, the static pressure in each WT at the two pumping stations is sufficient to provide pressure in the LZ areas, without any pumping effort. Therefore HSP and HBP provide pressure to the LZ areas such that the geodesic properties are exploited. An illustration of the two pumping stations and the HZ grid is shown in \figref{fig:HBP_HSP_grid}. 
+As can be seen in \figref{fig:pumping_stations_and_waterworks}, and as mentioned previously, the structure of the network in the HZ is a grid. The two main pump stations, HSP and HBP provide the pressure and flow to this grid, such that they keep a balance in pressure and flow. Furthermore, there are WTs placed both at HSP and HBP. The main supply stations, OMV and TBP in the LZ operate such that the pumps are controlled according to the water level in the WTs in HBP and HSP, respectively. Since the HZ has an elevation of approximately 55 meters, the static pressure in each WT at the two pumping stations is sufficient to provide pressure in the LZ areas, without any pumping effort when the main supply pumps HBP and TBP are turned off. Therefore, the WTs provide pressure to the LZ areas such that the geodesic properties are exploited. An illustration of the two pumping stations and the HZ grid is shown in \figref{fig:HBP_HSP_grid}. 
 
  %HZ grid
 \begin{figure}[H]
@@ -274,11 +281,11 @@ As can be seen in \figref{fig:pumping_stations_and_waterworks}, and as mentioned
 
 \vspace{-3mm}
 
-As can be seen in \figref{fig:HBP_HSP_grid}, the pumping stations with the WTs are connected through the grid, and therefore the WTs are connected as well.
+As can be seen in \figref{fig:HBP_HSP_grid}, the pumping stations with the WTs are connected through the grid, furthermore the WTs are connected in the LZ area.
 
 In order to avoid too high or too low pressure in the system, the pressure needs to be controlled in one pumping station and the flow in the other one. HBP is responsible for flow control, while HSP is responsible for the pressure control. Thereby it is avoided to provide too high flow or too low or high pressure to the end-users. 
 
-One special case of the operation which illustrates well the behaviour of the tanks located in the HZ, is when the supply pump stations, TBP and OMV are turned off. In this case, the tanks are being emptied and all the static pressure stored in the tanks is being used to supply the LZ. \figref{fig:pressure_balance_Randers} shows an illustration for the pressure balance in the tanks.
+One special case of the operation which explains well the behaviour of the tanks located in the HZ, is when the supply pump stations, TBP and OMV are both turned off. In this case, the tanks are being emptied and all the static pressure stored in the tanks is being used to supply the LZ. \figref{fig:pressure_balance_Randers} shows an illustration for the pressure balance in the tanks.
 
  %tank emptying
 \begin{figure}[H]
@@ -290,21 +297,21 @@ One special case of the operation which illustrates well the behaviour of the ta
 \end{figure}
 
 \vspace{-3mm}
-It is important to note however, that it requires a long time for balancing out the levels in the WTs. Sometimes the aim is to empty the tanks in the HZ due to maintenance or other issues and in this case, by experience, it can take 12 hours for the water level to balance out.  
+It is important to note, however, that it requires a long time for balancing out the levels in the WTs. In some cases the goal is to empty the tanks in the HZ due to maintenance or other issues and in this case, by experience, it can take up to 12 hours for the water levels to balance out.  
 
 Furthermore, in Hornbæk, the elevation is above sea level, therefore the static pressure from the two main pumping stations are not sufficient to supply this area. Due to this, boosting is needed. The HNP pumping station in Hornbæk boosts the pressure of the water, coming from OMV. 
 
-\subsection{Summarizing the properties of the Randers WSS}
+\subsection{Control perspectives}
 \label{Randers_wss_summary}
 
-As it was described in \secref{the_randers_water_supply_network}, if normal operation is assumed, Vilstrup is an individual distribution area. Therefore, VSV is able to provide all flow demands in Randers South, without the help of the other waterworks in Randers North. Due to this consideration, the WSS in Randers South can be separated when the control of Randers North is analysed. 
+As it has been described in \secref{the_randers_water_supply_network}, if normal operation is assumed, Vilstrup is an individual distribution area. Therefore, VSV is able to provide all flow demands in Randers South, without the help of the other waterworks in Randers North. Due to this consideration, the WSS in Randers South can be separated when the control of Randers North is analysed. 
 
 Taking into account the properties of the network explained in this chapter, a brief summary of the operation is given. The control is focused on the two main pumping stations, TBP and OMV, which are both operated by controlling the flow, according to the water level in the corresponding WTs. The region called VSV in the southern part of the network is discarded from the distribution, furthermore the region called HNP is seen as a region which demands a certain amount of flow, however the control of the boosting pumps are not considered. Similarly to the water works BKV and ØSV, they treated as water sources, however in the control it it not taken into account that water comes from them. Rather, TBP main pumping station is considered as a source of the water. With these considerations, the network simplifies to the following, shown in \figref{fig:simplified_network}
 
  %Simplified network map
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.02\textwidth]{report/pictures/verdo_pic2}
+\includegraphics[width=0.95\textwidth]{report/pictures/verdo_pic2}
 \caption{The simplified network map of the Randers WSS.}
 \label{fig:simplified_network}
 \end{figure}
