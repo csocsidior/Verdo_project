@@ -821,16 +821,41 @@ In order to illustrate and to show how the implementation of the model described
 
 The underlying graph of the example network is shown in \figref{fig:example1_graph}
 
-%Graph of example1 network
+
+
+
 \begin{figure}[H]
 \centering
-%\includegraphics[width=1\textwidth]{report/pictures/verdo_pic}
+\begin{subfigure}{.49\textwidth}
+\centering
+\hspace{3mm}
 \input{report/tikz/example1_graph.tex} 
+\vspace{2mm}
 \caption{Graph of a simple multi-inlet network.}
 \label{fig:example1_graph}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\centering
+\hspace{0mm}
+\input{report/tikz/example_EPANET.tex} 
+\vspace{3mm}
+  \caption{The network in EPANET.}
+  \label{fig:example_EPANET}
+\end{subfigure}
+\caption{example.}
+\label{fig:example_sum}
 \end{figure}
-
 \vspace{-3mm}
+
+% %Graph of example1 network
+% \begin{figure}[H]
+% \centering
+% %\includegraphics[width=1\textwidth]{report/pictures/verdo_pic}
+% \input{report/tikz/example1_graph.tex} 
+% \caption{Graph of a simple multi-inlet network.}
+% \label{fig:example1_graph}
+% \end{figure}
+% \vspace{-3mm}
 
 In \figref{fig:example1_graph}, arrows illustrate the in-and outflows such that input flows are present in $v_1 $ and $v_2$, and user-consumption is defined only in $v_3$ and $v_6$. The diameters are the same for all pipes, however regarding the length, there are two types of pipes in this network. The corresponding parameters of the pipes, pumps, the elevation profile and the hourly demand variation is described in detail and can be found in (appref). 
 
