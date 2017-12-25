@@ -3,7 +3,9 @@
 \section{Hydraulic system overview}
 \label{hydraulic_system_overview}
 
-WSSs are designed to deliver water to consumers in terms of sufficient pressure and appropriate chemical composition. Furthermore, a safe and efficient operation of urban water supply networks must be satisfied at every time. Drinking water distribution systems as such, typically need to transport water from one geographical place to another. In practice, several different methods exist to achieve the transport of the water. One example is to use the natural advantages such as the water stored in mountains, and thereby use the potential energy of the water to provide pressure in the supply area. A good example for this are countries like Norway where the advantages of the landscape are being utilized \cite{norway_mountains}. However, considering the fact that in Denmark typically water is tapped from the ground, such advantages cannot be utilized, unless the water is first pumped to high elevations. Furthermore, it is worth noting that the quality of groundwater, in general, is very good in Denmark and therefore used for drinking water purposes. In some places, the water is clean enough to go through only an aeration process at the waterworks, right after tapping it from the ground. In WSSs, the two main actuators are pumps and valves. These two kind of control elements make it possible to pump the clean water into the network and thereby to deliver the water to the costumers or to WTs, where the water is stored for later use \cite{prahata}. The schematic of the water delivery process is illustrated in \figref{fig:WSS_example}.
+WSSs are designed to deliver water to consumers in terms of sufficient pressure and appropriate chemical composition, while a safe and efficient operation is satisfied at all time. Drinking water distribution systems need to transport water from one geographical place to another. In practice, several different methods exist to achieve such water transport. One example is to use the natural advantages such as the water stored in mountains, and thereby use the potential energy of the water to provide pressure in the supply area. A good example for this are countries like Norway where the advantages of the landscape can be utilized \cite{norway_mountains}. However, considering the fact that in Denmark typically water is tapped from the ground, such advantages cannot be taken into account, unless the water is first pumped to high elevation points. Furthermore, it is worth noting that the quality of groundwater, in general, is very good in Denmark and therefore primarily used for drinking water purposes. In some areas, the water is clean enough to go through only an aeration process at the waterworks, right after tapping it from the ground. 
+
+In WSSs, the two main actuators are pumps and valves. These two kind of control elements make it possible to pump the clean water into the network and thereby to deliver the water to the costumers or to WTs, where the water can be stored for later use \cite{prahata}. The schematic of the water delivery process is illustrated in \figref{fig:WSS_example}.
 
 %illustration of WSS
 \begin{figure}[H]
@@ -124,9 +126,9 @@ Along with pumps, valves can be also seen as actuators. Unlike pumps, valves are
 \section{Distribution system solutions}
 \label{distribution_system_solutions}
 
-As it has been explained in \secref{pipe_networks}, WSSs can have different structures, operation rules, complexity and can consists of different hydraulic components. The main structural and operational differences between drinking water networks are typically due to the different attributes of the landscape and the different water consumption by the users. The main purpose of such systems, however, is usually the same; to maintain the water at positive pressure in order to ensure that water reaches all parts of the network, that a sufficient flow is available and to ensure that untreated water cannot enter the network. 
+As it has been explained in \secref{pipe_networks}, WSSs can have different structures, pump schedules, complexity and can consists of different hydraulic components. The main structural and operational differences between drinking water networks are typically due to the different attributes of the landscape and the different type of water consumption by the end-users. The main purpose of such systems, however, is usually the same; to maintain the water at positive pressure in order to ensure that water reaches all parts of the network, that a sufficient flow is available and to ensure that untreated water cannot enter the network. 
 
-In Denmark, in WSSs, the water is typically pressurised by pumps that pump water into one or more WTs, constructed at the highest local point in the network. Although the operation is similar in these networks, usually unique solutions are required for specific distribution networks such as WSSs for whole cities. Therefore, in the following discussion, the WSS in Randers is introduced in order to get an overview of the operation and to explain the necessary structural and physical properties of the network which can be utilized for modelling purposes. 
+In Denmark, the water is typically pressurised by pumps that pump water into WTs, constructed at the highest local point in the network. Although the main operation is similar in WSSs for whole cities, usually unique solutions are required for maintaining operation. Therefore, in the following discussion, the WSS in Randers is introduced in order to get an overview of the operation and to explain the structural and physical properties of the network which are later used for modelling purposes. 
 
 \newpage
 
@@ -259,7 +261,7 @@ In order to show the geographical location of the waterworks and pumping station
 \centering
 %\includegraphics[width=1\textwidth]{report/pictures/verdo_pic}
 \input{report/tikz/reservoirs_epanet.tex} 
-\caption{Water works(encircled in blue) and Pumping stations(encircled in red) in the network.}
+\caption{Water works(encircled in blue) and Pumping stations(encircled in red).}
 \vspace{-3mm}
 \label{fig:pumping_stations_and_waterworks}
 \end{figure}
@@ -297,29 +299,115 @@ One special case of the operation which explains well the behaviour of the tanks
 \end{figure}
 
 \vspace{-3mm}
-It is important to note, however, that it requires a long time for balancing out the levels in the WTs. In some cases the goal is to empty the tanks in the HZ due to maintenance or other issues and in this case, by experience, it can take up to 12 hours for the water levels to balance out.  
+It is important to note, however, that it requires a long time for balancing out the levels in the WTs. In some cases the goal is to empty the tanks in the HZ due to maintenance. In this case, it can take up to 12 hours for the water levels to balance out.  
 
-Furthermore, in Hornbæk, the elevation is above sea level, therefore the static pressure from the two main pumping stations are not sufficient to supply this area. Due to this, boosting is needed. The HNP pumping station in Hornbæk boosts the pressure of the water, coming from OMV. 
+Furthermore, in Hornbæk, the elevation is above sea level, therefore the static pressure from the two main pumping stations are not sufficient to supply the area. Due to this, boosting is needed. The HNP pumping station in Hornbæk boosts the pressure of the water, coming from OMV. 
 
 \subsection{Control perspectives}
 \label{Randers_wss_summary}
 
-As it has been described in \secref{the_randers_water_supply_network}, in case of normal operation, Vilstrup is an individual distribution area. Therefore, VSV is able to provide the total consumption demand in Randers South, without the help of the other waterworks in Randers North. Due to this, the WSS in Randers South can be separated when the water management in Randers North is being analysed. The network in Randers North, with the corresponding water works, WTs and pumping stations is shown in \figref{fig:simplified_network}. 
+As it has been described in \secref{the_randers_water_supply_network}, Vilstrup is an individual distribution area if normal operation is assumed. Therefore, VSV is able to provide the total consumption demand in Randers South, without the help of the other waterworks in Randers North. Consequently, the WSS in Randers South can be separated when the water management in Randers North is being analysed. The network in Randers North, with the corresponding water works, WTs and pumping stations is shown in \figref{fig:simplified_network}. 
 
 %Simplified network map
 \begin{figure}[H]
 \centering
 \input{report/pictures/verdo_pic_simplified.tex}
 %\includegraphics[width=0.95\textwidth]{report/pictures/verdo_pic3}
-\caption{The simplified network map of the Randers WSS.}
+\caption{The network map in Randers North.}
 \label{fig:simplified_network}
 \end{figure}
 \vspace{-3mm}
 
-Taking into account the properties of the network explained in this chapter, a brief summary of the operation is given. The control is focused on the two main pumping stations, TBP and OMV, which are both operated by controlling the flow, according to the water level in the corresponding WTs. The region called VSV in the southern part of the network is discarded from the distribution, furthermore the region called HNP is seen as a region which demands a certain amount of flow, however the control of the boosting pumps are not considered. Similarly to the water works BKV and ØSV, they treated as water sources, however in the control it it not taken into account that water comes from them. Rather, TBP main pumping station is considered as a source of the water. With these considerations, the network simplifies to the following, shown in \figref{fig:simplified_network}
+In Randers North the control is focused on the two main pumping stations, TBP and OMV. Both pumping stations are operated by controlling the flow according to the water level in the corresponding WTs in HBP and HSP. TBP pumping station delivers the water coming from the two waterworks BKV and ØSV. In HBP and HSP, pressure and flow controlled pumps keep the pressure-flow balance in the grid. Furthermore, the distribution zone called HNP is seen as a region, where the booster pumps deliver the water mainly from OMV. 
 
-The model of this system is going to be used for control purposes, which means that the model needs to be simple, but at the same time needs to have the same characteristics as of the original network. In the WSS in Randers, the control purpose is to find an optimal control scheme which is able to actuate the pumps at the two main pumping stations, such that the dynamic effect of the WTs at each station are taken into account. Challenges of control come up due to the multiple WTs in the system, actuated by multiple pumping stations. In a later chapter, the mathematical description of such systems is proposed. 
+The available model of the system is going to be used for control purposes, which means that the model for control needs to be simple, however needs to have the same characteristics as of the original network. In the Randers WSS, the purpose of control is to find an optimal control scheme which is able to actuate the pumps at the two main pumping stations HSP and HBP, such that the dynamic effect of the WTs at each station are utilized. Challenges of control come up due to the multiple WTs in the system, actuated by multiple pumping stations. In order to create a framework which is commissionable for optimal control, first the mathematical description of the model is required. 
 
+\section{Simulation framework in EPANET}
+\label{simulation_framework_in_EPANET}
+
+The main properties of the Randers WSS has been discussed in \secref{the_randers_water_supply_network}. In order to draw a clear picture of the simulation framework in EPANET, the structure of the model, the data and certain abstractions made throughout the simulation is going to be discussed. 
+
+\subsection{Model and data structure}
+\label{model_data_and_structure}
+
+As it has been explained in \chapref{description_of_water_supply_systems}, the typical components of WSSs are: reservoirs, pipes, pumps and valves. For simulation purposes, it is necessary that the model of the real-life network consists of thousands of elements in order to accurately mimic hydraulic behaviour and to replicate the topographical layout of the system. Such models are appropriate for simulation purposes, however, too complex for demanding online optimisation tasks. However, the available data and information in the simulation framework can be used to create a reduced order model suitable for control purposes. 
+
+The use of Geographic Information Systems(GIS) and Supervisory Control and Data Acquisition(SCADA) systems in the water industry resulted in an increasing amount of information about actual network topology and service that can be utilized in a hydraulic network model \cite{johnson2016geographic}. Consequently, the simulation model of WSSs include almost exactly the same amount of components as in real-life. The following data and model description strongly relies on the documentation of the Randers WSS EPANET model \cite{verdo_doc}, provided by Verdo A/S, where the considerations and modelling steps with the available data from GIS are gathered. The model is mainly based on the data stored in GIS and the SCADA system, however different case studies and experience have also been taken into account throughout the modelling process. It is important to note that the following results and properties of the EPANET model serve as a basis for understanding the data processing and therefore the discussion is important in the thesis.  
+
+Initially, during the modelling, nodes have been made between each different pipe elements, however with large number of elements, calculation time has been increasingly high. Therefore, the number of nodes in the network have been reduced based on the fact that pipe sections with the same material and dimensions can be treated as one pipeline. In order to illustrate the complexity of the network, the number of elements in the simulation model, including the VSV region, is shown in \tabref{numberofelements_table}.
+
+\begin{center}
+\label{numberofelements_table}
+    \begin{tabular}{ | p{3cm} | p{3cm} |}
+    \hline
+    \textbf{Element type} & \textbf{Number}  \\ 
+    \hline
+    Links & 4144  \\ 
+    \hline
+    Nodes & 4180  \\ 
+    \hline
+    Tanks & 6  \\ 
+    \hline
+    \end{tabular}
+    \captionof{table}{Number of WSS elements.}
+\end{center}
+
+\vspace{-3mm}
+
+When the EPANET simulation network is considered, it is important to state that certain abstractions are present in the model. Due to these abstractions the exact structure and operation does not necessarily reflect the real-world configuration, however both the simulation and measurements on the network provide the same results. Therefore, for instance, the number of WTs in the model does not necessarily match the number of WTs in the real system. Water works usually have large WTs, where the aeration process and filtering is being done, however in certain parts of the model, water works lack these WTs. Furthermore, the number of pumps at certain pumping stations is not the same as in real world, since the model has been done such that the overall effect of the pumps has been considered.  
+
+\subsection{Water consumption data}
+\label{water_consumption_data}
+
+In the model, the consumption is divided into two groups: non-industrial and industrial water consumption. It has been chosen to keep the number of demand categories low, as it turned out that the quality of the data from GIS is not representative. Among many reasons, this is due to the fact that, for instance, one-storey buildings and two-or more-storey buildings have very similar consumption rates. The consumption curves have been defined such that they match the pumped water volumes from waterworks and pumping stations in each individual zone. Therefore, a calculation has been made which shows the deviation of the consumption over the day. Thereby, it has been possible possible to see the uniformity of the consumption types in each zone \cite{verdo_doc}. With around three percent uncertainty, the consumption patterns turned out to be representative in the model. The demand patterns over a 24 hours long period are periodic and shown in \figref{fig:demandpatterns_EPANET} .
+
+\begin{figure}[H]
+\centering
+%\includegraphics[width=0.4\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/demandpatterns.tex}
+\caption{Industrial and Non-industrial demand patterns implemented in EPANET.}
+\label{fig:demandpatterns_EPANET}
+\end{figure}
+
+\vspace{-3mm}
+
+In \figref{fig:demandpatterns_EPANET}, the $y$-axis shows the ratio of change compared to the base demand of the two different types of water consumption. For each type of consumer, different base demands are determined. However, the variation from this base value can be described in the same manner with the presented consumption curves for users falling in the same category. 
+
+It is worth noting that the industrial consumption profile in the VSV zone slightly differs from the industries in the rest of the network. However, since the VSV zone is not considered in the further simulation model, the demand pattern is not shown here. Furthermore, there are no individual consumers in any of the supply areas who has had  significant effect on the calibration and simulation of the model. 
+
+\subsection{Abstractions in the model}
+\label{control_and_water_source_abstractions}
+
+As described in \secref{the_randers_water_supply_network}, there are several different pumping stations and waterworks in the network, supplying different zones. In general, there is a possibility in EPANET to simulate the cleaning process in the waterworks, including drilling, raw water and clean water treatment. However, in the model the focus is on the correct distribution. Therefore, all waterworks are simulated with clean water reservoirs. In the EPANET simulation, pumps in the waterworks pump the water out corresponding to the real pump curves. However, there are two exceptions, where the simulation of the pumping station is different. In the OMV water work, which is responsible for filling the tanks(T1A and T1B) in HBP pumping station, the precise operation has not been taken into account. Instead, the control schedule of the pumps has been simulated as a positive demand node, which is negative according to the EPANET sign convention. The same technique was used in HBP pumping station, where the two tanks are located and which provides the distribution to the HZ. One of the reasons for this is that the controls turned out to be relatively complicated with frequency converters and the simulation result of the pumping was not matching the real world scenario. The advantage of this is that in one of the flow controlled pumping stations, the mass balance is controlled. Furthermore, the risk that the model does not simulate correctly is reduced. It should be noted that this abstraction can be done easily in HBP and OMV, since pumps in these two pumping stations are flow controlled. 
+
+Apart from the OMV water work and HBP pumping station, all water works have been simulated with reservoirs which cannot be emptied. Water works and pumping stations, where the pumps are pressure controlled, are controlled by PRVs, as this is the typical way of controlling pressure controlled pumps in EPANET networks \cite{agency2016epanet}. Such an arrangement is shown in \figref{fig:PRV_EPANET} 
+
+ %Waterworks in EPANET
+\begin{figure}[H]
+\centering
+%\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/PRV_control_EPANET.tex} 
+\caption{Abstraction for pressure controlled pumping stations in EPANET.}
+\label{fig:PRV_EPANET}
+\end{figure}
+
+\vspace{-3mm}
+It is important to note, however, that in case of high demands, with this arrangement in the network it can happen that water works and pumping stations deliver more flow than allowed or physically possible. Therefore control rules have been incorporated in the models which prevent the pumping stations produce more flow than available in the real world. 
+
+In case of flow controlled pumping stations, such as OMV, the following abstractions are made in the EPANET simulation framework 
+
+ %Flowcontrolled pumping stations in EPANET
+\begin{figure}[H]
+\centering
+%\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/flow_abstraction.tex} 
+\caption{Abstraction for flow controlled pumping stations in EPANET.}
+\label{fig:FCV_EPANET}
+\end{figure}
+
+\vspace{-3mm}
+
+In \figref{fig:FCV_EPANET}, the node which has demand $d_+$ is the flow controlled pumping station. The water coming out from this node can be controlled by a FCV. In every case, the pumping stations are supplied by flow from water works. A good example for this is TBP pumping station where the water works BKV and ØSV are modelled. However, the pumping station can be modelled as two nodes, where inflow is defined on the node on the water work side and outflow is defined on the outlet side. 
 
 
 

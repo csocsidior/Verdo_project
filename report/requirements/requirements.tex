@@ -1,14 +1,14 @@
 \chapter{System Modelling}
 \label{system_modelling}
 
-\emph{This chapter presents the mathematical description of hydraulic components in water distribution systems. Thereby, the physical measures of hydraulic systems are introduced. The similarities to electronic networks are shown by explaining the relevant properties of graph theory. The network model of a single and multi-inlet network description, presented in \cite{oneinput_paper}, is first introduced, then the model description is extended such that the model is capable of handling multiple Water Tanks. In the end of the chapter, the different modelling approaches are compared and an overview is given which explains the properties of the extended system model.}
+\emph{This chapter presents the mathematical description of hydraulic components in water distribution networks. Thereby, the physical measures of hydraulic systems are introduced. The similarities to electronic networks are shown by explaining the relevant properties of graph theory. The model of a single and multi-inlet network, presented in \cite{oneinput_paper}, is first introduced, then the model description is extended such that it is capable of handling multiple Water Tanks. In the end of the chapter, different models are compared and a summary of the extended system model is given.}
 
 \section{Hydraulic component modelling}
 \label{hydraulic_component_modelling}
 
-In this section the mathematical relation between pressure and flow is given for each component in a WSS system, in order to show their non-linear behaviour. The purpose here is not to derive the different models, but to introduce the mathematical formalism which describes them.
+In this section the mathematical relation between pressure and flow is given for each component in a WSS system, in order to show the non-linear behaviour of the water flowing through them. Here the purpose is not to derive the different component models, but to introduce the mathematical formalism which describes them.
 
-\eqref{onecomponent} shows the dual variable which describes all two-terminal components in the network 
+\eqref{onecomponent} shows the dual variable which describes all two-terminal components in a hydraulic network 
 
 \begin{equation}
 \label{onecomponent}
@@ -35,7 +35,7 @@ where\\
 \vspace*{2mm}
 is the differential pressure across the element,\\
 is the flow through the element,\\
-are the absolute pressures.
+are the absolute pressures at the two endpoints.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
