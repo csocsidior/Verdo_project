@@ -1,0 +1,26 @@
+t=0:1:144; % Time vector
+
+%% 
+%//////////Identification//////////
+load('dk_1.mat');
+load('dk_2.mat');
+load('p_A.mat');
+load('p_B.mat');
+load('p_C.mat');
+load('pk_1.mat');
+load('pk_2.mat');
+dk_2 = dk_2*-1;
+
+
+%for test:
+load('HL7_demand.mat');   
+load('HL14_flow.mat');  %in  
+load('NY118_flow.mat'); %out
+
+figure(1)
+stairs(t,HL14_flow - NY118_flow,'LineWidth',1.2)
+hold on
+stairs(t,HL7_demand+10,'LineWidth',1.2)
+xlim([0 149])
+
+

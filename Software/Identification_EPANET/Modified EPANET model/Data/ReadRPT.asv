@@ -12,9 +12,9 @@ str = fgetl(fid);
 % pattern_N = {'7568', '7564', '10000602', '2031', '2081', '410'};
 % pattern_L = {'12328', '18336', '18878'};
 %cripressure_2
-pattern_M = {'HL9'};
-pattern_N = {'7479'};
-pattern_L = {'11751'};
+pattern_M = {'HL7'};
+pattern_N = {'HL7'};
+pattern_L = {'HL14','NY118', };
 
 nodal_demands = ones(0,length(pattern_M));
 nodal_pressures = ones(0,length(pattern_N));
@@ -97,13 +97,13 @@ while(~feof(fid))
     str = fgetl(fid);
 end
 
-% t=0:1:148; % Time vector
-% figure(1)
-% stairs(t,nodal_pressures(:,1),'LineWidth',1.2)
-% xlim([0 149])
-% %title('WT pressure','latex')
-% xlabel('Time [h]','interpreter','latex');
-% ylabel('Pressure  [m]','interpreter','latex')
+t=0:1:144; % Time vector
+figure(1)
+stairs(t,nodal_demands(:,1),'LineWidth',1.2)
+xlim([0 149])
+%title('WT pressure','latex')
+xlabel('Time [h]','interpreter','latex');
+ylabel('Pressure  [m]','interpreter','latex')
 % 
 % figure(2)
 % stairs(t,link_flows(:,1),'LineWidth',1.2)
@@ -114,13 +114,20 @@ end
 
 %dk1 dk2 sigma pWT pk1 pk2 
 %sigma_base = 35;
-dk_1 = link_flows(:,1);
+%dk_1 = link_flows(:,1);
 %dk_2_v2 = link_flows(:,2);
 %sigma_v0 = nodal_demands(:,1)/5;
-sigma_v2 = sigma_v0*sigma_base;
-pk_2_v2 = nodal_pressures(:,1);
+%sigma_v2 = sigma_v0*sigma_base;
+%p_C = nodal_pressures(:,1);
+%dk_2 = nodal_demands(:,1);
 
-%save('dk_1.mat','dk_1')
+HL10_demand = nodal_demands(:,1);
+%HL14_flow = link_flows(:,1);
+%NY118_flow = link_flows(:,2);
+
+save('HL7_demand.mat','HL7_demand')
+%save('HL14_flow.mat','HL14_flow')
+%save('NY118_flow.mat','NY118_flow')
 
 fclose(fid);
 

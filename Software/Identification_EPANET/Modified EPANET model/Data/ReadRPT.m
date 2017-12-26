@@ -12,9 +12,9 @@ str = fgetl(fid);
 % pattern_N = {'7568', '7564', '10000602', '2031', '2081', '410'};
 % pattern_L = {'12328', '18336', '18878'};
 %cripressure_2
-pattern_M = {'HL9'};
+pattern_M = {'HogL52'};
 pattern_N = {'HL7'};
-pattern_L = {'11751'};
+pattern_L = {'HL14','NY118', };
 
 nodal_demands = ones(0,length(pattern_M));
 nodal_pressures = ones(0,length(pattern_N));
@@ -118,10 +118,16 @@ ylabel('Pressure  [m]','interpreter','latex')
 %dk_2_v2 = link_flows(:,2);
 %sigma_v0 = nodal_demands(:,1)/5;
 %sigma_v2 = sigma_v0*sigma_base;
-p_C = nodal_pressures(:,1);
+%p_C = nodal_pressures(:,1);
 %dk_2 = nodal_demands(:,1);
 
-%save('dk_1.mat','dk_1')
+HogL52_demand = nodal_demands(:,1);
+%HL14_flow = link_flows(:,1);
+%NY118_flow = link_flows(:,2);
+
+save('HogL52_demand.mat','HogL52_demand')
+%save('HL14_flow.mat','HL14_flow')
+%save('NY118_flow.mat','NY118_flow')
 
 fclose(fid);
 
