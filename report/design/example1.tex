@@ -321,30 +321,58 @@ The parameter matrix is computed equivalently as for the output equation with th
  \theta^T_{\mathcal{W}1} = \bar{P}_{\mathcal{W}1} X_{\mathcal{W}}^{\dagger}, 
 \end{equation}
 
-In case of $l$ WTs, the state derivative approximates $\hat{p}_{\mathcal{S}2,k+1}\! -\! \hat{p}_{\mathcal{S}2,k}$ are given as shown in \eqref{complete_state_parameter_eq}
+% In case of $l$ WTs, the state derivative approximates $\hat{p}_{\mathcal{S}2,k+1}\! -\! \hat{p}_{\mathcal{S}2,k}$ are given as shown in \eqref{complete_state_parameter_eq}
 
-\begin{equation}
-\label{complete_state_parameter_eq}
-         \begin{pmatrix}
-           \hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k} \\[1pt]
-           \vdots\\[1pt]
-           \hat{p}_{\mathcal{S}l,k+1} - \hat{p}_{\mathcal{S}l,k} \\[1pt]
-         \end{pmatrix}
-         =
-          \begin{pmatrix}
-           \theta_{\mathcal{S}1} & \! \hdots \! & \theta_{\mathcal{S}l} \\[1pt]
-         \end{pmatrix}^T
-\chi(u_k).
-\end{equation}
+% \begin{equation}
+% \label{complete_state_parameter_eq}
+%          \begin{pmatrix}
+%            \hat{p}_{\mathcal{S}1,k+1} - \hat{p}_{\mathcal{S}1,k} \\[1pt]
+%            \vdots\\[1pt]
+%            \hat{p}_{\mathcal{S}l,k+1} - \hat{p}_{\mathcal{S}l,k} \\[1pt]
+%          \end{pmatrix}
+%          =
+%           \begin{pmatrix}
+%            \theta_{\mathcal{S}1} & \! \hdots \! & \theta_{\mathcal{S}l} \\[1pt]
+%          \end{pmatrix}^T
+% \chi(u_k).
+% \end{equation}
 
 \newpage
 
 \section{Identification of the Randers WSS}
 \label{identification_of_the_randers_WSS} 
 
-%Work in progress
+%Simplified network map for identification
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.4\textwidth]{report/pictures/missingfigure}
+\input{report/tikz/identification_map.tex}
+%\includegraphics[width=0.95\textwidth]{report/pictures/verdo_pic3}
+\caption{The network map with the corresponding WTs and pumping stations.}
+\label{fig:simplified_network_identification}
 \end{figure}
+\vspace{-3mm}
 
+
+ %Total consumptions
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/EPANET_id/sigma.tex} 
+ \vspace{-2.5mm}
+ %\caption{Consumption pattern in the identification.}
+ \label{fig:sigma_id}
+ \end{figure}
+\vspace{-8mm}
+
+ %Inlet flows
+ \begin{figure}[H]
+ \centering
+ %\hspace{0mm}
+ %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+ \input{report/tikz/EPANET_id/dk_12.tex} 
+ \vspace{-2.5mm}
+ \caption{Inlet flows of the two pumping stations.}
+ \label{fig:dk_12}
+ \end{figure}
+ \vspace{-3mm}
