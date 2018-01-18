@@ -264,7 +264,7 @@ The model described in \eqref{eq:PumpModel}, works only for positive flows, ther
 \subsection{Elevated reservoir model}
 \label{elevatedreservoir_component}
 
-In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is equal to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the cross sectional area of the tank and the amount of water stored inside, proportional relation can be set between the pressure and the flow in and out of the tank. The dynamics of such components are described by first order differential equations shown in \eqref{wt_model1}.
+In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is equal to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the cross sectional area of the tank and the amount of water stored inside, proportional relation can be set between the pressure and the flow in and out of the tank. The dynamics of such components are described by first-order Ordinary Differential Equations(ODE) shown in \eqref{wt_model1}.
 
 \begin{equation}
 \label{wt_model1}
@@ -812,7 +812,7 @@ and \hspace*{1mm} $T$ is the length of the period.
 If the non-inlet demands are time-varying, but periodic behaviour is assumed and on top of this, the input vertices are arranged such that \eqref{Fv3} is fulfilled, \eqref{model_multiinlet1} can be rewritten as follows
 
 \begin{equation}
-\label{model_multiinlet1}
+\label{model_multiinlet2}
 \bar{p}_i(t) = \alpha_i(t) \sigma^2(t) + \sum_j \beta_{ij} \hat{p}_j(t) + \gamma_i,
 \end{equation}
 
@@ -821,12 +821,11 @@ where $\alpha_i$ now is a time-varying parameter of the model.
 \subsection{Simulation example}
 \label{multi_inlet_network_example}
 
-In order to illustrate and to show how the implementation of the model described in \secref{multi_inlet_reduced_network_description} works, it is first tested on a simple, two-source, two-loop pipe network. This simple pipe system serves as an example to point out the differences and possible simplifications which were done regarding the modelling in Matlab and in EPANET. In this case, simulation results are steady-state values of pressures and flows, and the models are excited by some arbitrary pressure inputs. 
+In \secref{modelling_framework}, the mathematical description of Multi-inlet WSSs has been given based on the physical properties of hydraulic elements. In order to draw a better picture of the modelling, the partitioning and implementation of such model is tested on a simple, two-inlet, two-loop pipe network. With the use of EPANET we are going to be able to point out the differences between our MATLAB implementation and the simulation in EPANET. Furthermore, as there is not any dynamics included in this model, the calculations carried out are about to solve the algebraic expressions regarding flows and pressures in the network. 
 
-The underlying graph of the example network is shown in \figref{fig:example1_graph}
+% In order to illustrate and to show how the implementation of the model described in \secref{multi_inlet_reduced_network_description} works, it is first tested on a simple, two-source, two-loop pipe network. This simple pipe system serves as an example to point out the differences and possible simplifications which were done regarding the modelling in Matlab and in EPANET. In this case, simulation results are steady-state values of pressures and flows, and the models are excited by some arbitrary pressure inputs. 
 
-
-
+The underlying graph of the example network is shown in \figref{fig:example1_graph} and equivalently the implementation in EPANET is shown in \figref{fig:example_EPANET}.
 
 \begin{figure}[H]
 \centering
@@ -861,9 +860,9 @@ The underlying graph of the example network is shown in \figref{fig:example1_gra
 % \end{figure}
 % \vspace{-3mm}
 
-In \figref{fig:example1_graph}, arrows illustrate the in-and outflows such that input flows are present in $v_1 $ and $v_2$, and user-consumption is defined only in $v_3$ and $v_6$. The diameters are the same for all pipes, however regarding the length, there are two types of pipes in this network. The corresponding parameters of the pipes, pumps, the elevation profile and the hourly demand variation is described in detail and can be found in (appref). 
+In \figref{fig:example1_graph}, arrows illustrate the in-and outflows such that input flows are in $v_1 $ and $v_2$ vertices, and users consume water in $v_3$ and $v_6$. The diameters are the same for all pipes, however regarding the length differ. The corresponding parameters of the pipes, pumps, the elevation profile and the hourly demand variation is described in detail and can be found in (appref). 
 
-The partitioning of edges in the network is chosen such that
+The partitioning of edges in this example is chosen such that
 
 \begin{equation}
   \label{edgeorientation_example1_T}
@@ -887,6 +886,7 @@ p(t) =
  \bar{p}_4(t) \\[1.3pt]
  \bar{p}_5(t) \\[1.3pt] 
  \bar{p}_6(t) \\[1.3pt] 
+  \hline
  \hat{p}_1(t) \\[1.3pt] 
  \hat{p}_2(t) \\[1.3pt] 
  \end{pmatrix}
@@ -896,6 +896,7 @@ p(t) =
  0 \\[1pt]
  0 \\[1pt] 
  \bar{d}_6(t) \\[1pt] 
+  \hline
  \hat{d}_1(t) \\[1pt] 
  \hat{d}_2(t) \\[1pt] 
  \end{pmatrix}
@@ -905,6 +906,7 @@ p(t) =
  \bar{h}_4 \\[1pt]
  \bar{h}_5 \\[1pt] 
  \bar{h}_6 \\[1pt] 
+   \hline
  0 \\[1pt] 
  0 \\[1pt] 
  \end{pmatrix}
@@ -917,16 +919,16 @@ p(t) =
  \end{pmatrix}.
 \end{equation}
 
-From this arrangement of the edges and nodes, it follows that the sub-matrix, $\bar{H}_{\mathcal{T}}$, which maps non-inlet vertices to edges in set $\mathcal{E}_{\mathcal{T}}$, is invertible. 
+From this arrangement of the edges and vertices, it follows that the sub-matrix $\bar{H}_{\mathcal{T}}$ which maps non-inlet vertices to edges in set $\mathcal{E}_{\mathcal{T}}$ is invertible. 
 
-Since there are two nodes in the system with demand, the total flow leaving the network can be written as
+Since there are two vertices in the system with demand, the total flow leaving the network can be written as shown in \eqref{consumption1}.
 
 \begin{equation}
   \label{consumption1}
   \sigma(t) = -\bar{d}_3(t) - \bar{d}_6(t).
 \end{equation}
 
-Having the input pressures and the parameters of the network, the output pressures, i.e. the pressures in the non-inlet vertices can be calculated. However, first recall \eqref{meshresult2}, 
+By measuring the input pressures and knowing the parameters of the network, the output pressures, i.e. the pressures in the non-inlet vertices can be calculated. However, first recall \eqref{meshresult2}, 
 
 \begin{equation}
   \label{ac_eq} 
@@ -940,34 +942,34 @@ where\\
 \hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$. 
 \end{minipage}
 
-On account of non-linearity in \eqref{ac_eq},  it is not possible to solve the network analysis problem analytically. Instead, iterative numerical solution methods are used. As $g(q_{\mathcal{C}})$ is differentiable with respect to $q_{\mathcal{C}}$, gradient-based root finding algorithms such as Newton-Raphson method can be used. With iterative methods, initial values of flows are repeatedly adjusted until the difference between two successive iterates is within an acceptable tolerance.  Furthermore, we know from the homogeneity and monotonicity property of $g(q_{\mathcal{C}})$ that the function is a homeomorphism in $q_{\mathcal{C}}$, therefore its root is unique. Using gradient-based searching methods, and squaring $g(q_{\mathcal{C}})$ 
+On account of non-linearity in \eqref{ac_eq}, an analytic solution has not been found to express the flows $q_{\mathcal{C}}$. Instead, iterative numerical methods are used. As $g(q_{\mathcal{C}})$ is differentiable with respect to $q_{\mathcal{C}}$, gradient-based root finding algorithms such as Newton-Raphson method is a convenient choice \cite{woodford1997numerical}. With iterative methods, initial values of flows are repeatedly adjusted until the difference between two successive iterates is within an acceptable tolerance. Furthermore, we know from the homogeneity and monotonicity property of $g(q_{\mathcal{C}})$ that the function is a homeomorphism in $q_{\mathcal{C}}$, therefore its root must be unique. Using the gradient-based searching method, and squaring $g(q_{\mathcal{C}})$  yields
 
 \begin{equation}
 \label{gradient_search} 
   2 \frac{\partial g^T(q_{\mathcal{C}})}{\partial q_{\mathcal{C}}} g(q_{\mathcal{C}}) = 0, 
 \end{equation}
 
-the unique solution can be found. Furthermore, if $g^T(q_{\mathcal{C}}) g(q_{\mathcal{C}})$ is convex, the solution is the global minimum. By solving \eqref{ac_eq} for $a_{\mathcal{C}}$, the non-inlet pressures and all flows in the network can be calculated in terms of the input pressures and the total demand in the network. In order to obtain these values, the previously-derived output equation in \eqref{model_multiinlet1} can be used. 
+By solving \eqref{gradient_search}, the unique solution is found. Furthermore, if $g^T(q_{\mathcal{C}}) g(q_{\mathcal{C}})$ is convex, the solution is the global minimum of this problem. By solving \eqref{ac_eq} for $a_{\mathcal{C}}$, the non-inlet pressures and all flows in the network can be calculated in terms of the input pressures and the total demand in the network. In order to obtain these values, the previously-derived output equation in \eqref{model_multiinlet1} is used. 
 
-In the simulation, the most simple case is considered, when the total flow demand in the network varies, however the distribution among vertices remains the same. In this case, $v$ is a constant vector, and the base demands in all vertices are the same. 
+Therefore in the simulation, the most simple case is considered when the total flow demand in the network varies, however the distribution among vertices remains the same. In this case, $v$ is a constant vector, and the base demands in all vertices are the same. 
 
-The variation curve for the input pressures are set the same in both EPANET and in the simulator. 
+The variation curves for input pressures are the inputs both in our MATLAB implementation and in EPANET. The inlet pressures are shown in \figref{fig:sub11_example1} and the inlet flows are shown in \figref{fig:sub22_example1} for a five hour-long period.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.49\textwidth}
 \centering
   \input{report/tikz/inlet_pressures.tex} 
-  \caption{Inlet pressures, $(\hat{p})$}
+  \caption{Inlet pressures $\hat{p}$}
   \label{fig:sub11_example1}
 \end{subfigure}
 \begin{subfigure}{.49\textwidth}
 \centering
   \input{report/tikz/inlet_demands.tex} 
-  \caption{Inlet demands, $(\hat{d})$}
+  \caption{Absolute value of the inlet flows $\hat{d}$}
   \label{fig:sub22_example1}
 \end{subfigure}
-\caption{Signals describing the input pressures(left) and flows(right) of the pumping stations.}
+\caption{Signals describing the input pressures(left) and flows(right) of the two pumping stations.}
 \label{fig:inlet_pressures_demands}
 \end{figure}
 
@@ -976,43 +978,53 @@ The variation curve for the input pressures are set the same in both EPANET and 
 \begin{subfigure}{.49\textwidth}
 \centering
   \input{report/tikz/demands.tex} 
-  \caption{Non-inlet demands, $(\bar{d})$}
+  \caption{Non-inlet demands $\bar{d}$}
   \label{fig:sub21_example1}
 \end{subfigure}
 \begin{subfigure}{.49\textwidth}
 \centering
   \input{report/tikz/non_inlet_pressures.tex} 
-  \caption{Non-inlet pressures, $(\bar{p})$}
+  \caption{Non-inlet pressures $\bar{p}$}
   \label{fig:sub22_example1}
 \end{subfigure}
-\caption{Signals describing the demand flows by the end-users(left) and output pressures(right) in the network.}
+\caption{Signals describing the demand flows by the end-users(left) and output pressures(right).}
 \label{fig:noninlet_demands_noninlet_pressures}
 \end{figure}
+\vspace{-3mm}
+
+In \figref{fig:sub22_example1}, the non-inlet pressure values corresponding to the EPANET simulation are denoted with $\bar{p}_{3e}$, $\bar{p}_{4e}$, $\bar{p}_{5e}$ and $\bar{p}_{6e}$. The pressure values denoted with $\bar{p}_{3}$, $\bar{p}_{4}$, $\bar{p}_{5}$ and $\bar{p}_{6}$ denote the results of the simulation in MATLAB. 
+
+Furthermore, \figref{fig:flows_C_T} shows the simulation results on all non-inlet flows in $\mathcal{C}$ and $\mathcal{T}$, respectively. It should be noted that negative flows correspond to wrong initial guess on the direction of the edges in the network graph. Therefore, in Matlab the calculated flows appear with a negative sign. For that reason in the figures below, the corresponding EPANET results have been flipped as well in order to compare the results. 
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.49\textwidth}
 \centering
   \input{report/tikz/flows_C.tex} 
-  \caption{Flows in $\mathcal{C}$, $(q_{\mathcal{C}})$}
+  \caption{Flows in $\mathcal{C}$}
   \label{fig:sub31_example1}
 \end{subfigure}
 \begin{subfigure}{.49\textwidth}
 \centering
   \input{report/tikz/flows_T.tex} 
-  \caption{Flows in $\mathcal{T}$, $(q_{\mathcal{T}})$}
+  \caption{Flows in $\mathcal{T}$}
   \label{fig:sub31_example1}
 \end{subfigure}
 \caption{Signals describing the flows in all pipes in the network.}
 \label{fig:flows_C_T}
 \end{figure}
+\vspace{-3mm}
+
+From the comparison of non-inlet flows and non-inlet pressures we can see that our implementation of the Multi-inlet model in MATLAB yields the same results as in EPANET. The small difference between the pressure and flow values is due to the fact that our model does not take into account that the friction factor of pipe elements might change according to the flows.  
+
+Therefore, the framework of modelling introduced in this section is further discussed and utilized in the following sections where the inclusion of elevated reservoirs is considered. 
 
 \newpage
 
 \section{Inclusion of elevated reservoirs}
 \label{inclusion_of_reservoirs}
 
-When a WT is being attached to an existing pipe network, certain properties of the previous system must be modified. Regarding the underlying graph of the network, when a WT is attached, the vertex to which the tank is connected becomes a vertex with a demand. However, the demand flow which describes the filling and emptying process of the tank, in this case, is not directly related to any user consumption profile, since flow can go into and come out of the tank. Therefore, the constraint on demand flows, described in \eqref{non_inlet_constraint} is not true in case of elevated reservoirs, as the demand can be both positive or negative. For this reason, demands on the reservoirs are treated as inputs and added to the nodes marked with hats $\hat{p}$ and $\hat{d}$. The nodes on which demand of elevated reservoirs are defined are selected from the input flows of the pumps such that 
+When a WT is being attached to an existing pipe network, certain properties of the system must be modified. Regarding the underlying graph of the network, when a WT is attached, the vertex to which the WT is connected becomes a vertex with a demand. However, the demand flow which describes the filling and emptying process of the tank, in this case, is not directly related to any user consumption profile, since flow can go into and come out of the WT. Therefore, the constraint on demand flows, previously described in \eqref{non_inlet_constraint} is not valid in case of elevated reservoirs, as this type of demand flow can be both positive or negative. For this reason, demands on the WTs are treated as inputs and added to the vertices marked with hats $\hat{p}$ and $\hat{d}$. The vertices on which demand of WTs are defined are selected from the overall inlet flows such that 
 
 \begin{subequations}
 \begin{equation}
@@ -1023,26 +1035,27 @@ When a WT is being attached to an existing pipe network, certain properties of t
 
  \begin{minipage}[t]{0.20\textwidth}
 where\\
-\hspace*{8mm} $\hat{d}_t \in \: \mathbb{R}^{(l \times 1)}$\\
-\hspace*{8mm} $\hat{d}_c \in \: \mathbb{R}^{(c \times 1\!)}$ \\
+\hspace*{8mm} $\hat{d}_t \in \: \mathbb{R}^{l }$\\
+\hspace*{8mm} $\hat{d}_c \in \: \mathbb{R}^{c }$ \\
 \newline
 \hspace*{6mm} $F^T \in \: \mathbb{R}^{(l\! \times \!c\!+\!l)}$ \\
 \hspace*{6mm} $G^T \in \: \mathbb{R}^{(c\! \times \!c\!+\!l )}$
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the vector including the nodal demands of the tanks,\\
-is the the vector including the nodal demands of the pump inputs, \\
-is a mapping which selects the nodes belonging to tanks, \\
-is a mapping which selects the nodes belonging to pump inputs.
+is the vector of demand flows corresponding to WTs,\\
+is the the vector of demand flows corresponding to the pump inlets, \\
+is a mapping which selects the vertices belonging to WTs, \\
+is a mapping which selects the vertices belonging to pump inlets.
 \end{minipage}
 
-The same partitioning is done for the input pressures and elevation, regarding pumps and tanks
+The same partitioning is done for the input pressures and elevation, regarding pumps and WTs.
 
 \begin{equation}
 \label{tank_inclusion_separation_of_input_pressure_elevation1}
 \hat{h} = F \hat{h}_t + G \hat{h}_c, 
 \end{equation}
+\vspace{-3mm}
 
 \begin{equation}
 \label{tank_inclusion_separation_of_input_pressure_elevation2}
@@ -1053,49 +1066,55 @@ The same partitioning is done for the input pressures and elevation, regarding p
 
  \begin{minipage}[t]{0.20\textwidth}
 where\\
-\hspace*{8mm} $\hat{h}_t \in \: \mathbb{R}^{(l \times 1)}$\\
-\hspace*{8mm} $\hat{h}_c \in \: \mathbb{R}^{(c  \times  1)}$ \\
+\hspace*{8mm} $\hat{h}_t \in \: \mathbb{R}^{l }$\\
+\hspace*{8mm} $\hat{h}_c \in \: \mathbb{R}^{c }$ \\
 \newline
-\hspace*{8mm} $\hat{p}_t \in \: \mathbb{R}^{(l \times 1)}$\\
-\hspace*{8mm} $\hat{p}_c \in \: \mathbb{R}^{(c \times 1)}$ 
+\hspace*{8mm} $\hat{p}_t \in \: \mathbb{R}^{l }$\\
+\hspace*{8mm} $\hat{p}_c \in \: \mathbb{R}^{c }$ 
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the vector including the elevation of the tanks,\\
-is the the vector including the elevation of the pump stations,\\
-is the vector including the absolute pressures in the tanks,\\
-is the the vector including the absolute pressures of the pump inputs.
+is the vector of the elevation of the WTs,\\
+is the the vector of the elevation of the pump stations,\\
+is the vector of the absolute pressures in the WTs,\\
+is the vector of the absolute pump inlet pressures.
 \end{minipage}
 
-With the inclusion of tanks, the network is not only constrained by the static pressure and flow relation, as in case of the model without tanks, but also governed by the dynamic equation describing the WT. These dynamics act as integrators on the flows which go in or out of the tank, $\hat{d}_t$. In terms of $\hat{d}_t$, the dynamics of the tanks set the pressure contribution, $\hat{p}_t$ , as an input to the distribution system. The block diagram of such system is shown in \figref{fig:WT_system_blockdiagram}.
+With the inclusion of WTs, the network is not only constrained by the static relation between pressure and flow, as in case of the previously-derived model without WTs, but also governed by the dynamic equation describing the WT. These dynamics act as integrators on the flows $\hat{d}_t$ which go in or out of the tank. In terms of $\hat{d}_t$, the dynamics of the tanks set the pressure contribution $\hat{p}_t$ , as an input to the WSS. The block diagram of such system is shown in \figref{fig:WT_system_blockdiagram}.
 
 %Pumping stations and waterworks in Randers
 \begin{figure}[H]
 \centering
 %\includegraphics[width=1\textwidth]{report/pictures/verdo_pic}
 \input{report/tikz/watertank_inclusion_block.tex} 
-\caption{Block diagram of the system with WTs.}
+\caption{Block diagram of the system extended with WTs.}
 \label{fig:WT_system_blockdiagram}
 \end{figure}
+\vspace{-3mm}
 
-where the 'Elevated reservoirs' block represents the subsystem with dynamics, and the 'Static network' subsystem is governed by the algebraic flow and pressure relations which describe the pipe network. 
+where the 'Elevated reservoirs' block represents the subsystem with dynamics, and the 'Static network' subsystem is governed by the algebraic flow and pressure relations which describe flow and pressure in the whole pipe network. 
 
-When elevated reservoirs are introduced in the network, the system usually operates such that the control inputs are the flows, $\hat{d}$, as this is the most practical and robust way to control the network. In fact, this is the case regarding the Randers WSS, as the two pumping stations which are filling up the tanks are controlled by flow, as it was explained in \secref{waterworks_and_pumping_stations}. 
-
-This modelling approach is different, however,  from what is handled in case of a network without a tank, since instead of using the pressures, $\hat{p}$, the inlet flows, $\hat{d_c}$, are considered as inputs. Furthermore, regarding the dynamics, the filling and emptying of a tank is dependent on how much flow is delivered by the pumps. This inlet flow is provided by multiple pumping stations, however, a distinction has to be made between the presence of single or multiple WTs in the network. In the former case, the flows delivered by the pumps are filling or emptying the one and only tank in the network. In the latter case, however, the model needs to be able to handle the flow distribution among the different WTs, meaning that different pumping stations can have different filling or emptying effects on the different WTs. Therefore, in the following, the two different approaches are presented. 
+When elevated reservoirs are introduced in the network, the system usually operates such that the control inputs are the flows $\hat{d}$, as this is the most practical and robust way to control the network. In fact, this is the case regarding the Randers WSS, as the two pumping stations which are filling the tanks are controlled by flow, as it has been explained in \secref{waterworks_and_pumping_stations}. Therefore, the modelling approach we are about to present is different from what is handled in case of a network without a WT, since instead of using the pressures $\hat{p}$, the inlet flows $\hat{d_c}$ are considered as inputs to the model. Furthermore, regarding the dynamics, the filling and emptying process of a tank is dependent on how much flow is delivered by the pumps. This inlet flow in general is provided by multiple pumping stations, however, we make a distinction between single and multiple-WT  networks. In the former case, the flows delivered by the pumps are filling or emptying the one and only tank in the network. In the latter case, the model needs to be able to handle the flow distribution among the different WTs, meaning that different pumping stations can have different filling or emptying effects on the WTs. Therefore, in the further discussion first the case with one WT is presented, then multiple-WTs are considered.
 
 
-\section{Multi-inlet, single-WT model}
+\section{Multi-inlet/single-WT model}
 \label{multi_inlet_single_WT_model}
 
-Recalling the dynamic equation of one tank, in \eqref{wt_model2}
+Recalling the dynamics of one WT, in \eqref{wt_model2}, we can write the following in \eqref{wt_model_demand1}.
 
 \begin{equation}
 \label{wt_model_demand1}
 \dot{\hat{p}}_{t} = -\tau \hat{d}_{t},
 \end{equation}
+\vspace{-3mm}
 
-it is seen that the flow, $\hat{d}_t$, needs to be expressed in terms of the inputs, $\hat{d}_c$. In order to express the demand regarding a tank, the whole network is treated as one node, as illustrated in \figref{fig:onenode_system}. 
+ \begin{minipage}[t]{0.20\textwidth}
+where\\
+\hspace*{8mm} $\hat{d}_t  \in \: \mathbb{R}$ \\
+\hspace*{8mm} $\tau  \in \: \mathbb{R_{+}}$
+\end{minipage}
+
+From \eqref{wt_model_demand1} we can see that the flow $\hat{d}_t$, needs to be expressed in terms of the inputs $\hat{d}_c$. In order to express the demand regarding the WT, the whole network is treated as one node, as illustrated in \figref{fig:onenode_system}. 
 
  %Network illustration as one node
 \begin{figure}[H]
@@ -1107,7 +1126,7 @@ it is seen that the flow, $\hat{d}_t$, needs to be expressed in terms of the inp
 \end{figure}
 \vspace{-3mm}
 
-According to the mass-balance in the network, and using the corresponding partitioning as shown in \figref{fig:onenode_system}, the balance equation on all demand flows can be written in the form of
+According to the mass-balance in the network, and using the corresponding partitioning as shown in \figref{fig:onenode_system}, the balance equation on all demand flows can be written as shown in \eqref{massbalance_model2}.
 
 \begin{equation}
 \label{massbalance_model2}
@@ -1136,22 +1155,23 @@ Now, expressing $\hat{d}_t $ from \eqref{massbalance_model2} yields
 \hat{d}_t  = \sigma - 1^T \hat{d}_c,
 \end{equation}
 
-where it is shown, that if the control flows, $\hat{d}_c$, are higher than the total non-inlet demand, $\sigma$, the tank is being filled, and the tank is emptied if $\hat{d}_c$ is lower than $\sigma$. Thus, the system dynamics can be reformulated such that
+where it is shown that if the control flows $\hat{d}_c$, are higher than the total consumption $\sigma$, the WT is being filled. The WT is being emptied if $\hat{d}_c$ is lower than $\sigma$. Thus, the system dynamics can be reformulated such that
 
 \begin{equation}
 \label{wt_model_demandd}
 \dot{\hat{p}}_t = -\tau (\sigma - 1^T \hat{d}_c).
 \end{equation}
 
-It is important to point out that this first order differential equation in \eqref{wt_model_demandd}, describes the mass-balance model of a single tank system, where the input flows equal to the overall demand in the network and the rate of change in storage in the tank. The result is not surprising, since according to \eqref{wt_model_demandd}, the water level, or pressure, fluctuates according to the in- and outflow of water, which relates to the pumping effort and demand in the network. 
+It is important to point out that this first-order ODE in \eqref{wt_model_demandd} describes the mass-balance model of a single-WT system, where the input flows equal to the overall demand in the network and the rate of change of the stored water in the tank. The result is not surprising, since according to \eqref{wt_model_demandd}, the water level or equivalently the pressure fluctuates according to the in- and outflow of water, which corresponds to the pumping effort and demand in the network. 
 
 In the single-WT modelling case, the dynamics can be described by a one-state, scalar equation, however the model is restricted to only one WT. As shown before, we know that this is not the case in the Randers WSS. Therefore, a more general description of the network is required, without restriction on the number of elevated reservoirs. 
 
+In case of the single-WT model, the outputs are the inlet pressures of the $c$ pumping stations. During the derivation of such model, several issues have been faced due to the presence of the constraint on the network set by $q_{\mathcal{C}}$ flows. With this type of modelling, it proved to be difficult to express a model which is suitable for control purposes. Therefore, during the derivation of the general case, we attempt to use a different approaches than writing up mass-balance for the whole network.  
 
-\section{Multi-inlet, multi-WT model}
+\section{Multi-inlet/multi-WT model}
 \label{multi_inlet_multi_WT_model}
 
-In case there are more than one WTs, the model based on the mass-balance equation, proposed in \eqref{massbalance_model2} is not applicable due to the fact that the pressures delivered by the tanks have to be balanced, similarly as in a simple connected-volume system. Therefore, a model framework is required which can handle the dynamics of multiple tanks, constrained by the static network and driven by the input flows of the pumping stations. In order to derive such a model, the partitioning of the network is reconsidered. As described previously, the incidence matrix is partitioned such that 
+In case there are more than one WTs, the model based on the mass-balance equation proposed in \eqref{massbalance_model2} is not applicable. This is due to the fact that the inlet pressures have to be balanced, similarly as in a simple connected-volume system. Therefore, a slightly different modelling approach is required which can handle the dynamics of multiple WTs, constrained by the static network and driven by the inlet flows of the pumping stations. In order to derive such a model, the partitioning of the network is reconsidered. As described previously, the incidence matrix is partitioned such that 
 
 \begin{equation}
 \label{H_matrix_sub1}
@@ -1162,7 +1182,7 @@ H=
 \end{pmatrix},
 \end{equation}
 
-where $\bar{H}_{\mathcal{T}}$ is invertible. This partitioning rule on the edges is kept, however in the following model description let us slightly modify the notation and partitioning of the vertices. Now let
+where $\bar{H}_{\mathcal{T}}$ is invertible. The partitioning rule on the edges is kept from before, however in the following model description we let us slightly modify the notation and partitioning of the vertices. Now let
 
 \begin{equation}
   \label{vertices1_1}
@@ -1178,12 +1198,12 @@ and \\
 \end{minipage}
 \begin{minipage}[t]{0.67\textwidth}
 \vspace*{2mm}
- represents the vertices corresponding to the points where elevated reservoirs are connected,\\
+ represents the vertices corresponding to the points where WTs are connected,\\
  \newline
  represents the remaining vertices in the graph.
 \end{minipage}
 
-We originally defined $\bar{d}$ to describe non-inlet demands in the network and $\hat{d}$ to describe inlet-flows of the pumping stations, along with the demands of the WTs. With the redefined notation and partitioning of vertices, we make sure that the vertices related to tanks are in the set $\hat{\mathcal{V}}$ and all other points in the network are in $\bar{\mathcal{V}}$. So now, $\hat{d}$ describes flows regarding the WTs. In order to express the controlled inlet and non-inlet points in the network, the vectors related to $\bar{\mathcal{V}}$, $\bar{p}$ and $\bar{d}$, are further partitioned such that
+We originally defined $\bar{d}$ to describe non-inlet demands in the network and $\hat{d}$ to describe inlet-flows of the pumping stations, along with the demands of the WTs. With the redefined notation and partitioning rule on the vertices, we make sure that the vertices related to tanks are in the set $\hat{\mathcal{V}}$ and all other points in the network are in $\bar{\mathcal{V}}$. Therefore now, $\hat{d}$ describes flows regarding the WTs. In order to express the controlled inlet and non-inlet points in the network, the vectors related to $\bar{\mathcal{V}}$, namely $\bar{p}$ and $\bar{d}$, are further partitioned such that
 
 \begin{subequations}
 
@@ -1212,15 +1232,15 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the vector including the inlet pressures ,\\
-is the vector including the non-inlet pressures, \\
-is the vector including the controlled inlet flows, \\
-is the vector including the non-inlet demands, \\
-is a mapping which selects the nodes belonging to the inlets, \\
+is the vector of the inlet pressures ,\\
+is the vector of the non-inlet pressures, \\
+is the vector of the controlled inlet flows, \\
+is the vector of the non-inlet demands, \\
+is a mapping which selects vertices which belong to the inlets, \\
 is a mapping which selects the remaining vertices.
 \end{minipage}
 
-With this partitioning of vertices, similarly to the model presented in \secref{multi_inlet_reduced_network_description}, Kirchhoff's and Ohm's law can be formulated. Recalling Kirchhoff's vertex law
+With this partitioning of the vertices, similarly to the model presented in \secref{multi_inlet_reduced_network_description}, Kirchhoff's and Ohm's law is formulated. Recalling Kirchhoff's vertex law yields
 
 \begin{equation}
 \label{kirchhoffslaw_matrix}
@@ -1239,7 +1259,7 @@ With this partitioning of vertices, similarly to the model presented in \secref{
  \end{pmatrix},
 \end{equation}
 
-and recalling \eqref{ohmslaw_matrixform}, Ohm's law is given
+and recalling \eqref{ohmslaw_matrixform}, Ohm's law is given such that
 
 \begin{equation}
 \label{ohmslaw_matrixform11}
@@ -1258,7 +1278,7 @@ and recalling \eqref{ohmslaw_matrixform}, Ohm's law is given
  \end{pmatrix}.
 \end{equation}
 
-In order to get an expression for $\hat{d}$, describing the flows regarding the WTs, lets define matrix $\Omega$ as follows
+In order to get an expression for $\hat{d}$, describing the flows regarding the WTs, lets define matrix $\Omega$ as follows:
 
 \begin{equation}
 \label{omega_matrix}
@@ -1269,14 +1289,14 @@ In order to get an expression for $\hat{d}$, describing the flows regarding the 
  \end{pmatrix}.
 \end{equation}
 
-Multiplying \eqref{kirchhoffslaw_matrix} with $\Omega$ from the left-hand side, $\hat{d}$ can be expressed in the form of
+Multiplying \eqref{kirchhoffslaw_matrix} with $\Omega$ from the left-hand side, $\hat{d}$ can be expressed such that
 
 \begin{equation}
 \label{WT_flows}
 \hat{d} = (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} \bar{d}.
 \end{equation}
 
-As shown in \eqref{WT_flows}, the vertex law describes the dependencies of the WT demands on $\bar{d}$, which now consists of the pump inlet flows and the non-inlet demands in the rest of the network, and also shows the dependencies on $q_\mathcal{C}$. Recalling and rewriting the equation governing elevated reservoirs in matrix form, we can write the following
+As shown in \eqref{WT_flows}, the vertex law describes the dependencies of the WT demands on $\bar{d}$, which now consists of the inlet pump flows and the non-inlet demands in the rest of the network, and also shows the dependencies on $q_\mathcal{C}$. Recalling and rewriting the equation governing elevated reservoirs in matrix form, we can write the following
 
 \begin{equation}
 \label{WT_matrixform}
@@ -1285,7 +1305,10 @@ As shown in \eqref{WT_flows}, the vertex law describes the dependencies of the W
 
 where $\Lambda = diag(\frac{1}{\tau_1},... ,\frac{1}{\tau_l}) \in \: \mathbb{R}^{l \times l} \succ 0$. 
 
-Inserting $\hat{d}$ in \eqref{WT_flows}, into \eqref{WT_matrixform} leads to
+In \eqref{WT_matrixform} SI units are considered for the pressures. However, if we make the conversion to pressure head, the diagonal matrix $\Lambda$ simplifies to:
+$\Lambda = diag(A_{wt,1},... ,A_{wt,l}) \in \: \mathbb{R}^{l \times l} \succ 0$. 
+
+Continuing the derivation and inserting $\hat{d}$ in \eqref{WT_flows}, into \eqref{WT_matrixform} leads to
 
 \begin{equation}
 \label{WT_matrixform_1}
@@ -1299,7 +1322,7 @@ Now, with the partitioning of $\bar{d}$, the inlet and non-inlet demands are ins
 \Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
 \end{equation}
 
-As shown in \eqref{WT_matrixform_final}, the dynamics are now in terms of the inputs, $\bar{d}_{\mathcal{K}}$, the overall demand in the network, $\sigma$ and $q_\mathcal{C}$. Recalling \eqref{meshresult2} in \secref{multi_inlet_reduced_network_description} and using the abbreviations for the corresponding matrices, Ohm's law has been reformulated such that
+As shown in \eqref{WT_matrixform_final}, the dynamics are now in terms of the inputs $\bar{d}_{\mathcal{K}}$, the overall demand in the network $\sigma$ and $q_\mathcal{C}$. Recalling \eqref{meshresult2} in \secref{multi_inlet_reduced_network_description} and using the abbreviations for the corresponding matrices, Ohm's law has been reformulated such that
 
  \begin{equation}
 \label{meshresult2_WT_model}
@@ -1313,14 +1336,14 @@ where\\
 \hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$. 
 \end{minipage}
 
-Now, using again that $\bar{d} = K \bar{d}_{\mathcal{K}} + D \bar{d}_{\mathcal{D}}$, the following implicit expression is formulated which enables us to calculate $q_\mathcal{C}$
+Now, using again that $\bar{d} = K \bar{d}_{\mathcal{K}} + D \bar{d}_{\mathcal{D}}$, the following implicit expression yields which allows us to calculate $q_\mathcal{C}$
 
  \begin{equation}
 \label{meshresult2_WT_model1}
 f_{\mathcal{C}}(q_\mathcal{C}) - A_1(\hat{p} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) = 0.
 \end{equation} 
 
-Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_model1}, \eqref{WT_matrixform_final} describes the dynamics of the system, taking into account the static constraints by the demands. Therefore, the structure of the overall Multi-inlet, multi-WT model dynamics can be summarized as follows
+Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_model1}, \eqref{WT_matrixform_final} describes the dynamics of the system, taking into account the static constraints by the demands. Therefore, the structure of the overall Multi-inlet, multi-WT model dynamics can be summarized as shown in \eqref{final_flowmodel}.
 
 \begin{equation}
 \label{final_flowmodel}
@@ -1330,25 +1353,25 @@ Along with the implicit expression for $q_\mathcal{C}$ in \eqref{meshresult2_WT_
 \end{cases}
 \end{equation}
 
-\eqref{final_flowmodel} is a system of first-order Ordinary Differential Equations(ODE) with a constraint, specifying how the system evolves in time, given initial values of the states $\hat{p}$, the inputs $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter $v_{\mathcal{D}}$. The constraint which is given by the algebraic equations regarding the static network, defines the manifold on which the trajectory of the ODE solution can be found. 
+\eqref{final_flowmodel} is a system of first-order ODEs with a constraint, specifying how the system evolves in time, given initial values of the states $\hat{p}$, the inputs $\bar{d}_{\mathcal{K}}$, and parametrized by the time-varying parameter $v_{\mathcal{D}}$. The constraint which is given by the algebraic equations regarding the static network, defines the manifold on which the trajectory of the ODE solution can be found. 
 
-The states of the system are the pressures in the WTs. Therefore when the model equations are solved for $q_\mathcal{C}$, initial information of the pressure values, $\hat{p}$, is required. Equivalently, the initial water levels in the tanks have to be known, as for any ODE. Furthermore, the initial value should be inside the set described by the algebraic constraint. 
+The states of the system are the pressures in the WTs. Therefore, when the model equations are solved for $q_\mathcal{C}$, initial information of the pressure values, $\hat{p}$ is required. Equivalently, the initial water levels in the tanks have to be known, as for any ODE. Furthermore, the initial value should be inside the set described by the algebraic constraint. 
 
-In order to calculate the corresponding pressure inputs, $\bar{p}_{\mathcal{K}}$, first $\bar{p}$ is expressed from Ohm's law as proposed in \secref{multi_inlet_reduced_network_description}
+In order to calculate the corresponding pressure inputs $\bar{p}_{\mathcal{K}}$, first $\bar{p}$ is expressed from Ohm's law as proposed in \secref{multi_inlet_reduced_network_description}.
 
 \begin{equation}
   \label{non-inlet_p_WT}
   \bar{p} =  \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) - \bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - \bar{h} .
 \end{equation}
 
-Now using that $\bar{p}_{\mathcal{K}} = K^T \bar{p} $, the pressure input equation becomes
+Now using that $\bar{p}_{\mathcal{K}} = K^T \bar{p} $, the pressure input equation becomes:
 
 \begin{equation}
   \label{non-inlet_p_WT1}
   \bar{p}_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_\mathcal{C} + A_3 K \bar{d}_{\mathcal{K}} - A_3 D v_{\mathcal{D}} \sigma) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p} + \hat{h}) - K^T\bar{h} .
 \end{equation}
 
-Furthermore, using that $\bar{p}_{\mathcal{D}} = D^T \bar{p} $, the pressure output equation becomes
+Furthermore, using that $\bar{p}_{\mathcal{D}} = D^T \bar{p} $, the pressure output equation yields:
 
 \begin{equation}
   \label{non-inlet_p_WT111}
@@ -1368,11 +1391,11 @@ Equivalently, \eqref{final_flowmodel} and \eqref{non-inlet_p_WT111} can be descr
 s.t. \:\:\:\:\: q_\mathcal{C} = q_\mathcal{C}((\hat{p}+\hat{h}), \bar{d}_{\mathcal{K}}, \sigma)
 \end{equation*}
 
-with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \mathbb{R}^{c}$ the input vector, $\sigma \in \mathbb{R}_{+}$ the measurable disturbance, $v_{\mathcal{D}} \in \mathbb{R}^{(n-l-c)}$ the time-varying parameter and $\bar{p}_{\mathcal{K}} \in \mathbb{R}^{c}$ the output vector. 
+with $\hat{p} \in \mathbb{R}^{l}$ the state vector, $\bar{d}_{\mathcal{K}} \in \mathbb{R}^{c}$ the input vector, $\sigma \in \mathbb{R}_{+}$ the measurable disturbance, $v_{\mathcal{D}} \in \mathbb{R}^{(n-l-c)}$ the time-varying distribution parameter and $\bar{p}_{\mathcal{K}} \in \mathbb{R}^{c}$ the output vector. 
 
-Although the ODE describing the dynamics is linear, the output and constraint equations are non-linear. Therefore the system is treated as a non-linear problem since the input-output relation is non-linear.  
+Although the ODE describing the dynamics is linear, the output and constraint equations are non-linear. Therefore, the system is treated as a non-linear SS system since the input-output relation is non-linear.  
 
-It is worth noting that this model with the flow inputs and the dynamics of the WTs results in a scalar dynamic equation in case of one tank. Therefore, the proposed restructuring of the model here is suitable for describing one tank systems as well, and capable of replacing the mass-balance based system dynamics, proposed in \secref{multi_inlet_single_WT_model}. Therefore, the single-WT network model, presented in \secref{multi_inlet_single_WT_model} is a special case of the Multi-inlet, Multi-WT model framework derived here. 
+It is worth noting that this model with the inlet flows and the dynamics of the WTs results in a scalar dynamic equation in case of one tank. Therefore, the proposed restructuring of the model here is suitable for describing one tank systems as well, and capable of replacing the mass-balance based system dynamics, proposed in \secref{multi_inlet_single_WT_model}. Therefore, the single-WT network model, presented in \secref{multi_inlet_single_WT_model} is a special case of the Multi-inlet, Multi-WT model framework derived here. 
 
 %q_\mathcal{C} = k_{v_{\mathcal{D}}}(q_\mathcal{C},\hat{p}, \bar{d}_{\mathcal{K}}, \sigma)
 
@@ -1386,7 +1409,7 @@ It is worth noting that this model with the flow inputs and the dynamics of the 
 \section{Model comparison}
 \label{model_comparison}
 
-In this chapter, three different model arrangements have been proposed and two of them have been derived for control purposes. The main goal was to develop a model of a WSS with elevated reservoirs, thereby the Multi-inlet model described in the first column in \tabref{comparisontable}, was a baseline model to extend towards inclusion of WTs. Therefore, as a summary of the network modelling, the different approaches and system structures are compared. It should be noted again, that notation has been redefined through the modelling, therefore symbols for the Multi-inlet and Multi-inlet, single-WT models are different from the one describing the Multi-inlet, multi-WT model. With this in mind, the properties of the three network models are summed up in the following table
+In this chapter, three different model arrangements have been proposed and two of them have been fully derived for control purposes. The main goal was to develop a model of a WSS with WTs, based on the Multi-inlet model proposed in \cite{oneinput_paper}. Therefore, in order to present a summary for the modelling, we compare the different approaches and system structures discussed in this chapter. It is important to note, that the notation has been redefined through the modelling, therefore the symbols for the Multi-inlet and the Multi-inlet/single-WT models are different from the one describing the Multi-inlet/multi-WT model. Keeping this in mind, the properties of the three network models are shown in the following table:
 \vspace{-2mm}
 \begin{center}
     \begin{tabular}{ | >{\centering\arraybackslash}m{1.8cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} | >{\centering\arraybackslash}m{3.6cm} |}
@@ -1404,7 +1427,7 @@ In this chapter, three different model arrangements have been proposed and two o
     \textbf{States} & - & $\hat{p}_t$ - The pressure in one tank. & $\hat{p}$ - The pressures in multiple tanks.\\ 
     \hline
       \multirow{1}{*}
-    \textbf{Output} & $\bar{p}$ - Pressures in the non-inlet points. & $\bar{p}$ - Pressures in the non-inlet points & $\bar{p}$ - Pressures in the non-inlet points.\\ 
+    \textbf{Output} & $\bar{p}$ - Pressures in the non-inlet points. & $\bar{p}_{c}$ - Inlet-pressure points & $\bar{p}_{\mathcal{K}}$ - Inlet pressure points.\\ 
     \hline
       \multirow{1}{*}
     \textbf{Advantages} & The network is without dynamics, therefore all solutions are steady-state values. & The network is controlled with flow, which makes the system more robust towards pressure errors in the WT. The dynamics are governed by a scalar equation, relying on the input flows.  & The control can handle the pressure balance among multiple WTs.\\ 
@@ -1441,7 +1464,7 @@ q_\mathcal{C} = q_\mathcal{C}((\hat{p}+\hat{h}), \bar{d}_{\mathcal{K}}, \sigma)
     \label{comparisontable}
 \end{center}
 \vspace{-1mm}
-In the next chapters, the Multi-inlet, multi-WT network model is discussed, as it is the suitable model for describing the water network in Randers. 
+In the next chapters, the Multi-inlet, multi-WT network model is further discussed, as it is the suitable model for describing the water network in Randers. 
 
 
 

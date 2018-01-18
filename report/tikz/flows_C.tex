@@ -16,7 +16,7 @@ height=1.3in,
 at={(0.758in,0.481in)},
 scale only axis,
 xmin=0,
-xmax=5,
+xmax=7.3,
 xlabel style={font=\color{white!15!black}},
 xlabel={Time [h]},
 ymin=-15,
@@ -24,13 +24,13 @@ ymax=30,
 ylabel style={font=\color{white!15!black}},
 ylabel={Flow [LPS]},
 axis background/.style={fill=white},
-%title style={font=\bfseries},
-%title={$\text{Flows in e}_\text{2}\text{, e}_\text{6}\text{ and e}_\text{7}$},
-xmajorgrids,
-ymajorgrids,
+title style={},
+title={$\text{Flows in e}_\text{2}\text{, e}_\text{6}\text{ and e}_\text{7}$},
+%xmajorgrids,
+%ymajorgrids,
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot[const plot, color=mycolor1, line width=1.2pt] table[row sep=crcr] {%
+\addplot[const plot, color=blue, line width=1.2pt] table[row sep=crcr] {%
 0	11.7502570959187\\
 1	29.5561012463149\\
 2	23.0126657096865\\
@@ -38,9 +38,19 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	18.5662622910719\\
 5	9.43871589453002\\
 };
-\addlegendentry{$q_{\mathcal{C},2}$}
+\addlegendentry{\tiny $q_{\mathcal{C},1}$}
 
-\addplot[const plot, color=mycolor2, line width=1.2pt] table[row sep=crcr] {%
+\addplot[const plot, dashed, color=SeaGreen, line width=1pt] table[row sep=crcr] {%
+0	13.7502570959187\\
+1	27.9561012463149\\
+2	24.0126657096865\\
+3	27.1936960334265\\
+4	18.1662622910719\\
+5	8.43871589453002\\
+};
+\addlegendentry{\tiny $q_{\mathcal{C},1e}$}
+
+\addplot[const plot, color=red, line width=1.2pt] table[row sep=crcr] {%
 0	3.85877138476544\\
 1	9.45870515475531\\
 2	7.4303780100986\\
@@ -48,7 +58,17 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	6.03871892954993\\
 5	3.10763052781182\\
 };
-\addlegendentry{$q_{\mathcal{C},6}$}
+\addlegendentry{\tiny $q_{\mathcal{C},2}$}
+
+\addplot[const plot, dashed, color=PineGreen, line width=1pt] table[row sep=crcr] {%
+0	2.85877138476544\\
+1	9.95870515475531\\
+2	7.99303780100986\\
+3	8.79458158128527\\
+4	5.03871892954993\\
+5	3.10763052781182\\
+};
+\addlegendentry{\tiny $q_{\mathcal{C},2e}$}
 
 \addplot[const plot, color=mycolor3, line width=1.2pt] table[row sep=crcr] {%
 0	-5.87120832235041\\
@@ -58,7 +78,17 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	-9.27312831304249\\
 5	-4.71685971758539\\
 };
-\addlegendentry{$q_{\mathcal{C},7}$}
+\addlegendentry{\tiny $q_{\mathcal{C},3}$}
+
+\addplot[const plot, dashed, color=black, line width=1pt] table[row sep=crcr] {%
+0	-6.99120832235041\\
+1	-13.7517027576359\\
+2	-11.4907702869938\\
+3	-12.9743937097818\\
+4	-8.27312831304249\\
+5	-4.71685971758539\\
+};
+\addlegendentry{\tiny $q_{\mathcal{C},3e}$}
 
 \end{axis}
 \end{tikzpicture}%

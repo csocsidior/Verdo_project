@@ -23,13 +23,13 @@ ymax=20,
 ylabel style={font=\color{white!15!black}},
 ylabel={Flow [LPS]},
 axis background/.style={fill=white},
-%title style={font=\bfseries},
-%title={$\text{End-user demands in v}_\text{3}\text{ and v}_\text{6}$},
-xmajorgrids,
-ymajorgrids,
+title style={},
+title={$\text{End-user demands in v}_\text{3}\text{ and v}_\text{6}$},
+%xmajorgrids,
+%ymajorgrids,
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot[const plot, color=mycolor1, line width=1.2pt] table[row sep=crcr] {%
+\addplot[const plot, color=blue, line width=1.2pt] table[row sep=crcr] {%
 0	2.5\\
 1	6.5\\
 2	5\\
@@ -37,9 +37,9 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	4\\
 5	2\\
 };
-\addlegendentry{$\bar{d}_3$}
+\addlegendentry{\tiny $\bar{d}_3$}
 
-\addplot[const plot, color=mycolor2, line width=1.2pt] table[row sep=crcr] {%
+\addplot[const plot, color=red, line width=1.2pt] table[row sep=crcr] {%
 0	7.5\\
 1	19.5\\
 2	15\\
@@ -47,7 +47,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	12\\
 5	6\\
 };
-\addlegendentry{$\bar{d}_6$}
+\addlegendentry{\tiny $\bar{d}_6$}
 
 \end{axis}
 \end{tikzpicture}%

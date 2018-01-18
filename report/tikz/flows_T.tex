@@ -17,7 +17,7 @@ height=1.3in,
 at={(0.758in,0.481in)},
 scale only axis,
 xmin=0,
-xmax=5,
+xmax=7.3,
 xlabel style={font=\color{white!15!black}},
 xlabel={Time [h]},
 ymin=-40,
@@ -25,13 +25,13 @@ ymax=40,
 ylabel style={font=\color{white!15!black}},
 ylabel={Flow [LPS]},
 axis background/.style={fill=white},
-%title style={font=\bfseries},
-%title={$\text{Flows in e}_\text{1}\text{, e}_\text{5}\text{, e}_\text{3}\text{ and e}_\text{4}$},
-xmajorgrids,
-ymajorgrids,
+title style={},
+title={$\text{Flows in e}_\text{1}\text{, e}_\text{5}\text{, e}_\text{3}\text{ and e}_\text{4}$},
+%xmajorgrids,
+%ymajorgrids,
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot[const plot, color=mycolor1, line width=1.2pt] table[row sep=crcr] {%
+\addplot[const plot, color=blue, line width=1.2pt] table[row sep=crcr] {%
 0	-12.0202773888028\\
 1	-31.3456933339238\\
 2	-24.0915174125941\\
@@ -39,9 +39,19 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	-19.2544150484795\\
 5	-9.61422564913281\\
 };
-\addlegendentry{$q_{\mathcal{T},1}$}
+\addlegendentry{\tiny $q_{\mathcal{T},1}$}
 
-\addplot[const plot, color=mycolor2, line width=1.2pt] table[row sep=crcr] {%
+\addplot[const plot, dashed, color=SeaGreen, line width=1pt] table[row sep=crcr] {%
+0	-12.7202773888028\\
+1	-31.9456933339238\\
+2	-24.7915174125941\\
+3	-28.9247207423594\\
+4	-19.9544150484795\\
+5	-9.61422564913281\\
+};
+\addlegendentry{\tiny $q_{\mathcal{T},1e}$}
+
+\addplot[const plot, color=red, line width=1.2pt] table[row sep=crcr] {%
 0	-1.62879167764959\\
 1	-4.74829724236414\\
 2	-3.50922971300619\\
@@ -49,7 +59,17 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	-2.72687168695751\\
 5	-1.28314028241461\\
 };
-\addlegendentry{$q_{\mathcal{T},5}$}
+\addlegendentry{\tiny $q_{\mathcal{T},2}$}
+
+\addplot[const plot, dashed, color=PineGreen, line width=1pt] table[row sep=crcr] {%
+0	-1.92879167764959\\
+1	-4.94829724236414\\
+2	-3.90922971300619\\
+3	-4.92560629021824\\
+4	-2.12687168695751\\
+5	-1.28314028241461\\
+};
+\addlegendentry{\tiny $q_{\mathcal{T},2e}$}
 
 \addplot[const plot, color=mycolor3, line width=1.2pt] table[row sep=crcr] {%
 0	-9.52027738880282\\
@@ -59,7 +79,17 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	-15.2544150484795\\
 5	-7.6142256491328\\
 };
-\addlegendentry{$q_{\mathcal{T},3}$}
+\addlegendentry{\tiny $q_{\mathcal{T},3}$}
+
+\addplot[const plot, dashed, color=black, line width=1pt] table[row sep=crcr] {%
+0	-9.12027738880282\\
+1	-24.1456933339238\\
+2	-17.0915174125941\\
+3	-22.1247207423594\\
+4	-15.2544150484795\\
+5	-7.6142256491328\\
+};
+\addlegendentry{\tiny $q_{\mathcal{T},3e}$}
 
 \addplot[const plot, color=mycolor4, line width=1.2pt] table[row sep=crcr] {%
 0	13.3790487735683\\
@@ -69,7 +99,18 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 4	21.2931339780294\\
 5	10.7218561769446\\
 };
-\addlegendentry{$q_{\mathcal{T},4}$}
+\addlegendentry{\tiny $q_{\mathcal{T},4}$}
+
+\addplot[const plot, dashed, color=brown, line width=1pt] table[row sep=crcr] {%
+0	14.5790487735683\\
+1	35.5043984886791\\
+2	27.9218954226927\\
+3	31.1193023236447\\
+4	21.9931339780294\\
+5	10.1218561769446\\
+};
+\addlegendentry{\tiny $q_{\mathcal{T},4e}$}
+
 
 \end{axis}
 \end{tikzpicture}%
