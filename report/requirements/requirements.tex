@@ -1,7 +1,7 @@
 \chapter{System Modelling}
 \label{system_modelling}
 
-\emph{This chapter presents the mathematical description of hydraulic components in water distribution networks. Thereby, the physical measures of hydraulic systems are introduced. The similarities to electronic networks are shown by explaining the relevant properties of graph theory. The model of a single and multi-inlet network, presented in \cite{oneinput_paper}, is first introduced, then the model description is extended such that it is capable of handling multiple Water Tanks. In the end of the chapter, different models are compared and a summary of the extended system model is given.}
+\emph{This chapter presents the mathematical description of hydraulic components in water distribution networks. Thereby, the physical measures of hydraulic systems are introduced. The similarities to electronic networks are shown by explaining the relevant properties of graph theory. The model of a single and multi-inlet network, based on \cite{oneinput_paper}, is first introduced, then the model description is extended such that it is capable of handling multiple Water Tanks. In the end of the chapter, different models are compared and a summary of the extended system model is given.}
 
 \section{Hydraulic component modelling}
 \label{hydraulic_component_modelling}
@@ -47,7 +47,9 @@ are the absolute pressures at the two endpoints.
 \subsection{Hydraulic head}
 \label{hydraulic_head}
 
-As can be seen in \eqref{onecomponent}, the measure of pressure is in $[Pa]$ and the measure of volumetric flow is in $[\frac{m^3}{s}]$. In the further report, the units used for calculation are in SI, however sometimes results are shown in non-SI units. Non-SI units are considered due to the fact that EPANET uses meter head and liters instead of pascals and cubic meters for pressure and flow simulations, respectively. The unit conversion between liters and cubic meters is a constant, however meter head expresses pressure in terms of length. The relation between pressure and pressure head is explained in \eqref{pressurehead} below. 
+As can be seen in \eqref{onecomponent}, the measure of pressure is in $[Pa]$ and the measure of volumetric flow is in $[\frac{m^3}{s}]$. In the further report SI units are used, in order to show the hydraulic model of the components. However, non-SI units are also utilized due to the fact that EPANET uses meter head for pressure and liters per seconds for flow simulations. Furthermore, the measurements carried out on the Randers network are also measured in non-SI units. Therefore, we allow ourselves to use non-SI units for showing measurement and simulation results. 
+
+The unit conversion between liters and cubic meters yields by a constant, while meter head expresses pressure in terms of length. The relation between pressure and pressure head is explained in \eqref{pressurehead}. 
 
 %\begin{ceqn} 
 \begin{equation}
@@ -78,11 +80,9 @@ is the density of the fluid.
 \textcolor{White}{te}$\unit{kg/m^3}$
 \end{minipage}
 
-As can be seen in \eqref{pressurehead}, if the density of the liquid is a known parameter, the conversion can be made easily between pressure and pressure head. In this project, water is considered and its density is assumed to be constant. 
+As can be seen in \eqref{pressurehead}, if the density of the liquid is a known parameter, the conversion can be done easily between pressure and pressure head. In the thesis, the fluid is water and its density is assumed to be constant. 
 
-In general, the hydraulic head, or total head, is a measure of the potential of fluid at a specific measurement point. It relates the energy of an incompressible fluid to the height of an equivalent static column of that fluid. The different forms of energies concerning fluids can be measured in distance, and therefore that is the reason that these terms are sometimes referred to as heads. The total hydraulic head of a fluid is composed of the pressure head and elevation head. \footnote{There is a third term, called the kinetic head which is discarded, since the velocity of the fluid is assumed to be constant along the cross sectional area in the whole length of pipes \cite{chen2016sustainable}.}
-
-The total head is given 
+In general, the hydraulic head and total head is a measure of the potential of fluid at a specific measurement point. It relates the energy of an incompressible fluid to the height of an equivalent static column of the fluid. The different forms of energies regarding fluids can be measured in distance, and therefore the reason is that these terms are referred to as heads. The total hydraulic head of a fluid is composed of the pressure head and elevation head. \footnote{There is a third term, called the kinetic head which is discarded, since the velocity of the fluid is assumed to be constant along the cross sectional area in the whole length of pipes \cite{chen2016sustainable}.} The total head is given in \eqref{totalhead}.
 
 %\begin{ceqn} 
 \begin{equation}
@@ -107,12 +107,12 @@ is the elevation(head).
 \textcolor{White}{te}$\unit{m}$
 \end{minipage}
 
-Therefore, pressure head is a measurement of length, which is dependant on the density of the fluid but can be converted to the units of pressure. Using meters for describing pressure in the system is convenient for the reason, that pressure can be treated the same way as the elevation. In calculations, this property is exploited. 
+Therefore, pressure head is a measurement of length which depends on the density of the fluid but can be converted to pressure units such as Pascals. Using meters for describing pressure in the system is convenient due to the reason that pressure can be treated the same way as elevation. During the derivation of the WSS network model this property is going to be strongly exploited. 
 
 \subsection{Pipe model}
 \label{pipe_component}
 
-Pipes in the network are governed by the dynamic equation
+Pipes in the network are governed by the dynamics shown in \eqref{complete_pipemodel}.
 
 \begin{equation}
 \label{complete_pipemodel}
@@ -127,21 +127,21 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the mass inertia of the water in the pipes,\\ 
-is the pressure drop due to friction,\\
-is the pressure drop due to geodesic level difference across the two terminals of pipe elements.
+is the mass inertia of the water in the $i^{th}$ pipe,\\ 
+is the pressure drop due to friction in the $i^{th}$ pipe,\\
+is the pressure drop due to geodesic level difference across the two terminals of the $i^{th}$ pipe.
 \end{minipage}
 
-The dynamics of pipes due to mass inertia are discarded in this project, as it is shown in other works that the small time constant of these mass inertia dynamics are not dominant in the system, especially if there are elevated reservoirs included \cite{8thsemester_project,kenneth_houe}. Therefore the pressure drop across pipes can be written as
+The dynamics due to mass inertia are discarded in the thesis, as it is shown in other works that the small time constant of these mass inertia dynamics are not dominant in the system if there are elevated reservoirs included \cite{8thsemester_project,kenneth_houe}. Therefore, the pressure drop across pipes can be written as
 
 \begin{equation}
 \label{complete_pipemodel1}
-  \Delta p_i = f_i(q_i) - h_i,
+  \Delta p_i = f_i(q_i) - h_i.
 \end{equation}
 
-Additionally, the dynamics due to inertia of the liquid is not the only possible dynamics for pipes. The phenomenon, called water hammer occurs when a fluid, or gas in motion is forced to stop or change direction suddenly. In this case, a pressure wave runs through the pipe, causing vibration and possible damage in the network \cite{2011water}. However, \eqref{complete_pipemodel} models the pressure drops or equivalently, headloss, due to the elevation of the pipes and friction of the fluid. Therefore such rapid flow change is not assumed in the network.
+Additionally, the dynamics due to inertia of the liquid are not the only possible dynamics for pipes. The phenomenon, called water hammer occurs when a fluid, or gas in motion is forced to stop or change direction suddenly. This can occur when a valve is rapidly closed or opened. In this case, a pressure wave runs through the pipe, causing vibration and possible damage to the network \cite{2011water}. However, \eqref{complete_pipemodel} models the pressure drops or equivalently, the headloss, due to the elevation of the pipes and friction of the fluid. Although such a rapid change can occur in the network due to undesired network operation, in the further modelling normal operation is assumed.
 
-The pressure drop due to friction across the $i^{th}$ edge is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle > 0$ for every $x,y \in \: \mathbb{R}^{m}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance such that
+The pressure drop due to friction across the $i^{th}$ pipe segment is a diagonal map where $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing.\footnote{A map $f: \mathbb{R}^{m} \rightarrow \mathbb{R}^{m} $ is strictly increasing if $\langle x-y, f(x)-f(y) \rangle > 0$ for every $x,y \in \: \mathbb{R}^{m}$ such that $x \neq y$ \cite{oneinput_paper}.} As it is shown in \eqref{deltap_friction}, $f_i$ describes a flow dependant pressure drop due to the hydraulic resistance such that
 
 \begin{equation}
   \label{deltap_friction}
@@ -161,7 +161,7 @@ is the resistance coefficient, the parameter of pipes.
 \textcolor{White}{te}$\unit{\cdot}$
 \end{minipage}
 
-\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. The resistance coefficient is calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result and is the most commonly used in Europe\cite{prahata,agency2016epanet}. $\gamma$ is given as shown in \eqref{resistance_coefficient} below\footnote{EPANET uses the D-W formula for calculating the resistance terms.}.  
+\eqref{deltap_friction} is motivated by turbulent flow in the pipes, which is typical in water supply applications. Furthermore, the resistance coefficients are calculated according to the Darcy-Weisbach formula, which provides the theoretically most precise result and is the most commonly used friction calculation in Europe\cite{prahata,agency2016epanet}. $\gamma$ is given as shown in \eqref{resistance_coefficient} \footnote{ Among other calculation methods, it is possible to use D-W friction calculator in EPANET. }.  
 
 \begin{equation}
   \label{resistance_coefficient}
@@ -180,11 +180,11 @@ where\\
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
 is the Darcy friction factor,  \\
-is the roughness of the pipe,  \\
-is the diameter of the pipe,  \\
+is the roughness of the pipe segment,  \\
+is the diameter of the pipe segment,  \\
 is the Reynolds-number,  \\
-is a coefficient in the D-W equation,  \\
-is the length of the pipe.
+is the D-W  coefficient for SI units,  \\
+is the length of the pipe segment.
 \end{minipage}
 \begin{minipage}[t]{0.10\textwidth}
 \vspace*{2mm}
@@ -196,11 +196,9 @@ is the length of the pipe.
 \textcolor{White}{te}$\unit{m}$
 \end{minipage}
 
-In \eqref{resistance_coefficient}, the Darcy friction factor, $f_D$, is dependant on the Reynolds number, which is defined by the volumetric flow in the pipes. However, at high flows Re becomes nearly constant and therefore normally this flow dependency is disregarded. Thus, $f_D$ is considered to be constant in the further project. 
+In \eqref{resistance_coefficient}, the Darcy friction factor $f_D$ depends on the Reynolds number, which is determined by the volumetric flow in the pipes. At high flows Re becomes nearly constant and therefore normally this flow dependency is disregarded. Thus, $f_D$ is considered to be constant in the simulations based on this type of network modelling. 
 
-The derivation of \eqref{resistance_coefficient} is explained in more detail in appref \cite{chen2016sustainable}. Furthermore, in the following sections it is assumed that each $f_i$ has a structure shown in \eqref{deltap_friction}.
-
-It is important to note here that $f_i(\cdot)$ is a homogeneous map which means that if the argument is multiplied by a positive scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it can be shown that
+Furthermore, it is important to note that $f_i(\cdot)$ is a homogeneous map which means that if the terms in its argument are multiplied by a positive scalar, then its value is multiplied by some power of this scalar \footnote{$g(\alpha v) = \alpha^k g(v)$}. For $f_i(q_i)$, it has been shown in \cite{oneinput_paper} that
 
 \begin{equation}
   \label{homogeneity}
@@ -208,12 +206,12 @@ It is important to note here that $f_i(\cdot)$ is a homogeneous map which means 
 \end{equation}
 
 More precisely, with the given structure of $f(\cdot)$ the scaling would be $|\alpha|\alpha$, however $\alpha \geq 0$ is already assumed in \eqref{homogeneity}. 
-This property is noted here and used later in the system description, in \secref{multi_inlet_reduced_network_description}, where the scaling is indeed such that $\alpha \in \: \mathbb{R}_{+}$.
+This property is noted here and used later in the network modelling, in \secref{multi_inlet_reduced_network_description}, where the scaling is indeed such that $\alpha \in \: \mathbb{R}_{+}$. In the following, it is assumed that each $f_i$ for the $i^{th}$ pipe segment has a structure as shown in \eqref{deltap_friction}.
 
 \subsection{Valve model}
 \label{valve_component}
 
-Valves in the network are governed by the following algebraic expression
+Valves in the network are governed by the algebraic expression shown in \eqref{valvemodel}.
 
 \begin{equation}
 \label{valvemodel}
@@ -226,7 +224,7 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the valve conductivity function, taking the Opening Degree(OD) of the valve in its argument \cite{8thsemester_project}.
+is the valve conductivity function, taking the Opening Degree(OD) of the valve into account \cite{8thsemester_project}.
 \end{minipage}
 
 $\mu_i(q_i,k_v)$ is a continuously differentiable and proper function which for $q_i = 0$ is zero and monotonically increasing.
@@ -234,7 +232,7 @@ $\mu_i(q_i,k_v)$ is a continuously differentiable and proper function which for 
 \subsection{Pump model}
 \label{pump_component}
 
-Centrifugal pumps are governed by the following expression \cite{kallesoePHD}
+Centrifugal pumps are governed by the expression shown in \eqref{eq:PumpModel} \cite{kallesoePHD}.
 
 \begin{equation}
   \Delta p = -a_{h2}{q_i}^2 + a_{h1} \omega_r q_i + a_{h0}{\omega_r}^2
@@ -266,7 +264,7 @@ The model described in \eqref{eq:PumpModel}, works only for positive flows, ther
 \subsection{Elevated reservoir model}
 \label{elevatedreservoir_component}
 
-In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is equal to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the cross sectional area of the tank and the amount of water in it, proportional relation can be set between the pressure and the flow in and out of the tank. The dynamics of such system can be described by a first order differential equation of the form
+In elevated reservoirs, the rate of change in the volume of the fluid inside the tank is equal to the volumetric flow at which water enters or leaves the tank. Since the pressure on the bottom is due to the cross sectional area of the tank and the amount of water stored inside, proportional relation can be set between the pressure and the flow in and out of the tank. The dynamics of such components are described by first order differential equations shown in \eqref{wt_model1}.
 
 \begin{equation}
 \label{wt_model1}
@@ -293,17 +291,18 @@ is the flow into the tank if $q_i < 0$ and flow out of the tank if $q_i > 0$.
 \textcolor{White}{te}$\unit{Pa}$\\
 \textcolor{White}{te}$\unit{m}$\\
 \textcolor{White}{te}$\unit{Pa/m^3}$\\
+\newline
 \textcolor{White}{te}$\unit{m^3/s}$
 \end{minipage} 
 
-As can be seen in \eqref{wt_model1}, in general, the parameter of the tank depends on the pressure and water level ratio, if the cross sectional are is not constant along the height of the tank. However, it is assumed that tanks have the same cross sectional areas in the entire height. Then \eqref{wt_model1} simplifies to
+As can be seen in \eqref{wt_model1}, in general, the parameter of the tank depends on the pressure and water level ratio, if the cross sectional area is not constant along the height of the tank. However, it is assumed that tanks have the same cross sectional areas in the entire height. Then \eqref{wt_model1} simplifies to
 
 \begin{equation}
 \label{wt_model2}
 \dot{p}_i = -\tau_i q_i.
 \end{equation}
 
-In this case the parameter of the tank is given by 
+In this case, assuming the pressure in pascals, the parameter of the tank is given by \eqref{wt_model3}.
 
 \begin{equation}
 \label{wt_model3}
@@ -323,16 +322,21 @@ is the cross sectional area of the $i^{th}$ tank.
 \textcolor{White}{te}$\unit{m^2}$
 \end{minipage} 
 
+By converting the pressure $p_i$ to pressure head $h_{p,i}$ in \eqref{wt_model2}, the parameter of the $i^{th}$ tank can be written as the reciprocal of the cross sectional area, as shown in \eqref{wt_model34}.
 
+\begin{equation}
+\label{wt_model34}
+\tau_i =\frac{1}{A_{wt,i}},
+\end{equation}
 
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
 
 Tools from Graph Theory(GT) can be utilized to model a WSS as a directed graph, similarly as in Circuit Theory(CT). In the graph the set of vertices represent sources, consumption nodes and reservoirs, while the set of edges, represent pipes, pumps and valves. 
 
-In order to track the pressure and flow in the desired part of the network, the equation system of the network has to be solved for the corresponding edges and vertices. The whole network can be described by writing up the equations for all edges in the network, based on the mathematical modelling of the different components in the system, as shown in \secref{hydraulic_component_modelling}. However, in case of complex systems such as water networks for large cities, these systems of equations are difficult to handle individually and typically cannot be solved explicitly if the system consists of loops. Therefore the properties of GT are not only useful for setting up relations between flow and pressure, but to make the handling of algebraic constraints easier by exploiting the properties of linear algebra. Thereby making it convenient for implementing it in computer algorithms for iterative solving methods.  
+In order to track the pressure and flow in the desired part of the network, the equation system relying on the network graph has to be solved for the corresponding edges and vertices. The whole network can be described by writing up the equations for all edges, taking into account the mathematical model of the different components. However, in case of complex systems such as water supply networks for large cities, the systems of equations are difficult to handle individually and typically cannot be solved explicitly if the system consists of many loops. Therefore, the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of algebraic constraints easier by exploiting the properties of linear algebra. Thereby making it convenient for implementing it in computer algorithms that use iterative solving methods.  
 
-WSSs can be described by a directed and connected graph, such that \cite{graph_intro}: 
+WSSs can be described by a directed and connected graph, such that \cite{graph_intro} 
 
 \begin{equation}
   \label{Numberofchords}
@@ -357,7 +361,7 @@ is the set of edges, where $\mathcal{E} = \{e_1, ..., e_m\}$.
 \subsection{Incidence matrix}
 \label{incidence_matrix}
 
-The incidence matrix, $H$, of a connected graph, $\mathcal{G}$, is a matrix where the number of rows and columns correspond to the number of vertices and edges, respectively. Therefore $H\in \: \mathbb{R}^{n \times m}$. In case of hydraulic networks, edges are directed in order to keep track of the direction of the flow in the system. 
+The incidence matrix, $H$, of a connected graph, $\mathcal{G}$, is a matrix where the number of rows and columns correspond to the number of vertices and edges, respectively. Therefore, $H\in \: \mathbb{R}^{n \times m}$. In case of hydraulic networks, edges are directed in order to keep track of the direction of the flow in the system. 
 
 \begin{equation}
 \label{DiGraph}
@@ -375,7 +379,7 @@ The incidence matrix, $H$, of a connected graph, $\mathcal{G}$, is a matrix wher
 		\right.
 \end{equation}	
 
-It is worth mentioning that the reduced incidence matrix can be obtained by removing any arbitrary row from $H$. Therefore $H$ always has $(n-1)$ row rank. This statement is induced by the mass conservation in the network and explained in the following section, \secref{kirchhoffs_law}.
+It is worth mentioning that the reduced incidence matrix can be obtained by removing any arbitrary row from $H$. Therefore $H$ always has $(n-1)$ row rank \cite{deo2017graph}. This statement is induced by the mass conservation in the network and explained in \secref{kirchhoffs_law}.
 
 \subsection{Cycle matrix}
 \label{cycle_matrix}
@@ -416,7 +420,7 @@ The set of fundamental cycles correspond to the fundamental cycle matrix, $B$, s
 \section{Kirchhoff's and Ohm's law for hydraulic networks}
 \label{kirchhoffs_law}
 
-In this project, the hydraulic system is considered to be an open network with pipes, valves, pumps and the storage tanks, where water is able to enter and leave the network at a subset of the vertices. For such system, Kirchhoff's vertex law, or equivalently Kirchhoff's current law(KCL), corresponds to conservation of mass in each vertex and described by
+In the thesis, the hydraulic system is considered to be an open network with pipes, valves, pumps and storage tanks, where water is able to enter and leave the network at a subset of the vertices. For such system, Kirchhoff's vertex law or equivalently Kirchhoff's current law(KCL) correspond to conservation of mass in each vertex and it is described by \eqref{vertexlaw_open}.
 
 \begin{equation}
   \label{vertexlaw_open}
@@ -436,49 +440,51 @@ is the vector of nodal demands, with $d_i > 0$ when demand flow is into vertex $
 \textcolor{White}{te}$\unit{m^3/s}$
 \end{minipage}
 
-Nodal demands are seen as the end-user consumption, which means that water is taken out from the network. The mass conservation corresponds to the fact that what is consumed from the system must also be produced. Due to mass conservation, there can be only $(n-1)$ independent nodal demands in the network
+Nodal demands are seen as the end-user consumption, which means that water is taken out from the network. The mass conservation corresponds to the fact that what is consumed in the system must also be produced. Due to mass conservation, there can be only $(n-1)$ independent nodal demands in the network.
 
 \begin{equation}
   \label{mass_conservation}
-  d_n = - \sum_{i=1}^{n-1} d_i.
+  d_n = - \sum_{i=1}^{n-1} d_i. 
 \end{equation}
 
-As a matter of fact, \eqref{mass_conservation} is not an additional constraint since it follows from \eqref{vertexlaw_open}. This can be sown by using the knowledge that $\mathds{1}_n$ is the left kernel\footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.} of $H$.
+As a matter of fact, \eqref{mass_conservation} is not an additional constraint since it follows from \eqref{vertexlaw_open}. This can be sown by using the knowledge that $\mathbb{1}_n$ is the left kernel of $H$ \footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.}.
 
-In the further report, a distinction is made between inlet and non-inlet nodes. It is assumed that the demand at non-inlet nodes fulfil the following constraint
+In the further thesis, a distinction is made between inlet and non-inlet nodes. It is assumed that the demand at non-inlet nodes fulfil the constraint in \eqref{non_inlet_constraint}.
 
 \begin{equation}
   \label{non_inlet_constraint}
   d_i \leq 0.
 \end{equation}
 
-It is worth noting however, that in closed hydraulic networks the vertex law becomes
+It is worth noting for the sake of comparison that in closed hydraulic networks the vertex law becomes
 
 \begin{equation}
   \label{vertexlaw_closed}
   Hq = 0.
 \end{equation}
 
-Ohm's law for hydraulic networks is expressed with the incidence matrix, when $H^T$ is applied to the vector of absolute pressures, $p$. Important to point out that the description below in \eqref{ohmslaw} is valid if edges of the underlying graph are considered as only pipe elements.
+Therefore, Ohm's law for hydraulic networks is expressed with the incidence matrix, by multiplying the vector of absolute pressures $p$ with $H^T$. It is important to point out that in the description below in \eqref{ohmslaw}, it has been assumed that the edges of the underlying graph are representing only pipe elements.
 
 \begin{equation}
   \label{ohmslaw}
   \Delta p = H^Tp = f(q) - H^Th.
 \end{equation}
 
-In \eqref{ohmslaw}, the differential pressure is described across each edge in the network, taking into account the pressure loss due to friction, $f(q)$, and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. It is noted that the pressure loss, $f(q)$, the absolute pressure, $p$  and the geodesic level $h$ can be both considered in units of meter. As mentioned in the previous section, handling Ohm's law for hydraulic systems in meter is convenient, since the elevation is already in meters.
-
+In \eqref{ohmslaw}, the differential pressure is calculated across each edge in the network, taking into account the pressure loss $f(q)$ due to friction, and the pressure drop due to geodesic level differences,  where $h \in \: \mathbb{R}^{n}$ is the vector of geodesic levels at each vertex expressed in units of potential, i.e. pressure. It should be noted that the pressure loss $f(q)$, the absolute pressure $p$  and the pressure drop due to geodesic level differences $h$ can be converted to the units of meter. As mentioned in the previous section, handling Ohm's law in meter is convenient since the elevation is already in meters.
 
 \section{Multi-inlet model}
 \label{multi_inlet_reduced_network_description}
 
-The system is a water network supplied from more than one pumping stations and the distribution is to several end-users. In the underlying graph therefore the nodes are pipe connections, with possible water demand from the end-users, and the edges are only pipes. 
+In order to derive a multi-inlet model, we assume that the water network is supplied by more than one pumping station and there are many end-users representing the water consumption in the system. The model derivation in this section therefore based on the results of \cite{oneinput_paper}. In the underlying graph of the network we assume that vertices are connecting pipe segments and they can have certain flow demands. The aim of the modelling is to obtain a reduced order network model which is able to capture the dependency of certain measured pressure points on the flows and inlet pressures. 
 
-The aim of the modelling here is to obtain a reduced order network model which is able to capture the dependence of the measured output pressures, on the flows and pressures at the inlets. The inclusion of storage tanks is the next step of the model development, therefore it is described in a following section, in \secref{inclusion_of_reservoirs}. 
+The further step of the Multi-inlet model development is to include the dynamics of elevated reservoirs in the network model. However, before making such model extension, first the framework for the static network modelling is established. Then the model development with elevated reservoirs is introduced in \secref{inclusion_of_reservoirs}. 
 
-It is assumed that the inlet pressures and demands are measured. Furthermore, pressure measurement is available in certain parts of the remaining network, at the end-users. Considering generality, the model is described for $c$ inlets, however it should be noted that regarding the Randers WSS, two inlet vertices are taken into account. 
+\subsection{Modelling framework}
+\label{modelling_framework}
 
-In order to put the system into a form which can handle the measured pressure dependencies on the control inputs, the underlying graph of the network is first partitioned. The $n$ vertices of the graph are separated into two sets
+It is assumed that the inlet pressures and inlet flows are measured. Furthermore, pressure measurements are available in certain parts of the remaining network, which we consider as the output of the model. In order to keep generality, the model takes into account $c$ inlets, however it should be noted, that for the Randers WSS two inlet vertices are sufficient. 
+
+In order to convert the system into a form which later can handle the measured pressure dependencies on the control inputs, the underlying graph of the network is first partitioned. The $n$ vertices of the graph are separated into two sets such that
 
 \begin{equation}
   \label{vertices1}
@@ -494,7 +500,7 @@ and \\
 \end{minipage}
 \begin{minipage}[t]{0.55\textwidth}
 \vspace*{2mm}
- represents the vertices corresponding to the inlet points,\\
+ represents vertices corresponding to the inlet points,\\
  \newline
  represents the remaining vertices in the graph.
 \end{minipage}
@@ -513,9 +519,9 @@ and\\
 \hspace*{8mm} $\mathcal{E_{\mathcal{C}}} = \{e_{\mathcal{C},1}, ..., e_{\mathcal{C},m-n+c}\}$. 
 \end{minipage}
 
-The subsets regarding edges and the partitioning is chosen such that the sub-matrix, which maps edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $\bar{\mathcal{V}}$, is invertible. It is worth mentioning that such partitioning is always possible for connected graphs. 
+The subsets regarding edges and the partitioning is chosen such that the sub-matrix, which maps edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $\bar{\mathcal{V}}$, is invertible. It is worth mentioning that such partitioning is always possible for connected graphs \cite{deo2017graph}. 
 
-Therefore, the incidence matrix can be split into four sub-matrices, as shown in \eqref{H_matrix_sub} below
+Therefore, the incidence matrix can be split into four sub-matrices, shown in \eqref{H_matrix_sub}.
 
 \begin{equation}
 \label{H_matrix_sub}
@@ -541,34 +547,36 @@ is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{T}}}$ to vertices in $
 is the sub-matrix, mapping edges in $\mathcal{E_{\mathcal{C}}}$ to vertices in $\hat{\mathcal{V}}$. 
 \end{minipage}
 
-It is worth noting that the only requirement for the edge partitioning is $\bar{H}_{\mathcal{T}}$ being invertible\footnote{$\exists \{\mathcal{V}, \mathcal{E} \} : \bar{H}^{-1}_{\mathcal{T}} \because rank(H) = (n-1) $ \cite{deo2017graph} }. Furthermore, the set $\mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \}$ is not necessarily a tree of the underlying graph, it can be any form of graph that fulfils the invertibility requirements. The set here, $\mathcal{T}$, is not connected due to the requirement of $\mathcal{E_{\mathcal{T}}} \geq (n-1)$. For the multi-inlet case, $c > 1$, therefore $\mathcal{E_{\mathcal{T}}} = (n-c)$.  However, one special case is given when $c = 1$, meaning that the network has only one inlet. In this case, $\mathcal{T}$ is indeed a spanning tree. 
+It is worth emphasizing that the only requirement for the edge partitioning is $\bar{H}_{\mathcal{T}}$ being invertible\footnote{$\exists \{\mathcal{V}, \mathcal{E} \} : \bar{H}^{-1}_{\mathcal{T}} then rank(H) = (n-1) $ \cite{deo2017graph} }. Furthermore, the set $\mathcal{T} = \{\mathcal{V}, \mathcal{E_{\mathcal{T}}} \}$ is not necessarily a tree of the underlying graph, it can be any form of graph that fulfils the invertibility requirements. Thus the set $\mathcal{T}$ is not connected due to the requirement of $\mathcal{E_{\mathcal{T}}} \geq (n-1)$. For the multi-inlet case, $c > 1$, therefore $\mathcal{E_{\mathcal{T}}} = (n-c)$.  One special case is given when $c = 1$, implying that the network has only one inlet. In this case, $\mathcal{T}$ is indeed a spanning tree. 
 
-With the chosen partitioning, Kirchhoff's vertex law in \eqref{vertexlaw_open} can be rewritten as
+With the chosen partitioning, Kirchhoff's vertex law in \eqref{vertexlaw_open} is written as shown in \eqref{vertexlaw_partitioned12}.
 
 \begin{subequations}
 \begin{equation}
 \label{vertexlaw_partitioned1}
 \bar{d} = \bar{H}_{\mathcal{T}} q_{\mathcal{T}} + \bar{H}_{\mathcal{C}} q_{\mathcal{C}}, 
 \end{equation}
-\vspace{6mm}
+\vspace{4.5mm}
 \begin{equation}
 \label{vertexlaw_partitioned2}
-\hat{d} = \hat{H}_{\mathcal{T}} q_{\mathcal{T}} + \hat{H}_{\mathcal{C}} q_{\mathcal{C}}, 
+\hat{d} = \hat{H}_{\mathcal{T}} q_{\mathcal{T}} + \hat{H}_{\mathcal{C}} q_{\mathcal{C}}. 
 \end{equation}
+\label{vertexlaw_partitioned12}
 \end{subequations}
 
-and Ohm's law in \eqref{ohmslaw}, separating the pressure drops due to hydraulic resistance
+Furthermore, Ohm's law introduced in \eqref{ohmslaw}, separating the pressure drops due to hydraulic resistance is shown in \eqref{ohmslaw_partitioned12}.
 
 \begin{subequations}
 \begin{equation}
 \label{ohmslaw_partitioned1}
 f_{\mathcal{T}}(q_\mathcal{T}) = \bar{H}^T_{\mathcal{T}} (\bar{p} + \bar{h}) + \hat{H}^T_{\mathcal{T}} (\hat{p} + \hat{h}), 
 \end{equation}
-\vspace{6mm}
+\vspace{4.5mm}
 \begin{equation}
 \label{ohmslaw_partitioned2}
 f_{\mathcal{C}}(q_\mathcal{C}) = \bar{H}^T_{\mathcal{C}} (\bar{p} + \bar{h}) + \hat{H}^T_{\mathcal{C}} (\hat{p} + \hat{h}). 
 \end{equation}
+\label{ohmslaw_partitioned12}
 \end{subequations}
 
 Writing up \eqref{ohmslaw_partitioned1} and \eqref{ohmslaw_partitioned2} in matrix form, the following yields
@@ -589,12 +597,12 @@ Writing up \eqref{ohmslaw_partitioned1} and \eqref{ohmslaw_partitioned2} in matr
    \begin{pmatrix} 
  \bar{p} + \bar{h} \\[3pt] 
  \hat{p} + \hat{h} 
- \end{pmatrix}
+ \end{pmatrix}.
 \end{equation}
 
-As it is shown in \eqref{ohmslaw_matrixform}, the transposed incidence matrices can be written up as the two sub-matrices partitioned according to inlet and non-inlet nodes. 
+As it is shown in \eqref{ohmslaw_matrixform}, the transposed incidence matrices can be written up as the two sub-matrices partitioned according to inlet and non-inlet vertices. 
 
-Now, defining a matrix $\Gamma$, in which the partitioning of the edges are the same as for the incidence matrix, $H$. $\Gamma$ is defined as follows
+Now, defining a matrix $\Gamma$, in which the edge partitioning is the same as for the incidence matrix $H$, $\Gamma$ is defined as follows
 
 \begin{equation}
 \label{bmatrix}
@@ -602,10 +610,10 @@ Now, defining a matrix $\Gamma$, in which the partitioning of the edges are the 
  =
 \begin{pmatrix} 
 -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} & I 
-\end{pmatrix}
+\end{pmatrix}.
 \end{equation}
 
-It should be noted that the expressions in matrix $\Gamma$ are of the same structure as the structure of a partitioned cycle matrix \cite{deo2017graph}. However, as mentioned, the set $\mathcal{T}$ does not define a spanning tree when $c>1$, therefore matrix $\Gamma$ is not a cycle matrix corresponding to any spanning trees. Multiplying $H$ with $\Gamma$ from the left-hand side
+It is worth noting that the terms in $\Gamma$ are of the same structure as the structure of a partitioned cycle matrix \cite{deo2017graph}. However, as concluded before, the set $\mathcal{T}$ does not define a spanning tree when $c>1$. Therefore $\Gamma$ does not correspond to any spanning trees. Multiplying $H$ with $\Gamma$ from the left-hand side yields:
 
  \begin{equation}
   \label{meshlaw_analogy}
@@ -624,7 +632,7 @@ It should be noted that the expressions in matrix $\Gamma$ are of the same struc
 .
 \end{equation}
 
-Multiplying with $\Gamma$ from the left in \eqref{ohmslaw_matrixform} 
+Furthermore, multiplying with $\Gamma$ from the left in \eqref{ohmslaw_matrixform} 
 
 \begin{equation}
 \label{ohmslaw_matrixform_B}
@@ -649,28 +657,28 @@ Multiplying with $\Gamma$ from the left in \eqref{ohmslaw_matrixform}
  \end{pmatrix}
 \end{equation}
 
-induces the following expression
+induces the following expression:
 
 \begin{equation}
 \label{meshresult}
 f_{\mathcal{C}}(q_\mathcal{C}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(q_\mathcal{T}) = (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
 \end{equation}
 
-From \eqref{vertexlaw_partitioned1}, the vector $q_{\mathcal{T}}$, of flows in edges $\mathcal{E}_{\mathcal{T}}$ can be expressed
+From \eqref{vertexlaw_partitioned1}, the vector $q_{\mathcal{T}}$ of flows in $\mathcal{E}_{\mathcal{T}}$ is expressed, which yields in \eqref{qt_flow}.
 
 \begin{equation}
 \label{qt_flow}
 q_{\mathcal{T}} = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}.
 \end{equation}
 
-Therefore using \eqref{qt_flow}, \eqref{meshresult} can be rewritten
+Therefore, using \eqref{qt_flow}, \eqref{meshresult} can be rewritten as shown in \eqref{meshresult2}.
 
 \begin{equation}
 \label{meshresult2}
 f_{\mathcal{C}}(q_\mathcal{C}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} q_\mathcal{C} + \bar{H}^{-1}_{\mathcal{T}} \bar{d}) = (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}})(\hat{p} + \hat{h}).
 \end{equation} 
 
-Now expressing the vertex demands at non-inlet vertices, $\bar{d}$, such that
+Now, expressing the demands at non-inlet vertices $\bar{d}$, such that
 
 \begin{equation}
 \label{noninlet_demand}
@@ -682,25 +690,27 @@ where\\
 \hspace*{8mm} $\bar{d} \in \: \mathbb{R}^{n-c}$\\
 \hspace*{8mm} $\sigma \in \: \mathbb{R}_{+}$ \\
 \newline
+and\\
 \hspace*{8mm} $v \in \: \mathbb{R}_{n-c}$
 \end{minipage}
 \begin{minipage}[t]{0.68\textwidth}
 \vspace*{2mm}
-is the vector of nodal demands in non-inlet vertices,\\
-is the total demand in the network, representing the total consumption of the end-users,\\
-represents the distribution vector of nodal demands among the non-inlet vertices with the property $\sum_{i} v_i = 1 $ and $v_i \in \: (0;1)$.
+is the vector of demands in non-inlet vertices,\\
+is the total demand in the network, representing the total consumption by the end-users,\\
+\newline
+represents the distribution vector of demands among the non-inlet vertices, fulfilling the property $\sum_{i} v_i = 1 $ and $v_i \in \: (0;1)$.
 \end{minipage}
 
-Furthermore, introducing a vector, $a_{\mathcal{C}}$, such that 
+Furthermore, we introduce a vector, $a_{\mathcal{C}}$, such that 
 
 \begin{equation}
 \label{ac}
-q_{\mathcal{C}} = a_{\mathcal{C}} \sigma.
+q_{\mathcal{C}} = a_{\mathcal{C}} \sigma,
 \end{equation}
 
-It is worth mentioning that such an $a_{\mathcal{C}}$ can always be defined in this manner as long as $\sigma \neq 0$.
+where $a_{\mathcal{C}}$ can always be defined in a unique manner as long as $\sigma \neq 0$ \cite{oneinput_paper}.
 
-Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the total demand, $\sigma$, \eqref{meshresult2} can be expressed such that
+Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the total demand $\sigma$, we express \eqref{meshresult2} such that
 
 \begin{equation}
 \begin{split}
@@ -713,16 +723,16 @@ Having $\bar{d}$ and $q_{\mathcal{C}}$ introduced as the linear function of the 
 
 where the latter equality is due to the homogeneity property of the pressure drops due to frictions, previously explained in \secref{pipe_component}.
 
-Defining a function $F_v : \mathbb{R}^{m-n+c} \rightarrow \mathbb{R}^{m-n+c}$, parametrized with $v$ such that it takes $a_{\mathcal{C}}$ as input, the following expression can be formed
+Defining a function $F_v : \mathbb{R}^{m-n+c} \rightarrow \mathbb{R}^{m-n+c}$, parametrized with $v$ such that it takes $a_{\mathcal{C}}$ as input, the following expression can be written for $F_v$
 
 \begin{equation}
 \begin{split}
 \label{Fv}
 F_v(a_{\mathcal{C}}) = f_{\mathcal{C}}(a_{\mathcal{C}}) -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}} f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} - \bar{H}^{-1}_{\mathcal{T}} v) 
-\end{split}
+\end{split}.
 \end{equation}
 
-Furthermore, $F_v(\cdot)$ equals to the following, according to \eqref{meshresult2}
+According to \eqref{meshresult2}, we can express $F_v(\cdot)$ in terms of the inlet pressures as shown in \eqref{Fv1}.
 
 \begin{equation}
 \begin{split}
@@ -731,11 +741,9 @@ F_v(a_{\mathcal{C}}) = \frac{1}{\sigma^2} (\hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\
 \end{split}
 \end{equation}
 
-An algebraic expression for $a_c$ can be found iff $\exists F_v^{-1}(\cdot)$. It can be shown, however that $\exists F_v^{-1}(\cdot)$ by showing that $F_v(\cdot)$ is a homeomorphism\footnote{Two functions are homeomorphic if they can be formed into each other by continuous, invertible mapping \cite{krantz2012handbook}. However, here invertibility is a sufficient condition.}, which is done in \cite{oneinput_paper}.  
+An algebraic expression for $a_c$ can be found iff $\exists F_v^{-1}(\cdot)$. It is possible to show however, that $F_v^{-1}(\cdot)$ exists by showing that $F_v(\cdot)$ is a homeomorphism\footnote{Two functions are homeomorphic if they can be formed into each other by continuous, invertible mapping \cite{krantz2012handbook}. However, here invertibility is a sufficient condition.}. The proof of this is done in \cite{oneinput_paper}.  
 
-\eqref{Fv1} being a homeomorphism in $q_{\mathcal{C}}$ means that the solution $q_{\mathcal{C}}$ is unique for every given values of $\hat{p}$, $\hat{h}$ and $\sigma$.
-
-As a result of using the inverse mapping of $F_v$, a unique expression can be obtained for $a_{\mathcal{C}}$
+\eqref{Fv1} being a homeomorphism in $q_{\mathcal{C}}$ means that the solution $q_{\mathcal{C}}$ is unique for every given values of $\hat{p}$, $\hat{h}$ and $\sigma$. As a result of using the inverse mapping of $F_v$, this unique expression is obtained for $a_{\mathcal{C}}$ as shown in \eqref{Fv2}.
 
 \begin{equation}
 \label{Fv2}
@@ -747,22 +755,18 @@ where\\
 \hspace*{8mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}\in \: \mathbb{R}^{(m-n+c \times c)}$. 
 \end{minipage}
 
-$A_1$ has a non-trivial kernel, and for every unique value of $\frac{1}{\sigma^2} A_1 (\hat{p}+\hat{h}) $, there is a unique solution for $a_{\mathcal{C}}$.
+$A_1$ has a non-trivial kernel, and for every unique value of $\frac{1}{\sigma^2} A_1 (\hat{p}+\hat{h}) $, there is a unique solution for $a_{\mathcal{C}}$. The main objective of writing up $a_{\mathcal{C}}$ is to show that it can be expressed in terms of $v, \sigma(t), \hat{p}(t)$ and $\hat{h}$, where $\hat{h}$ and $\sigma(t)$ are assumed to be known signals and parameters, $v(t)$ is an unknown parameter and $\hat{p}(t)$ is the control signal. The difficulty about the constraint on $a_{\mathcal{C}}$ in \eqref{Fv2} is that its structure is unknown. Equivalently, the solution for $a_{\mathcal{C}}$ cannot be expressed analytically but there exists a unique numerical solution for it.  
 
-% The existence of such inverse mapping means that the measured vector of input pressures, $\hat{p}$, defines exactly one value for $a_{\mathcal{C}}$, since the friction losses, $f(\cdot)$, are strictly increasing functions.
-
-The main objective of writing up $a_{\mathcal{C}}$ is to show that it can be expressed in terms of $v, \sigma(t), \hat{p}(t)$ and $\hat{h}$, where $\hat{h}$ and $\sigma(t)$ are assumed to be known signals and parameters, $v(t)$ is an unknown parameter and $\hat{p}(t)$ is the control signal. The difficulty about the constraint on $a_{\mathcal{C}}$ in \eqref{Fv2} is that its structure is unknown. Equivalently, the solution for $a_{\mathcal{C}}$ cannot be expressed analytically but there exists a unique numerical solution for it.  
-
-Furthermore, assuming that $(\hat{p} + \hat{h}) \neq 0 \in \: ker(A_1)$, then $a_{\mathcal{C}}$, \eqref{Fv1} can be simplified such that 
+Furthermore, assuming that $(\hat{p} + \hat{h}) \neq 0 \in \: ker(A_1)$, then $a_{\mathcal{C}}$ in \eqref{Fv1} is simplified such that 
 
 \begin{equation}
 \label{Fv3}
 a_{\mathcal{C}} = F_v^{-1} (0).
 \end{equation}
 
-\eqref{Fv3} shows, that in the special case when the input vertices are chosen such that the product $A_1 (\hat{p} + \hat{h}) = 0$, then $a_{\mathcal{C}}$ becomes only dependent on the parameter $v$. 
+\eqref{Fv3} shows that in the special case when the input vertices are chosen such that the product $A_1 (\hat{p} + \hat{h}) = 0$, then $a_{\mathcal{C}}$ becomes only dependent on the parameter $v$. 
 
-Now, using the equations for Ohm's law in \eqref{ohmslaw_partitioned1} and the vector $q_{\mathcal{T}}$, of flows in edges $\mathcal{E}_{\mathcal{T}}$ in \eqref{qt_flow}, the vector $\bar{p}$ of pressures at non-inlet vertices is expressed
+Now, using the equations for Ohm's law in \eqref{ohmslaw_partitioned1} and the vector $q_{\mathcal{T}}$ of flows in edges $\mathcal{E}_{\mathcal{T}}$ in \eqref{qt_flow}, the vector $\bar{p}$ of pressures at non-inlet vertices is expressed such that
 
 \begin{equation}
 \begin{split}
@@ -772,26 +776,26 @@ Now, using the equations for Ohm's law in \eqref{ohmslaw_partitioned1} and the v
 \end{split}
 \end{equation}
 
-As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressures in the non-inlet vertices can be written up in terms of $\sigma(t)$, $\hat{p}(t)$ time-varying signals, in terms of $\hat{h}$ and $\bar{h}$ constants and in terms of the parameter $a_{\mathcal{C}}$ and $v$. In the non-general case, as shown in \eqref{Fv3}, $a_c$ is a parameter which is governed by the behaviour of the total demand distribution among the non-inlet vertices. In case vector $v$ is constant, thereby time-invariant, which means that the distribution of nodal demands are the same in all vertices in the network at all time, the output pressure in the $i^{th}$ non-inlet vertices can be written as follows: 
+As shown in \eqref{non-inlet_p1}, the output vector which consists of the pressures in the non-inlet vertices can be written in terms of $\sigma(t)$, $\hat{p}(t)$ time-varying signals, $\hat{h}$ and $\bar{h}$ constants and in terms of the parameter $a_{\mathcal{C}}$ and $v$. In the non-general case, shown in \eqref{Fv3}, $a_c$ is a parameter which is governed by the behaviour of the total demand distribution among the non-inlet vertices. In case vector $v$ is constant, which means that the base demands are the same in all vertices in the network at all time, the output pressure in the $i^{th}$ non-inlet vertex yields as follows: 
 
 \begin{equation}
 \label{model_multiinlet1}
 \bar{p}_i(t) = \alpha_i \sigma^2(t) + \sum_j \beta_{ij} \hat{p}_j(t) + \gamma_i
 \end{equation}
 
-  \begin{minipage}[t]{0.50\textwidth}
+  \begin{minipage}[t]{0.45\textwidth}
 where\\
-\hspace*{8mm} $ \alpha_i = (\bar{H}^{-T}_{\mathcal{T}})_i f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} + \bar{H}^{-1}_{\mathcal{T}} v)$ \\
+\hspace*{8mm} $ \alpha_i = (\bar{H}^{-T}_{\mathcal{T}})_i f_{\mathcal{T}}(-\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} a_{\mathcal{C}} + \bar{H}^{-1}_{\mathcal{T}} v)$, \\
 \vspace*{7pt}
-\hspace*{8mm} $ \beta_{ij} = -(\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{ij} $ \\
+\hspace*{8mm} $ \beta_{ij} = -(\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{ij} $, \\
 \vspace*{7pt}
-\hspace*{8mm} $ \gamma_{i} = -(\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{i}\hat{h} - \bar{h}_i $ 
+\hspace*{8mm} $ \gamma_{i} = -(\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}})_{i}\hat{h} - \bar{h}_i $. 
 
 \end{minipage}
 
-However in WSSs, the above-mentioned consideration for $v$ is unrealistic, meaning that the distribution of nodal demands in the non-inlet vertices should depend on time, as the end-user water consumption is not the same in every hour. This consumption behaviour of the end-users, however, is assumed to be periodic, which is a fair assumption, taking into account that the daily consumption shows approximately the same trends every day. 
+In WSSs, the above-mentioned consideration as $v$ being constant gives a less realistic description, meaning that the distribution of demands in the non-inlet vertices might differ in time. This consumption behaviour of the end-users, however, is assumed to be periodic, which is a fair assumption if we take into account that the daily consumption of end-users shows approximately the same trends every day. 
 
-Therefore the demand in non-inlet vertices, described in \eqref{noninlet_demand} can be rewritten such that
+Therefore the demand in non-inlet vertices, described in \eqref{noninlet_demand} is rewritten such that
 
 \begin{equation}
 \label{noninlet_demand_time_varying}
@@ -802,7 +806,7 @@ Therefore the demand in non-inlet vertices, described in \eqref{noninlet_demand}
 where\\
 \hspace*{8mm} $v(t+T) = v(t)$,\\
 \hspace*{8mm} $\sigma(t+T) = \sigma(t)$,\\
-\hspace*{8mm} and $T$ is the length of the period.
+and \hspace*{1mm} $T$ is the length of the period.
 \end{minipage}
 
 If the non-inlet demands are time-varying, but periodic behaviour is assumed and on top of this, the input vertices are arranged such that \eqref{Fv3} is fulfilled, \eqref{model_multiinlet1} can be rewritten as follows
@@ -812,7 +816,7 @@ If the non-inlet demands are time-varying, but periodic behaviour is assumed and
 \bar{p}_i(t) = \alpha_i(t) \sigma^2(t) + \sum_j \beta_{ij} \hat{p}_j(t) + \gamma_i,
 \end{equation}
 
-where $\alpha_i$ is also a time-varying parameter of the model. 
+where $\alpha_i$ now is a time-varying parameter of the model. 
 
 \subsection{Simulation example}
 \label{multi_inlet_network_example}
@@ -831,7 +835,7 @@ The underlying graph of the example network is shown in \figref{fig:example1_gra
 \hspace{3mm}
 \input{report/tikz/example1_graph.tex} 
 \vspace{2mm}
-\caption{Graph of a simple multi-inlet network.}
+\caption{Graph of the example multi-inlet network.}
 \label{fig:example1_graph}
 \end{subfigure}
 \begin{subfigure}{.49\textwidth}

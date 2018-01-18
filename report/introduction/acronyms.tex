@@ -89,6 +89,8 @@
 	$f_D = 0.05$		&	Darcy friction factor							& \hspace{64mm}[$kg/m^3$]\\
 \end{tabular}
 
+\newpage
+
 \section*{Graph theory}
 
 \begin{tabular}{l l} 
@@ -136,27 +138,141 @@
 % \\
 % explain that $\bm{x}[k]$ is not iteration, it shows that x is a vector and a sequence-> this is very important to state ! 
 
-% We should write somthing about notation: 
-%\newpage
+\newpage
 \section*{Glossary of mathematical notation}
 
-\textbf{Matrices}
+\textbf{Matrices and vectors}
+
+Vectors are denoted with lower case letters and matrices are denoted with capital letters such that
+
+\vspace{-6mm}
+ \begin{equation*}
+ v = 
+ \begin{pmatrix}
+
+ 		 v_1 	\\
+		 v_2 	\\
+ 		 \vdots \\
+		 v_n
+
+ \end{pmatrix}
+ \in {\mathbb{R}}^{n},
+ \hspace{10mm}
+ M = 
+ \begin{pmatrix}
+
+ 		 m_{11} & m_{12} & \hdots & m_{1k}	\\
+ 		 m_{21} & m_{22} & \hdots & m_{2k}	\\
+ 		 \vdots & \vdots & \ddots & \vdots	\\
+ 		 m_{n1} & m_{n2} & \hdots &m_{nk} \\
+
+ \end{pmatrix}
+ \in {\mathbb{R}}^{(n \times k)}.
+ \end{equation*}
 
 Diagonal matrices are denoted with $diag(\cdot)$, which maps an n-tuple to the corresponding diagonal matrix:
+\vspace{-5mm}
 
 \begin{equation*}
-diag \: : \: \mathbb{R}^{n} \rightarrow \mathbb{R}^{n \times n},
+diag \: : \: \mathbb{R}^{n} \rightarrow \mathbb{R}^{(n \times n)},
 \end{equation*}
 \begin{equation*}
-diag(a_1,\: ... \:, a_n ) := 
+diag(m_{11},\: ... \:, m_{nn} ) := 
 \begin{pmatrix}
-    a_{1} & & \\
+    m_{11} & & \\
     & \ddots & \\
-    & & a_{n}
+    & & m_{nn}
   \end{pmatrix}.
   \end{equation*}
 
 A positive semi-definite (resp. positive definite) matrix $A$ is is denoted $A \succeq 0$ ($resp.\; A \; \succ 0$).
+
+The pseudo inverse of a matrix M is denoted with $M^{\dagger}$.
+
+\textbf{Description of non-linear models}
+
+In the thesis we are dealing with dynamical systems that are modelled by a finite number of coupled first-order ordinary differential equations such that 
+
+\vspace{-4mm}
+\begin{equation*}
+\begin{split}
+  \label{non-inlet_p1}
+  \dot{x}_1 = & f_1(t,x_1, ..., x_n,u_1,...,u_p) \\
+  \dot{x}_2 = & f_2(t,x_1, ..., x_n,u_1,...,u_p) \\
+   &\mathrel{\makebox[\widthof{=}]{\vdots}} \\
+   \dot{x}_n = & f_n(t,x_1, ..., x_n,u_1,...,u_p)
+\end{split}
+\end{equation*}
+
+where $\dot{x}_i$ denotes the derivative of $x_i$ with respect to time. The variables in the argument are states $x_i$ and inputs $u_i$. Furthermore, in the thesis, vector notation is used to write the system description in a compact form such that 
+
+\vspace{-4mm}
+\begin{equation*}
+\label{example1_signals_constants}
+x =
+ \begin{pmatrix} 
+ x_1 \\[1.3pt] 
+ x_2 \\[1.3pt]
+ \vdots \\[1.3pt] 
+ x_n \\[1.3pt] 
+ \end{pmatrix}
+ , \hspace{5mm}
+u =  \begin{pmatrix} 
+ u_1 \\[1pt] 
+ u_2 \\[1pt]
+ \vdots \\[1pt] 
+ u_p \\[1pt] 
+ \end{pmatrix}
+ , \hspace{5mm}
+ f(t,x,u) =  \begin{pmatrix} 
+ f_1(t,x,u) \\[1pt] 
+ f_1(t,x,u) \\[1pt]
+ \vdots \\[1pt] 
+ f_n(t,x,u) \\[1pt] 
+ \end{pmatrix}.
+\end{equation*}
+
+\vspace{-2mm}
+For the complete model description we use $g(\cdot)$ state model as one n-dimensional first-order vector differential equation. For the output description we use $h(\cdot)$ q-dimensional output model. 
+
+\vspace{-6mm}
+\begin{equation*}
+\dot{x} = g(t,x,u)
+\end{equation*}
+\vspace{-8mm}
+\begin{equation*}
+y = h(t,x,u)
+\end{equation*}
+\vspace{-6mm}
+
+Typically, for the state equation $f(\cdot)$ is used, however $f(\cdot)$ denotes friction terms in the thesis, therefore is the distinction. 
+
+The vector valued functions are defined such that the mapping is the following
+
+\vspace{-4mm}
+ \begin{equation*}
+ \alpha(v) : {\mathbb{R}}^{n} \rightarrow {\mathbb{R}}^{n} : [v_1, v_2, \hdots, v_n] \rightarrow [\alpha(v_1), \alpha(v_2),\hdots,\alpha(v_n)].
+ \end{equation*}
+
+ \textbf{Indexes}
+
+ Indexes on terms belonging to vectors or matrices are denoted with subscripts. The discrete time index of variables is denoted with $k$ in superscript such that 
+
+\vspace{-6mm}
+\begin{equation*}
+ x = 
+ \begin{pmatrix}
+
+ 		 x^k 	\\
+		 x^{k+1} 	\\
+ 		 \vdots \\
+		 x^r
+
+ \end{pmatrix},
+ \end{equation*}
+ \vspace{-6mm}
+
+ where $x^k$ is the $k^{th}$ time step value. 
 
 % \textbf{Upper and lower bounds of a variable}
 

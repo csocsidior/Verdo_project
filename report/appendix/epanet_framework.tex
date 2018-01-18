@@ -17,17 +17,16 @@ The simulation data has been validated by using pressure measurements on differe
 
 In the model, all pipes are associated with tags, indicating dimensions, material and year information. With this information it is possible to estimate an average resistance, i.e. roughness of the pipes. 
 During the validation process of the pipe resistances, it was chosen to consider an average roughness value, taking into account that the roughness should not be lower than a roughness of new pipes and at the same time, should not exceed a certain upper bound. Roughnesses were upscaled at places where the pressure was too high while downscaled where the pressure was certainly too low. Correct pressure data, however is an essential information for a more detailed and precise calibration, therefore high deviations up to 5 meter heads are present in the system. \figref{fig:pressure_mistakes} shows the pressure deviation in the system compared to the data on which the system was calibrated. 
-
+\vspace{-4mm}
 %Fire hydrants measurements
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.55\textwidth]{report/pictures/fire_hydrants}
+\includegraphics[width=0.46\textwidth]{report/pictures/fire_hydrants}
 %\input{report/tikz/PRV_control_EPANET.tex} 
 \caption{Difference calculation between observed and calculated pressures on fire hydrants\cite{verdo_doc}.}
 \label{fig:pressure_mistakes}
 \end{figure}
-
-\vspace{-3mm}
+\vspace{-8mm}
 
 \subsection{Grid balance and supply zones}
 \label{grid_balance_supply_zones}
