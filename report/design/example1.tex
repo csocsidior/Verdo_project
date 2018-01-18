@@ -346,16 +346,19 @@ The parameter vectors of the state and output model are $\theta^T_{\mathcal{W}}$
 \section{Identification on the Randers WSS}
 \label{identification_of_the_randers_WSS} 
 
+The properties and structure of the Randers WSS has been described in detail in \secref{the_randers_water_supply_network}. As we mentioned there, the main focus has been put on the identification of the inlet-pressures in the two pumping stations TBP and OMV, furthermore on the three tank levels in HBP and HSP pumping stations. Therefore, let us recall the map of Randers North, where the corresponding pumping stations and WTs are noted.  
+
 %Simplified network map for identification
 \begin{figure}[H]
 \centering
 \input{report/tikz/identification_map.tex}
 %\includegraphics[width=0.95\textwidth]{report/pictures/verdo_pic3}
 \caption{The network map with the corresponding WTs and pumping stations.}
-\label{fig:simplified_network_identification}
+\label{fig:simplified_network_identification123}
 \end{figure}
 \vspace{-3mm}
 
+In the following description of the identification, let us use the notation for the pumping stations and WTs shown in \figref{fig:simplified_network_identification123}. Thus, $\mathcal{K}_1$ denotes Oust Mølle(OMV) pumping station, while $\mathcal{K}_1$ denotes Toldbodgade(TBP) waterwork. The WTs in Hobrovej(HBP) pumping station are denoted with $\mathcal{W}_1$ and $\mathcal{W}_2$, while the WT in Hadsundevej(HSP) pumping station is denoted with $\mathcal{W}_3$.  
 
  %Total consumptions
  \begin{figure}[H]
