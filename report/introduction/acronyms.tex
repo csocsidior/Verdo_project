@@ -49,6 +49,7 @@
 
 \section*{Physical symbols}
 
+In order to keep the nomenclature at a reasonable length, a general notation is listed for all physical variables used in the thesis. 
 
 \begin{tabular}{l l l} 
 	\textbf{Symbol}		&	\textbf{Description}								& \hspace{25mm}\textbf{Unit}	\\\hline
@@ -70,6 +71,7 @@
 	$q$					&	Volumetric flow									    & \hspace{25mm}[$m^3/s$]\\
 	$Re$				&	Reynolds number								        & \hspace{25mm}[$\cdot$]\\
 	$T$					&	Period of time								        & \hspace{25mm}[$s$]\\
+	$T_s$				&	Sampling time								        & \hspace{25mm}[$s$]\\
 	$z$					&	Elevation head									    & \hspace{25mm}[$m$]\\
 
 	$\gamma$			&	Resistance parameter of pipes 						& \hspace{25mm}[$\cdot$]\\	
@@ -80,34 +82,61 @@
 	$\tau$				&	Elevated reservoir parameter 			 			& \hspace{25mm}[$Pa/m^3$]\\	
 \end{tabular}
 
-\section*{Constants}
-
-\begin{tabular}{l l l} 
-	\textbf{Symbol}		&	\textbf{Description}							& \hspace{64mm}\textbf{Unit}			\\\hline						
-	$g$ = 9.83 			&	Gravitational acceleration						& \hspace{64mm}[$m/s^2$]\\
-	$\rho = 1000$		&	Density of water								& \hspace{64mm}[$kg/m^3$]\\
-	$f_D = 0.05$		&	Darcy friction factor							& \hspace{64mm}[$kg/m^3$]\\
-\end{tabular}
-
 \section*{Multi-inlet model}
 
 \begin{tabular}{l l l} 
-	\textbf{Symbol}		&	\textbf{Description}							& \hspace{64mm}\textbf{Unit}			\\\hline						
-	$g$ = 9.83 			&	Gravitational acceleration						& \hspace{64mm}[$m/s^2$]\\
-	$\rho = 1000$		&	Density of water								& \hspace{64mm}[$kg/m^3$]\\
-	$f_D = 0.05$		&	Darcy friction factor							& \hspace{64mm}[$kg/m^3$]\\
+	\textbf{Symbol}		&	\textbf{Description}							& \hspace{44mm}\textbf{Unit}			\\\hline	
+
+	$\bar{d}$			&	Non-inlet demand flow						    & \hspace{44mm}[$m^3/s$]\\
+	$\hat{d}$			&	Pump inlet flow									& \hspace{44mm}[$m^3/s$]\\
+	$\bar{h}$			&	Elevation pressure of non-inlet points		    & \hspace{44mm}[$Pa$]\\
+	$\hat{h}$			&	Elevation pressure of inlet points				& \hspace{44mm}[$Pa$]\\
+	$\bar{p}$			&	Non-inlet pressure				    			& \hspace{44mm}[$Pa$]\\
+	$\hat{p}$			&	Pump inlet pressure								& \hspace{44mm}[$Pa$]\\
+	$q_{\mathcal{C}}$	&	Flows in $\mathcal{C}$						    & \hspace{44mm}[$m^3/s$]\\
+	$q_{\mathcal{T}}$	&	Flows in $\mathcal{T}$						    & \hspace{44mm}[$m^3/s$]\\
+	$v$					&	Distribution parameter					    	& \hspace{44mm}[$\cdot$]\\
+	$\sigma$			&	Total flow consumption						    & \hspace{44mm}[$m^3/s$]\\
+
+\end{tabular}
+
+\section*{Multi-inlet/single-WT model}
+
+\begin{tabular}{l l l} 
+	\textbf{Symbol}		&	\textbf{Description}							& \hspace{42mm}\textbf{Unit}			\\\hline						
+	$\hat{d}_t$			&	Demand flows corresponding to WTs			    & \hspace{42mm}[$m^3/s$]\\
+	$\hat{d}_c$			&	Pump inlet flows								& \hspace{42mm}[$m^3/s$]\\
+	$\hat{h}_t$			&	Elevation pressure of WTs		    			& \hspace{42mm}[$Pa$]\\
+	$\hat{h}_c$			&	Elevation pressure of pumping stations			& \hspace{42mm}[$Pa$]\\
+	$\hat{p}_t$			&	Pressure in WTs				    				& \hspace{42mm}[$Pa$]\\
+	$\hat{p}_c$			&	Pump inlet pressure								& \hspace{42mm}[$Pa$]\\
 \end{tabular}
 
 \section*{Multi-inlet/multi-WT model}
 
+Note that some of the notation through the Multi-inlet/multi-WT model derivation has been reused and redefined compared to the previous models. In order to avoid confusion, some of the redefined notations here are listed. 
+
 \begin{tabular}{l l l} 
-	\textbf{Symbol}		&	\textbf{Description}							& \hspace{64mm}\textbf{Unit}			\\\hline						
-	$g$ = 9.83 			&	Gravitational acceleration						& \hspace{64mm}[$m/s^2$]\\
-	$\rho = 1000$		&	Density of water								& \hspace{64mm}[$kg/m^3$]\\
-	$f_D = 0.05$		&	Darcy friction factor							& \hspace{64mm}[$kg/m^3$]\\
+	\textbf{Symbol}		&	\textbf{Description}							& \hspace{26mm}\textbf{Unit}			\\\hline						
+	$\hat{d}$			&	Flow in or out of the WT			    		& \hspace{26mm}[$m^3/s$]\\
+	$\bar{d}_{\mathcal{K}}$	&	Pump inlet flows							& \hspace{26mm}[$m^3/s$]\\
+	$\bar{d}_{\mathcal{D}}$	&	Non-inlet flows								& \hspace{26mm}[$m^3/s$]\\
+	$\hat{h}$			&	Elevation pressure of WTs		    			& \hspace{26mm}[$Pa$]\\
+	$\bar{h}$			&	Elevation pressure of pumps and non-inlet points& \hspace{26mm}[$Pa$]\\
+	$\hat{p}$			&	Pressure in WTs				    				& \hspace{26mm}[$Pa$]\\
+	$\bar{p}_{\mathcal{K}}$	&	Pump inlet pressure							& \hspace{26mm}[$Pa$]\\
+	$\bar{p}_{\mathcal{D}}$	&	Non-inlet pressure							& \hspace{26mm}[$Pa$]\\
 \end{tabular}
 
-\newpage
+\section*{Constants}
+
+\begin{tabular}{l l l} 
+	\textbf{Symbol}		&	\textbf{Description}							& \hspace{59mm}\textbf{Unit}			\\\hline						
+	$g$ = 9.83 			&	Gravitational acceleration						& \hspace{59mm}[$m/s^2$]\\
+	$\rho = 1000$		&	Density of water								& \hspace{59mm}[$kg/m^3$]\\
+	$f_D = 0.05$		&	Darcy friction factor							& \hspace{59mm}[$kg/m^3$]\\
+	$\pi = 3.14$		&	Mathematical constant							& \hspace{59mm}[$\cdot$]\\
+\end{tabular}
 
 \section*{Graph theory}
 
@@ -130,10 +159,8 @@
 	$\mathcal{T}$		&	General sub-graph 		    								\\
 	$\mathcal{T^*}$		&	Tree in a graph		    									\\
 	$\mathcal{T}^*_{span}$		&	Spanning tree in a graph	    					\\
-
-
-
 \end{tabular}	
+
 
 	
 
@@ -187,6 +214,7 @@ Vectors are denoted with lower case letters and matrices are denoted with capita
  \end{pmatrix}
  \in {\mathbb{R}}^{(n \times k)}.
  \end{equation*}
+ \vspace{-3mm}
 
 Diagonal matrices are denoted with $diag(\cdot)$, which maps an n-tuple to the corresponding diagonal matrix:
 \vspace{-5mm}
@@ -202,6 +230,7 @@ diag(m_{11},\: ... \:, m_{nn} ) :=
     & & m_{nn}
   \end{pmatrix}.
   \end{equation*}
+  \vspace{-3mm}
 
 A positive semi-definite (resp. positive definite) matrix $A$ is is denoted $A \succeq 0$ ($resp.\; A \; \succ 0$).
 
@@ -221,6 +250,7 @@ In the thesis we are dealing with dynamical systems that are modelled by a finit
    \dot{x}_n = & f_n(t,x_1, ..., x_n,u_1,...,u_p)
 \end{split}
 \end{equation*}
+\vspace{-3mm}
 
 where $\dot{x}_i$ denotes the derivative of $x_i$ with respect to time. The variables in the argument are states $x_i$ and inputs $u_i$. Furthermore, in the thesis, vector notation is used to write the system description in a compact form such that 
 
@@ -263,7 +293,7 @@ y = h(t,x,u)
 \end{equation*}
 \vspace{-6mm}
 
-Typically, for the state equation $f(\cdot)$ is used, however $f(\cdot)$ denotes friction terms in the thesis, therefore is the distinction. 
+Typically, for the state equation $f(\cdot)$ is used, however $f(\cdot)$ denotes friction terms in the thesis and used at several places. Therefore, to avoid confusion we use $g(\cdot)$ for the state model description.
 
 The vector valued functions are defined such that the mapping is the following
 
@@ -291,6 +321,10 @@ The vector valued functions are defined such that the mapping is the following
  \vspace{-6mm}
 
  where $x^k$ is the $k^{th}$ time step value. 
+
+ \textbf{Units}
+
+ All constants, variables and parameters are defined in SI units. Throughout the thesis, however, non-SI units for the pressures and flows used when interfacing EPANET, or when simulation results in MATLAB or Simulink are shown. In the aforementioned cases we make the conversion, thus the calculations are carried out on non-SI units. 
 
 % \textbf{Upper and lower bounds of a variable}
 

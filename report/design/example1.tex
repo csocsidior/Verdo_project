@@ -325,6 +325,8 @@ The parameter vector is computed equivalently as for the output equation with th
 
 The parameter vectors of the state and output model are $\theta^T_{\mathcal{W}}$ and $\theta^T_{\mathcal{K}}$, respectively. Once they are identified and validated, the state RBFF model in \eqref{state_der_ident_approx} and the output RBFF model in \eqref{output_RBFNNnetwork_approx} can be utilized to make model based state and output predictions, given measurements on the system. Therefore, the mathematical description of the modelling ends here. In the next sections, we are going to discuss specifically the identification of the WSS in Randers. 
 
+Additionally to the aforementioned conclusions, the presented identification method has been tested in EPANET on a simple two-loop, two-inlets, single-WT network. In this network, similarly as for a real WSS, the two pumping stations are operated according to the WT level. The identification concept has been tested and validated under several consumption and scheduling scenarios. The detailed presentation of these tests can be found in \appref{NN_based_example}. 
+
 % In case of $l$ WTs, the state derivative approximates $\hat{p}_{\mathcal{S}2,k+1}\! -\! \hat{p}_{\mathcal{S}2,k}$ are given as shown in \eqref{complete_state_parameter_eq}
 
 % \begin{equation}
@@ -343,10 +345,10 @@ The parameter vectors of the state and output model are $\theta^T_{\mathcal{W}}$
 
 \newpage
 
-\section{Identification on the Randers WSS}
+\section{Identification of the WSS in Randers}
 \label{identification_of_the_randers_WSS} 
 
-The properties and structure of the Randers WSS has been described in detail in \secref{the_randers_water_supply_network}. As we mentioned there, the main focus has been put on the identification of the inlet-pressures in the two pumping stations TBP and OMV, furthermore on the three tank levels in HBP and HSP pumping stations. Therefore, let us recall the map of Randers North, where the corresponding pumping stations and WTs are noted.  
+The properties and structure of the Randers WSS has been described in detail in \secref{the_randers_water_supply_network}. As mentioned previously, the main focus is on the identification of the inlet pressures at the two pumping stations TBP and OMV, and on the three WT levels in HBP and HSP pumping stations. Therefore, let us recall the network map of Randers North in \figref{fig:simplified_network_identification1223}, where the corresponding pumping stations and WTs are shown.  
 
 %Simplified network map for identification
 \begin{figure}[H]
@@ -354,32 +356,94 @@ The properties and structure of the Randers WSS has been described in detail in 
 \input{report/tikz/identification_map.tex}
 %\includegraphics[width=0.95\textwidth]{report/pictures/verdo_pic3}
 \caption{The network map with the corresponding WTs and pumping stations.}
-\label{fig:simplified_network_identification123}
+\label{fig:simplified_network_identification1223}
 \end{figure}
 \vspace{-3mm}
 
-In the following description of the identification, let us use the notation for the pumping stations and WTs shown in \figref{fig:simplified_network_identification123}. Thus, $\mathcal{K}_1$ denotes Oust Mølle(OMV) pumping station, while $\mathcal{K}_1$ denotes Toldbodgade(TBP) waterwork. The WTs in Hobrovej(HBP) pumping station are denoted with $\mathcal{W}_1$ and $\mathcal{W}_2$, while the WT in Hadsundevej(HSP) pumping station is denoted with $\mathcal{W}_3$.  
+In the following description, let us use the notation for the pumping stations and WTs shown in \figref{fig:simplified_network_identification1223}. Thus, $\mathcal{K}_1$ denotes Oust Mølle(OMV) waterwork and $\mathcal{K}_1$ denotes Toldbodgade(TBP) pumping station. The WTs at Hobrovej(HBP) pumping station are denoted with $\mathcal{W}_1$ and $\mathcal{W}_2$, furthermore the WT at Hadsundevej(HSP) pumping station is denoted with $\mathcal{W}_3$. 
 
- %Total consumptions
- \begin{figure}[H]
- \centering
- %\hspace{0mm}
- %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/EPANET_id/sigma.tex} 
- \vspace{-2.5mm}
- %\caption{Consumption pattern in the identification.}
- \label{fig:sigma_id}
- \end{figure}
-\vspace{-8mm}
+The identification of the model has been carried out on measurement data provided by Verdo A/S, such that four days-long data sets have been extracted from three different time periods in 2017. It turned out to be difficult to find four day-long measurement sets, as certain sensors are frequently losing the radio signal, thus making the measurements unusable. The three data sets on which the identification and validations have been carried out is shown in \tabref{identification_periods}.
 
- %Inlet flows
- \begin{figure}[H]
- \centering
- %\hspace{0mm}
- %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
- \input{report/tikz/EPANET_id/dk_12.tex} 
- \vspace{-2.5mm}
- \caption{Inlet flows of the two pumping stations.}
- \label{fig:dk_12}
- \end{figure}
- \vspace{-3mm}
+\begin{center}
+    \begin{tabular}{ | p{3cm} | p{3cm} | p{3cm} |}
+    \hline
+     & \textbf{Start time} & \textbf{End time} \\ 
+    \hline
+    Period 1 & 21.10.2017 0.00 &  24.10.2017 23.00 \\ 
+    \hline
+    Period 2 & 07.11.2017 0.00 & 10.11.2017 23.00  \\ 
+    \hline
+    Period 3 & 09.12.2017 0.00 & 12.12.2017 23.00 \\ 
+    \hline
+    \end{tabular}
+    \label{identification_periods}
+    \captionof{table}{Dates from which data are extracted.}
+\end{center}
+
+\vspace{-3mm}
+
+The model is first identified on the data set from Period 1. After the identification, the model is validated on the data sets from Period 2 and Period 3. The extracted data is sampled with $T_s = 1$ [min] sampling time, except for the total consumption $\sigma$, as it has been calculated by using the measurements on the WT flows. The sampling rate of the total water consumption $\sigma$ is $T_s = 1$ [h]. 
+
+The total water consumption in the three different periods is shown in \figref{fig:data_allconsumption}, where $\sigma_1$, $\sigma_2$ and $\sigma_3$ denote the consumption in period 1, period 2 and period 3, respectively.
+
+%Total consumptions
+  \begin{figure}[H]
+  \centering
+  %\hspace{0mm}
+  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+  \input{report/tikz/ident_data/total_consumption.tex} 
+  %\vspace{-2.5mm}
+  \caption{Total water consumption in three different periods.}
+  \label{fig:data_allconsumption}
+  \end{figure}
+ %\vspace{-8mm}
+
+As it is shown in \figref{fig:data_allconsumption}, the characteristics of the daily consumption is similar, although measurements are taken from different months. 
+
+%Inlet flows - period 1
+  \begin{figure}[H]
+  \centering
+  %\hspace{0mm}
+  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+  \input{report/tikz/ident_data/inlet_flows_p1.tex} 
+  %\vspace{-2.5mm}
+  \caption{Inlet flows of the two pumping stations.}
+  \label{fig:inlet_flows_p1}
+  \end{figure}
+ %\vspace{-8mm}
+
+ %w3 - period 1
+  \begin{figure}[H]
+  \centering
+  %\hspace{0mm}
+  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+  \input{report/tikz/ident_data/w3_p1.tex} 
+  %\vspace{-2.5mm}
+  \caption{Level in $\mathcal{W}3$ WT.}
+  \label{fig:w3_p1}
+  \end{figure}
+ %\vspace{-8mm}
+
+%  %Total consumptions
+%  \begin{figure}[H]
+%  \centering
+%  %\hspace{0mm}
+%  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+%  \input{report/tikz/EPANET_id/sigma.tex} 
+%  \vspace{-2.5mm}
+%  %\caption{Consumption pattern in the identification.}
+%  \label{fig:sigma_id}
+%  \end{figure}
+% \vspace{-8mm}
+
+%  %Inlet flows
+%  \begin{figure}[H]
+%  \centering
+%  %\hspace{0mm}
+%  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+%  \input{report/tikz/EPANET_id/dk_12.tex} 
+%  \vspace{-2.5mm}
+%  \caption{Inlet flows of the two pumping stations.}
+%  \label{fig:dk_12}
+%  \end{figure}
+%  \vspace{-3mm}
