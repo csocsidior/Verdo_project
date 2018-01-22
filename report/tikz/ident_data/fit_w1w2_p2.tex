@@ -10,8 +10,8 @@
 \begin{tikzpicture}
 
 \begin{axis}[%
-width=3.657in,
-height=1.047in,
+width=2.25in,
+height=0.884in,
 at={(1.421in,0.43in)},
 scale only axis,
 xmin=0,
@@ -23,11 +23,11 @@ ymax=2.64,
 ylabel style={font=\color{white!15!black}},
 ylabel={Head  [m]},
 axis background/.style={fill=white},
-title style={font=\bfseries},
-title={$\hat{p}_{\mathcal{W}1}$ - water level},
+title style={},
+title={$\hat{p}^{k+1}_{\mathcal{W}1}$ - water level},
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot [color=mycolor1]
+\addplot [color=blue]
   table[row sep=crcr]{%
 1	2.56\\
 2	2.56\\
@@ -2909,9 +2909,9 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.52\\
 2879	2.53\\
 };
-\addlegendentry{Measurement}
+\addlegendentry{\tiny Meas.}
 
-\addplot [color=mycolor2]
+\addplot [color=red]
   table[row sep=crcr]{%
 1	2.53393168281914\\
 2	2.53718384810235\\
@@ -5793,13 +5793,14 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.51001505989253\\
 2879	2.51059243918322\\
 };
-\addlegendentry{Model}
+\addlegendentry{\tiny Model}
 
 \end{axis}
 
 \begin{axis}[%
-width=3.657in,
-height=1.047in,
+xshift=-5.15cm,
+width=2.25in,
+height=0.884in,
 at={(6.232in,0.43in)},
 scale only axis,
 xmin=0,
@@ -5808,14 +5809,14 @@ xlabel style={font=\color{white!15!black}},
 xlabel={Time [min]},
 ymin=2.26,
 ymax=2.68,
-ylabel style={font=\color{white!15!black}},
-ylabel={Head  [m]},
+%ylabel style={font=\color{white!15!black}},
+%ylabel={Head  [m]},
 axis background/.style={fill=white},
-title style={font=\bfseries},
-title={$\hat{p}_{\mathcal{W}2}$ - water level},
+title style={},
+title={$\hat{p}^{k+1}_{\mathcal{W}2}$ - water level},
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot [color=mycolor1]
+\addplot [color=blue]
   table[row sep=crcr]{%
 1	2.5\\
 2	2.5\\
@@ -8697,9 +8698,9 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.47\\
 2879	2.48\\
 };
-\addlegendentry{Measurement}
+\addlegendentry{\tiny Meas.}
 
-\addplot [color=mycolor2]
+\addplot [color=red]
   table[row sep=crcr]{%
 1	2.57154035065172\\
 2	2.57497973795739\\
@@ -11581,7 +11582,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.54446928046809\\
 2879	2.54509542120412\\
 };
-\addlegendentry{Model}
+\addlegendentry{\tiny Model}
 
 \end{axis}
 \end{tikzpicture}%

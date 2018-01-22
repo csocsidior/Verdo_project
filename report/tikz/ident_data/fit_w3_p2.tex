@@ -10,8 +10,8 @@
 \begin{tikzpicture}
 
 \begin{axis}[%
-width=7.209in,
-height=1.135in,
+width=5.239in,
+height=0.784in,
 at={(1.209in,0.429in)},
 scale only axis,
 xmin=0,
@@ -23,11 +23,11 @@ ymax=2.6,
 ylabel style={font=\color{white!15!black}},
 ylabel={Head  [m]},
 axis background/.style={fill=white},
-title style={font=\bfseries},
+title style={},
 title={$\hat{p}^{k+1}_{\mathcal{W}3}$ - water level},
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot [color=mycolor1]
+\addplot [color=blue]
   table[row sep=crcr]{%
 1	2.55\\
 2	2.55\\
@@ -2909,9 +2909,9 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.53\\
 2879	2.54\\
 };
-\addlegendentry{Meas.}
+\addlegendentry{\tiny Meas.}
 
-\addplot [color=mycolor2]
+\addplot [color=red]
   table[row sep=crcr]{%
 1	2.53265713562723\\
 2	2.53481748956256\\
@@ -5793,7 +5793,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.55511713871965\\
 2879	2.55443796119653\\
 };
-\addlegendentry{Model}
+\addlegendentry{\tiny Model}
 
 \end{axis}
 \end{tikzpicture}%

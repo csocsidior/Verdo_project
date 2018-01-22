@@ -196,5 +196,16 @@ plot(Z_W_v2(3,:))
  set(h1, 'Interpreter', 'latex');
  title('$\hat{p}^{k+1}_{\mathcal{W}3}$ - water level','interpreter','latex')
 
+%% W3
+figure(1)
+ plot(w3_kp1_p1-Z_W(3,:)')
+ xlim([0 2880])
+ %ylim([2.46 2.6])
+ xlabel('Time [min]','interpreter','latex');
+ ylabel('Head  [m]','interpreter','latex')
+ h1 = legend('Residual $\mathcal{W}3$','Location','NorthEast');
+ set(h1, 'Interpreter', 'latex');
+ title('$\hat{p}^{k+1}_{\mathcal{W}3}$ - Identification residual','interpreter','latex')
+
 
 

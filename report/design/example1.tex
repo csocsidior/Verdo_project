@@ -325,7 +325,7 @@ The parameter vector is computed equivalently as for the output equation with th
 
 The parameter vectors of the state and output model are $\theta^T_{\mathcal{W}}$ and $\theta^T_{\mathcal{K}}$, respectively. Once they are identified and validated, the state RBFF model in \eqref{state_der_ident_approx} and the output RBFF model in \eqref{output_RBFNNnetwork_approx} can be utilized to make model based state and output predictions, given measurements on the system. Therefore, the mathematical description of the modelling ends here. In the next sections, we are going to discuss specifically the identification of the WSS in Randers. 
 
-Additionally to the aforementioned conclusions, the presented identification method has been tested in EPANET on a simple two-loop, two-inlets, single-WT network. In this network, similarly as for a real WSS, the two pumping stations are operated according to the WT level. The identification concept has been tested and validated under several consumption and scheduling scenarios. The detailed presentation of these tests can be found in \appref{NN_based_example}. 
+Additionally to the aforementioned conclusions, the presented identification method has been tested in EPANET on a simple two-loop, two-inlets, single-WT network. In this network, similarly as for a real WSS, the two pumping stations are operated according to the WT level. The identification concept has been tested and validated under several consumption and scheduling scenarios. The detailed discussion of these tests can be found in \appref{NN_based_example}. 
 
 % In case of $l$ WTs, the state derivative approximates $\hat{p}_{\mathcal{S}2,k+1}\! -\! \hat{p}_{\mathcal{S}2,k}$ are given as shown in \eqref{complete_state_parameter_eq}
 
@@ -348,7 +348,7 @@ Additionally to the aforementioned conclusions, the presented identification met
 \section{Identification of the WSS in Randers}
 \label{identification_of_the_randers_WSS} 
 
-The properties and structure of the Randers WSS has been described in detail in \secref{the_randers_water_supply_network}. As mentioned previously, the main focus is on the identification of the inlet pressures at the two pumping stations TBP and OMV, and on the three WT levels in HBP and HSP pumping stations. Therefore, let us recall the network map of Randers North in \figref{fig:simplified_network_identification1223}, where the corresponding pumping stations and WTs are shown.  
+The properties and structure of the Randers WSS has been described in detail in \secref{the_randers_water_supply_network}. As mentioned previously, the main focus is on the identification of the inlet pressures at the two pumping stations TBP and OMV, and to identify the water level in the three WTs at HBP and HSP pumping stations. Therefore, let us recall the network map of Randers North in \figref{fig:simplified_network_identification1223}, where the corresponding pumping stations and WTs are shown.  
 
 %Simplified network map for identification
 \begin{figure}[H]
@@ -362,18 +362,18 @@ The properties and structure of the Randers WSS has been described in detail in 
 
 In the following description, let us use the notation for the pumping stations and WTs shown in \figref{fig:simplified_network_identification1223}. Thus, $\mathcal{K}_1$ denotes Oust Mølle(OMV) waterwork and $\mathcal{K}_1$ denotes Toldbodgade(TBP) pumping station. The WTs at Hobrovej(HBP) pumping station are denoted with $\mathcal{W}_1$ and $\mathcal{W}_2$, furthermore the WT at Hadsundevej(HSP) pumping station is denoted with $\mathcal{W}_3$. 
 
-The identification of the model has been carried out on measurement data provided by Verdo A/S, such that four days-long data sets have been extracted from three different time periods in 2017. It turned out to be difficult to find four day-long measurement sets, as certain sensors are frequently losing the radio signal, thus making the measurements unusable. The three data sets on which the identification and validations have been carried out is shown in \tabref{identification_periods}.
+The identification of the model has been carried out on measurement data provided by Verdo A/S, such that two day-long data sets have been extracted from three different time periods in 2017. It turned out to be difficult to find long time periods in which the measurement data was not biased, as certain sensors are frequently losing the radio signal, thus making the measurements unusable. The three data sets on which the identification and validations have been carried out is shown in \tabref{identification_periods}.
 
 \begin{center}
     \begin{tabular}{ | p{3cm} | p{3cm} | p{3cm} |}
     \hline
      & \textbf{Start time} & \textbf{End time} \\ 
     \hline
-    Period 1 & 21.10.2017 0.00 &  24.10.2017 23.00 \\ 
+    Period 1 & 21.10.2017 0.00 &  22.10.2017 24.00 \\ 
     \hline
-    Period 2 & 07.11.2017 0.00 & 10.11.2017 23.00  \\ 
+    Period 2 & 07.11.2017 0.00 & 08.11.2017 24.00  \\ 
     \hline
-    Period 3 & 09.12.2017 0.00 & 12.12.2017 23.00 \\ 
+    Period 3 & 09.12.2017 0.00 & 10.12.2017 24.00 \\ 
     \hline
     \end{tabular}
     \label{identification_periods}
@@ -382,24 +382,26 @@ The identification of the model has been carried out on measurement data provide
 
 \vspace{-3mm}
 
-The model is first identified on the data set from Period 1. After the identification, the model is validated on the data sets from Period 2 and Period 3. The extracted data is sampled with $T_s = 1$ [min] sampling time, except for the total consumption $\sigma$, as it has been calculated by using the measurements on the WT flows. The sampling rate of the total water consumption $\sigma$ is $T_s = 1$ [h]. 
+The model is first identified on the data set from Period one. After the identification, the model is validated on the data sets from Period two and Period three. The extracted data is sampled with $T_s = 1$ [min] sampling time, except for the total consumption $\sigma$, as it has been calculated by using the measurements on the WT flows. The sampling rate of the total water consumption $\sigma$ is $T_s = 1$ [h]. 
 
-The total water consumption in the three different periods is shown in \figref{fig:data_allconsumption}, where $\sigma_1$, $\sigma_2$ and $\sigma_3$ denote the consumption in period 1, period 2 and period 3, respectively.
+The total water consumption in the three different periods is shown in \figref{fig:data_allconsumption}, where $\sigma_1$, $\sigma_2$ and $\sigma_3$ denote the consumption in period one, period two and period three, respectively.
 
+\vspace{-3mm}
 %Total consumptions
   \begin{figure}[H]
   \centering
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/total_consumption.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Total water consumption in three different periods.}
   \label{fig:data_allconsumption}
   \end{figure}
  %\vspace{-8mm}
  \vspace{-3mm}
 
-As it is shown in \figref{fig:data_allconsumption}, the characteristics of the daily consumption is similar, although measurements are taken from different months. 
+As it is shown in \figref{fig:data_allconsumption}, the characteristics of the daily consumption is similar, although measurements are taken from different months. This is according to the expectations, considering the fact that there is high consumption in the morning and late afternoon, while the consumption is low in the night hours. The corresponding inlet flows of the two pumping stations and the water level in the WTs for period one are shown in \figref{fig:w1_w2_p1}. 
+\vspace{-3mm}
 
 %Inlet flows - period 1
   \begin{figure}[H]
@@ -433,17 +435,22 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/w1_w2_p1.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{The inlet flows of the pumping stations and the levels in the WTs.}
   \label{fig:w1_w2_p1}
   \end{figure}
  %\vspace{-8mm}
   \vspace{-3mm}
 
-\newpage
+  As we can see from the top figure, the inlet flows are scheduled according to the consumption in the network. In the peak hours, the ON-OFF control is more frequent while in the night hours the pumps are shut down. More precisely, TBP pumping station $\mathcal{K}_2$ turns off the pumps completely, while OMV waterwork $\mathcal{K}_1$ lowers the flow. 
+
+  WT $\mathcal{W}_3$ is getting filled and emptied mainly by the pumping station in $\mathcal{K}_2$. The WTs $\mathcal{W}_1$ and $\mathcal{W}_2$ are two storage tanks being very close to each other, therefore their filling and emptying process shows exactly the same characteristics. As we see, these two WTs are getting emptied in the high-consumption hours, thereby providing the static pressure and flow to the Low Zone areas in Randers North. 
+
+  In the following discussion, the corresponding flow and WT level characteristics are shown for each period two and period three, which are later used for validation. 
+\vspace{-3mm}
 \subsection{First validation data}
 \label{first_validation}
- \vspace{-2mm}
+ \vspace{-3mm}
 
 %Inlet flows - period 2
   \begin{figure}[H]
@@ -478,7 +485,7 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/w1_w2_p2.tex} 
   \vspace{-2.5mm}
-  \caption{The inlet flows of the pumping stations and the levels in the WTs.}
+  \caption{The inlet flows of the pumping stations and the water level in the WTs.}
   \label{fig:w1_w2_p2}
   \end{figure}
  %\vspace{-8mm}
@@ -521,14 +528,16 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/w1_w2_p3.tex} 
   \vspace{-2.5mm}
-  \caption{The inlet flows of the pumping stations and the levels in the WTs.}
+  \caption{The inlet flows of the pumping stations and the water level in the WTs.}
   \label{fig:w1_w2_p3}
   \end{figure}
  %\vspace{-8mm}
   \vspace{-3mm}
 
- \subsection{Identification results regarding inlet pressures}
+ \subsection{Identification and validation results regarding the inlet pressures}
  \label{output_results}
+
+ For the inlet pressure $\bar{p}_{\mathcal{K}2}$, the identification has been carried out with ten RBF neurons. The performance goal has been chosen to the order of $10^{-1}$. $\bar{p}_{\mathcal{K}1}$ inlet pressure at OMV waterwork has not been identified due to the fact that Verdo A/S does not have sensors installed at the moment because of the ongoing renovation work at the station. Furthermore, the measurements were too noisy to carry out proper identification on them. For that reason, the inlet pressure measurements have been filtered and the outliers have been removed. The result of the identification is shown in \figref{fig:fit_pk2_p1}. The two validation results are shown in \figref{fig:fit_pk2_p2} and \figref{fig:fit_pk2_p3}, respectively. 
 
  %pk2_p1
   \begin{figure}[H]
@@ -536,7 +545,7 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/fit_pk2_p1.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Inlet pressure - fit to the measurement data from period 1.}
   \label{fig:fit_pk2_p1}
   \end{figure}
@@ -549,7 +558,7 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/fit_pk2_p2.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Inlet pressure - fit to the measurement data from period 2.}
   \label{fig:fit_pk2_p2}
   \end{figure}
@@ -562,15 +571,20 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/fit_pk2_p3.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Inlet pressure - fit to the measurement data from period 3.}
   \label{fig:fit_pk2_p3}
   \end{figure}
  %\vspace{-8mm}
  \vspace{-3mm}
 
+ The performance goal could have been further reached with introducing more RBF neurons, however more neurons did not result in good generalization, due to the presence of high frequency noise on the signal. In case of increasing the number of neurons, and reduce the spread parameter of the RBFs, the identification has resulted in overfit and the validation has given bad performance. The inlet pressure residuals for the identification and validation can be found in \appref{identification_residuals}. 
+
+\newpage
   \subsection{Identification results regarding WT levels}
  \label{state_results}
+
+ The identification of the state model has been carried out using 12 RBF neurons. The identification results are shown in \figref{fig:fit_w1w2_p1} and \figref{fig:fit_w3_p1}. The validation results are shown in \figref{fig:fit_w1w2_p2}, \figref{fig:fit_w3_p2} and \figref{fig:fit_w1w2_p3}, \figref{fig:fit_w3_p3} for period two and three, respectively. 
 
   %w1-w2_p1
   \begin{figure}[H]
@@ -578,7 +592,7 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/fit_w1w2_p1.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Water level - fit to the measurement data from period 1.}
   \label{fig:fit_w1w2_p1}
   \end{figure}
@@ -591,9 +605,22 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/fit_w3_p1.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Water level - fit to the measurement data from period 1.}
   \label{fig:fit_w3_p1}
+  \end{figure}
+ %\vspace{-8mm}
+ \vspace{-3mm}
+
+   %w1-w2_p2
+  \begin{figure}[H]
+  \centering
+  %\hspace{0mm}
+  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+  \input{report/tikz/ident_data/fit_w1w2_p2.tex} 
+  \vspace{-2.5mm}
+  \caption{Water level - fit to the measurement data from period 2.}
+  \label{fig:fit_w1w2_p2}
   \end{figure}
  %\vspace{-8mm}
  \vspace{-3mm}
@@ -604,9 +631,22 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/fit_w3_p2.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Water level - fit to the measurement data from period 2.}
   \label{fig:fit_w3_p2}
+  \end{figure}
+ %\vspace{-8mm}
+ \vspace{-3mm}
+
+   %w1-w2_p3
+  \begin{figure}[H]
+  \centering
+  %\hspace{0mm}
+  %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
+  \input{report/tikz/ident_data/fit_w1w2_p3.tex} 
+  \vspace{-2.5mm}
+  \caption{Water level - fit to the measurement data from period 3.}
+  \label{fig:fit_w1w2_p3}
   \end{figure}
  %\vspace{-8mm}
  \vspace{-3mm}
@@ -617,7 +657,7 @@ As it is shown in \figref{fig:data_allconsumption}, the characteristics of the d
   %\hspace{0mm}
   %\includegraphics[width=0.35\textwidth]{report/pictures/missingfigure}
   \input{report/tikz/ident_data/fit_w3_p3.tex} 
-  %\vspace{-2.5mm}
+  \vspace{-2.5mm}
   \caption{Water level - fit to the measurement data from period 3.}
   \label{fig:fit_w3_p3}
   \end{figure}

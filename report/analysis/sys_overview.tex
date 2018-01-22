@@ -334,7 +334,7 @@ As it has been explained in \chapref{description_of_water_supply_systems}, the t
 
 The use of Geographic Information Systems(GIS) and Supervisory Control and Data Acquisition(SCADA) systems in the water industry resulted in an increasing amount of information about actual network topology and service that can be utilized in a hydraulic network model \cite{johnson2016geographic}. Consequently, the simulation model of WSSs include almost exactly the same amount of components as in real-life. The following data and model description strongly relies on the documentation of the Randers WSS EPANET model \cite{verdo_doc}, provided by Verdo A/S, where the main modelling steps are explained. The model is mainly based on the data stored in GIS and the SCADA system, however different case studies and experience have also been incorporated into the model. It is important to note that the following results and properties of the EPANET model serve as a basis for understanding the data processing and therefore the discussion is important in the thesis.  
 
-Initially, during the modelling, nodes have been made between each different pipe elements. However with large number of elements, calculation time has been increasingly high. Therefore, the number of nodes in the network have been reduced based on the fact that pipe sections with the same material and dimensions can be treated as one pipeline. In order to illustrate the complexity of the network, the number of elements in the simulation model, including the VSV region, is shown in \tabref{numberofelements_table}.
+Initially, during the modelling, vertices have been created between each different pipe elements. However with large number of elements, calculation time has been increasingly high. Therefore, the number of vertices in the network have been reduced based on the fact that pipe sections with the same material and dimensions can be treated as one pipeline. In order to illustrate the complexity of the network, the number of elements in the simulation model, including the VSV region, is shown in \tabref{numberofelements_table}.
 
 \begin{center}
 \label{numberofelements_table}
@@ -344,7 +344,7 @@ Initially, during the modelling, nodes have been made between each different pip
     \hline
     Links & 4144  \\ 
     \hline
-    Nodes & 4180  \\ 
+    Vertices & 4180  \\ 
     \hline
     Tanks & 6  \\ 
     \hline

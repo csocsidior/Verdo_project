@@ -281,7 +281,7 @@ where\\
 \end{minipage}
 \begin{minipage}[t]{0.63\textwidth}
 \vspace*{2mm}
-is the pressure at the node connected to the tank,\\ 
+is the pressure at the vertex connected to the tank,\\ 
 is the water level in the tank,\\ 
 is the parameter in terms of the cross sectional area and the pressure/water level ratio in the tank,\\
 is the flow into the tank if $q_i < 0$ and flow out of the tank if $q_i > 0$.
@@ -332,7 +332,7 @@ By converting the pressure $p_i$ to pressure head $h_{p,i}$ in \eqref{wt_model2}
 \section{Graph-based network modelling}
 \label{graph_based_network_modelling}
 
-Tools from Graph Theory(GT) can be utilized to model a WSS as a directed graph, similarly as in Circuit Theory(CT). In the graph the set of vertices represent sources, consumption nodes and reservoirs, while the set of edges, represent pipes, pumps and valves. 
+Tools from Graph Theory(GT) can be utilized to model a WSS as a directed graph, similarly as in Circuit Theory(CT). In the graph the set of vertices represent sources, consumption vertices and reservoirs, while the set of edges, represent pipes, pumps and valves. 
 
 In order to track the pressure and flow in the desired part of the network, the equation system relying on the network graph has to be solved for the corresponding edges and vertices. The whole network can be described by writing up the equations for all edges, taking into account the mathematical model of the different components. However, in case of complex systems such as water supply networks for large cities, the systems of equations are difficult to handle individually and typically cannot be solved explicitly if the system consists of many loops. Therefore, the properties of GT are not only useful for setting up relations between flow and pressure, but to make handling of algebraic constraints easier by exploiting the properties of linear algebra. Thereby making it convenient for implementing it in computer algorithms that use iterative solving methods.  
 
@@ -449,7 +449,7 @@ Nodal demands are seen as the end-user consumption, which means that water is ta
 
 As a matter of fact, \eqref{mass_conservation} is not an additional constraint since it follows from \eqref{vertexlaw_open}. This can be sown by using the knowledge that $\mathbb{1}_n$ is the left kernel of $H$ \footnote{The kernel of matrix $A \in \: \mathbb{R}^{m \times n)}$ is $ \{x \in \: \mathbb{R}^{n} | Ax = 0 \} $.}.
 
-In the further thesis, a distinction is made between inlet and non-inlet nodes. It is assumed that the demand at non-inlet nodes fulfil the constraint in \eqref{non_inlet_constraint}.
+In the further thesis, a distinction is made between inlet and non-inlet vertices. It is assumed that the demand at non-inlet vertices fulfil the constraint in \eqref{non_inlet_constraint}.
 
 \begin{equation}
   \label{non_inlet_constraint}
@@ -1114,7 +1114,7 @@ where\\
 \hspace*{8mm} $\tau  \in \: \mathbb{R_{+}}$
 \end{minipage}
 
-From \eqref{wt_model_demand1} we can see that the flow $\hat{d}_t$, needs to be expressed in terms of the inputs $\hat{d}_c$. In order to express the demand regarding the WT, the whole network is treated as one node, as illustrated in \figref{fig:onenode_system}. 
+From \eqref{wt_model_demand1} we can see that the flow $\hat{d}_t$, needs to be expressed in terms of the inputs $\hat{d}_c$. In order to express the demand regarding the WT, the whole network is treated as one vertex, as illustrated in \figref{fig:onenode_system}. 
 
  %Network illustration as one node
 \begin{figure}[H]

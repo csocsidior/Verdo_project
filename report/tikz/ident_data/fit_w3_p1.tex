@@ -10,8 +10,8 @@
 \begin{tikzpicture}
 
 \begin{axis}[%
-width=7.048in,
-height=1.149in,
+width=5.239in,
+height=0.784in,
 at={(1.182in,0.432in)},
 scale only axis,
 xmin=0,
@@ -23,11 +23,11 @@ ymax=2.6,
 ylabel style={font=\color{white!15!black}},
 ylabel={Head  [m]},
 axis background/.style={fill=white},
-title style={font=\bfseries},
-title={$\hat{p}^{k+1}_{\mathcal{W},2}$ - inlet pressure},
+title style={},
+title={$\hat{p}^{k+1}_{\mathcal{W}3}$ - water level},
 legend style={legend cell align=left, align=left, draw=white!15!black}
 ]
-\addplot [color=mycolor1]
+\addplot [color=blue]
   table[row sep=crcr]{%
 1	2.55\\
 2	2.55\\
@@ -2909,9 +2909,9 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.5\\
 2879	2.51\\
 };
-\addlegendentry{Meas.}
+\addlegendentry{\tiny Meas.}
 
-\addplot [color=mycolor2]
+\addplot [color=red]
   table[row sep=crcr]{%
 1	2.53996641375124\\
 2	2.53874535171781\\
@@ -5793,7 +5793,7 @@ legend style={legend cell align=left, align=left, draw=white!15!black}
 2878	2.53012872638647\\
 2879	2.5298142140964\\
 };
-\addlegendentry{Model}
+\addlegendentry{\tiny Model}
 
 \end{axis}
 \end{tikzpicture}%
