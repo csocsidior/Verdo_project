@@ -1,0 +1,34 @@
+local booster in the basement - at the buildings, not in the area! Bossting 
+is in steps and they are using PRVs. 
+
+P.7 elevated reservoir in the centre -> it is directly distributed to all surrounuding
+areas, not through long pipes. In the centre -> provide the same pressure around 
+
+Reference 12 - mistake in the author. 
+
+P.7 -> explain larger loops better -> like the AAU test setup -> figure ! 
+
+P.8 -> not levelling out the pressure (less then 2 meters, normally around 1 meter)
+
+elevated reservoir -> the flow contribution is high, the pressure change in meter is
+not so high.
+
+P.8 Valves -> changes the structure of the network by closing off parts 
+-> adative structure form for control 
+
+PRVs and FCVs -> used to control flow, nowdays they are not used for control 
+
+normally in one loop there are not any pumps and valves 
+
+sectioning in the network possible? -> 
+
+
+MATH
+
+
+ohmslaw_partitioned1
+the vector $q_{\mathcal{T}}$, of flows in edges $\mathcal{E}_{\mathcal{T}}$ 
+
+loop, 2 inlets, place for a tank, 
+
+
