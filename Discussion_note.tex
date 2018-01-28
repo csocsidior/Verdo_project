@@ -6,127 +6,36 @@
 \makeoddfoot{AAU}{}{}{\thepage}
 
 \pagenumbering{gobble}
-\subsection{Output equation}
+\subsection{Note}
 
-Let us write the output and constraint equations in discrete time. The output $\bar{p}_{\mathcal{K},k}$ is given by \eqref{eq1}.
+\begin{align}
+\label{WT_matrixform_final_discrete1}
+\nonumber  \hat{p}^{k+1} - \hat{p}^{k}   =& T_s \Lambda^{-1} \big(- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  \textcolor{orange}{q_{\mathcal{C}}(u^k)}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \textcolor{blue}{\bar{d}^{k}_{\mathcal{K}}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \textcolor{blue}{\sigma^{k}} \big) 
+\end{align}
 
-\begin{equation}
-  \label{eq1}
-  \bar{p}_{\mathcal{K},k} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) - \bar{h}_{\mathcal{K}}.
-\end{equation}
-
-
-The constraint for the system is on $q_\mathcal{C}$
 
  \begin{equation}
-\label{eq2}
-f_{\mathcal{C}}(q_{\mathcal{C},k}) - A_1(\hat{p}_k + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 q_{\mathcal{C},k} + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k) = 0.
+\label{meshresult2_WT_model1}
+f_{\mathcal{C}}(\textcolor{red}{q^k_\mathcal{C}}) - A_1(\textcolor{blue}{\hat{p}^k} + \hat{h}) + A_2^T f_{\mathcal{T}}(A_2 \textcolor{red}{q^k_\mathcal{C}} + A_3 K \textcolor{blue}{\bar{d}^k_{\mathcal{K}}} - A_3 D v_{\mathcal{D}} \textcolor{blue}{\sigma^k}) = 0
 \end{equation} 
 
-Reformulating \eqref{eq2} yields 
+\begin{minipage}[t]{0.4\textwidth}
+where\\
+\hspace*{8mm} $A_1 = \hat{H}^T_{\mathcal{C}} -\bar{H}^T_{\mathcal{C}}\bar{H}^{-T}_{\mathcal{T}}\hat{H}^T_{\mathcal{T}}$, \vspace*{1.5mm}  \\
+\hspace*{8mm} $A_2 = -\bar{H}^{-1}_{\mathcal{T}} \bar{H}_{\mathcal{C}} $, \vspace*{1.5mm}\\
+\hspace*{8mm} $A_3 = \bar{H}^{-1}_{\mathcal{T}}$.
+\end{minipage}
+
+\begin{equation}
+  \label{non-inlet_p_WT1}
+  \bar{p}^k_{\mathcal{K}} = K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 \textcolor{orange}{q_{\mathcal{C}}(u^k)} + A_3 K \textcolor{blue}{\bar{d}^k_{\mathcal{K}}} - A_3 D v_{\mathcal{D}} \textcolor{blue}{\sigma^k}) - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\textcolor{blue}{\hat{p}^k} + \hat{h}) - K^T\bar{h} 
+\end{equation}
 
  \begin{equation}
-\label{eq3}
-q_{\mathcal{C},k} = q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) .
+\label{qc_abstraction}
+\textcolor{red}{q^{k}_{\mathcal{C}}} = q_{\mathcal{C}} \big( (\textcolor{blue}{\hat{p}^{k}} + \hat{h}),\textcolor{blue}{\bar{d}^{k}_{\mathcal{K}}}, \textcolor{blue}{\sigma^{k}} \big) = \textcolor{orange}{q_{\mathcal{C}}(u^k)}
 \end{equation} 
-
-Substituting \eqref{eq3} into \eqref{eq1}, we get the following
-
-
-\begin{align}
-  \label{eq4}
-      \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} &= \nonumber K^T \bar{H}^{-T}_{\mathcal{T}}f_{\mathcal{T}}(A_2 q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) + A_3 K \bar{d}_{\mathcal{K},k} - A_3 D v_{\mathcal{D}} \sigma_k)   \\ &  - K^T\bar{H}^{-T}_{\mathcal{T}}\hat{H}^{T}_{\mathcal{T}} (\hat{p}_k + \hat{h}) .
-\end{align}
-
-In \eqref{eq4}, we have the elevation of the pumping stations $(\bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}})$ given by the expression on the right-hand side. Let us write \eqref{eq4} in a form where the expression is replaced with a non-linear function $\tilde{f}_1$ with an unknown structure but with the same variables in the argument.
-
-\begin{equation}
-  \label{eq5}
-     \tilde{y}_k = \bar{p}_{\mathcal{K},k} + \bar{h}_{\mathcal{K}} = \tilde{f}_1 \big((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big).
-\end{equation}
-
-\subsection{State equation}
-
-The state equation in continuous form is given by \eqref{eq6}.
-
-\begin{equation}
-\label{eq6}
-\Lambda \dot{\hat{p}} = - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_\mathcal{C}  - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K}} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma .
-\end{equation}
-
-After substituting the constraint on $q_{\mathcal{C},k}$, the discrete form, using Euler-method, is given by \eqref{eq7}.
-
-\begin{align}
-\label{eq7}
-\Lambda\nonumber \frac{1}{T_s} (\hat{p}_{k+1} - \hat{p}_k)  &= - (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C}}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k.
-\end{align}
-
-\underline{Original idea:}
-
-The original idea was to choose a structure for \eqref{eq7} such that 
-
-\begin{equation}
-\label{eq8}
-\hat{p}_{k+1} = \tilde{f}_2\big( (\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + a_2 \hat{p}_k,
-\end{equation}
-
-where $a$ is a linear parameter.
-
-\newpage
-
-\underline{Other idea:} 
-
-\eqref{eq7} can be written in the form
-
-\begin{align}
-\label{eq9}
-\nonumber  \hat{p}_{k+1} - \hat{p}_k  &= T_s \Lambda^{-1} \big[- (\hat{H}_{\mathcal{C}} - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}}\bar{H}_{\mathcal{C}})  q_{\mathcal{C},k}\big ((\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k \big) \\ & - \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} K \bar{d}_{\mathcal{K},k} + \hat{H}_{\mathcal{T}} \bar{H}^{-1}_{\mathcal{T}} D v_{\mathcal{D}} \sigma_k \big].
-\end{align}
-
-In this arrangement, let us keep the tank pressures $\hat{p}_k$ on the left hand-side. Thus, $\hat{p}_{k+1}$ can be reconstructed by adding the current values $\hat{p}_k$ to both sides in the equation. Thereby, we do not need to introduce the linear parameter when we identify the state equation.  
-
-($\Lambda$ is invertible, as it is a diagonal matrix, with positive values in each diagonal entry.)
-
-\underline{+1 on the state model:} 
-
-Let us recall \eqref{eq8}.
-
-\begin{equation}
-\label{eq10}
-\hat{p}_{k+1} = \tilde{f}_2\big( (\hat{p}_k + \hat{h}),\bar{d}_{\mathcal{K},k}, \sigma_k\big) + a_2 \hat{p}_k,
-\end{equation}
-
-In this equation, the present values of the states are already represented inside the non-linear term $\tilde{f}_2$ as $(\hat{p}_k + \hat{h}_k)$. $\hat{p}$ and $(\hat{p}_k + \hat{h}_k)$ are dependant variables, and we did not introduce linear terms for variables that are dependant e.g. in the output equation in \eqref{eq5}. 
 
 \end{document}
 
 
-
-% All the unconnected parts in the EPANET model are listed in the table below. The program which finds the unconnected parts was tested on Samlet\_slutmodel\_juni\_2013.net.
-
-% \begin{center}
-% \label{mistake_table}
-%     \begin{tabular}{ | p{3cm} | p{3cm} | p{3cm} | p{3cm} |}
-%     \hline
-%     \textbf{} & \textbf{Node IDs} & \textbf{Link IDs}  & \textbf{Description of the problem}  \\ 
-%     \hline
-%     1 & 20102476, ...& NY1037, ... & Tjærby is not connected to the main pipeline. Therefore, Bunkedal Vandværk does not operate. \\ 
-%     \hline
-%     2 &533, 1999 & 12757 & A pipeline left in the model, probably by accident. The presence of this does not affect anything.  \\ 
-%     \hline
-%     3 & 20102158,
-%     20102159& NY328 & In the low zone, nodes and links are overlapping but not connected. \\ 
-%     \hline
-%     4 & 20102163,
-%     20102164 & NY331 & Same error as for Nr. 2. An unconnected pipeline under the connected links. The presence of this does not cause any error. \\ 
-%     \hline
-%     5 & 20102323, 
-%     2010232  & NY624 & A single unconnected pipeline. \\ 
-%     \hline
-%     6 & 20102490,
-%     20102491,
-%     20102492 & NY1065, NY1074 & A small unconnected part.  \\ 
-%     \hline
-%     \end{tabular}
-%     %\captionof{table}{Number of WSS elements.}
-% \end{center}

@@ -22,11 +22,11 @@ AA = smooth(dk2_p1);
 dk2_p1 = smooth(AA);
 
 %% Training set for the output identification - Period 1
-X_K = [sigma_p1, w1_p1, w2_p1, w3_p1, dk1_p1, dk2_p1]';   %(maybe add elevations)
+X_K = [sigma_p1, smooth(w1_p1), smooth(w2_p1), smooth(w3_p1), dk1_p1, dk2_p1]';   %(maybe add elevations)
 Y_K = [pk2_p1]';
 
 %% Training set for the output validation - Period 2
-X_K_v1 = [sigma_p2, w1_p2, w2_p2, w3_p2, dk1_p2, dk2_p2]';   %(maybe add elevations)
+X_K_v1 = [sigma_p2, smooth(w1_p2), smooth(w2_p2), smooth(w3_p2), dk1_p2, smooth(dk2_p2)]';   %(maybe add elevations)
 Y_K_v1 = [pk2_p2]';
 
 %% Training set for the output validation - Period 3
@@ -34,9 +34,9 @@ X_K_v2 = [sigma_p3, w1_p3, w2_p3, w3_p3, dk1_p3, dk2_p3]';   %(maybe add elevati
 Y_K_v2 = [pk2_p3]';
 
 %% Output identification
-spread = 60;                %30 
+spread = 125;                %30  60
 % number of neurons
-K = 10;                       %20
+K = 10;                       %20  10
 % performance goal 
 goal = 0.001;
 % neuron step
@@ -46,7 +46,7 @@ net = newrb(X_K,Y_K,goal,spread,K,Ki);
 Y_net = net(X_K);
 a{1} = radbas(netprod(dist(net.IW{1,1},X_K),net.b{1}));
 
- chi_K = [a{1} ; w1_p1' ; w2_p1'; w3_p1'; ones(1,2880)];
+ chi_K = [a{1} ; smooth(w1_p1)' ; smooth(w2_p1)'; smooth(w3_p1)'; ones(1,2880)];
  theta_K = Y_K/chi_K
  Z_K = theta_K*chi_K;
  
@@ -68,7 +68,7 @@ a{1} = radbas(netprod(dist(net.IW{1,1},X_K),net.b{1}));
  %% Output validation 1 - Period 2
  
 a_v1{1} = radbas(netprod(dist(net.IW{1,1},X_K_v1),net.b{1}));
-chi_K_v1 = [a_v1{1} ; w1_p2' ; w2_p2'; w3_p2'; ones(1,2880)];
+chi_K_v1 = [a_v1{1} ; smooth(w2_p2)' ; smooth(w1_p2)'; smooth(w3_p2)'; ones(1,2880)];
 Z_K_v1 = theta_K*chi_K_v1;
 
  figure(1)
@@ -86,7 +86,7 @@ Z_K_v1 = theta_K*chi_K_v1;
   %% Output validation 2 - Period 3
  
 a_v2{1} = radbas(netprod(dist(net.IW{1,1},X_K_v2),net.b{1}));
-chi_K_v2 = [a_v2{1} ; w1_p3' ; w2_p3'; w3_p3'; ones(1,2880)];
+chi_K_v2 = [a_v2{1} ; w2_p3' ; w1_p3'; w3_p3'; ones(1,2880)];
 Z_K_v2 = theta_K*chi_K_v2;
 
   figure(1)
@@ -114,6 +114,14 @@ Z_K_v2 = theta_K*chi_K_v2;
      plot(t,a{1}(5,:),'LineWidth',1.2)
      hold on
       plot(t,a{1}(6,:),'LineWidth',1.2)
+      hold on
+      plot(t,a{1}(7,:),'LineWidth',1.2)
+      hold on
+      plot(t,a{1}(8,:),'LineWidth',1.2)
+      hold on
+      plot(t,a{1}(9,:),'LineWidth',1.2)
+      hold on
+      plot(t,a{1}(10,:),'LineWidth',1.2)
       
  %% Residuals
  
