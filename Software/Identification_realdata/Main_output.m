@@ -62,7 +62,7 @@ a{1} = radbas(netprod(dist(net.IW{1,1},X_K),net.b{1}));
  set(h1, 'Interpreter', 'latex');
  title('$\bar{p}_{\mathcal{K},2}$ - inlet pressure','interpreter','latex')
  
- cost_func = 'NMSE';
+ cost_func = 'NMSE'; %normalized mean squared error
  fit_pk2_p1 = 100*goodnessOfFit(Z_K',pk2_p1,cost_func)
  
  %% Output validation 1 - Period 2
@@ -83,6 +83,14 @@ Z_K_v1 = theta_K*chi_K_v1;
  set(h1, 'Interpreter', 'latex');
  title('$\bar{p}_{\mathcal{K},2}$ - inlet pressure','interpreter','latex')
  
+% AA = smooth(pk2_p2,'rlowess');
+% AA1 = smooth(AA,'rlowess');
+% AA2 = smooth(AA1);
+% AA3 = smooth(AA2,'rlowess');
+% pk2_p2 = smooth(AA3);
+ 
+ fit_pk2_p2 = 100*goodnessOfFit(Z_K_v1',pk2_p2,cost_func)
+ 
   %% Output validation 2 - Period 3
  
 a_v2{1} = radbas(netprod(dist(net.IW{1,1},X_K_v2),net.b{1}));
@@ -100,6 +108,8 @@ Z_K_v2 = theta_K*chi_K_v2;
  h1 = legend('Measurement','Model','Location','SouthEast');
  set(h1, 'Interpreter', 'latex');
  title('$\bar{p}_{\mathcal{K},2}$ - inlet pressure','interpreter','latex')
+ 
+ fit_pk2_p3 = 100*goodnessOfFit(Z_K_v2',pk2_p3,cost_func)
  
  %%
  figure(2)
