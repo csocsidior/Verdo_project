@@ -22,21 +22,21 @@ AA = smooth(dk2_p1);
 dk2_p1 = smooth(AA);
 
 %% Training set for the output identification - Period 1
-X_K = [sigma_p1, smooth(w1_p1), smooth(w2_p1), smooth(w3_p1), dk1_p1, dk2_p1]';   %(maybe add elevations)
+X_K = [sigma_p1*0.277777778, smooth(w1_p1), smooth(w2_p1), smooth(w3_p1), dk1_p1*0.277777778, dk2_p1*0.277777778]';   %(maybe add elevations)
 Y_K = [pk2_p1]';
 
 %% Training set for the output validation - Period 2
-X_K_v1 = [sigma_p2, smooth(w1_p2), smooth(w2_p2), smooth(w3_p2), dk1_p2, smooth(dk2_p2)]';   %(maybe add elevations)
+X_K_v1 = [sigma_p2*0.277777778, smooth(w1_p2), smooth(w2_p2), smooth(w3_p2), dk1_p2*0.277777778, smooth(dk2_p2)*0.277777778]';   %(maybe add elevations)
 Y_K_v1 = [pk2_p2]';
 
 %% Training set for the output validation - Period 3
-X_K_v2 = [sigma_p3, w1_p3, w2_p3, w3_p3, dk1_p3, dk2_p3]';   %(maybe add elevations)
+X_K_v2 = [sigma_p3*0.277777778, w1_p3, w2_p3, w3_p3, dk1_p3*0.277777778, dk2_p3*0.277777778]';   %(maybe add elevations)
 Y_K_v2 = [pk2_p3]';
 
 %% Output identification
 spread = 125;                %30  60
 % number of neurons
-K = 10;                       %20  10
+K = 6;                       %20  10
 % performance goal 
 goal = 0.001;
 % neuron step
@@ -49,7 +49,7 @@ a{1} = radbas(netprod(dist(net.IW{1,1},X_K),net.b{1}));
  chi_K = [a{1} ; smooth(w1_p1)' ; smooth(w2_p1)'; smooth(w3_p1)'; ones(1,2880)];
  theta_K = Y_K/chi_K
  Z_K = theta_K*chi_K;
- 
+ %%
   figure(1)
  plot(t,pk2_p1,'LineWidth',1)
   hold on

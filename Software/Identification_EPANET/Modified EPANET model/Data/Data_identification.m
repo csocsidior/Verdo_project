@@ -113,6 +113,8 @@ xlim([0 121])
 
 figure(5)
 stairs(t,p_A,'LineWidth',1.2)
+hold on
+stairs(t,p_B,'LineWidth',1.2)
 xlim([0 120])
 ylim([2.45 3.1])
 xlabel('Time [h]','interpreter','latex');
